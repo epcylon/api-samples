@@ -1,0 +1,155 @@
+syntax = "proto3";
+package stomp;
+option csharp_namespace = "Epcylon.Common.Net.ProtoStomp.Proto";
+
+/* Heartbeat message for keep-alive purposes. */
+message Heartbeat { }
+
+/* The ConnectRequest message is used to connect to the server. This is the first 
+ * message that must be sent to the server before any other requests are made.
+ * Use within a RequestFrame. */
+message ConnectRequest
+{
+    string accept_version = 1;                   // The proto-stomp versions the client can handle.
+    string login = 2;                            // The username to log in with.
+    string passcode = 3;                         // The password to log in with.
+    bytes body = 4;                              // Additional server-specific information to include.
+}
+
+/* The DisconnectRequest message is used to inform the server that a disconnection
+ * is about to be made. Server implementations must be able to handle disconnections 
+ * with and without this request. Use within a RequestFrame. */
+message DisconnectRequest { }
+
+/* The SubscribeRequest message is used to subscribe to a stream of events.
+ * Use within a RequestFrame. */
+message SubscribeRequest
+{
+    string destination = 1;                      // A string that identifies the subscription.
+    uint64 subscription_id = 2;                  // A unique client identifier for the subscription.
+    uint32 throttle_rate = 3;                    // The rate to throttle messages at (in ms, 0 for no throttling).
+    uint64 receipt_id = 4;                       // A unique (optional) receipt id to include if a receipt is desired.
+}
+
+/* The UnsubscribeRequest message is used to unsubscribe from a stream of events.
+ * Use within a RequestFrame. */
+message UnsubscribeRequest
+{
+    uint64 subscription_id = 1;                  // The client-specific subscription identifier.
+    uint64 receipt_id = 2;                       // A unique (optional) receipt id to include if a receipt is desired.
+}
+
+/* The ThrottleRequest message is used to change the throttle rate of an existing 
+ * subscription. Use within a RequestFrame. */
+message ThrottleRequest
+{
+    uint64 subscription_id = 1;                  // The client-specific subscription identifier.
+    uint32 throttle_rate = 2;                    // The rate to throttle messages at (in ms, 0 for no throttling).
+    uint64 receipt_id = 3;                       // A unique (optional) receipt id to include if a receipt is desired.
+}
+
+/* The SendRequest message is used to send single updates or commands to the server.
+ * Use within a RequestFrame. */
+message SendRequest
+{
+    string destination = 1;                      // A string that identifies the command destination.
+    uint64 send_id = 2;                          // A unique client-specific identifier for the send. 
+    bytes body = 3;                              // The body to include in the send, if required.
+    uint64 receipt_id = 4;                       // A unique (optional) receipt id to include if a receipt is desired.
+}
+
+/* This is the main request frame that will be received by the server. 
+ * All requests must be made using this frame. */
+message RequestFrame
+{
+    /* Only one type of request may be made per RequestFrame message. */
+    oneof request
+    {
+        ConnectRequest connect = 1;              // Used to connect to the server.
+        DisconnectRequest disconnect = 2;        // Sent immediately before disconnecting.
+        SubscribeRequest subscribe = 3;          // Used to subscribe to a stream of events.
+        UnsubscribeRequest unsubscribe = 4;      // Used to unsubscribe from a stream of events.
+        ThrottleRequest throttle = 5;            // Changes the throttle rate of an existing subscription.
+        SendRequest send = 6;                    // Used to send single updates or commands to the server.
+        Heartbeat heartbeat = 7;                 // Heartbeat message for keep-alive purposes.
+    }
+}
+
+/* The ConnectedResponse message is sent by the server whenever a connection has been
+ * successfully made. */
+message ConnectedResponse
+{    
+    string version = 1;                          // The version of the server being used.
+}
+
+/* Holds an individual subscription response update. */
+message MessageResponse
+{    
+    uint64 subscription_id = 1;                  // The client-specific subscription identifier.
+    uint64 message_id = 2;                       // A unique identifier for this message.
+    bytes body = 3;                              // The updated subscription information. 
+}
+
+/* Holds a collection of MessageResponse elements. Used in batch messages. */
+message MessageResponses
+{
+    repeated MessageResponse message = 1;        // A collection of messages to handle.
+}
+
+/* Notifies the client that a request has been fully processed. Sent in response to any 
+ * message sent to the server with a receipt id included. */
+message ReceiptResponse
+{
+    uint64 receipt_id = 1;                       // The receipt identifier included in the request.
+}
+
+/* Notifies a client of errors that occur at the server level. */
+message ServerErrorResponse
+{    
+    string message = 1;                          // Message that summarizes the error.
+    string details = 2;                          // Detailed information about the error.
+}
+
+/* Notifies a client of errors that occur for a specific subscription. */
+message SubscriptionErrorResponse
+{
+    uint64 subscription_id = 1;                  // The client-specific subscription identifier.
+    uint64 message_id = 2;                       // A unique identifier for this message.
+    string message = 3;                          // Message that summarizes the error.
+    string details = 4;                          // Detailed information about the error.
+}
+
+/* This is the main response frame that will be received by the client. 
+ * All responses are included within this frame. */
+message ResponseFrame
+{
+   /* Only one type of response is available per ResponseFrame message. */
+   oneof response
+   {
+      /* Response to a connection attempt. Received when properly connected. */
+      ConnectedResponse connected = 1;
+
+      /* Holds a single message for a subcription, whether throttled or not.
+       * If a subscription is not throttled, responses will always be in this
+       * message. If a subscription is throttled, responses may be in this message
+       * or in the batch messages. */
+      MessageResponse single_message = 2;
+
+      /* Holds batched throttled messages for multiple subscriptions. Only throttled
+       * subscriptions will send messages through this, but throttled messages may
+       * still come in through the single message. */
+      MessageResponses batch_messages = 3;
+
+      /* Receipt response for receiptable requests. */
+      ReceiptResponse receipt = 4;
+
+      /* Notifies a client of errors that occur at the server level. */
+      ServerErrorResponse server_error = 5;
+
+      /* Notifies a client of errors that occur for a specific subscription. */
+      SubscriptionErrorResponse subscription_error = 6;
+
+      /* Heartbeat message. */
+      Heartbeat heartbeat = 7;
+   }
+}
