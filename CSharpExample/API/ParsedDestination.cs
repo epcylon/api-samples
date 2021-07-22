@@ -414,7 +414,7 @@ namespace BridgeRock.CSharpExample.API
             Destination = builder.ToString();
         }
 
-        public static ParsedDestination CreateGaugeDestination(SubscriptionPath subscriptionPath, string streamID, string symbol, string compression)
+        public static ParsedDestination CreateGaugeDestination(SubscriptionPath subscriptionPath, string streamID, string symbol, string compression = null)
         {
             return new ParsedDestination(SubscriptionType.Gauge, subscriptionPath, streamID, symbol, compression);
         }

@@ -1,11 +1,11 @@
-﻿using BridgeRock.CSharpExample.WebSockets;
-using Epcylon.Common.Net.ProtoStomp.Proto;
+﻿using Epcylon.Common.Net.ProtoStomp.Proto;
 using Google.Protobuf;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using WebSocketSharp;
 
 namespace BridgeRock.CSharpExample.ProtoStomp
 {
@@ -37,7 +37,7 @@ namespace BridgeRock.CSharpExample.ProtoStomp
         /// <summary>
         /// Transport layer interface instance.
         /// </summary>
-        private readonly ITransport<byte[], byte[]> _transport;
+        private readonly WebSocket _transport;
 
         /// <summary>
         /// The Stomp version the client is connected to.
@@ -52,12 +52,12 @@ namespace BridgeRock.CSharpExample.ProtoStomp
         /// <summary>
         /// The host address of the server to connect to.
         /// </summary>
-        public string Host => _transport.Host;
+        public string Host { get; }
 
         /// <summary>
         /// The port of the server to connect to.
         /// </summary>
-        public int Port => _transport.Port;
+        public int Port { get; }
 
         public string Username { get; private set; }
         public string Password { get; private set; }
@@ -71,23 +71,41 @@ namespace BridgeRock.CSharpExample.ProtoStomp
         /// <summary>
         /// Initializes a new instance of the <see cref="StompClient" /> class.
         /// </summary>
-        /// <param name = "transport">The transport channel.</param>
+        /// <param name="host">The web address to connect to.</param>
+        /// <param name="port">The port to connect to.</param>
         /// <param name="username">The username to connect with.</param>
         /// <param name="password">The password to connect with.</param>
         /// <param name="connectBody">Any extra information to include in the connect message.</param>
-        public ProtoStompClient(ITransport<byte[], byte[]> transport, string username = null,
+        public ProtoStompClient(string host, int port = int.MinValue, string username = null,
                                 string password = null, ByteString connectBody = null)
         {
-            _transport = transport;
+            if (port == int.MinValue)
+            {
+                // If no port was specified, figure out the appropriate port.
+                string[] fields = host.Split(new char[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
 
-            _transport.OnOpen += OnOpen;
-            _transport.OnClose += OnClose;
-            _transport.OnMessage += HandleMessage;
-            _transport.OnError += HandleError;
+                if (fields.Length > 1 && int.TryParse(fields[1], out port))
+                    host = fields[0];
+                else if (host.StartsWith("wss"))
+                    port = 443;
+                else
+                    port = 80;
+            }
 
+            Host = host;
+            Port = port;
             Username = username;
             Password = password;
             ConnectBody = connectBody;
+
+            // Create the new websocket.
+            _transport = new WebSocket(Host + ':' + Port + "/");
+
+            // Set up the event handling.
+            _transport.OnOpen += (o, e) => OnOpen(o);
+            _transport.OnClose += (o, e) => OnClose(o);
+            _transport.OnMessage += (o, e) => HandleMessage(o, e.RawData);
+            _transport.OnError += (o, e) => OnError(o, e);
 
             _messageConsumers = new Dictionary<ResponseFrame.ResponseOneofCase, Action<ResponseFrame>>
             {
@@ -101,6 +119,44 @@ namespace BridgeRock.CSharpExample.ProtoStomp
             };
         }
 
+        private void OnError(object o, ErrorEventArgs e)
+        {
+            string message;
+
+            message = e.Message + (e.Exception?.Message ?? string.Empty);
+
+            // Handle the error message.
+            Trace.TraceError(_moduleID + ":HE - Stomp transport error: " + message);
+
+            // Make sure it closes properly.                        
+            if ((_transport is object) && (_transport.ReadyState == WebSocketState.Closed))
+                Close();            
+        }
+
+
+        /// <summary>
+        /// Used to close the transport object.
+        /// </summary>
+        void Close()
+        {
+            try
+            {
+                if (_transport is object)
+                {
+                    if (_transport.ReadyState != WebSocketState.Closed)
+                        _transport.CloseAsync();
+                    else
+                        OnClose(this);
+                }
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError(_moduleID + ":Cls - " + ex.Message);
+                OnClose(this);
+            }
+        }
+
+
         private void HandleSubscriptionError(ResponseFrame frame)
         {
             ProtoStompSubscription subscription;
@@ -112,7 +168,7 @@ namespace BridgeRock.CSharpExample.ProtoStomp
                     _subscriptionReferences.TryGetValue(
                         frame.SubscriptionError.SubscriptionId, out subscription);
 
-                if (subscription != null)
+                if (subscription is object)
                 {
                     // If the subscription was found, handle the error. 
                     (subscription as IObserver<ByteString>).
@@ -181,7 +237,7 @@ namespace BridgeRock.CSharpExample.ProtoStomp
                 lock (_subscriptionReferences)
                     _subscriptionReferences.TryGetValue(message.SubscriptionId, out subscription);
                 
-                if (subscription != null)
+                if (subscription is object)
                 {
                     // If the subscription was found, handle the next message.
                     (subscription as IObserver<ByteString>).OnNext(message.Body);
@@ -210,7 +266,7 @@ namespace BridgeRock.CSharpExample.ProtoStomp
                     if (_receiptReferences.TryGetValue(frame.Receipt.ReceiptId, out receiptable))
                         _receiptReferences.Remove(frame.Receipt.ReceiptId);
 
-                if (receiptable != null)
+                if (receiptable is object)
                 {
                     receiptable.OnReceipt();
                 }
@@ -252,20 +308,17 @@ namespace BridgeRock.CSharpExample.ProtoStomp
                     Password = password;
 
                 _isDisconnecting = false;
-                _transport.Connect();
+
+                // Connect to the websocket.
+                _transport.ConnectAsync();
             }
             catch (Exception ex)
             {
                 Trace.TraceError(_moduleID + ":Cn - " + ex.Message);
             }
-        }
+        }        
 
-        private void HandleError(ITransport<byte[], byte[]> source, string message)
-        {
-            Trace.TraceError(_moduleID + ":HE - Stomp transport error: " + message);
-        }
-
-        private void OnOpen(ITransport<byte[], byte[]> source)
+        private void OnOpen(object source)
         {
             ConnectRequest connect;
 
@@ -280,7 +333,7 @@ namespace BridgeRock.CSharpExample.ProtoStomp
                 if (ConnectBody is object)
                     connect.Body = ConnectBody;
                                 
-                _transport.Send(new RequestFrame { Connect = connect }.ToByteArray());
+                Send(new RequestFrame { Connect = connect });
             }
             catch (Exception ex)
             {
@@ -288,7 +341,19 @@ namespace BridgeRock.CSharpExample.ProtoStomp
             }
         }
 
-        private void OnClose(ITransport<byte[], byte[]> source)
+        private void Send(RequestFrame frame)
+        {
+            try
+            {
+                _transport.SendAsync(frame.ToByteArray(), null); 
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError(_moduleID + ":Snd - " + ex.Message);
+            }
+        }
+
+        private void OnClose(object source)
         {
             try
             {
@@ -313,7 +378,7 @@ namespace BridgeRock.CSharpExample.ProtoStomp
             try
             {
                 _isDisconnecting = true;
-                _transport.Send(new RequestFrame { Disconnect = new DisconnectRequest() }.ToByteArray());
+                Send(new RequestFrame { Disconnect = new DisconnectRequest() });
                 _transport.Close();
 
                 ClearSubscriptions();
@@ -379,7 +444,7 @@ namespace BridgeRock.CSharpExample.ProtoStomp
                     lock (_receiptReferences)
                         _receiptReferences.Add(toSend.ReceiptID, toSend);
 
-                _transport.Send(new RequestFrame { Send = toSend.Request }.ToByteArray());
+                Send(new RequestFrame { Send = toSend.Request });
             }
             catch (Exception ex)
             {
@@ -395,7 +460,7 @@ namespace BridgeRock.CSharpExample.ProtoStomp
             try
             {
                 // Send an empty message to the server.
-                _transport.Send(new RequestFrame { Heartbeat = new Heartbeat() }.ToByteArray());
+                Send(new RequestFrame { Heartbeat = new Heartbeat() });
             }
             catch (Exception ex)
             {
@@ -412,7 +477,7 @@ namespace BridgeRock.CSharpExample.ProtoStomp
         {
             try
             {
-                if (subscription != null)
+                if (subscription is object)
                 {
                     lock (_subscriptionReferences)
                         _subscriptionReferences[subscription.SubscriptionID] = subscription;
@@ -421,7 +486,7 @@ namespace BridgeRock.CSharpExample.ProtoStomp
                         lock (_receiptReferences)
                             _receiptReferences.Add(subscription.ReceiptID, subscription);
 
-                    _transport.Send(new RequestFrame { Subscribe = subscription.Request }.ToByteArray());
+                    Send(new RequestFrame { Subscribe = subscription.Request });
 
                     // Log the subscription action.
                     Trace.TraceInformation(_moduleID + ":Sub - Subscribe: " + subscription.Destination +
@@ -444,7 +509,7 @@ namespace BridgeRock.CSharpExample.ProtoStomp
 
             try
             {
-                if (subscription != null)
+                if (subscription is object)
                 {
                     // Create the unsubscribe message.
                     throttle.SubscriptionId = subscription.SubscriptionID;
@@ -456,7 +521,7 @@ namespace BridgeRock.CSharpExample.ProtoStomp
                         _receiptReferences.Add(receipt.ReceiptID, receipt);
 
                     // Send the message.
-                    _transport.Send(new RequestFrame { Throttle = throttle }.ToByteArray());
+                    Send(new RequestFrame { Throttle = throttle });
 
                     // Log the throttle action.
                     Trace.TraceInformation(_moduleID + ":Thr - Throttle: " + subscription.Destination +
@@ -480,7 +545,7 @@ namespace BridgeRock.CSharpExample.ProtoStomp
 
             try
             {
-                if (subscription != null)
+                if (subscription is object)
                 {                   
                     // Remove from the subscription references.
                     lock (_subscriptionReferences)
@@ -499,7 +564,7 @@ namespace BridgeRock.CSharpExample.ProtoStomp
                         _receiptReferences.Add(receipt.ReceiptID, receipt);
 
                     // Send the message.
-                    _transport.Send(new RequestFrame { Unsubscribe = unsubscribe }.ToByteArray());
+                    Send(new RequestFrame { Unsubscribe = unsubscribe });
 
                     // Log the subscription action.
                     Trace.TraceInformation(_moduleID + ":USub - Unsubscribe: " +
@@ -538,7 +603,7 @@ namespace BridgeRock.CSharpExample.ProtoStomp
         /// Dispatches the given message to a registered message consumer.
         /// </summary>
         /// <param name="msg">The message to handle.</param>
-        private void HandleMessage(ITransport<byte[], byte[]> source, byte[] msg)
+        private void HandleMessage(object source, byte[] msg)
         {
             ResponseFrame frame;
 
