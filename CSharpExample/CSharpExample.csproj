@@ -79,9 +79,14 @@
     <Compile Include="API\Subscriptions\HeadroomSubscription.cs" />
     <Compile Include="API\Subscriptions\PerceptionSubscription.cs" />
     <Compile Include="API\Subscriptions\SingleValueSubscription.cs" />
+    <Compile Include="API\Subscriptions\SentimentSubscription.cs" />
     <Compile Include="API\Values\GaugeValueBase.cs" />
     <Compile Include="API\Values\SingleValueBase.cs" />
+    <Compile Include="API\Values\Sentiment.cs" />
     <Compile Include="API\Values\ValueBase.cs" />
+    <Compile Include="Controls\SentimentViewer.xaml.cs">
+      <DependentUpon>SentimentViewer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ProtoStomp\IDGenerator.cs" />
     <Compile Include="ProtoStomp\IReceiptable.cs" />
     <Compile Include="ProtoStomp\ProtoStompClient.cs" />
@@ -90,6 +95,10 @@
     <Compile Include="ProtoStomp\ProtoStompSubscription.cs" />
     <Compile Include="API\Proto\StealthApiV20.cs" />
     <Compile Include="ProtoStomp\Proto\StompV01.cs" />
+    <Page Include="Controls\SentimentViewer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -9,12 +9,12 @@ namespace BridgeRock.CSharpExample.API.Subscriptions
         where V : SingleValueBase, new()
     {
         public SingleValueSubscription(ProtoStompClient client, SubscriptionPath gaugePath, string streamID,
-                                       string symbol, bool receipt = false, uint throttleRate = 0) :
-                base(client, SingleValueUpdate.Parser, gaugePath, streamID, symbol, null, receipt, throttleRate)
+                                       string symbol, string compression = null, bool receipt = false, uint throttleRate = 0) :
+                base(client, SingleValueUpdate.Parser, gaugePath, streamID, symbol, compression, receipt, throttleRate)
         {
         }
 
-        protected override void HandleUpdate(SingleValueUpdate update)
+        protected override void HandleUpdate(SingleValueUpdate update, object processed)
         {
             DateTime timestamp;
 

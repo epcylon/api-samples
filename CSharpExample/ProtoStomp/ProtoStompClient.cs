@@ -61,7 +61,6 @@ namespace BridgeRock.CSharpExample.ProtoStomp
 
         public string Username { get; private set; }
         public string Password { get; private set; }
-        private ByteString ConnectBody { get; }
         
         /// <summary>
         /// Is the client disconnecting?
@@ -73,11 +72,7 @@ namespace BridgeRock.CSharpExample.ProtoStomp
         /// </summary>
         /// <param name="host">The web address to connect to.</param>
         /// <param name="port">The port to connect to.</param>
-        /// <param name="username">The username to connect with.</param>
-        /// <param name="password">The password to connect with.</param>
-        /// <param name="connectBody">Any extra information to include in the connect message.</param>
-        public ProtoStompClient(string host, int port = int.MinValue, string username = null,
-                                string password = null, ByteString connectBody = null)
+        public ProtoStompClient(string host, int port = int.MinValue)
         {
             if (port == int.MinValue)
             {
@@ -94,9 +89,6 @@ namespace BridgeRock.CSharpExample.ProtoStomp
 
             Host = host;
             Port = port;
-            Username = username;
-            Password = password;
-            ConnectBody = connectBody;
 
             // Create the new websocket.
             _transport = new WebSocket(Host + ':' + Port + "/");
@@ -295,17 +287,22 @@ namespace BridgeRock.CSharpExample.ProtoStomp
         /// <summary>
         /// Connects to the server on the specified address.
         /// </summary>
-        /// <param name="username">The username to connect with.</param>
-        /// <param name="password">The password to connect with.</param>
-        public void Connect(string username = null, string password = null)
+        /// <param name="jwtToken">Jwt Token to connect with.</param>
+        public void Connect(string jwtToken)
         {
+            byte[] bytes;
+            string username;
+
             try
             {
-                if (username is object)
-                    Username = username;
+                // Get the username from the token.
+                bytes = Convert.FromBase64String(jwtToken.Split(new char[] { '.' })[1]);
+                username = System.Text.Encoding.UTF8.GetString(bytes);
+                username = username.Split(new string[] { "sub\":\"" }, StringSplitOptions.None)[1].Split(new char[] { '"' })[0];
 
-                if (password is object)
-                    Password = password;
+                // Set the username and password.
+                Password = jwtToken;
+                Username = username;
 
                 _isDisconnecting = false;
 
@@ -330,8 +327,6 @@ namespace BridgeRock.CSharpExample.ProtoStomp
                     connect.Login = Username;
                 if (Password is object)
                     connect.Passcode = Password;
-                if (ConnectBody is object)
-                    connect.Body = ConnectBody;
                                 
                 Send(new RequestFrame { Connect = connect });
             }
