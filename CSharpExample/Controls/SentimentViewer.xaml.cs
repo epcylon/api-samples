@@ -95,6 +95,9 @@ namespace BridgeRock.CSharpExample.Controls
         /// </summary>
         private bool _storyboardRunning = false;
 
+        /// <summary>
+        /// Have the sentiment values been updated?
+        /// </summary>
         private bool _sentimentUpdated = true;
 
         #endregion
@@ -566,6 +569,7 @@ namespace BridgeRock.CSharpExample.Controls
         {
             bool changed;                                                       // Have the values changed?
             Sentiment values = Values;                                          // Get the sentiment values.
+            int peaking = 0;                                                    // Is the spectrum peaking?
 
             try
             {
@@ -579,12 +583,18 @@ namespace BridgeRock.CSharpExample.Controls
                 // Changed if the "Dirty" value changed.
                 changed = ReferenceEquals(_lines[0]?.Fill, _inactiveColor) != values.IsDirty;
 
-                //// If we have new values, set the peaking state.
-                //if (Peaking != peaking)
-                //{
-                //    changed = true;
-                //    Peaking = peaking;
-                //}
+                // Check if peaking.
+                if (values.Lengths[0] > 0.95)
+                    peaking = 1;
+                else if (values.Lengths[0] < -0.95)
+                    peaking = -1;
+
+                // If we have new values, set the peaking state.
+                if (Peaking != peaking)
+                {
+                    changed = true;
+                    Peaking = peaking;
+                }
 
                 for (int index = 0; index <= Sentiment.TotalBars - 1; index++)
                 {
