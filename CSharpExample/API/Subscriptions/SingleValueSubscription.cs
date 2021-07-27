@@ -16,11 +16,7 @@ namespace BridgeRock.CSharpExample.API.Subscriptions
 
         protected override void HandleUpdate(SingleValueUpdate update, object processed)
         {
-            DateTime timestamp;
-
-            timestamp = ProtoTimeEncoder.TimestampSecondsToDate(update.Timestamp);
-
-            Values.TimeStamp = timestamp;
+            Values.TimeStamp = ProtoTimeEncoder.TimestampSecondsToDate(update.Timestamp);
             Values.GaugeLevel = update.Value / 1000.0;
             Values.IsDirty = update.IsDirty;
         }

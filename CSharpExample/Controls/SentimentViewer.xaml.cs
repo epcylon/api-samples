@@ -766,7 +766,7 @@ namespace BridgeRock.CSharpExample.Controls
         {
             try
             {
-                if (e.PropertyName == "Sentiment")
+                if (e.PropertyName == "Updated")
                 {
                     // If this is the last update, check if an actual update occured, and update if necessary.
                     if (_sentimentUpdated)

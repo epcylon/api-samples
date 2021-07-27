@@ -87,11 +87,6 @@
                     NotifyPropertyChanged();
                 }
             }
-        }
-
-        internal void Updated()
-        {
-            NotifyPropertyChanged("Sentiment");
-        }
+        }        
     }
 }

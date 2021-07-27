@@ -25,5 +25,10 @@ namespace BridgeRock.CSharpExample.API.Values
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        
+        /// <summary>
+        /// Called whenever the values are finished updating.
+        /// </summary>
+        internal void Updated() => NotifyPropertyChanged("Updated");        
     }
 }

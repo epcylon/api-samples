@@ -75,14 +75,23 @@
     <Compile Include="API\ProtoTimeEncoder.cs" />
     <Compile Include="API\Subscriptions\BookPressureSubscription.cs" />
     <Compile Include="API\Subscriptions\CommitmentSubscription.cs" />
+    <Compile Include="API\Subscriptions\EquilibriumSubscription.cs" />
     <Compile Include="API\Subscriptions\GaugeSubscriptionBase.cs" />
     <Compile Include="API\Subscriptions\HeadroomSubscription.cs" />
+    <Compile Include="API\Subscriptions\MultiframeSubscription.cs" />
     <Compile Include="API\Subscriptions\PerceptionSubscription.cs" />
     <Compile Include="API\Subscriptions\SingleValueSubscription.cs" />
     <Compile Include="API\Subscriptions\SentimentSubscription.cs" />
+    <Compile Include="API\Subscriptions\StrategySubscription.cs" />
+    <Compile Include="API\Subscriptions\SubscriptionBase.cs" />
+    <Compile Include="API\Subscriptions\TriggerSubscription.cs" />
+    <Compile Include="API\Values\Equilibrium.cs" />
     <Compile Include="API\Values\GaugeValueBase.cs" />
+    <Compile Include="API\Values\MultiFrameEquilibrium.cs" />
     <Compile Include="API\Values\SingleValueBase.cs" />
     <Compile Include="API\Values\Sentiment.cs" />
+    <Compile Include="API\Values\StrategyValues.cs" />
+    <Compile Include="API\Values\Trigger.cs" />
     <Compile Include="API\Values\ValueBase.cs" />
     <Compile Include="Controls\SentimentViewer.xaml.cs">
       <DependentUpon>SentimentViewer.xaml</DependentUpon>

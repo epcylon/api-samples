@@ -18,6 +18,7 @@ namespace BridgeRock.CSharpExample
         private HeadroomSubscription _headroomSubscription;
         private BookPressureSubscription _bookPressureSubscription;
         private SentimentSubscription _sentimentSubscription;
+        private EquilibriumSubscription _equilibriumSubscription;
 
         public Perception Perception
         {
@@ -74,6 +75,18 @@ namespace BridgeRock.CSharpExample
             DependencyProperty.Register("Sentiment", typeof(Sentiment), typeof(MainWindow), new PropertyMetadata(null));
 
 
+        public Equilibrium Equilibrium
+        {
+            get { return (Equilibrium)GetValue(EquilibriumProperty); }
+            set { SetValue(EquilibriumProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Equilibrium.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty EquilibriumProperty =
+            DependencyProperty.Register("Equilibrium", typeof(Equilibrium), typeof(MainWindow), new PropertyMetadata(null));
+
+
+
         public MainWindow()
         {
             InitializeComponent();
@@ -116,7 +129,7 @@ namespace BridgeRock.CSharpExample
             Dispatcher.Invoke(delegate
             {
                 string symbol = "NQ U1";
-                string streamId = ParsedDestination.DelayStreamID;
+                string streamId = ParsedDestination.DemoStreamID;
 
                 _perceptionSubscription = new PerceptionSubscription(_client, streamId, symbol);
                 Perception = _perceptionSubscription.Values;
@@ -137,6 +150,10 @@ namespace BridgeRock.CSharpExample
                 _sentimentSubscription = new SentimentSubscription(_client, streamId, symbol, "50t");
                 Sentiment = _sentimentSubscription.Values;
                 _sentimentSubscription.Subscribe();
+
+                _equilibriumSubscription = new EquilibriumSubscription(_client, streamId, symbol, "300s");
+                Equilibrium = _equilibriumSubscription.Values;
+                _equilibriumSubscription.Subscribe();
             });
         }
     }

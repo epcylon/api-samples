@@ -2,7 +2,6 @@
 using BridgeRock.CSharpExample.ProtoStomp;
 using QuantGate.API.Proto.Stealth;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace BridgeRock.CSharpExample.API.Subscriptions
@@ -36,20 +35,15 @@ namespace BridgeRock.CSharpExample.API.Subscriptions
 
         protected override void HandleUpdate(SentimentUpdate update, object processed)
         {
-            DateTime timestamp;
-
             if (!(processed is Tuple<double[], double[]> converted))
                 return;
 
-            timestamp = ProtoTimeEncoder.TimestampSecondsToDate(update.Timestamp);
-
-            Values.TimeStamp = timestamp;
+            Values.TimeStamp = ProtoTimeEncoder.TimestampSecondsToDate(update.Timestamp);
             Values.Lengths = converted.Item1;
             Values.Colors = converted.Item2;
             Values.AvgLength = update.Lengths.Average / 1000.0;
             Values.AvgColor = update.Lengths.Average / 1000.0;
             Values.IsDirty = update.IsDirty;
-            Values.Updated();
         }
 
         #region Height/Color Interpolation        
@@ -103,82 +97,6 @@ namespace BridgeRock.CSharpExample.API.Subscriptions
             }
 
             return result;
-        }
-
-        private static List<double> InterpolateTo55(double y1, int l1, double y2, int l2, double y3)
-        {
-            int index = 0;
-            double value;
-            double[] values;
-            int remaining;
-            List<double> returnValues = new List<double>();
-
-            try
-            {
-                for (index = 0; index < Sentiment.TotalBars; index++)
-                    returnValues.Add(0);
-                index = 0;
-
-                remaining = (Sentiment.TotalBars - 1) - (l1 + l2);
-
-                values = new double[]
-                {
-                    2 * y1 - y2,
-                    y1,
-                    y2,
-                    LinearInterpolate(l1, y2, l1 + l2, y3)
-                };
-
-                for (double x = 0; x <= l1; x++)
-                {
-                    value = CubicInterpolate(values, x / l1);
-                    returnValues[index] = value;
-                    index++;
-                }
-
-                values = new double[]
-                {
-                    LinearInterpolate(l2, y2, l2 + l1, y1),
-                    y2,
-                    y3,
-                    LinearInterpolate(l2, y3, l2 + remaining, 0)
-                };
-
-                for (double x = 1; x <= l2; x++)
-                {
-                    value = CubicInterpolate(values, x / l2);
-                    returnValues[index] = value;
-                    index++;
-                }
-
-                values = new double[]
-                {
-                    LinearInterpolate(remaining, y3, remaining + l2, y2),
-                    y3,
-                    0,
-                    -y3
-                };
-
-                for (double x = 1; x <= remaining; x++)
-                {
-                    value = CubicInterpolate(values, x / remaining);
-                    returnValues[index] = value;                    
-                    index++;
-                }
-            }
-            catch (Exception ex)
-            {
-                //Log any exceptions.
-                //Go through values.
-                foreach (double nextValue_loopVariable in returnValues)
-                {
-                    //Clear the return values.
-                    value = nextValue_loopVariable;
-                    value = 0.0;
-                }
-            }
-
-            return returnValues;
         }
 
         /// <summary>
