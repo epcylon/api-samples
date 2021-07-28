@@ -6,11 +6,11 @@ namespace BridgeRock.CSharpExample.API.Subscriptions
 {
     public class StrategySubscription : SubscriptionBase<StrategyUpdate, StrategyValues>
     {
-        public StrategySubscription(ProtoStompClient client, string streamID, string term,
-                                    string strategyID, bool receipt = false, uint throttleRate = 0) :
+        public StrategySubscription(ProtoStompClient client, string strategyID, string streamID,
+                                    string symbol, bool receipt = false, uint throttleRate = 0) :
             base(client, StrategyUpdate.Parser,
                  new ParsedDestination(SubscriptionType.Strategy, SubscriptionPath.None,
-                                       streamID, term: term, strategyID: strategyID).Destination,
+                                       streamID, symbol, strategyID: strategyID).Destination,
                  receipt, throttleRate)
         {
         }

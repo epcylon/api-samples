@@ -80,6 +80,7 @@
     <Compile Include="API\Subscriptions\HeadroomSubscription.cs" />
     <Compile Include="API\Subscriptions\MultiframeSubscription.cs" />
     <Compile Include="API\Subscriptions\PerceptionSubscription.cs" />
+    <Compile Include="API\Subscriptions\SearchSubscription.cs" />
     <Compile Include="API\Subscriptions\SingleValueSubscription.cs" />
     <Compile Include="API\Subscriptions\SentimentSubscription.cs" />
     <Compile Include="API\Subscriptions\StrategySubscription.cs" />
@@ -88,9 +89,12 @@
     <Compile Include="API\Values\Equilibrium.cs" />
     <Compile Include="API\Values\GaugeValueBase.cs" />
     <Compile Include="API\Values\MultiFrameEquilibrium.cs" />
+    <Compile Include="API\Values\SearchResults.cs" />
     <Compile Include="API\Values\SingleValueBase.cs" />
     <Compile Include="API\Values\Sentiment.cs" />
     <Compile Include="API\Values\StrategyValues.cs" />
+    <Compile Include="API\Values\TopSearchResult.cs" />
+    <Compile Include="API\Values\TopSearchResults.cs" />
     <Compile Include="API\Values\Trigger.cs" />
     <Compile Include="API\Values\ValueBase.cs" />
     <Compile Include="Controls\SentimentViewer.xaml.cs">

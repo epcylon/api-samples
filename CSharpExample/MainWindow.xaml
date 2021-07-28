@@ -20,6 +20,7 @@
 
         <controls:SentimentViewer HorizontalAlignment="Left" Margin="180,60,0,0" VerticalAlignment="Top" IsEnabled="False"
                                   Height="300" Width="300" Values="{Binding Path=Sentiment}" Background="#FFD0D0D0" />
+        <TextBox x:Name="txtSearch" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Margin="520,60,0,0"/>
 
     </Grid>
 </Window>

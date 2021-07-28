@@ -3,7 +3,10 @@ using BridgeRock.CSharpExample.API.Subscriptions;
 using BridgeRock.CSharpExample.API.Values;
 using BridgeRock.CSharpExample.ProtoStomp;
 using System;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace BridgeRock.CSharpExample
 {
@@ -19,6 +22,8 @@ namespace BridgeRock.CSharpExample
         private BookPressureSubscription _bookPressureSubscription;
         private SentimentSubscription _sentimentSubscription;
         private EquilibriumSubscription _equilibriumSubscription;
+
+        private SearchSubscription _searchSubscription;
 
         public Perception Perception
         {
@@ -93,6 +98,8 @@ namespace BridgeRock.CSharpExample
 
             DataContext = this;
 
+            txtSearch.TextChanged += HandleSearchUpdate;
+
             //_client = new ProtoStompClient("wss://feed.stealthtrader.com");
             _client = new ProtoStompClient("wss://test.stealthtrader.com");
             //_client = new ProtoStompClient("ws://localhost", 2432);
@@ -105,6 +112,11 @@ namespace BridgeRock.CSharpExample
                             "eyJzdWIiOiJKb2huSCIsImlhdCI6MTYyNjk3NjExMiwiZXhwIjoxNjI4MTIx" +
                             "NjAwLCJhdWQiOiIyV1VqZW9iUlhSVzlwc05ERWN4ZTFNRDl3dGRmZGgxQyJ9." +
                             "DoeYRaAnK15I4LscisTHJm72zOqJhc1zKqbexP9vLro");
+        }
+
+        private void HandleSearchUpdate(object sender, TextChangedEventArgs e)
+        {
+            _searchSubscription.Search(txtSearch.Text, "paper");
         }
 
         private void HandleHeartbeat(ProtoStompClient client)
@@ -154,7 +166,19 @@ namespace BridgeRock.CSharpExample
                 _equilibriumSubscription = new EquilibriumSubscription(_client, streamId, symbol, "300s");
                 Equilibrium = _equilibriumSubscription.Values;
                 _equilibriumSubscription.Subscribe();
+
+                _searchSubscription = new SearchSubscription(_client, streamId);
+                _searchSubscription.Values.PropertyChanged += HandleSearchResultsChanged;
+                _searchSubscription.Subscribe();
             });
+        }
+
+        private void HandleSearchResultsChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Updated")
+            {
+                Debug.Print(_searchSubscription.Values.SearchTerm + " Updated!");
+            }
         }
     }
 }
