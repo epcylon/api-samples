@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BridgeRock.CSharpExample.ProtoStomp
+namespace QuantGate.API.ProtoStomp
 {
     internal class ProtoStompReceipt : IReceiptable
     {

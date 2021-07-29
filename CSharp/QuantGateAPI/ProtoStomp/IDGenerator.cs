@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 
-namespace BridgeRock.CSharpExample.ProtoStomp
+namespace QuantGate.API.ProtoStomp
 {
     /// <summary>
     /// Used to generate IDs for the STOMP protocol.

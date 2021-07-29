@@ -1,6 +1,5 @@
-﻿using BridgeRock.CSharpExample.API.Values;
+﻿using QuantGate.API.Values;
 using System;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;

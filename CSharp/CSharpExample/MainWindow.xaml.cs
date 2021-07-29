@@ -1,10 +1,7 @@
-﻿using BridgeRock.CSharpExample.API;
-using BridgeRock.CSharpExample.API.Subscriptions;
-using BridgeRock.CSharpExample.API.Values;
-using BridgeRock.CSharpExample.ProtoStomp;
+﻿using QuantGate.API;
+using QuantGate.API.Utilities;
+using QuantGate.API.Values;
 using System;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -15,14 +12,8 @@ namespace BridgeRock.CSharpExample
     /// </summary>
     public partial class MainWindow : Window
     {
-        private ProtoStompClient _client;
-        //private PerceptionSubscription _perceptionSubscription;
-        //private CommitmentSubscription _commitmentSubscription;
-        //private HeadroomSubscription _headroomSubscription;
-        //private BookPressureSubscription _bookPressureSubscription;
-        //private SentimentSubscription _sentimentSubscription;
-        //private EquilibriumSubscription _equilibriumSubscription;
-        //private SearchSubscription _searchSubscription;
+        private APIClient _client;
+        private SymbolSearch _symbolSearch;
 
         public Perception Perception
         {
@@ -90,6 +81,27 @@ namespace BridgeRock.CSharpExample
             DependencyProperty.Register("Equilibrium", typeof(Equilibrium), typeof(MainWindow), new PropertyMetadata(null));
 
 
+        public MultiframeEquilibrium MultiFrame
+        {
+            get { return (MultiframeEquilibrium)GetValue(MultiFrameProperty); }
+            set { SetValue(MultiFrameProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for MultiFrame.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty MultiFrameProperty =
+            DependencyProperty.Register("MultiFrame", typeof(MultiframeEquilibrium), typeof(MainWindow), new PropertyMetadata(null));
+
+
+        public StrategyValues Strategy
+        {
+            get { return (StrategyValues)GetValue(StrategyProperty); }
+            set { SetValue(StrategyProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Strategy.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty StrategyProperty =
+            DependencyProperty.Register("Strategy", typeof(StrategyValues), typeof(MainWindow), new PropertyMetadata(null));
+
 
         public MainWindow()
         {
@@ -100,7 +112,7 @@ namespace BridgeRock.CSharpExample
             txtSearch.TextChanged += HandleSearchUpdate;
 
             //_client = new ProtoStompClient("wss://feed.stealthtrader.com");
-            _client = new ProtoStompClient("wss://test.stealthtrader.com", streamID: ParsedDestination.DemoStreamID);
+            _client = new APIClient("wss://test.stealthtrader.com", streamID: ParsedDestination.DemoStreamID);
             //_client = new ProtoStompClient("ws://localhost", 2432);
             _client.Connected += HandleConnected;
             _client.Disconnected += HandleDisconnected;
@@ -115,25 +127,25 @@ namespace BridgeRock.CSharpExample
 
         private void HandleSearchUpdate(object sender, TextChangedEventArgs e)
         {
-          //  _searchSubscription.Search(txtSearch.Text, "paper");
+            _symbolSearch.Search(txtSearch.Text, "paper");
         }
 
-        private void HandleHeartbeat(ProtoStompClient client)
+        private void HandleHeartbeat(APIClient client)
         {
             Console.WriteLine("Heartbeat");
         }
 
-        private void HandleError(ProtoStompClient client, string message)
+        private void HandleError(APIClient client, string message)
         {
             Console.WriteLine("Error! " + message);
         }
 
-        private void HandleDisconnected(ProtoStompClient client)
+        private void HandleDisconnected(APIClient client)
         {
             Console.WriteLine("Disconnected!");
         }
 
-        private void HandleConnected(ProtoStompClient client)
+        private void HandleConnected(APIClient client)
         {
             Console.WriteLine("Connected!");
 
@@ -147,22 +159,19 @@ namespace BridgeRock.CSharpExample
                 BookPressure = _client.SubscribeBookPressure(symbol);
                 Sentiment = _client.SubscribeSentiment(symbol, "50t");
                 Equilibrium = _client.SubscribeEquilibrium(symbol, "300s");
-
-                //_searchSubscription = new SearchSubscription(_client, streamId);
-                //_searchSubscription.Values.PropertyChanged += HandleSearchResultsChanged;
-                //_searchSubscription.Subscribe();
+                MultiFrame = _client.SubscribeMultiframeEquilibrium(symbol);
+                Strategy = _client.SubscribeStrategy("Crb9.0", symbol);
+                _symbolSearch = _client.SubscribeSearch();
+                _symbolSearch.Update += HandleSearchUpdate;
             });
         }
 
-        private void HandleSearchResultsChanged(object sender, PropertyChangedEventArgs e)
+        private void HandleSearchUpdate(object sender, SearchUpdateEventArgs e)
         {
-            if (e.PropertyName == "Updated")
-            {
-                lvSearch.Items.Clear();
+            lvSearch.Items.Clear();
 
-                //foreach (var x in _searchSubscription.Values.Results)
-                //    lvSearch.Items.Add(x.Symbol);
-            }
+            foreach (var x in e.Results)
+                lvSearch.Items.Add(x.Symbol);
         }
     }
 }

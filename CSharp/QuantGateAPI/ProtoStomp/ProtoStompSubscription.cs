@@ -3,7 +3,7 @@ using Google.Protobuf;
 using System;
 using System.Diagnostics;
 
-namespace BridgeRock.CSharpExample.ProtoStomp
+namespace QuantGate.API.ProtoStomp
 {
     /// <summary>
     /// Represents the base class for a client's STOMP subscription.
@@ -23,7 +23,7 @@ namespace BridgeRock.CSharpExample.ProtoStomp
         /// <summary>
         /// The STOMP client that will handle this subscription.
         /// </summary>
-        internal ProtoStompClient Client { get; private set; }
+        internal APIClient Client { get; private set; }
 
         /// <summary>
         /// The subscription request underlying this subscription.
@@ -37,7 +37,7 @@ namespace BridgeRock.CSharpExample.ProtoStomp
         /// <param name="destination">The destination to subscribe to.</param>
         /// <param name="receipt">Should we request a subscription receipt?</param>
         /// <param name="throttleRate">The initial throttle rate for this subscription.</param>
-        public ProtoStompSubscription(ProtoStompClient client, string destination,
+        public ProtoStompSubscription(APIClient client, string destination,
                                       bool receipt = false, uint throttleRate = 0)
         {
             Client = client;

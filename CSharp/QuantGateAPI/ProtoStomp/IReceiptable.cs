@@ -1,4 +1,4 @@
-﻿namespace BridgeRock.CSharpExample.ProtoStomp
+﻿namespace QuantGate.API.ProtoStomp
 {
     public interface IReceiptable
     {

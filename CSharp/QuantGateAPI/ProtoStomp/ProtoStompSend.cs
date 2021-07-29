@@ -2,7 +2,7 @@
 using Google.Protobuf;
 using System;
 
-namespace BridgeRock.CSharpExample.ProtoStomp
+namespace QuantGate.API.ProtoStomp
 {
     public class ProtoStompSend : IReceiptable
     {
@@ -17,7 +17,7 @@ namespace BridgeRock.CSharpExample.ProtoStomp
         /// </summary>
         internal SendRequest Request { get; private set; }
 
-        public ProtoStompSend(ProtoStompClient client, string destination, ByteString body = null, bool receipt = false)
+        public ProtoStompSend(APIClient client, string destination, ByteString body = null, bool receipt = false)
         {
             Request = new SendRequest();
 
