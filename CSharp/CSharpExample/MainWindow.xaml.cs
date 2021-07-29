@@ -92,6 +92,17 @@ namespace BridgeRock.CSharpExample
             DependencyProperty.Register("MultiFrame", typeof(MultiframeEquilibrium), typeof(MainWindow), new PropertyMetadata(null));
 
 
+        public QuantGate.API.Values.Trigger Trigger
+        {
+            get { return (QuantGate.API.Values.Trigger)GetValue(TriggerProperty); }
+            set { SetValue(TriggerProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Trigger.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty TriggerProperty =
+            DependencyProperty.Register("Trigger", typeof(QuantGate.API.Values.Trigger), typeof(MainWindow), new PropertyMetadata(null));
+
+
         public StrategyValues Strategy
         {
             get { return (StrategyValues)GetValue(StrategyProperty); }
@@ -155,11 +166,12 @@ namespace BridgeRock.CSharpExample
                 
                 Perception = _client.SubscribePerception(symbol);
                 Commitment = _client.SubscribeCommitment(symbol);
+                Equilibrium = _client.SubscribeEquilibrium(symbol, "300s");
+                Sentiment = _client.SubscribeSentiment(symbol, "50t");
                 Headroom = _client.SubscribeHeadroom(symbol);
                 BookPressure = _client.SubscribeBookPressure(symbol);
-                Sentiment = _client.SubscribeSentiment(symbol, "50t");
-                Equilibrium = _client.SubscribeEquilibrium(symbol, "300s");
                 MultiFrame = _client.SubscribeMultiframeEquilibrium(symbol);
+                Trigger = _client.SubscribeTrigger(symbol);
                 Strategy = _client.SubscribeStrategy("Crb9.0", symbol);
                 _symbolSearch = _client.SubscribeSearch();
                 _symbolSearch.Update += HandleSearchUpdate;

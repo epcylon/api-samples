@@ -657,6 +657,9 @@ namespace QuantGate.API
         public MultiframeEquilibrium SubscribeMultiframeEquilibrium(string symbol) => 
             SubscribeAndReturn(new MultiframeSubscription(this, StreamID, symbol)) as MultiframeEquilibrium;
 
+        public Trigger SubscribeTrigger(string symbol) =>
+            SubscribeAndReturn(new TriggerSubscription(this, StreamID, symbol)) as Trigger;
+
         public StrategyValues SubscribeStrategy(string strategyID, string symbol) =>
             SubscribeAndReturn(new StrategySubscription(this, strategyID, StreamID, symbol)) as StrategyValues;
 
