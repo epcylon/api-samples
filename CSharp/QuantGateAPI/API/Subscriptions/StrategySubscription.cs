@@ -4,7 +4,7 @@ using QuantGate.API.Proto.Stealth;
 
 namespace BridgeRock.CSharpExample.API.Subscriptions
 {
-    public class StrategySubscription : SubscriptionBase<StrategyUpdate, StrategyValues>
+    internal class StrategySubscription : SubscriptionBase<StrategyUpdate, StrategyValues>
     {
         public StrategySubscription(ProtoStompClient client, string strategyID, string streamID,
                                     string symbol, bool receipt = false, uint throttleRate = 0) :

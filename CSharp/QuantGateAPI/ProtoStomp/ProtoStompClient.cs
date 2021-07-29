@@ -1,4 +1,7 @@
-﻿using Epcylon.Common.Net.ProtoStomp.Proto;
+﻿using BridgeRock.CSharpExample.API;
+using BridgeRock.CSharpExample.API.Subscriptions;
+using BridgeRock.CSharpExample.API.Values;
+using Epcylon.Common.Net.ProtoStomp.Proto;
 using Google.Protobuf;
 using System;
 using System.Collections.Generic;
@@ -59,9 +62,11 @@ namespace BridgeRock.CSharpExample.ProtoStomp
         /// </summary>
         public int Port { get; }
 
+        public string StreamID { get; }
+
         public string Username { get; private set; }
         public string Password { get; private set; }
-        
+
         /// <summary>
         /// Is the client disconnecting?
         /// </summary>
@@ -72,7 +77,7 @@ namespace BridgeRock.CSharpExample.ProtoStomp
         /// </summary>
         /// <param name="host">The web address to connect to.</param>
         /// <param name="port">The port to connect to.</param>
-        public ProtoStompClient(string host, int port = int.MinValue)
+        public ProtoStompClient(string host, int port = int.MinValue, string streamID = ParsedDestination.RealtimeStreamID)
         {
             if (port == int.MinValue)
             {
@@ -89,6 +94,7 @@ namespace BridgeRock.CSharpExample.ProtoStomp
 
             Host = host;
             Port = port;
+            StreamID = streamID;
 
             // Create the new websocket.
             _transport = new WebSocket(Host + ':' + Port + "/");
@@ -122,7 +128,7 @@ namespace BridgeRock.CSharpExample.ProtoStomp
 
             // Make sure it closes properly.                        
             if ((_transport is object) && (_transport.ReadyState == WebSocketState.Closed))
-                Close();            
+                Close();
         }
 
 
@@ -169,7 +175,7 @@ namespace BridgeRock.CSharpExample.ProtoStomp
                 else if (!_isDisconnecting && IsConnected)
                 {
                     // If not disconnecting, log an error.
-                    Trace.TraceInformation(_moduleID + ":HSE - Subscription not found for id: " + 
+                    Trace.TraceInformation(_moduleID + ":HSE - Subscription not found for id: " +
                                            frame.SubscriptionError.SubscriptionId.ToString());
                 }
             }
@@ -228,7 +234,7 @@ namespace BridgeRock.CSharpExample.ProtoStomp
                 // If the subscription id exists, try to get the subscription.
                 lock (_subscriptionReferences)
                     _subscriptionReferences.TryGetValue(message.SubscriptionId, out subscription);
-                
+
                 if (subscription is object)
                 {
                     // If the subscription was found, handle the next message.
@@ -313,7 +319,7 @@ namespace BridgeRock.CSharpExample.ProtoStomp
             {
                 Trace.TraceError(_moduleID + ":Cn - " + ex.Message);
             }
-        }        
+        }
 
         private void OnOpen(object source)
         {
@@ -327,7 +333,7 @@ namespace BridgeRock.CSharpExample.ProtoStomp
                     connect.Login = Username;
                 if (Password is object)
                     connect.Passcode = Password;
-                                
+
                 Send(new RequestFrame { Connect = connect });
             }
             catch (Exception ex)
@@ -340,7 +346,7 @@ namespace BridgeRock.CSharpExample.ProtoStomp
         {
             try
             {
-                _transport.SendAsync(frame.ToByteArray(), null); 
+                _transport.SendAsync(frame.ToByteArray(), null);
             }
             catch (Exception ex)
             {
@@ -432,7 +438,7 @@ namespace BridgeRock.CSharpExample.ProtoStomp
         /// </summary>
         /// <param name="toSend">The Stomp frame to send.</param>
         public void Send(ProtoStompSend toSend)
-        {            
+        {
             try
             {
                 if (toSend.ReceiptID != 0)
@@ -444,14 +450,14 @@ namespace BridgeRock.CSharpExample.ProtoStomp
             catch (Exception ex)
             {
                 Trace.TraceError(_moduleID + ":Snd - " + ex.Message);
-            }            
+            }
         }
 
         /// <summary>
         /// Sends a heartbeat message to the server.
         /// </summary>
         public void SendHeartbeat()
-        {            
+        {
             try
             {
                 // Send an empty message to the server.
@@ -460,7 +466,7 @@ namespace BridgeRock.CSharpExample.ProtoStomp
             catch (Exception ex)
             {
                 Trace.TraceError(_moduleID + ":SHB - " + ex.Message);
-            }            
+            }
         }
 
         /// <summary>
@@ -541,7 +547,7 @@ namespace BridgeRock.CSharpExample.ProtoStomp
             try
             {
                 if (subscription is object)
-                {                   
+                {
                     // Remove from the subscription references.
                     lock (_subscriptionReferences)
                         _subscriptionReferences.Remove(subscription.SubscriptionID);
@@ -626,5 +632,58 @@ namespace BridgeRock.CSharpExample.ProtoStomp
             if (IsConnected)
                 Disconnect();
         }
+
+        #region Subscriptions        
+
+        public Perception SubscribePerception(string symbol)
+        {
+            string streamID = ParsedDestination.StreamIDForSymbol(StreamID, symbol);
+            PerceptionSubscription subscription = new PerceptionSubscription(this, streamID, symbol);
+            subscription.Subscribe();
+            return subscription.Values;
+        }
+
+        public Commitment SubscribeCommitment(string symbol)
+        {
+            string streamID = ParsedDestination.StreamIDForSymbol(StreamID, symbol);
+            CommitmentSubscription subscription = new CommitmentSubscription(this, streamID, symbol);
+            subscription.Subscribe();
+            return subscription.Values;
+        }
+
+        public BookPressure SubscribeBookPressure(string symbol)
+        {
+            string streamID = ParsedDestination.StreamIDForSymbol(StreamID, symbol);
+            BookPressureSubscription subscription = new BookPressureSubscription(this, streamID, symbol);
+            subscription.Subscribe();
+            return subscription.Values;
+        }
+
+        public Headroom SubscribeHeadroom(string symbol)
+        {
+            string streamID = ParsedDestination.StreamIDForSymbol(StreamID, symbol);
+            HeadroomSubscription subscription = new HeadroomSubscription(this, streamID, symbol);
+            subscription.Subscribe();
+            return subscription.Values;
+        }
+
+        public Sentiment SubscribeSentiment(string symbol, string compression = "50t")
+        {
+            string streamID = ParsedDestination.StreamIDForSymbol(StreamID, symbol);
+            SentimentSubscription subscription = new SentimentSubscription(this, streamID, symbol, compression);
+            subscription.Subscribe();
+            return subscription.Values;
+        }
+
+        public Equilibrium SubscribeEquilibrium(string symbol, string compression = "300s")
+        {
+            string streamID = ParsedDestination.StreamIDForSymbol(StreamID, symbol);
+            EquilibriumSubscription subscription = new EquilibriumSubscription(this, streamID, symbol, compression);
+            subscription.Subscribe();
+            return subscription.Values;
+
+        }
+
+        #endregion
     }
 }

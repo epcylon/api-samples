@@ -6,7 +6,7 @@ using System.Diagnostics;
 
 namespace BridgeRock.CSharpExample.API.Subscriptions
 {
-    public class SentimentSubscription : GaugeSubscriptionBase<SentimentUpdate, Sentiment>
+    internal class SentimentSubscription : GaugeSubscriptionBase<SentimentUpdate, Sentiment>
     {
         /// <summary>
         /// Module-level Identifier.

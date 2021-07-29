@@ -70,44 +70,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="API\ParsedDestination.cs" />
-    <Compile Include="API\ProtoPriceEncoder.cs" />
-    <Compile Include="API\ProtoTimeEncoder.cs" />
-    <Compile Include="API\Subscriptions\BookPressureSubscription.cs" />
-    <Compile Include="API\Subscriptions\CommitmentSubscription.cs" />
-    <Compile Include="API\Subscriptions\EquilibriumSubscription.cs" />
-    <Compile Include="API\Subscriptions\GaugeSubscriptionBase.cs" />
-    <Compile Include="API\Subscriptions\HeadroomSubscription.cs" />
-    <Compile Include="API\Subscriptions\MultiframeSubscription.cs" />
-    <Compile Include="API\Subscriptions\PerceptionSubscription.cs" />
-    <Compile Include="API\Subscriptions\SearchSubscription.cs" />
-    <Compile Include="API\Subscriptions\SingleValueSubscription.cs" />
-    <Compile Include="API\Subscriptions\SentimentSubscription.cs" />
-    <Compile Include="API\Subscriptions\StrategySubscription.cs" />
-    <Compile Include="API\Subscriptions\SubscriptionBase.cs" />
-    <Compile Include="API\Subscriptions\TriggerSubscription.cs" />
-    <Compile Include="API\Values\Equilibrium.cs" />
-    <Compile Include="API\Values\GaugeValueBase.cs" />
-    <Compile Include="API\Values\MultiFrameEquilibrium.cs" />
-    <Compile Include="API\Values\SearchResults.cs" />
-    <Compile Include="API\Values\SingleValueBase.cs" />
-    <Compile Include="API\Values\Sentiment.cs" />
-    <Compile Include="API\Values\StrategyValues.cs" />
-    <Compile Include="API\Values\TopSearchResult.cs" />
-    <Compile Include="API\Values\TopSearchResults.cs" />
-    <Compile Include="API\Values\Trigger.cs" />
-    <Compile Include="API\Values\ValueBase.cs" />
     <Compile Include="Controls\SentimentViewer.xaml.cs">
       <DependentUpon>SentimentViewer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ProtoStomp\IDGenerator.cs" />
-    <Compile Include="ProtoStomp\IReceiptable.cs" />
-    <Compile Include="ProtoStomp\ProtoStompClient.cs" />
-    <Compile Include="ProtoStomp\ProtoStompReceipt.cs" />
-    <Compile Include="ProtoStomp\ProtoStompSend.cs" />
-    <Compile Include="ProtoStomp\ProtoStompSubscription.cs" />
-    <Compile Include="API\Proto\StealthApiV20.cs" />
-    <Compile Include="ProtoStomp\Proto\StompV01.cs" />
     <Page Include="Controls\SentimentViewer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -148,14 +113,15 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="API\Proto\Compile API.bat" />
-    <None Include="ProtoStomp\Proto\Compile Stomp.bat" />
-    <None Include="API\Proto\stealth-api-v2.0.proto" />
-    <None Include="ProtoStomp\Proto\stomp_v0.1.proto" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\CSharp\QuantGateAPI\QuantGateAPI.csproj">
+      <Project>{8d908c53-b75e-4237-9d3c-2b5907e03954}</Project>
+      <Name>QuantGateAPI</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

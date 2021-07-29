@@ -4,7 +4,7 @@ using QuantGate.API.Proto.Stealth;
 
 namespace BridgeRock.CSharpExample.API.Subscriptions
 {
-    public class TriggerSubscription : GaugeSubscriptionBase<TriggerUpdate, Trigger>
+    internal class TriggerSubscription : GaugeSubscriptionBase<TriggerUpdate, Trigger>
     {
         public TriggerSubscription(ProtoStompClient client, string streamID, string symbol, bool receipt = false, uint throttleRate = 0) :
             base(client, TriggerUpdate.Parser, SubscriptionPath.GaugeTrigger, streamID, symbol, null, receipt, throttleRate)

@@ -10,7 +10,7 @@ using scg = global::System.Collections.Generic;
 namespace QuantGate.API.Proto.Stealth {
 
   /// <summary>Holder for reflection information generated from stealth-api-v2.0.proto</summary>
-  public static partial class StealthApiV20Reflection {
+  internal static partial class StealthApiV20Reflection {
 
     #region Descriptor
     /// <summary>File descriptor for stealth-api-v2.0.proto</summary>
@@ -124,7 +124,7 @@ namespace QuantGate.API.Proto.Stealth {
   /// <summary>
   /// The type of instrument being traded. 
   /// </summary>
-  public enum InstrumentType {
+  internal enum InstrumentType {
     /// <summary>
     /// Not a valid instrument.
     /// </summary>
@@ -174,7 +174,7 @@ namespace QuantGate.API.Proto.Stealth {
   /// <summary>
   /// The Put/Call side ("right") of an option. 
   /// </summary>
-  public enum PutOrCall {
+  internal enum PutOrCall {
     /// <summary>
     /// Instrument is not an option.
     /// </summary>
@@ -240,7 +240,7 @@ namespace QuantGate.API.Proto.Stealth {
   /// Holds the spline information for a sentiment length or color spline.
   /// Values should be converted to between -1 and 1 by dividing by 1000. 
   /// </summary>
-  public sealed partial class SentimentSpline : pb::IMessage<SentimentSpline> {
+  internal sealed partial class SentimentSpline : pb::IMessage<SentimentSpline> {
     private static readonly pb::MessageParser<SentimentSpline> _parser = new pb::MessageParser<SentimentSpline>(() => new SentimentSpline());
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<SentimentSpline> Parser { get { return _parser; } }
@@ -518,7 +518,7 @@ namespace QuantGate.API.Proto.Stealth {
   /// <summary>
   /// SentimentUpdate represents a new sentiment subscription update. 
   /// </summary>
-  public sealed partial class SentimentUpdate : pb::IMessage<SentimentUpdate> {
+  internal sealed partial class SentimentUpdate : pb::IMessage<SentimentUpdate> {
     private static readonly pb::MessageParser<SentimentUpdate> _parser = new pb::MessageParser<SentimentUpdate>(() => new SentimentUpdate());
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<SentimentUpdate> Parser { get { return _parser; } }
@@ -748,7 +748,7 @@ namespace QuantGate.API.Proto.Stealth {
   /// All prices (and gap size) are converted to long values.
   /// Values should be converted to between -1 and 1 by dividing by 1000. 
   /// </summary>
-  public sealed partial class EquilibriumUpdate : pb::IMessage<EquilibriumUpdate> {
+  internal sealed partial class EquilibriumUpdate : pb::IMessage<EquilibriumUpdate> {
     private static readonly pb::MessageParser<EquilibriumUpdate> _parser = new pb::MessageParser<EquilibriumUpdate>(() => new EquilibriumUpdate());
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<EquilibriumUpdate> Parser { get { return _parser; } }
@@ -1120,7 +1120,7 @@ namespace QuantGate.API.Proto.Stealth {
   /// MultiframeUpdate represents a new multi-timeframe equilibrium subscription update. 
   /// Values should be converted to between -1 and 1 by dividing by 1000. 
   /// </summary>
-  public sealed partial class MultiframeUpdate : pb::IMessage<MultiframeUpdate> {
+  internal sealed partial class MultiframeUpdate : pb::IMessage<MultiframeUpdate> {
     private static readonly pb::MessageParser<MultiframeUpdate> _parser = new pb::MessageParser<MultiframeUpdate>(() => new MultiframeUpdate());
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<MultiframeUpdate> Parser { get { return _parser; } }
@@ -1586,7 +1586,7 @@ namespace QuantGate.API.Proto.Stealth {
   /// All prices (and gap size) are converted to long values.
   /// Values should be converted to between -1 and 1 by subtracting 1001 and dividing by 1000. 
   /// </summary>
-  public sealed partial class TriggerUpdate : pb::IMessage<TriggerUpdate> {
+  internal sealed partial class TriggerUpdate : pb::IMessage<TriggerUpdate> {
     private static readonly pb::MessageParser<TriggerUpdate> _parser = new pb::MessageParser<TriggerUpdate>(() => new TriggerUpdate());
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<TriggerUpdate> Parser { get { return _parser; } }
@@ -1959,7 +1959,7 @@ namespace QuantGate.API.Proto.Stealth {
   /// value (such as Perception, Commitment, Headroom, Book Pressure, or SMA).
   /// Values should be converted to between -1 and 1 by dividing by 1000. 
   /// </summary>
-  public sealed partial class SingleValueUpdate : pb::IMessage<SingleValueUpdate> {
+  internal sealed partial class SingleValueUpdate : pb::IMessage<SingleValueUpdate> {
     private static readonly pb::MessageParser<SingleValueUpdate> _parser = new pb::MessageParser<SingleValueUpdate>(() => new SingleValueUpdate());
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<SingleValueUpdate> Parser { get { return _parser; } }
@@ -2144,7 +2144,7 @@ namespace QuantGate.API.Proto.Stealth {
   /// <summary>
   /// StrategyUpdate represents a new subscription update for a subscribed strategy. 
   /// </summary>
-  public sealed partial class StrategyUpdate : pb::IMessage<StrategyUpdate> {
+  internal sealed partial class StrategyUpdate : pb::IMessage<StrategyUpdate> {
     private static readonly pb::MessageParser<StrategyUpdate> _parser = new pb::MessageParser<StrategyUpdate>(() => new StrategyUpdate());
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<StrategyUpdate> Parser { get { return _parser; } }
@@ -2610,7 +2610,7 @@ namespace QuantGate.API.Proto.Stealth {
   /// price result (such as Simple Moving Average).
   /// All prices are converted to long values, empty values will be decoded as NaN. 
   /// </summary>
-  public sealed partial class SinglePriceUpdate : pb::IMessage<SinglePriceUpdate> {
+  internal sealed partial class SinglePriceUpdate : pb::IMessage<SinglePriceUpdate> {
     private static readonly pb::MessageParser<SinglePriceUpdate> _parser = new pb::MessageParser<SinglePriceUpdate>(() => new SinglePriceUpdate());
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<SinglePriceUpdate> Parser { get { return _parser; } }
@@ -2795,7 +2795,7 @@ namespace QuantGate.API.Proto.Stealth {
   /// <summary>
   /// Holds a single tick range for an Instrument definition. 
   /// </summary>
-  public sealed partial class TickValue : pb::IMessage<TickValue> {
+  internal sealed partial class TickValue : pb::IMessage<TickValue> {
     private static readonly pb::MessageParser<TickValue> _parser = new pb::MessageParser<TickValue>(() => new TickValue());
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<TickValue> Parser { get { return _parser; } }
@@ -3044,7 +3044,7 @@ namespace QuantGate.API.Proto.Stealth {
       /// <summary>
       /// Types of tick formats available to display prices in.
       /// </summary>
-      public enum TickFormat {
+      internal enum TickFormat {
         /// <summary>
         /// Decimal display (regular 0.000, etc.) 
         /// </summary>
@@ -3073,7 +3073,7 @@ namespace QuantGate.API.Proto.Stealth {
   /// <summary>
   /// Holds information about the current trading session for an instrument. 
   /// </summary>
-  public sealed partial class TradingSession : pb::IMessage<TradingSession> {
+  internal sealed partial class TradingSession : pb::IMessage<TradingSession> {
     private static readonly pb::MessageParser<TradingSession> _parser = new pb::MessageParser<TradingSession>(() => new TradingSession());
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<TradingSession> Parser { get { return _parser; } }
@@ -3227,7 +3227,7 @@ namespace QuantGate.API.Proto.Stealth {
   /// <summary>
   /// Holds the details of a trading instrument. 
   /// </summary>
-  public sealed partial class InstrumentUpdate : pb::IMessage<InstrumentUpdate> {
+  internal sealed partial class InstrumentUpdate : pb::IMessage<InstrumentUpdate> {
     private static readonly pb::MessageParser<InstrumentUpdate> _parser = new pb::MessageParser<InstrumentUpdate>(() => new InstrumentUpdate());
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<InstrumentUpdate> Parser { get { return _parser; } }
@@ -3729,7 +3729,7 @@ namespace QuantGate.API.Proto.Stealth {
   /// <summary>
   /// Holds basic information for an individual symbol within a symbol search result. 
   /// </summary>
-  public sealed partial class SymbolSearchResult : pb::IMessage<SymbolSearchResult> {
+  internal sealed partial class SymbolSearchResult : pb::IMessage<SymbolSearchResult> {
     private static readonly pb::MessageParser<SymbolSearchResult> _parser = new pb::MessageParser<SymbolSearchResult>(() => new SymbolSearchResult());
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<SymbolSearchResult> Parser { get { return _parser; } }
@@ -4009,7 +4009,7 @@ namespace QuantGate.API.Proto.Stealth {
   /// Note: The user must subscribe to a definition/search subscription to get results 
   ///       and make specific requests using a definition/search/{term} send message. 
   /// </summary>
-  public sealed partial class SymbolSearchUpdate : pb::IMessage<SymbolSearchUpdate> {
+  internal sealed partial class SymbolSearchUpdate : pb::IMessage<SymbolSearchUpdate> {
     private static readonly pb::MessageParser<SymbolSearchUpdate> _parser = new pb::MessageParser<SymbolSearchUpdate>(() => new SymbolSearchUpdate());
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<SymbolSearchUpdate> Parser { get { return _parser; } }
@@ -4155,7 +4155,7 @@ namespace QuantGate.API.Proto.Stealth {
   /// <summary>
   /// Holds basic information for an individual symbol within a top symbols update. 
   /// </summary>
-  public sealed partial class TopSymbolItem : pb::IMessage<TopSymbolItem> {
+  internal sealed partial class TopSymbolItem : pb::IMessage<TopSymbolItem> {
     private static readonly pb::MessageParser<TopSymbolItem> _parser = new pb::MessageParser<TopSymbolItem>(() => new TopSymbolItem());
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<TopSymbolItem> Parser { get { return _parser; } }
@@ -4650,7 +4650,7 @@ namespace QuantGate.API.Proto.Stealth {
   /// <summary>
   /// Holds an update of the current top items of a top symbols subscription. 
   /// </summary>
-  public sealed partial class TopSymbolsUpdate : pb::IMessage<TopSymbolsUpdate> {
+  internal sealed partial class TopSymbolsUpdate : pb::IMessage<TopSymbolsUpdate> {
     private static readonly pb::MessageParser<TopSymbolsUpdate> _parser = new pb::MessageParser<TopSymbolsUpdate>(() => new TopSymbolsUpdate());
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<TopSymbolsUpdate> Parser { get { return _parser; } }

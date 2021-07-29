@@ -1,11 +1,10 @@
 ﻿using BridgeRock.CSharpExample.API.Values;
 using BridgeRock.CSharpExample.ProtoStomp;
 using QuantGate.API.Proto.Stealth;
-using System;
 
 namespace BridgeRock.CSharpExample.API.Subscriptions
 {
-    public abstract class SingleValueSubscription<V> : GaugeSubscriptionBase<SingleValueUpdate, V>
+    internal abstract class SingleValueSubscription<V> : GaugeSubscriptionBase<SingleValueUpdate, V>
         where V : SingleValueBase, new()
     {
         public SingleValueSubscription(ProtoStompClient client, SubscriptionPath gaugePath, string streamID,

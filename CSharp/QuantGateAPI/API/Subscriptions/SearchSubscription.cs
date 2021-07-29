@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace BridgeRock.CSharpExample.API.Subscriptions
 {
-    public class SearchSubscription : SubscriptionBase<SymbolSearchUpdate, SearchResults>
+    internal class SearchSubscription : SubscriptionBase<SymbolSearchUpdate, SearchResults>
     {
         public SearchSubscription(ProtoStompClient client, string streamID, bool receipt = false, uint throttleRate = 0) :
             base(client, SymbolSearchUpdate.Parser,
@@ -22,7 +22,7 @@ namespace BridgeRock.CSharpExample.API.Subscriptions
         protected override void HandleUpdate(SymbolSearchUpdate update, object processed)
         {
             Values.SearchTerm = update.SearchTerm;
-            Values.Results = update.Results.ToList();
+            //Values.Results = update.Results.ToList();
         }
     }
 }

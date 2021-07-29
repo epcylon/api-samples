@@ -16,14 +16,13 @@ namespace BridgeRock.CSharpExample
     public partial class MainWindow : Window
     {
         private ProtoStompClient _client;
-        private PerceptionSubscription _perceptionSubscription;
-        private CommitmentSubscription _commitmentSubscription;
-        private HeadroomSubscription _headroomSubscription;
-        private BookPressureSubscription _bookPressureSubscription;
-        private SentimentSubscription _sentimentSubscription;
-        private EquilibriumSubscription _equilibriumSubscription;
-
-        private SearchSubscription _searchSubscription;
+        //private PerceptionSubscription _perceptionSubscription;
+        //private CommitmentSubscription _commitmentSubscription;
+        //private HeadroomSubscription _headroomSubscription;
+        //private BookPressureSubscription _bookPressureSubscription;
+        //private SentimentSubscription _sentimentSubscription;
+        //private EquilibriumSubscription _equilibriumSubscription;
+        //private SearchSubscription _searchSubscription;
 
         public Perception Perception
         {
@@ -101,7 +100,7 @@ namespace BridgeRock.CSharpExample
             txtSearch.TextChanged += HandleSearchUpdate;
 
             //_client = new ProtoStompClient("wss://feed.stealthtrader.com");
-            _client = new ProtoStompClient("wss://test.stealthtrader.com");
+            _client = new ProtoStompClient("wss://test.stealthtrader.com", streamID: ParsedDestination.DemoStreamID);
             //_client = new ProtoStompClient("ws://localhost", 2432);
             _client.Connected += HandleConnected;
             _client.Disconnected += HandleDisconnected;
@@ -116,7 +115,7 @@ namespace BridgeRock.CSharpExample
 
         private void HandleSearchUpdate(object sender, TextChangedEventArgs e)
         {
-            _searchSubscription.Search(txtSearch.Text, "paper");
+          //  _searchSubscription.Search(txtSearch.Text, "paper");
         }
 
         private void HandleHeartbeat(ProtoStompClient client)
@@ -141,35 +140,17 @@ namespace BridgeRock.CSharpExample
             Dispatcher.Invoke(delegate
             {
                 string symbol = "NQ U1";
-                string streamId = ParsedDestination.DemoStreamID;
+                
+                Perception = _client.SubscribePerception(symbol);
+                Commitment = _client.SubscribeCommitment(symbol);
+                Headroom = _client.SubscribeHeadroom(symbol);
+                BookPressure = _client.SubscribeBookPressure(symbol);
+                Sentiment = _client.SubscribeSentiment(symbol, "50t");
+                Equilibrium = _client.SubscribeEquilibrium(symbol, "300s");
 
-                _perceptionSubscription = new PerceptionSubscription(_client, streamId, symbol);
-                Perception = _perceptionSubscription.Values;
-                _perceptionSubscription.Subscribe();
-
-                _commitmentSubscription = new CommitmentSubscription(_client, streamId, symbol);
-                Commitment = _commitmentSubscription.Values;
-                _commitmentSubscription.Subscribe();
-
-                _headroomSubscription = new HeadroomSubscription(_client, streamId, symbol);
-                Headroom = _headroomSubscription.Values;
-                _headroomSubscription.Subscribe();
-
-                _bookPressureSubscription = new BookPressureSubscription(_client, streamId, symbol);
-                BookPressure = _bookPressureSubscription.Values;
-                _bookPressureSubscription.Subscribe();
-
-                _sentimentSubscription = new SentimentSubscription(_client, streamId, symbol, "50t");
-                Sentiment = _sentimentSubscription.Values;
-                _sentimentSubscription.Subscribe();
-
-                _equilibriumSubscription = new EquilibriumSubscription(_client, streamId, symbol, "300s");
-                Equilibrium = _equilibriumSubscription.Values;
-                _equilibriumSubscription.Subscribe();
-
-                _searchSubscription = new SearchSubscription(_client, streamId);
-                _searchSubscription.Values.PropertyChanged += HandleSearchResultsChanged;
-                _searchSubscription.Subscribe();
+                //_searchSubscription = new SearchSubscription(_client, streamId);
+                //_searchSubscription.Values.PropertyChanged += HandleSearchResultsChanged;
+                //_searchSubscription.Subscribe();
             });
         }
 
@@ -179,8 +160,8 @@ namespace BridgeRock.CSharpExample
             {
                 lvSearch.Items.Clear();
 
-                foreach (var x in _searchSubscription.Values.Results)
-                    lvSearch.Items.Add(x.Symbol);
+                //foreach (var x in _searchSubscription.Values.Results)
+                //    lvSearch.Items.Add(x.Symbol);
             }
         }
     }

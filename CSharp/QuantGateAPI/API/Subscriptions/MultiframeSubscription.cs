@@ -4,7 +4,7 @@ using QuantGate.API.Proto.Stealth;
 
 namespace BridgeRock.CSharpExample.API.Subscriptions
 {
-    public class MultiframeSubscription : GaugeSubscriptionBase<MultiframeUpdate, MultiFrameEquilibrium>
+    internal class MultiframeSubscription : GaugeSubscriptionBase<MultiframeUpdate, MultiFrameEquilibrium>
     {
         public MultiframeSubscription(ProtoStompClient client, string streamID, string symbol,
                                      string compression, bool receipt = false, uint throttleRate = 0) :

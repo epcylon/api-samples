@@ -1,17 +1,18 @@
 ﻿using BridgeRock.CSharpExample.API.Values;
 using BridgeRock.CSharpExample.ProtoStomp;
 using Google.Protobuf;
+using QuantGateAPI.API.Subscriptions;
 using System;
 using System.Windows.Threading;
 
 namespace BridgeRock.CSharpExample.API.Subscriptions
 {
-    public abstract class SubscriptionBase<M, V> : ProtoStompSubscription
+    public abstract class SubscriptionBase<M, V> : ProtoStompSubscription, ISubscription
         where M : IMessage<M>
         where V : ValueBase, new()
     {
         private readonly MessageParser<M> _parser;
-        public V Values { get; } = new V();
+        public V Values { get; }
 
         private readonly Dispatcher _dispatcher;
 
@@ -21,6 +22,7 @@ namespace BridgeRock.CSharpExample.API.Subscriptions
         {
             _dispatcher = Dispatcher.CurrentDispatcher;
             _parser = parser;
+            Values = new V() { Subscription = this };
             OnNext += HandleOnNext;
         }
 

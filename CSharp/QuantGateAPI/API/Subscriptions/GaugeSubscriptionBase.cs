@@ -4,7 +4,7 @@ using Google.Protobuf;
 
 namespace BridgeRock.CSharpExample.API.Subscriptions
 {
-    public abstract class GaugeSubscriptionBase<M, V> : SubscriptionBase<M, V>
+    internal abstract class GaugeSubscriptionBase<M, V> : SubscriptionBase<M, V>
         where M : IMessage<M>
         where V : GaugeValueBase, new()
     {

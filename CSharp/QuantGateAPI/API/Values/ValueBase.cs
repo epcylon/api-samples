@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using QuantGateAPI.API.Subscriptions;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace BridgeRock.CSharpExample.API.Values
@@ -8,6 +9,8 @@ namespace BridgeRock.CSharpExample.API.Values
     /// </summary>
     public abstract class ValueBase : INotifyPropertyChanged
     {
+        internal ISubscription Subscription { get; set; }
+
         /// <summary>
         /// Notifies when one of the properties changes.
         /// </summary>

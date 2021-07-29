@@ -1,4 +1,5 @@
 ﻿using QuantGate.API.Proto.Stealth;
+using QuantGateAPI.API.Subscriptions;
 using System;
 
 namespace BridgeRock.CSharpExample.API.Values
