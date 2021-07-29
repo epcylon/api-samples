@@ -177,7 +177,10 @@ namespace BridgeRock.CSharpExample
         {
             if (e.PropertyName == "Updated")
             {
-                Debug.Print(_searchSubscription.Values.SearchTerm + " Updated!");
+                lvSearch.Items.Clear();
+
+                foreach (var x in _searchSubscription.Values.Results)
+                    lvSearch.Items.Add(x.Symbol);
             }
         }
     }
