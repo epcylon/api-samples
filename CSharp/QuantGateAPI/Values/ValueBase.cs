@@ -1,4 +1,5 @@
 ﻿using QuantGate.API.Subscriptions;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -15,6 +16,11 @@ namespace QuantGate.API.Values
         /// Notifies when one of the properties changes.
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Notifies that the object was updated (after complete update).
+        /// </summary>
+        public event EventHandler Updated;
         
         /// <summary>
         /// This method is called by the Set accessor of each property.
@@ -32,6 +38,21 @@ namespace QuantGate.API.Values
         /// <summary>
         /// Called whenever the values are finished updating.
         /// </summary>
-        internal void Updated() => NotifyPropertyChanged("Updated");        
+        internal void SendUpdated() => Updated?.Invoke(this, EventArgs.Empty);
+
+        /// <summary>
+        /// Unsubscribe from the subscription.
+        /// </summary>
+        internal void Unsubscribe() => Subscription.Unsubscribe();
+
+        /// <summary>
+        /// The throttle rate of the subscription for these values (in ms).
+        /// </summary>
+        /// <remarks>Setting this value will change the throttle rate.</remarks>
+        public int ThrottleRate
+        {
+            get => (int)Subscription.ThrottleRate;
+            set => Subscription.ThrottleRate = (uint)value;
+        }
     }
 }

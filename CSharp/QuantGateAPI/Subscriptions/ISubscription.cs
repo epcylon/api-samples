@@ -7,5 +7,6 @@ namespace QuantGate.API.Subscriptions
         void Subscribe();
         void Unsubscribe();
         ValueBase Values { get; }
+        uint ThrottleRate { get; set; }
     }
 }

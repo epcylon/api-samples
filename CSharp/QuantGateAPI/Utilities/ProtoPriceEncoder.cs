@@ -61,7 +61,7 @@
     /// 0 = 0 [=0.0]
     /// NaN = 8192 [=0.00]
     /// </remarks>
-    public static class ProtoPriceEncoder
+    internal static class ProtoPriceEncoder
     {
         #region Constants
 

@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:BridgeRock.CSharpExample.Controls" mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="600" Width="900">
     <Grid>
         <Slider HorizontalAlignment="Left" Margin="60,60,0,0" VerticalAlignment="Top" Orientation="Vertical" IsEnabled="False"
                 Height="300" Width="20" Minimum="-1" Maximum="1" Value="{Binding Path=Perception.GaugeLevel}"/>
@@ -14,19 +14,21 @@
 
         <Slider HorizontalAlignment="Left" Margin="120,60,0,0" VerticalAlignment="Top" Orientation="Vertical" IsEnabled="False"
                 Height="300" Width="20" Minimum="-1" Maximum="1" Value="{Binding Path=BookPressure.GaugeLevel}"/>
-        
+
         <Slider HorizontalAlignment="Left" Margin="150,60,0,0" VerticalAlignment="Top" Orientation="Vertical" IsEnabled="False"
                 Height="300" Width="20" Minimum="-1" Maximum="1" Value="{Binding Path=Headroom.GaugeLevel}"/>
 
         <controls:SentimentViewer HorizontalAlignment="Left" Margin="180,60,0,0" VerticalAlignment="Top" IsEnabled="False"
                                   Height="300" Width="300" Values="{Binding Path=Sentiment}" Background="#FFD0D0D0" />
-        
-        <TextBox x:Name="txtSearch" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text=""  VerticalAlignment="Top" Width="172" Margin="520,60,0,0"/>
-        
-        <ListView x:Name="lvSearch" HorizontalAlignment="Left" Height="157" VerticalAlignment="Top" Width="172" Margin="520,88,0,0">
+
+        <TextBox x:Name="txtSearch" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text=""  VerticalAlignment="Top" Width="340" Margin="520,60,0,0"/>
+
+        <ListView x:Name="lvSearch" HorizontalAlignment="Left" Height="272" VerticalAlignment="Top" Width="340" Margin="520,88,0,0">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Symbol" Width="100"/>
+                    <GridViewColumn Header="Symbol" DisplayMemberBinding="{Binding Symbol}" Width="60"/>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding DisplayName}" Width="200"/>
+                    <GridViewColumn Header="Progress" DisplayMemberBinding="{Binding EntryProgress, StringFormat=p1}" Width="60"/>
                 </GridView>
             </ListView.View>
         </ListView>

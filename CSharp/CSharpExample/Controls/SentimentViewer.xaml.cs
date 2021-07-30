@@ -760,25 +760,22 @@ namespace BridgeRock.CSharpExample.Controls
             }
         }
         
-
         private void HandleSentimentPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {               
+            // Something was updated.
+            _sentimentUpdated = true;
+        }
+
+        private void HandleSentimentUpdated(object sender, EventArgs e)
         {
             try
             {
-                if (e.PropertyName == "Updated")
-                {
-                    // If this is the last update, check if an actual update occured, and update if necessary.
-                    if (_sentimentUpdated)
-                        UpdateSpectrum();
+                // If this is the last update, check if an actual update occured, and update if necessary.
+                if (_sentimentUpdated)
+                    UpdateSpectrum();
 
-                    // No longer updated.
-                    _sentimentUpdated = false;
-                }
-                else
-                {
-                    // Something was updated.
-                    _sentimentUpdated = true;
-                } 
+                // No longer updated.
+                _sentimentUpdated = false;
             }
             catch (Exception ex)
             {
@@ -870,11 +867,17 @@ namespace BridgeRock.CSharpExample.Controls
                 return;
 
             if (args.OldValue is Sentiment oldSentiment)
+            {
                 oldSentiment.PropertyChanged -= viewer.HandleSentimentPropertyChanged;
-            
+                oldSentiment.Updated -= viewer.HandleSentimentUpdated;
+            }
+
             if (args.NewValue is Sentiment newSentiment)
+            {
                 newSentiment.PropertyChanged += viewer.HandleSentimentPropertyChanged;
-        }
+                newSentiment.Updated += viewer.HandleSentimentUpdated;
+            }
+        }        
 
         /// <summary>
         /// Has the data been retrieved?

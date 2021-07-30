@@ -5,7 +5,7 @@ namespace QuantGate.API.ProtoStomp
     /// <summary>
     /// Used to generate IDs for the STOMP protocol.
     /// </summary>
-    public static class IDGenerator
+    internal static class IDGenerator
     {
         /// <summary>
         /// The next ID to use.

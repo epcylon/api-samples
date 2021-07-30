@@ -6,7 +6,7 @@ using System.Windows.Threading;
 
 namespace QuantGate.API.Subscriptions
 {
-    public abstract class SubscriptionBase<M, V> : ProtoStompSubscription, ISubscription
+    internal abstract class SubscriptionBase<M, V> : ProtoStompSubscription, ISubscription
         where M : IMessage<M>
         where V : ValueBase, new()
     {
@@ -33,7 +33,7 @@ namespace QuantGate.API.Subscriptions
             _dispatcher.BeginInvoke(DispatcherPriority.Normal, (Action)(() =>
             {
                 HandleUpdate(update, processed);
-                Values.Updated();
+                Values.SendUpdated();
             }));
         }
 

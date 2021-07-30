@@ -32,7 +32,7 @@ namespace QuantGate.API.Subscriptions
                     Currency = result.Currency,
                     DisplayName = result.DisplayName,
                     Exchange = result.Exchange,
-                    InstrumentType = result.InstrumentType,
+                    InstrumentType = (InstrumentType)result.InstrumentType,
                 }); ;
 
             return results;

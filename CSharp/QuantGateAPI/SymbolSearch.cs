@@ -1,7 +1,6 @@
 ﻿using QuantGate.API.Subscriptions;
 using QuantGate.API.Values;
 using System;
-using System.ComponentModel;
 using System.Linq;
 
 namespace QuantGate.API
@@ -17,16 +16,13 @@ namespace QuantGate.API
         internal SymbolSearch(SearchSubscription subscription)
         {
             Subscription = subscription;
-            Subscription.Values.PropertyChanged += HandleValuesUpdate;
+            Subscription.Values.Updated += HandleValuesUpdate;
         }
 
-        private void HandleValuesUpdate(object sender, PropertyChangedEventArgs e)
+        private void HandleValuesUpdate(object sender, EventArgs e)
         {
-            if (e.PropertyName == "Updated")
-            {
-                Update(this, new SearchUpdateEventArgs(Subscription.Values.SearchTerm, 
-                                                       Subscription.Values.Results.ToList()));
-            }
+            Update(this, new SearchUpdateEventArgs(Subscription.Values.SearchTerm, 
+                                                   Subscription.Values.Results.ToList()));
         }
 
         public void Search(string term, string broker) => Subscription.Search(term, broker);

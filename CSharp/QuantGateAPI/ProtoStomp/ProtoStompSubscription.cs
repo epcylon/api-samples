@@ -8,7 +8,7 @@ namespace QuantGate.API.ProtoStomp
     /// <summary>
     /// Represents the base class for a client's STOMP subscription.
     /// </summary>
-    public class ProtoStompSubscription : IReceiptable, IObserver<ByteString>
+    internal class ProtoStompSubscription : IReceiptable, IObserver<ByteString>
     {
         /// <summary>
         /// Module-level Identifier.

@@ -51,6 +51,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enumerations.cs" />
+    <Compile Include="Subscriptions\InstrumentSubscription.cs" />
+    <Compile Include="Subscriptions\TopSymbolsSubscription.cs" />
     <Compile Include="SymbolSearch.cs" />
     <Compile Include="Utilities\ParsedDestination.cs" />
     <Compile Include="Utilities\ProtoPriceEncoder.cs" />
@@ -70,8 +73,10 @@
     <Compile Include="Subscriptions\StrategySubscription.cs" />
     <Compile Include="Subscriptions\SubscriptionBase.cs" />
     <Compile Include="Subscriptions\TriggerSubscription.cs" />
+    <Compile Include="Utilities\TimeZoneDecoder.cs" />
     <Compile Include="Values\Equilibrium.cs" />
     <Compile Include="Values\GaugeValueBase.cs" />
+    <Compile Include="Values\Instrument.cs" />
     <Compile Include="Values\MultiframeEquilibrium.cs" />
     <Compile Include="Values\SearchResult.cs" />
     <Compile Include="Values\SearchResults.cs" />
@@ -79,8 +84,10 @@
     <Compile Include="Values\Sentiment.cs" />
     <Compile Include="Values\SingleValueBase.cs" />
     <Compile Include="Values\StrategyValues.cs" />
-    <Compile Include="Values\TopSearchResult.cs" />
-    <Compile Include="Values\TopSearchResults.cs" />
+    <Compile Include="Values\TickValues.cs" />
+    <Compile Include="Values\TopSymbol.cs" />
+    <Compile Include="Values\TopSymbols.cs" />
+    <Compile Include="Values\TradingSession.cs" />
     <Compile Include="Values\Trigger.cs" />
     <Compile Include="Values\ValueBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

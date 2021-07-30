@@ -1,6 +1,6 @@
 ﻿namespace QuantGate.API.ProtoStomp
 {
-    public interface IReceiptable
+    internal interface IReceiptable
     {
         ulong ReceiptID { get; }
 

@@ -4,7 +4,7 @@ using System;
 
 namespace QuantGate.API.ProtoStomp
 {
-    public class ProtoStompSend : IReceiptable
+    internal class ProtoStompSend : IReceiptable
     {
         public string Destination { get { return Request.Destination; } }
         

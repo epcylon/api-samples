@@ -21,15 +21,15 @@ namespace QuantGate.API.Subscriptions
             Values.TimeStamp = ProtoTimeEncoder.TimestampSecondsToDate(update.Timestamp);
             Values.EntryProgress = update.EntryProgress / 1000.0;
             Values.ExitProgress = update.ExitProgress / 1000.0;
-            Values.Signal = update.Signal;
+            Values.Signal = (StrategySignal)update.Signal;
             Values.PerceptionLevel = update.PerceptionLevel / 1000.0;
-            Values.PerceptionSignal = update.PerceptionSignal;
+            Values.PerceptionSignal = (GaugeSignal)update.PerceptionSignal;
             Values.CommitmentLevel = update.CommitmentLevel / 1000.0;
-            Values.CommitmentSignal = update.CommitmentSignal;
+            Values.CommitmentSignal = (GaugeSignal)update.CommitmentSignal;
             Values.EquilibriumLevel = update.EquilibriumLevel / 1000.0;
-            Values.EquilibriumSignal = update.EquilibriumSignal;
+            Values.EquilibriumSignal = (GaugeSignal)update.EquilibriumSignal;
             Values.SentimentLevel = update.SentimentLevel / 1000.0;
-            Values.SentimentSignal = update.SentimentSignal;
+            Values.SentimentSignal = (GaugeSignal)update.SentimentSignal;
         }
     }
 }

@@ -63,8 +63,11 @@ namespace QuantGate.API
         /// </summary>
         public int Port { get; }
 
-        public string StreamID { get; }
-
+        /// <summary>
+        /// Stream ID associated with the stream the client is connected to.
+        /// </summary>
+        private string _streamID;
+        public DataStream Stream { get; }
         public string Username { get; private set; }
         public string Password { get; private set; }
 
@@ -78,7 +81,7 @@ namespace QuantGate.API
         /// </summary>
         /// <param name="host">The web address to connect to.</param>
         /// <param name="port">The port to connect to.</param>
-        public APIClient(string host, int port = int.MinValue, string streamID = ParsedDestination.RealtimeStreamID)
+        public APIClient(string host, int port = int.MinValue, DataStream stream = DataStream.Realtime)
         {
             if (port == int.MinValue)
             {
@@ -95,7 +98,15 @@ namespace QuantGate.API
 
             Host = host;
             Port = port;
-            StreamID = streamID;
+
+            // Set the stream (and get the proper stream ID).
+            Stream = stream;
+            switch (Stream)
+            {
+                case DataStream.Delayed: _streamID = ParsedDestination.DelayStreamID; break;
+                case DataStream.Demo: _streamID = ParsedDestination.DemoStreamID; break;
+                default: _streamID = ParsedDestination.RealtimeStreamID; break;
+            }
 
             // Create the new websocket.
             _transport = new WebSocket(Host + ':' + Port + "/");
@@ -438,7 +449,7 @@ namespace QuantGate.API
         /// Sends a message to the specified address.
         /// </summary>
         /// <param name="toSend">The Stomp frame to send.</param>
-        public void Send(ProtoStompSend toSend)
+        internal void Send(ProtoStompSend toSend)
         {
             try
             {
@@ -636,32 +647,44 @@ namespace QuantGate.API
 
         #region Subscriptions
 
-        public Perception SubscribePerception(string symbol) =>
-            SubscribeAndReturn(new PerceptionSubscription(this, StreamID, symbol)) as Perception;
+        public Perception SubscribePerception(string symbol, int throttleRate = 0) =>
+            SubscribeAndReturn(new PerceptionSubscription(this, _streamID, symbol, throttleRate: (uint)throttleRate)) as Perception;
 
-        public Commitment SubscribeCommitment(string symbol) =>
-            SubscribeAndReturn(new CommitmentSubscription(this, StreamID, symbol)) as Commitment;
+        public Commitment SubscribeCommitment(string symbol, int throttleRate = 0) =>
+            SubscribeAndReturn(new CommitmentSubscription(this, _streamID, symbol, throttleRate: (uint)throttleRate)) as Commitment;
 
-        public BookPressure SubscribeBookPressure(string symbol) =>
-            SubscribeAndReturn(new BookPressureSubscription(this, StreamID, symbol)) as BookPressure;
+        public BookPressure SubscribeBookPressure(string symbol, int throttleRate = 0) =>
+            SubscribeAndReturn(new BookPressureSubscription(this, _streamID, symbol, throttleRate: (uint)throttleRate)) as BookPressure;
    
-        public Headroom SubscribeHeadroom(string symbol) =>
-            SubscribeAndReturn(new HeadroomSubscription(this, StreamID, symbol)) as Headroom;        
+        public Headroom SubscribeHeadroom(string symbol, int throttleRate = 0) =>
+            SubscribeAndReturn(new HeadroomSubscription(this, _streamID, symbol, throttleRate: (uint)throttleRate)) as Headroom;        
 
-        public Sentiment SubscribeSentiment(string symbol, string compression = "50t") => 
-            SubscribeAndReturn(new SentimentSubscription(this, StreamID, symbol, compression)) as Sentiment;            
+        public Sentiment SubscribeSentiment(string symbol, string compression = "50t", int throttleRate = 0) => 
+            SubscribeAndReturn(new SentimentSubscription(this, _streamID, symbol, compression, 
+                                                         throttleRate: (uint)throttleRate)) as Sentiment;            
         
-        public Equilibrium SubscribeEquilibrium(string symbol, string compression = "300s") =>
-            SubscribeAndReturn(new EquilibriumSubscription(this, StreamID, symbol, compression)) as Equilibrium;
+        public Equilibrium SubscribeEquilibrium(string symbol, string compression = "300s", int throttleRate = 0) =>
+            SubscribeAndReturn(new EquilibriumSubscription(this, _streamID, symbol, compression, 
+                                                           throttleRate: (uint)throttleRate)) as Equilibrium;
 
-        public MultiframeEquilibrium SubscribeMultiframeEquilibrium(string symbol) => 
-            SubscribeAndReturn(new MultiframeSubscription(this, StreamID, symbol)) as MultiframeEquilibrium;
+        public MultiframeEquilibrium SubscribeMultiframeEquilibrium(string symbol, int throttleRate = 0) => 
+            SubscribeAndReturn(new MultiframeSubscription(this, _streamID, symbol, 
+                                                          throttleRate: (uint)throttleRate)) as MultiframeEquilibrium;
 
-        public Trigger SubscribeTrigger(string symbol) =>
-            SubscribeAndReturn(new TriggerSubscription(this, StreamID, symbol)) as Trigger;
+        public Trigger SubscribeTrigger(string symbol, int throttleRate = 0) =>
+            SubscribeAndReturn(new TriggerSubscription(this, _streamID, symbol, throttleRate: (uint)throttleRate)) as Trigger;
 
-        public StrategyValues SubscribeStrategy(string strategyID, string symbol) =>
-            SubscribeAndReturn(new StrategySubscription(this, strategyID, StreamID, symbol)) as StrategyValues;
+        public StrategyValues SubscribeStrategy(string strategyID, string symbol, int throttleRate = 0) =>
+            SubscribeAndReturn(new StrategySubscription(this, strategyID, _streamID, symbol, 
+                                                        throttleRate: (uint)throttleRate)) as StrategyValues;
+
+        public Instrument SubscribeInstrument(string symbol) =>
+            SubscribeAndReturn(new InstrumentSubscription(this, _streamID, symbol)) as Instrument;
+
+        public TopSymbols SubscribeTopSymbols(string broker, InstrumentType instrumentType = 
+                                              InstrumentType.NoInstrument, int throttleRate = 0) =>
+            SubscribeAndReturn(new TopSymbolsSubscription(this, null, broker, instrumentType,
+                                                          throttleRate: (uint) throttleRate)) as TopSymbols;
 
         private ValueBase SubscribeAndReturn(ISubscription subscription)
         {
@@ -671,10 +694,16 @@ namespace QuantGate.API
 
         public SymbolSearch SubscribeSearch()
         {            
-            SearchSubscription subscription = new SearchSubscription(this, StreamID);
+            SearchSubscription subscription = new SearchSubscription(this, _streamID);
             subscription.Subscribe();
             return new SymbolSearch(subscription);
         }
+
+        /// <summary>
+        /// Unsubscribes the from the stream for the given values.
+        /// </summary>
+        /// <param name="values">The values to unsubscribe the stream from.</param>
+        public void Unsubscribe(ValueBase values) => values.Unsubscribe();
 
         #endregion
     }

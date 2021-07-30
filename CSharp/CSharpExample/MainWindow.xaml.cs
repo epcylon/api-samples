@@ -1,5 +1,4 @@
 ﻿using QuantGate.API;
-using QuantGate.API.Utilities;
 using QuantGate.API.Values;
 using System;
 using System.Windows;
@@ -14,6 +13,7 @@ namespace BridgeRock.CSharpExample
     {
         private APIClient _client;
         private SymbolSearch _symbolSearch;
+        private TopSymbols _topSymbols;
 
         public Perception Perception
         {
@@ -113,7 +113,6 @@ namespace BridgeRock.CSharpExample
         public static readonly DependencyProperty StrategyProperty =
             DependencyProperty.Register("Strategy", typeof(StrategyValues), typeof(MainWindow), new PropertyMetadata(null));
 
-
         public MainWindow()
         {
             InitializeComponent();
@@ -123,7 +122,7 @@ namespace BridgeRock.CSharpExample
             txtSearch.TextChanged += HandleSearchUpdate;
 
             //_client = new ProtoStompClient("wss://feed.stealthtrader.com");
-            _client = new APIClient("wss://test.stealthtrader.com", streamID: ParsedDestination.DemoStreamID);
+            _client = new APIClient("wss://test.stealthtrader.com", stream: DataStream.Delayed);
             //_client = new ProtoStompClient("ws://localhost", 2432);
             _client.Connected += HandleConnected;
             _client.Disconnected += HandleDisconnected;
@@ -138,7 +137,14 @@ namespace BridgeRock.CSharpExample
 
         private void HandleSearchUpdate(object sender, TextChangedEventArgs e)
         {
-            _symbolSearch.Search(txtSearch.Text, "paper");
+            if (!string.IsNullOrEmpty(txtSearch.Text))
+            {
+                _symbolSearch.Search(txtSearch.Text, "paper");
+            }
+            else
+            {
+                HandleTopSymbolsUpdate(_topSymbols, EventArgs.Empty);
+            }
         }
 
         private void HandleHeartbeat(APIClient client)
@@ -175,15 +181,31 @@ namespace BridgeRock.CSharpExample
                 Strategy = _client.SubscribeStrategy("Crb9.0", symbol);
                 _symbolSearch = _client.SubscribeSearch();
                 _symbolSearch.Update += HandleSearchUpdate;
+                _topSymbols = _client.SubscribeTopSymbols("ib");
+                _topSymbols.Updated += HandleTopSymbolsUpdate;
             });
+        }
+
+        private void HandleTopSymbolsUpdate(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(txtSearch.Text))
+                return;
+
+            lvSearch.Items.Clear();
+
+            foreach (var x in _topSymbols.Symbols)
+                lvSearch.Items.Add(x);
         }
 
         private void HandleSearchUpdate(object sender, SearchUpdateEventArgs e)
         {
+            if (string.IsNullOrEmpty(txtSearch.Text))
+                return;
+
             lvSearch.Items.Clear();
 
             foreach (var x in e.Results)
-                lvSearch.Items.Add(x.Symbol);
+                lvSearch.Items.Add(x);
         }
     }
 }

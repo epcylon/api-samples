@@ -9,7 +9,7 @@ namespace QuantGate.API.Utilities
     /// <summary>
     /// Type of subscription requested by the client.
     /// </summary>
-    public enum SubscriptionType : long
+    internal enum SubscriptionType : long
     {
         /// <summary>
         /// Not requesting or invalid.
@@ -32,7 +32,7 @@ namespace QuantGate.API.Utilities
     /// <summary>
     /// The main subscription path of the subscription requested by the client.
     /// </summary>
-    public enum SubscriptionPath : long
+    internal enum SubscriptionPath : long
     {
         /// <summary>
         /// Not subscribed to anything.
@@ -89,7 +89,7 @@ namespace QuantGate.API.Utilities
     /// <summary>
     /// Holds the parsed information from a subscription destination string.
     /// </summary>
-    public class ParsedDestination
+    internal class ParsedDestination
     {
         /// <summary>
         /// Class-level identifier.

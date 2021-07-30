@@ -124,7 +124,7 @@ namespace QuantGate.API.Proto.Stealth {
   /// <summary>
   /// The type of instrument being traded. 
   /// </summary>
-  public enum InstrumentType {
+  internal enum InstrumentType {
     /// <summary>
     /// Not a valid instrument.
     /// </summary>
@@ -192,7 +192,7 @@ namespace QuantGate.API.Proto.Stealth {
   /// <summary>
   /// Entry/Exit signal state for strategies. 
   /// </summary>
-  public enum StrategySignal {
+  internal enum StrategySignal {
     /// <summary>
     /// No current signal.
     /// </summary>
@@ -210,7 +210,7 @@ namespace QuantGate.API.Proto.Stealth {
   /// <summary>
   /// Gauge signal state for strategies (PCES lights). 
   /// </summary>
-  public enum GaugeSignal {
+  internal enum GaugeSignal {
     /// <summary>
     /// Unknown signal (gauge signal not set - use default).
     /// </summary>
