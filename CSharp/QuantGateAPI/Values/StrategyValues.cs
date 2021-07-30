@@ -1,23 +1,65 @@
-﻿using QuantGate.API.Proto.Stealth;
-using System;
+﻿using System;
 
 namespace QuantGate.API.Values
 {
+    /// <summary>
+    /// Holds Strategy values. Will be updated by the stream with change notifications.
+    /// Supply this object to the Unsubscribe method of the APIClient to stop the subscription.
+    /// </summary>
     public class StrategyValues : ValueBase
     {
+        /// <summary>
+        /// Timestamp of the latest update.
+        /// </summary>
         private DateTime _timestamp;
+        /// <summary>
+        /// Entry progress value.
+        /// </summary>
         private double _entryProgress;
+        /// <summary>
+        /// Exit progress value.
+        /// </summary>
         private double _exitProgress;
+        /// <summary>
+        /// Entry signal for the strategy.
+        /// </summary>
         private StrategySignal _signal;
-        private double _perceptionLevel;
+        /// <summary>
+        /// Perception level. 0 represents an unset value.
+        /// </summary>
+        private double? _perceptionLevel;
+        /// <summary>
+        /// Signal tied to the perception level.
+        /// </summary>
         private GaugeSignal _perceptionSignal;
-        private double _commitmentLevel;
+        /// <summary>
+        /// Commitment level. 0 represents an unset value.
+        /// </summary>
+        private double? _commitmentLevel;
+        /// <summary>
+        /// Signal tied to the commitment level.
+        /// </summary>
         private GaugeSignal _commitmentSignal;
-        private double _equilibriumLevel;
+        /// <summary>
+        /// Equilibrium level. 0 represents an unset value.
+        /// </summary>
+        private double? _equilibriumLevel;
+        /// <summary>
+        /// Signal tied to the equilibrium level.
+        /// </summary>
         private GaugeSignal _equilibriumSignal;
-        private double _sentimentLevel;
+        /// <summary>
+        /// Sentiment level. 0 represents an unset value.
+        /// </summary>
+        private double? _sentimentLevel;
+        /// <summary>
+        /// Signal tied to the 50t sentiment indication.
+        /// </summary>
         private GaugeSignal _sentimentSignal;
 
+        /// <summary>
+        /// Timestamp of the latest update.
+        /// </summary>
         public DateTime TimeStamp
         {
             get => _timestamp;
@@ -31,6 +73,9 @@ namespace QuantGate.API.Values
             }
         }
 
+        /// <summary>
+        /// Entry progress value.
+        /// </summary>
         public double EntryProgress
         {
             get => _entryProgress;
@@ -44,6 +89,9 @@ namespace QuantGate.API.Values
             }
         }
 
+        /// <summary>
+        /// Exit progress value.
+        /// </summary>
         public double ExitProgress
         {
             get => _exitProgress;
@@ -57,6 +105,9 @@ namespace QuantGate.API.Values
             }
         }
 
+        /// <summary>
+        /// Entry signal for the strategy.
+        /// </summary>
         public StrategySignal Signal
         {
             get => _signal;
@@ -70,7 +121,10 @@ namespace QuantGate.API.Values
             }
         }
 
-        public double PerceptionLevel
+        /// <summary>
+        /// Perception level. 0 represents an unset value.
+        /// </summary>
+        public double? PerceptionLevel
         {
             get => _perceptionLevel;
             set
@@ -83,6 +137,9 @@ namespace QuantGate.API.Values
             }
         }
 
+        /// <summary>
+        /// Signal tied to the perception level.
+        /// </summary>
         public GaugeSignal PerceptionSignal
         {
             get => _perceptionSignal;
@@ -96,7 +153,10 @@ namespace QuantGate.API.Values
             }
         }
 
-        public double CommitmentLevel
+        /// <summary>
+        /// Commitment level. 0 represents an unset value.
+        /// </summary>
+        public double? CommitmentLevel
         {
             get => _commitmentLevel;
             set
@@ -109,6 +169,9 @@ namespace QuantGate.API.Values
             }
         }
 
+        /// <summary>
+        /// Signal tied to the commitment level.
+        /// </summary>
         public GaugeSignal CommitmentSignal
         {
             get => _commitmentSignal;
@@ -122,7 +185,10 @@ namespace QuantGate.API.Values
             }
         }
 
-        public double EquilibriumLevel
+        /// <summary>
+        /// Equilibrium level. 0 represents an unset value.
+        /// </summary>
+        public double? EquilibriumLevel
         {
             get => _equilibriumLevel;
             set
@@ -135,6 +201,9 @@ namespace QuantGate.API.Values
             }
         }
 
+        /// <summary>
+        /// Signal tied to the equilibrium level.
+        /// </summary>
         public GaugeSignal EquilibriumSignal
         {
             get => _equilibriumSignal;
@@ -148,7 +217,10 @@ namespace QuantGate.API.Values
             }
         }
 
-        public double SentimentLevel
+        /// <summary>
+        /// Sentiment level. 0 represents an unset value.
+        /// </summary>
+        public double? SentimentLevel
         {
             get => _sentimentLevel;
             set
@@ -161,6 +233,9 @@ namespace QuantGate.API.Values
             }
         }
 
+        /// <summary>
+        /// Signal tied to the 50t sentiment indication.
+        /// </summary>
         public GaugeSignal SentimentSignal
         {
             get => _sentimentSignal;

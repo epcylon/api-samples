@@ -647,51 +647,131 @@ namespace QuantGate.API
 
         #region Subscriptions
 
+        /// <summary>
+        /// Subscribes to a Perception gauge data stream for a specific symbol.
+        /// </summary>
+        /// <param name="symbol">Symbol to get the Perception data for.</param>
+        /// <param name="throttleRate">Rate to throttle messages at (in ms). Enter 0 for no throttling.</param>
+        /// <returns>The Perception data object that will receive the updates.</returns>
         public Perception SubscribePerception(string symbol, int throttleRate = 0) =>
             SubscribeAndReturn(new PerceptionSubscription(this, _streamID, symbol, throttleRate: (uint)throttleRate)) as Perception;
 
+        /// <summary>
+        /// Subscribes to a Commitment gauge data stream for a specific symbol.
+        /// </summary>
+        /// <param name="symbol">Symbol to get the Commitment data for.</param>
+        /// <param name="throttleRate">Rate to throttle messages at (in ms). Enter 0 for no throttling.</param>
+        /// <returns>The Commitment data object that will receive the updates.</returns>
         public Commitment SubscribeCommitment(string symbol, int throttleRate = 0) =>
             SubscribeAndReturn(new CommitmentSubscription(this, _streamID, symbol, throttleRate: (uint)throttleRate)) as Commitment;
 
+        /// <summary>
+        /// Subscribes to a Book Pressure gauge data stream for a specific symbol.
+        /// </summary>
+        /// <param name="symbol">Symbol to get the Book Pressure data for.</param>
+        /// <param name="throttleRate">Rate to throttle messages at (in ms). Enter 0 for no throttling.</param>
+        /// <returns>The Book Pressure data object that will receive the updates.</returns>
         public BookPressure SubscribeBookPressure(string symbol, int throttleRate = 0) =>
             SubscribeAndReturn(new BookPressureSubscription(this, _streamID, symbol, throttleRate: (uint)throttleRate)) as BookPressure;
-   
-        public Headroom SubscribeHeadroom(string symbol, int throttleRate = 0) =>
-            SubscribeAndReturn(new HeadroomSubscription(this, _streamID, symbol, throttleRate: (uint)throttleRate)) as Headroom;        
 
+        /// <summary>
+        /// Subscribes to a Headroom gauge data stream for a specific symbol.
+        /// </summary>
+        /// <param name="symbol">Symbol to get the Headroom data for.</param>
+        /// <param name="throttleRate">Rate to throttle messages at (in ms). Enter 0 for no throttling.</param>
+        /// <returns>The Headroom data object that will receive the updates.</returns>
+        public Headroom SubscribeHeadroom(string symbol, int throttleRate = 0) =>
+            SubscribeAndReturn(new HeadroomSubscription(this, _streamID, symbol, throttleRate: (uint)throttleRate)) as Headroom;
+
+        /// <summary>
+        /// Subscribes to a Sentiment gauge data stream for a specific symbol.
+        /// </summary>
+        /// <param name="symbol">Symbol to get the Sentiment data for.</param>
+        /// <param name="compression">Compression timeframe to apply to the gauge. Default value is 50t.</param>
+        /// <param name="throttleRate">Rate to throttle messages at (in ms). Enter 0 for no throttling.</param>
+        /// <returns>The Sentiment data object that will receive the updates.</returns>
         public Sentiment SubscribeSentiment(string symbol, string compression = "50t", int throttleRate = 0) => 
             SubscribeAndReturn(new SentimentSubscription(this, _streamID, symbol, compression, 
-                                                         throttleRate: (uint)throttleRate)) as Sentiment;            
-        
+                                                         throttleRate: (uint)throttleRate)) as Sentiment;
+
+        /// <summary>
+        /// Subscribes to a Equilibrium gauge data stream for a specific symbol.
+        /// </summary>
+        /// <param name="symbol">Symbol to get the Equilibrium data for.</param>
+        /// <param name="compression">Compression timeframe to apply to the gauge. Default value is 50t.</param>
+        /// <param name="throttleRate">Rate to throttle messages at (in ms). Enter 0 for no throttling.</param>
+        /// <returns>The Equilibrium data object that will receive the updates.</returns>
         public Equilibrium SubscribeEquilibrium(string symbol, string compression = "300s", int throttleRate = 0) =>
             SubscribeAndReturn(new EquilibriumSubscription(this, _streamID, symbol, compression, 
                                                            throttleRate: (uint)throttleRate)) as Equilibrium;
 
+        /// <summary>
+        /// Subscribes to a Multiframe Equilibrium gauge data stream for a specific symbol.
+        /// </summary>
+        /// <param name="symbol">Symbol to get the Multiframe Equilibrium data for.</param>
+        /// <param name="throttleRate">Rate to throttle messages at (in ms). Enter 0 for no throttling.</param>
+        /// <returns>The Multiframe Equilibrium data object that will receive the updates.</returns>
         public MultiframeEquilibrium SubscribeMultiframeEquilibrium(string symbol, int throttleRate = 0) => 
             SubscribeAndReturn(new MultiframeSubscription(this, _streamID, symbol, 
                                                           throttleRate: (uint)throttleRate)) as MultiframeEquilibrium;
 
+        /// <summary>
+        /// Subscribes to a Trigger gauge data stream for a specific symbol.
+        /// </summary>
+        /// <param name="symbol">Symbol to get the Trigger data for.</param>
+        /// <param name="throttleRate">Rate to throttle messages at (in ms). Enter 0 for no throttling.</param>
+        /// <returns>The Trigger data object that will receive the updates.</returns>
         public Trigger SubscribeTrigger(string symbol, int throttleRate = 0) =>
             SubscribeAndReturn(new TriggerSubscription(this, _streamID, symbol, throttleRate: (uint)throttleRate)) as Trigger;
 
+        /// <summary>
+        /// Subscribes to a Strategy update data stream for a specific strategy and symbol.
+        /// </summary>
+        /// <param name="strategyID">Strategy to subscribe to. Example enum values: PPr4.0, BTr4.0,  Crb.8.4.</param>
+        /// <param name="symbol">Symbol to get the Strategy update data for.</param>
+        /// <param name="throttleRate">Rate to throttle messages at (in ms). Enter 0 for no throttling.</param>
+        /// <returns>The Strategy data object that will receive the updates.</returns>
         public StrategyValues SubscribeStrategy(string strategyID, string symbol, int throttleRate = 0) =>
             SubscribeAndReturn(new StrategySubscription(this, strategyID, _streamID, symbol, 
                                                         throttleRate: (uint)throttleRate)) as StrategyValues;
 
+        /// <summary>
+        /// Used to retrieve the specification details of an instrument according to its symbol,
+        /// as listed by the QuantGate servers..
+        /// </summary>        
+        /// <param name="symbol">Symbol as listed by the QuantGate servers.</param>
+        /// <returns>The Instrument data object that will receive the updates.</returns>
+        /// <remarks>The client should unsubscribe as soon as the data is received.</remarks>
         public Instrument SubscribeInstrument(string symbol) =>
             SubscribeAndReturn(new InstrumentSubscription(this, _streamID, symbol)) as Instrument;
 
+        /// <summary>
+        /// Subscribes to a stream of Top Symbols according to broker and instrument type.
+        /// </summary>
+        /// <param name="broker">The broker to get the Top Symbols for. Must match a valid broker type string.</param>
+        /// <param name="instrumentType">The type of instrument to include in the results.</param>
+        /// <param name="throttleRate">Rate to throttle messages at (in ms). Enter 0 for no throttling.</param>
+        /// <returns>The Top Symbols data object that will receive the updates.</returns>
         public TopSymbols SubscribeTopSymbols(string broker, InstrumentType instrumentType = 
                                               InstrumentType.NoInstrument, int throttleRate = 0) =>
             SubscribeAndReturn(new TopSymbolsSubscription(this, null, broker, instrumentType,
                                                           throttleRate: (uint) throttleRate)) as TopSymbols;
 
+        /// <summary>
+        /// Subscribes to a stream and returns the values from the stream.
+        /// </summary>
+        /// <param name="subscription">The subscription to subscribe to and return.</param>
+        /// <returns>The values data object that will receive the subscription updates.</returns>
         private ValueBase SubscribeAndReturn(ISubscription subscription)
         {
             subscription.Subscribe();
             return subscription.Values;
         }
 
+        /// <summary>
+        /// Subscribes to a search stream and returns an object from which to request and receive search results.
+        /// </summary>
+        /// <returns>A Symbol Search object that can be used to search for and receive search results.</returns>
         public SymbolSearch SubscribeSearch()
         {            
             SearchSubscription subscription = new SearchSubscription(this, _streamID);

@@ -84,7 +84,7 @@
     <Compile Include="Values\Sentiment.cs" />
     <Compile Include="Values\SingleValueBase.cs" />
     <Compile Include="Values\StrategyValues.cs" />
-    <Compile Include="Values\TickValues.cs" />
+    <Compile Include="Values\TickRange.cs" />
     <Compile Include="Values\TopSymbol.cs" />
     <Compile Include="Values\TopSymbols.cs" />
     <Compile Include="Values\TradingSession.cs" />

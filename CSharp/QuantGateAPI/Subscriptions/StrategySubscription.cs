@@ -22,14 +22,21 @@ namespace QuantGate.API.Subscriptions
             Values.EntryProgress = update.EntryProgress / 1000.0;
             Values.ExitProgress = update.ExitProgress / 1000.0;
             Values.Signal = (StrategySignal)update.Signal;
-            Values.PerceptionLevel = update.PerceptionLevel / 1000.0;
+            Values.PerceptionLevel = ConvertLevel(update.PerceptionLevel);
             Values.PerceptionSignal = (GaugeSignal)update.PerceptionSignal;
-            Values.CommitmentLevel = update.CommitmentLevel / 1000.0;
+            Values.CommitmentLevel = ConvertLevel(update.CommitmentLevel);
             Values.CommitmentSignal = (GaugeSignal)update.CommitmentSignal;
-            Values.EquilibriumLevel = update.EquilibriumLevel / 1000.0;
+            Values.EquilibriumLevel = ConvertLevel(update.EquilibriumLevel);
             Values.EquilibriumSignal = (GaugeSignal)update.EquilibriumSignal;
-            Values.SentimentLevel = update.SentimentLevel / 1000.0;
+            Values.SentimentLevel = ConvertLevel(update.SentimentLevel);
             Values.SentimentSignal = (GaugeSignal)update.SentimentSignal;
         }
+
+        /// <summary>
+        /// Converts a level to a nullable double value.
+        /// </summary>
+        /// <param name="level">The level to convert.</param>
+        /// <returns>The converted nullable double value.</returns>
+        private double? ConvertLevel(uint level) => level == 0 ? null : (double?)((level - 1001) / 1000.0);
     }
 }

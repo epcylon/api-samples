@@ -3,23 +3,73 @@ using System.Collections.Generic;
 
 namespace QuantGate.API.Values
 {
+    /// <summary>
+    /// Holds Instrument details. Will be updated by the stream with change notifications.
+    /// Supply this object to the Unsubscribe method of the APIClient after values are received 
+    /// to end the subscription.
+    /// </summary>
     public class Instrument : ValueBase
     {
+        /// <summary>
+        /// Symbol as listed by the QuantGate servers.
+        /// </summary>
         private string _symbol;
+        /// <summary>
+        /// Underlying symbol.
+        /// </summary>
         private string _underlying;
+        /// <summary>
+        /// Currency the instrument is traded in.
+        /// </summary>
         private string _currency;
-        private string _displayName;
+        /// <summary>
+        /// Primary exchange (ISO 10383 MIC) the instrument is traded on.
+        /// </summary>
         private string _exchange;
+        /// <summary>
+        /// Display name of the instrument.
+        /// </summary>
+        private string _displayName;
+        /// <summary>
+        /// Type of instrument. 
+        /// </summary>
         private InstrumentType _instrumentType;
+        /// <summary>
+        /// Right of an option, if an option (will be empty otherwise).
+        /// </summary>
         private PutOrCall _putOrCall;
+        /// <summary>
+        /// Strike price of an option, if an option (will be zero otherwise).
+        /// </summary>
         private double _strike;
+        /// <summary>
+        /// Expiry date of the instrument, if applicable
+        /// </summary>
         private DateTime _expiryDate;
+        /// <summary>
+        /// Display name of the instrument.
+        /// </summary>
         private double _multiplier;
+        /// <summary>
+        /// Time zone of the primary exchange the instrument is traded on.
+        /// </summary>
         private TimeZoneInfo _timeZone;
+        /// <summary>
+        /// Tick ranges used to determine price levels.
+        /// </summary>
         private List<TickRange> _tickRanges = new List<TickRange>();
+        /// <summary>
+        /// Trading session end times and lengths for each day Sunday-Saturday, specified in the exchange time_zone.
+        /// </summary>
         private List<TradingSession> _tradingSessions = new List<TradingSession>();
+        /// <summary>
+        /// Map of broker symbols according to broker (ib, cqg, dtniq, etc.).
+        /// </summary>
         private Dictionary<string, string> _brokerSymbols = new Dictionary<string, string>();
 
+        /// <summary>
+        /// Symbol as listed by the QuantGate servers.
+        /// </summary>
         public string Symbol
         {
             get => _symbol;
@@ -33,6 +83,9 @@ namespace QuantGate.API.Values
             }
         }
 
+        /// <summary>
+        /// Underlying symbol.
+        /// </summary>
         public string Underlying
         {
             get => _underlying;
@@ -45,6 +98,10 @@ namespace QuantGate.API.Values
                 }
             }
         }
+
+        /// <summary>
+        /// Currency the instrument is traded in.
+        /// </summary>
         public string Currency 
         {
             get => _currency;
@@ -57,18 +114,10 @@ namespace QuantGate.API.Values
                 }
             }
         }
-        public string DisplayName
-        {
-            get => _displayName;
-            internal set
-            {
-                if (_displayName != value)
-                {
-                    _displayName = value;
-                    NotifyPropertyChanged();
-                }
-            }
-        }
+
+        /// <summary>
+        /// Primary exchange (ISO 10383 MIC) the instrument is traded on.
+        /// </summary>
         public string Exchange 
         {
             get => _exchange;
@@ -81,6 +130,26 @@ namespace QuantGate.API.Values
                 }
             }
         }
+
+        /// <summary>
+        /// Display name of the instrument.
+        /// </summary>
+        public string DisplayName
+        {
+            get => _displayName;
+            internal set
+            {
+                if (_displayName != value)
+                {
+                    _displayName = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Type of instrument. 
+        /// </summary>
         public InstrumentType InstrumentType 
         {
             get => _instrumentType;
@@ -93,6 +162,10 @@ namespace QuantGate.API.Values
                 }
             }
         }
+
+        /// <summary>
+        /// Right of an option, if an option (will be empty otherwise).
+        /// </summary>
         public PutOrCall PutOrCall 
         {
             get => _putOrCall;
@@ -105,6 +178,10 @@ namespace QuantGate.API.Values
                 }
             }
         }
+
+        /// <summary>
+        /// Strike price of an option, if an option (will be zero otherwise).
+        /// </summary>
         public double Strike 
         {
             get => _strike;
@@ -117,6 +194,10 @@ namespace QuantGate.API.Values
                 }
             }
         }
+
+        /// <summary>
+        /// Expiry date of the instrument, if applicable
+        /// </summary>
         public DateTime ExpiryDate 
         {
             get => _expiryDate;
@@ -129,7 +210,11 @@ namespace QuantGate.API.Values
                 }
             }
         }
-        public double Multiplier 
+
+        /// <summary>
+        /// Display name of the instrument.
+        /// </summary>
+        public double Multiplier
         {
             get => _multiplier;
             internal set
@@ -141,7 +226,11 @@ namespace QuantGate.API.Values
                 }
             }
         }
-        public TimeZoneInfo TimeZone 
+
+        /// <summary>
+        /// Time zone of the primary exchange the instrument is traded on.
+        /// </summary>
+        public TimeZoneInfo TimeZone
         {
             get => _timeZone;
             internal set
@@ -153,6 +242,10 @@ namespace QuantGate.API.Values
                 }
             }
         }
+
+        /// <summary>
+        /// Tick ranges used to determine price levels.
+        /// </summary>
         public List<TickRange> TickRanges 
         {
             get => _tickRanges;
@@ -163,6 +256,10 @@ namespace QuantGate.API.Values
                 NotifyPropertyChanged();
             }
         }
+
+        /// <summary>
+        /// Trading session end times and lengths for each day Sunday-Saturday, specified in the exchange time_zone.
+        /// </summary>
         public List<TradingSession> TradingSessions 
         {
             get => _tradingSessions;
@@ -173,6 +270,10 @@ namespace QuantGate.API.Values
                 NotifyPropertyChanged();                
             }
         }
+
+        /// <summary>
+        /// Map of broker symbols according to broker (ib, cqg, dtniq, etc.).
+        /// </summary>
         public Dictionary<string, string> BrokerSymbols 
         {
             get => _brokerSymbols;

@@ -15,9 +15,9 @@ namespace QuantGate.API.Subscriptions
         {
             Values.TimeStamp = ProtoTimeEncoder.TimestampSecondsToDate(update.Timestamp);
             Values.Bias = update.Bias / 1000.0;
-            Values.PerceptionPrice = update.Perception / 1000.0;
-            Values.SentimentPrice = update.Sentiment / 1000.0;
-            Values.CommitmentPrice = update.Commitment / 1000.0;
+            Values.Perception = update.Perception / 1000.0;
+            Values.Sentiment = update.Sentiment / 1000.0;
+            Values.Commitment = update.Commitment / 1000.0;
             Values.EquilibriumPrice = ProtoPriceEncoder.DecodePrice(update.EquilibriumPrice);
             Values.GapSize = ProtoPriceEncoder.DecodePrice(update.GapSize);
             Values.LastPrice = ProtoPriceEncoder.DecodePrice(update.LastPrice);

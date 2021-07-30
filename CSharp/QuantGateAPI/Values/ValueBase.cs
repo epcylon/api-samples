@@ -10,6 +10,9 @@ namespace QuantGate.API.Values
     /// </summary>
     public abstract class ValueBase : INotifyPropertyChanged
     {
+        /// <summary>
+        /// Holds a reference to the subscription that these values are streamed from.
+        /// </summary>
         internal ISubscription Subscription { get; set; }
 
         /// <summary>
