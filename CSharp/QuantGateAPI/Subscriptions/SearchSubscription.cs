@@ -17,7 +17,7 @@ namespace QuantGate.API.Subscriptions
 
         public void Search(string term, string broker)
         {
-            Client.Send(new ProtoStompSend(Client, Destination + '/' + term + '/' + broker));
+            Client.Send(new ProtoStompSend(Destination + '/' + term + '/' + broker));
         }
 
         protected override object Preprocess(SymbolSearchUpdate update)

@@ -17,7 +17,7 @@ namespace QuantGate.API.ProtoStomp
         /// </summary>
         internal SendRequest Request { get; private set; }
 
-        public ProtoStompSend(APIClient client, string destination, ByteString body = null, bool receipt = false)
+        public ProtoStompSend(string destination, ByteString body = null, bool receipt = false)
         {
             Request = new SendRequest();
 

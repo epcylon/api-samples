@@ -1,8 +1,7 @@
 ﻿using Google.Protobuf;
 using QuantGate.API.ProtoStomp;
 using QuantGate.API.Values;
-using System;
-using System.Windows.Threading;
+using System.Threading;
 
 namespace QuantGate.API.Subscriptions
 {
@@ -14,13 +13,10 @@ namespace QuantGate.API.Subscriptions
         public V Values { get; }
         ValueBase ISubscription.Values => Values;
 
-        private readonly Dispatcher _dispatcher;
-
         public SubscriptionBase(APIClient client, MessageParser<M> parser,
                                 string destination, bool receipt = false, uint throttleRate = 0) :
             base(client, destination, receipt, throttleRate)
         {
-            _dispatcher = Dispatcher.CurrentDispatcher;
             _parser = parser;
             Values = new V() { Subscription = this };
             OnNext += HandleOnNext;
@@ -30,11 +26,12 @@ namespace QuantGate.API.Subscriptions
         {
             M update = _parser.ParseFrom(values);
             object processed = Preprocess(update);
-            _dispatcher.BeginInvoke(DispatcherPriority.Normal, (Action)(() =>
+
+            Client.Sync.Post(new SendOrPostCallback((o) =>
             {
                 HandleUpdate(update, processed);
                 Values.SendUpdated();
-            }));
+            }), null);
         }
 
         protected virtual object Preprocess(M update) => null;

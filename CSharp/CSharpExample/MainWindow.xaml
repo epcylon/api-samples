@@ -28,7 +28,7 @@
                 <GridView>
                     <GridViewColumn Header="Symbol" DisplayMemberBinding="{Binding Symbol}" Width="60"/>
                     <GridViewColumn Header="Name" DisplayMemberBinding="{Binding DisplayName}" Width="200"/>
-                    <GridViewColumn Header="Progress" DisplayMemberBinding="{Binding EntryProgress, StringFormat=p1}" Width="60"/>
+                    <GridViewColumn Header="Progress" DisplayMemberBinding="{Binding EntryProgress}" Width="60"/>
                 </GridView>
             </ListView.View>
         </ListView>

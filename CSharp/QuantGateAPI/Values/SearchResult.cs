@@ -8,7 +8,7 @@
         /// <summary>
         /// Symbol as listed by the QuantGate servers.
         /// </summary>
-        public object Symbol { get; internal set; }
+        public string Symbol { get; internal set; }
         /// <summary>
         /// Underlying symbol.
         /// </summary>

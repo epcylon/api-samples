@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enumerations.cs" />
+    <Compile Include="ErrorEventArgs.cs" />
     <Compile Include="Subscriptions\InstrumentSubscription.cs" />
     <Compile Include="Subscriptions\TopSymbolsSubscription.cs" />
     <Compile Include="SymbolSearch.cs" />

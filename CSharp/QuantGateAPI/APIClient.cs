@@ -5,9 +5,11 @@ using QuantGate.API.Subscriptions;
 using QuantGate.API.Utilities;
 using QuantGate.API.Values;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using WebSocketSharp;
 
@@ -39,19 +41,29 @@ namespace QuantGate.API
             new Dictionary<ulong, IReceiptable>();
 
         /// <summary>
+        /// Blocking message queue used in the main thread to process new actions within the thread.
+        /// </summary>
+        private readonly BlockingCollection<Action> _actions = new BlockingCollection<Action>();
+
+        /// <summary>
         /// Transport layer interface instance.
         /// </summary>
         private readonly WebSocket _transport;
+
+        /// <summary>
+        /// The dispatcher to use for threading.
+        /// </summary>
+        internal SynchronizationContext Sync { get; }
 
         /// <summary>
         /// The Stomp version the client is connected to.
         /// </summary>
         public string StompVersion { get; private set; }
 
-        public event Action<APIClient> Connected = delegate { };
-        public event Action<APIClient> Disconnected = delegate { };
-        public event Action<APIClient> OnHeartbeat = delegate { };
-        public event Action<APIClient, string> Error = delegate { };
+        public event EventHandler Connected = delegate { };
+        public event EventHandler Disconnected = delegate { };
+        public event EventHandler OnHeartbeat = delegate { };
+        public event EventHandler<ErrorEventArgs> Error = delegate { };
 
         /// <summary>
         /// The host address of the server to connect to.
@@ -81,7 +93,9 @@ namespace QuantGate.API
         /// </summary>
         /// <param name="host">The web address to connect to.</param>
         /// <param name="port">The port to connect to.</param>
-        public APIClient(string host, int port = int.MinValue, DataStream stream = DataStream.Realtime)
+        /// <param name="stream">The base datastream to connect to (default = realtime).</param>
+        /// <param name="sync">The synchronization context to return values on (default = SychronizationContext.Current).</param>
+        public APIClient(string host, int port = int.MinValue, DataStream stream = DataStream.Realtime, SynchronizationContext sync = null)
         {
             if (port == int.MinValue)
             {
@@ -96,6 +110,9 @@ namespace QuantGate.API
                     port = 80;
             }
 
+            // Get a reference to the dispatcher to use.
+            Sync = (sync ?? SynchronizationContext.Current) ?? new SynchronizationContext();
+
             Host = host;
             Port = port;
 
@@ -108,14 +125,17 @@ namespace QuantGate.API
                 default: _streamID = ParsedDestination.RealtimeStreamID; break;
             }
 
+            // Start the main (long running) thread queue.
+            Task.Factory.StartNew(HandleActions, TaskCreationOptions.LongRunning);
+
             // Create the new websocket.
             _transport = new WebSocket(Host + ':' + Port + "/");
 
             // Set up the event handling.
-            _transport.OnOpen += (o, e) => OnOpen(o);
-            _transport.OnClose += (o, e) => OnClose(o);
-            _transport.OnMessage += (o, e) => HandleMessage(o, e.RawData);
-            _transport.OnError += (o, e) => OnError(o, e);
+            _transport.OnOpen += OnOpen;
+            _transport.OnClose += OnClose;
+            _transport.OnMessage += HandleMessage;
+            _transport.OnError += OnError;
 
             _messageConsumers = new Dictionary<ResponseFrame.ResponseOneofCase, Action<ResponseFrame>>
             {
@@ -129,84 +149,132 @@ namespace QuantGate.API
             };
         }
 
-        private void OnError(object o, ErrorEventArgs e)
+        #region Thread Queue Handling
+
+        private void Enqueue(Action action) { _actions.Add(action); }
+
+        private void HandleActions()
         {
-            string message;
-
-            message = e.Message + (e.Exception?.Message ?? string.Empty);
-
-            // Handle the error message.
-            Trace.TraceError(_moduleID + ":HE - Stomp transport error: " + message);
-
-            // Make sure it closes properly.                        
-            if ((_transport is object) && (_transport.ReadyState == WebSocketState.Closed))
-                Close();
+            foreach (Action action in _actions.GetConsumingEnumerable())
+                action();
         }
 
+        #endregion
+
+        #region Transport Event Handling
+
+        private void OnOpen(object source, EventArgs args)
+        {
+            Enqueue(() =>
+            {
+                ConnectRequest connect;
+
+                try
+                {
+                    connect = new ConnectRequest { AcceptVersion = "1.0" };
+
+                    if (Username is object)
+                        connect.Login = Username;
+                    if (Password is object)
+                        connect.Passcode = Password;
+
+                    Send(new RequestFrame { Connect = connect });
+                }
+                catch (Exception ex)
+                {
+                    Trace.TraceError(_moduleID + ":OO - " + ex.Message);
+                }
+            });
+        }
+
+        private void OnClose(object source, EventArgs args)
+        {
+            Enqueue(() =>
+            {
+                try
+                {
+                    // Clear any open subscriptions.
+                    ClearSubscriptions();
+
+                    // Set the status values.
+                    IsConnected = false;
+                    Sync.Post(new SendOrPostCallback((o) => { Disconnected(this, EventArgs.Empty); }), null);
+
+                    // Stop the thread.
+                    _actions.CompleteAdding();
+
+                }
+                catch (Exception ex)
+                {
+                    Trace.TraceError(_moduleID + ":OCl - " + ex.Message);
+                }
+            });
+        }
+
+        private void OnError(object o, WebSocketSharp.ErrorEventArgs e)
+        {
+            Enqueue(() =>
+            {
+                string message;
+
+                message = e.Message + (e.Exception?.Message ?? string.Empty);
+
+                // Handle the error message.
+                Trace.TraceError(_moduleID + ":HE - Stomp transport error: " + message);
+
+                // Make sure it closes properly.                        
+                if ((_transport is object) && (_transport.ReadyState == WebSocketState.Closed))
+                    Close();
+            });
+        }
 
         /// <summary>
-        /// Used to close the transport object.
+        /// Dispatches the given message to a registered message consumer.
         /// </summary>
-        void Close()
+        /// <param name="msg">The message to handle.</param>
+        private void HandleMessage(object source, MessageEventArgs args)
         {
-            try
+            Enqueue(() =>
             {
-                if (_transport is object)
+                ResponseFrame frame;
+
+                try
                 {
-                    if (_transport.ReadyState != WebSocketState.Closed)
-                        _transport.CloseAsync();
-                    else
-                        OnClose(this);
+                    frame = ResponseFrame.Parser.ParseFrom(args.RawData);
+
+                    if (frame is null)
+                        return;
+
+                    if (_messageConsumers.TryGetValue(frame.ResponseCase, out Action<ResponseFrame> consumer))
+                        consumer(frame);
                 }
-            }
-            catch (Exception ex)
-            {
-                Trace.TraceError(_moduleID + ":Cls - " + ex.Message);
-                OnClose(this);
-            }
+                catch (Exception ex)
+                {
+                    Trace.TraceError(_moduleID + ":HMsg - " + ex.Message);
+                }
+            });
         }
 
+        #endregion
 
-        private void HandleSubscriptionError(ResponseFrame frame)
-        {
-            ProtoStompSubscription subscription;
+        #region Response Frame Handling
 
-            try
-            {
-                // If the subscription id exists, try to get the subscription.
-                lock (_subscriptionReferences)
-                    _subscriptionReferences.TryGetValue(
-                        frame.SubscriptionError.SubscriptionId, out subscription);
-
-                if (subscription is object)
-                {
-                    // If the subscription was found, handle the error. 
-                    (subscription as IObserver<ByteString>).
-                        OnError(new Exception(frame.SubscriptionError.Message));
-                }
-                else if (!_isDisconnecting && IsConnected)
-                {
-                    // If not disconnecting, log an error.
-                    Trace.TraceInformation(_moduleID + ":HSE - Subscription not found for id: " +
-                                           frame.SubscriptionError.SubscriptionId.ToString());
-                }
-            }
-            catch (Exception ex)
-            {
-                Trace.TraceError(_moduleID + ":HSE - " + ex.Message);
-            }
-        }        
-
-        private void HandleHeartbeatFrame(ResponseFrame frame)
+        /// <summary>
+        /// Called when [connected] received.
+        /// </summary>
+        /// <param name="obj">The obj.</param>
+        private void OnStompConnected(ResponseFrame frame)
         {
             try
             {
-                // Handle as message.
-                OnHeartbeat(this);
+                StompVersion = frame.Connected.Version;
+                IsConnected = true;
+
+                Sync.Post(new SendOrPostCallback((o) => { Connected(this, EventArgs.Empty); }), null);
             }
             catch (Exception ex)
             {
-                Trace.TraceError(_moduleID + ":HHbF - " + ex.Message);
+                Trace.TraceError(_moduleID + ":OSCn - " + ex.Message);
             }
         }
 
@@ -237,15 +305,111 @@ namespace QuantGate.API
             }
         }
 
-        private void HandleMessage(MessageResponse message)
+        private void HandleReceiptFrame(ResponseFrame frame)
+        {
+            IReceiptable receiptable;
+
+            try
+            {
+                // Try to get the receiptable and remove if found.                
+                if (_receiptReferences.TryGetValue(frame.Receipt.ReceiptId, out receiptable))
+                    _receiptReferences.Remove(frame.Receipt.ReceiptId);
+
+                if (receiptable is object)
+                {
+                    receiptable.OnReceipt();
+                }
+                else if (!_isDisconnecting && IsConnected)
+                {
+                    Trace.TraceError(_moduleID + ":HRF - Receiptable not found for id" + frame.Receipt.ReceiptId.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError(_moduleID + ":HRF - " + ex.Message);
+            }
+        }
+
+        private void HandleErrorFrame(ResponseFrame frame)
+        {
+            Sync.Post(new SendOrPostCallback((o) => { Error(this, new ErrorEventArgs(frame.ServerError.Message)); }), null) ;
+        }
+
+        private void HandleSubscriptionError(ResponseFrame frame)
         {
             ProtoStompSubscription subscription;
 
             try
             {
                 // If the subscription id exists, try to get the subscription.
-                lock (_subscriptionReferences)
-                    _subscriptionReferences.TryGetValue(message.SubscriptionId, out subscription);
+                _subscriptionReferences.TryGetValue(
+                    frame.SubscriptionError.SubscriptionId, out subscription);
+
+                if (subscription is object)
+                {
+                    // If the subscription was found, handle the error. 
+                    (subscription as IObserver<ByteString>).
+                        OnError(new Exception(frame.SubscriptionError.Message));
+                }
+                else if (!_isDisconnecting && IsConnected)
+                {
+                    // If not disconnecting, log an error.
+                    Trace.TraceInformation(_moduleID + ":HSE - Subscription not found for id: " +
+                                           frame.SubscriptionError.SubscriptionId.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError(_moduleID + ":HSE - " + ex.Message);
+            }
+        }
+
+        private void HandleHeartbeatFrame(ResponseFrame frame)
+        {
+            try
+            {
+                // Handle as message.
+                Sync.Post(new SendOrPostCallback((o) => { OnHeartbeat(this, EventArgs.Empty); } ), null);
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError(_moduleID + ":HHbF - " + ex.Message);
+            }
+        }
+
+        #endregion
+
+
+        /// <summary>
+        /// Used to close the transport object.
+        /// </summary>
+        private void Close()
+        {
+            try
+            {
+                if (_transport is object)
+                {
+                    if (_transport.ReadyState != WebSocketState.Closed)
+                        _transport.CloseAsync();
+                    else
+                        OnClose(this, EventArgs.Empty);
+                }
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError(_moduleID + ":Cls - " + ex.Message);
+                OnClose(this, EventArgs.Empty);
+            }
+        }
+
+        private void HandleMessage(MessageResponse message)
+        {
+            ProtoStompSubscription subscription;
+
+            try
+            {
+                // If the subscription id exists, try to get the subscription.                
+                _subscriptionReferences.TryGetValue(message.SubscriptionId, out subscription);
 
                 if (subscription is object)
                 {
@@ -265,37 +429,6 @@ namespace QuantGate.API
             }
         }
 
-        private void HandleReceiptFrame(ResponseFrame frame)
-        {
-            IReceiptable receiptable;
-
-            try
-            {
-                // Try to get the receiptable and remove if found.
-                lock (_receiptReferences)
-                    if (_receiptReferences.TryGetValue(frame.Receipt.ReceiptId, out receiptable))
-                        _receiptReferences.Remove(frame.Receipt.ReceiptId);
-
-                if (receiptable is object)
-                {
-                    receiptable.OnReceipt();
-                }
-                else if (!_isDisconnecting && IsConnected)
-                {
-                    Trace.TraceError(_moduleID + ":HRF - Receiptable not found for id" + frame.Receipt.ReceiptId.ToString());
-                }
-            }
-            catch (Exception ex)
-            {
-                Trace.TraceError(_moduleID + ":HRF - " + ex.Message);
-            }
-        }
-
-        private void HandleErrorFrame(ResponseFrame frame)
-        {
-            Error(this, frame.ServerError.Message);
-        }
-
         /// <summary>
         /// Gets a value indicating whether this <see cref = "APIClient" /> is connected.
         /// </summary>
@@ -308,50 +441,32 @@ namespace QuantGate.API
         /// <param name="jwtToken">Jwt Token to connect with.</param>
         public void Connect(string jwtToken)
         {
-            byte[] bytes;
-            string username;
-
-            try
+            Enqueue(() =>
             {
-                // Get the username from the token.
-                bytes = Convert.FromBase64String(jwtToken.Split(new char[] { '.' })[1]);
-                username = System.Text.Encoding.UTF8.GetString(bytes);
-                username = username.Split(new string[] { "sub\":\"" }, StringSplitOptions.None)[1].Split(new char[] { '"' })[0];
+                byte[] bytes;
+                string username;
 
-                // Set the username and password.
-                Password = jwtToken;
-                Username = username;
+                try
+                {
+                    // Get the username from the token.
+                    bytes = Convert.FromBase64String(jwtToken.Split(new char[] { '.' })[1]);
+                    username = System.Text.Encoding.UTF8.GetString(bytes);
+                    username = username.Split(new string[] { "sub\":\"" }, StringSplitOptions.None)[1].Split(new char[] { '"' })[0];
 
-                _isDisconnecting = false;
+                    // Set the username and password.
+                    Password = jwtToken;
+                    Username = username;
 
-                // Connect to the websocket.
-                _transport.ConnectAsync();
-            }
-            catch (Exception ex)
-            {
-                Trace.TraceError(_moduleID + ":Cn - " + ex.Message);
-            }
-        }
+                    _isDisconnecting = false;
 
-        private void OnOpen(object source)
-        {
-            ConnectRequest connect;
-
-            try
-            {
-                connect = new ConnectRequest { AcceptVersion = "1.0" };
-
-                if (Username is object)
-                    connect.Login = Username;
-                if (Password is object)
-                    connect.Passcode = Password;
-
-                Send(new RequestFrame { Connect = connect });
-            }
-            catch (Exception ex)
-            {
-                Trace.TraceError(_moduleID + ":OO - " + ex.Message);
-            }
+                    // Connect to the websocket.
+                    _transport.ConnectAsync();
+                }
+                catch (Exception ex)
+                {
+                    Trace.TraceError(_moduleID + ":Cn - " + ex.Message);
+                }
+            });
         }
 
         private void Send(RequestFrame frame)
@@ -366,40 +481,26 @@ namespace QuantGate.API
             }
         }
 
-        private void OnClose(object source)
-        {
-            try
-            {
-                // Clear any open subscriptions.
-                ClearSubscriptions();
-
-                // Set the status values.
-                IsConnected = false;
-                Disconnected(this);
-            }
-            catch (Exception ex)
-            {
-                Trace.TraceError(_moduleID + ":OCl - " + ex.Message);
-            }
-        }
-
         /// <summary>
         /// Disconnects this instance.
         /// </summary>
         public void Disconnect()
         {
-            try
+            Enqueue(() =>
             {
-                _isDisconnecting = true;
-                Send(new RequestFrame { Disconnect = new DisconnectRequest() });
-                _transport.Close();
+                try
+                {
+                    _isDisconnecting = true;
+                    Send(new RequestFrame { Disconnect = new DisconnectRequest() });
+                    _transport.Close();
 
-                ClearSubscriptions();
-            }
-            catch (Exception ex)
-            {
-                Trace.TraceError(_moduleID + ":DCn - " + ex.Message);
-            }
+                    ClearSubscriptions();
+                }
+                catch (Exception ex)
+                {
+                    Trace.TraceError(_moduleID + ":DCn - " + ex.Message);
+                }
+            });
         }
 
         /// <summary>
@@ -412,23 +513,17 @@ namespace QuantGate.API
 
             try
             {
-                lock (_subscriptionReferences)
-                {
-                    // Clear the subscription references.
-                    subscriptions = _subscriptionReferences.Values.ToList();
-                    _subscriptionReferences.Clear();
-                }
+                // Clear the subscription references.
+                subscriptions = _subscriptionReferences.Values.ToList();
+                _subscriptionReferences.Clear();                
 
                 // Handle OnCompleted events for each subscription.
                 foreach (IObserver<ByteString> subscription in subscriptions)
                     subscription.OnCompleted();
-
-                lock (_receiptReferences)
-                {
-                    // Clear the receipt references.
-                    receiptables = _receiptReferences.Values.ToList();
-                    _receiptReferences.Clear();
-                }
+                
+                // Clear the receipt references.
+                receiptables = _receiptReferences.Values.ToList();
+                _receiptReferences.Clear();                
 
                 // Handle the OnInvalidate events for each subscription.
                 foreach (IReceiptable receiptable in receiptables)
@@ -451,18 +546,20 @@ namespace QuantGate.API
         /// <param name="toSend">The Stomp frame to send.</param>
         internal void Send(ProtoStompSend toSend)
         {
-            try
+            Enqueue(() =>
             {
-                if (toSend.ReceiptID != 0)
-                    lock (_receiptReferences)
+                try
+                {
+                    if (toSend.ReceiptID != 0)                        
                         _receiptReferences.Add(toSend.ReceiptID, toSend);
 
-                Send(new RequestFrame { Send = toSend.Request });
-            }
-            catch (Exception ex)
-            {
-                Trace.TraceError(_moduleID + ":Snd - " + ex.Message);
-            }
+                    Send(new RequestFrame { Send = toSend.Request });
+                }
+                catch (Exception ex)
+                {
+                    Trace.TraceError(_moduleID + ":Snd - " + ex.Message);
+                }
+            });
         }
 
         /// <summary>
@@ -470,15 +567,18 @@ namespace QuantGate.API
         /// </summary>
         public void SendHeartbeat()
         {
-            try
+            Enqueue(() =>
             {
-                // Send an empty message to the server.
-                Send(new RequestFrame { Heartbeat = new Heartbeat() });
-            }
-            catch (Exception ex)
-            {
-                Trace.TraceError(_moduleID + ":SHB - " + ex.Message);
-            }
+                try
+                {
+                    // Send an empty message to the server.
+                    Send(new RequestFrame { Heartbeat = new Heartbeat() });
+                }
+                catch (Exception ex)
+                {
+                    Trace.TraceError(_moduleID + ":SHB - " + ex.Message);
+                }
+            });
         }
 
         /// <summary>
@@ -488,28 +588,29 @@ namespace QuantGate.API
         /// <param name="reference">A reference object to associate with this request.</param>
         internal void Subscribe(ProtoStompSubscription subscription)
         {
-            try
+            Enqueue(() =>
             {
-                if (subscription is object)
+                try
                 {
-                    lock (_subscriptionReferences)
+                    if (subscription is object)
+                    {                        
                         _subscriptionReferences[subscription.SubscriptionID] = subscription;
 
-                    if (subscription.ReceiptID != 0)
-                        lock (_receiptReferences)
+                        if (subscription.ReceiptID != 0)
                             _receiptReferences.Add(subscription.ReceiptID, subscription);
 
-                    Send(new RequestFrame { Subscribe = subscription.Request });
+                        Send(new RequestFrame { Subscribe = subscription.Request });
 
-                    // Log the subscription action.
-                    Trace.TraceInformation(_moduleID + ":Sub - Subscribe: " + subscription.Destination +
-                                            " [" + subscription.SubscriptionID.ToString() + "]");
+                        // Log the subscription action.
+                        Trace.TraceInformation(_moduleID + ":Sub - Subscribe: " + subscription.Destination +
+                                                " [" + subscription.SubscriptionID.ToString() + "]");
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                Trace.TraceError(_moduleID + ":Sub - " + ex.Message);
-            }
+                catch (Exception ex)
+                {
+                    Trace.TraceError(_moduleID + ":Sub - " + ex.Message);
+                }
+            });
         }
 
         /// <summary>
@@ -517,34 +618,36 @@ namespace QuantGate.API
         /// </summary>
         internal void Throttle(ProtoStompSubscription subscription, uint rate)
         {
-            ThrottleRequest throttle = new ThrottleRequest();
-            ProtoStompReceipt receipt = new ProtoStompReceipt();
-
-            try
+            Enqueue(() =>
             {
-                if (subscription is object)
-                {
-                    // Create the unsubscribe message.
-                    throttle.SubscriptionId = subscription.SubscriptionID;
-                    throttle.ThrottleRate = rate;
-                    throttle.ReceiptId = receipt.ReceiptID;
+                ThrottleRequest throttle = new ThrottleRequest();
+                ProtoStompReceipt receipt = new ProtoStompReceipt();
 
-                    // Add to the receiptable requests.
-                    lock (_receiptReferences)
+                try
+                {
+                    if (subscription is object)
+                    {
+                        // Create the unsubscribe message.
+                        throttle.SubscriptionId = subscription.SubscriptionID;
+                        throttle.ThrottleRate = rate;
+                        throttle.ReceiptId = receipt.ReceiptID;
+
+                        // Add to the receiptable requests.                        
                         _receiptReferences.Add(receipt.ReceiptID, receipt);
 
-                    // Send the message.
-                    Send(new RequestFrame { Throttle = throttle });
+                        // Send the message.
+                        Send(new RequestFrame { Throttle = throttle });
 
-                    // Log the throttle action.
-                    Trace.TraceInformation(_moduleID + ":Thr - Throttle: " + subscription.Destination +
-                                         " [" + subscription.SubscriptionID.ToString() + "]: " + rate.ToString());
+                        // Log the throttle action.
+                        Trace.TraceInformation(_moduleID + ":Thr - Throttle: " + subscription.Destination +
+                                             " [" + subscription.SubscriptionID.ToString() + "]: " + rate.ToString());
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                Trace.TraceError(_moduleID + ":Thr - " + ex.Message);
-            }
+                catch (Exception ex)
+                {
+                    Trace.TraceError(_moduleID + ":Thr - " + ex.Message);
+                }
+            });
         }
 
         /// <summary>
@@ -553,87 +656,42 @@ namespace QuantGate.API
         /// <param name="subscription">The subscription to unsubscribe from.</param>
         internal void Unsubscribe(ProtoStompSubscription subscription)
         {
-            ProtoStompReceipt receipt = new ProtoStompReceipt();
-            UnsubscribeRequest unsubscribe = new UnsubscribeRequest();
-
-            try
+            Enqueue(() =>
             {
-                if (subscription is object)
-                {
-                    // Remove from the subscription references.
-                    lock (_subscriptionReferences)
-                        _subscriptionReferences.Remove(subscription.SubscriptionID);
-
-                    // Create the unsubscribe message.
-                    unsubscribe.SubscriptionId = subscription.SubscriptionID;
-                    unsubscribe.ReceiptId = receipt.ReceiptID;
-
-                    // Handle the receipt events on the subscription.
-                    receipt.Invalidated += ((IReceiptable)subscription).OnInvalidate;
-                    receipt.Receipted += ((IObserver<ByteString>)subscription).OnCompleted;
-
-                    // Add to the receiptable requests.
-                    lock (_receiptReferences)
-                        _receiptReferences.Add(receipt.ReceiptID, receipt);
-
-                    // Send the message.
-                    Send(new RequestFrame { Unsubscribe = unsubscribe });
-
-                    // Log the subscription action.
-                    Trace.TraceInformation(_moduleID + ":USub - Unsubscribe: " +
-                                           subscription.Destination + " [" + subscription.SubscriptionID.ToString() + "]");
-                }
-            }
-            catch (Exception ex)
-            {
-                Trace.TraceError(_moduleID + ":USub - " + ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// Called when [connected] received.
-        /// </summary>
-        /// <param name="obj">The obj.</param>
-        private void OnStompConnected(ResponseFrame frame)
-        {
-            Task.Run(() =>
-            {
+                ProtoStompReceipt receipt = new ProtoStompReceipt();
+                UnsubscribeRequest unsubscribe = new UnsubscribeRequest();
 
                 try
                 {
-                    StompVersion = frame.Connected.Version;
-                    IsConnected = true;
-                    Connected(this);
+                    if (subscription is object)
+                    {
+                        // Remove from the subscription references.                        
+                        _subscriptionReferences.Remove(subscription.SubscriptionID);
+
+                        // Create the unsubscribe message.
+                        unsubscribe.SubscriptionId = subscription.SubscriptionID;
+                        unsubscribe.ReceiptId = receipt.ReceiptID;
+
+                        // Handle the receipt events on the subscription.
+                        receipt.Invalidated += ((IReceiptable)subscription).OnInvalidate;
+                        receipt.Receipted += ((IObserver<ByteString>)subscription).OnCompleted;
+
+                        // Add to the receiptable requests.                        
+                        _receiptReferences.Add(receipt.ReceiptID, receipt);
+
+                        // Send the message.
+                        Send(new RequestFrame { Unsubscribe = unsubscribe });
+
+                        // Log the subscription action.
+                        Trace.TraceInformation(_moduleID + ":USub - Unsubscribe: " +
+                                               subscription.Destination + " [" + subscription.SubscriptionID.ToString() + "]");
+                    }
                 }
                 catch (Exception ex)
                 {
-                    Trace.TraceError(_moduleID + ":OSCn - " + ex.Message);
+                    Trace.TraceError(_moduleID + ":USub - " + ex.Message);
                 }
             });
-        }
-
-        /// <summary>
-        /// Dispatches the given message to a registered message consumer.
-        /// </summary>
-        /// <param name="msg">The message to handle.</param>
-        private void HandleMessage(object source, byte[] msg)
-        {
-            ResponseFrame frame;
-
-            try
-            {
-                frame = ResponseFrame.Parser.ParseFrom(msg);
-
-                if (frame is null)
-                    return;
-
-                if (_messageConsumers.TryGetValue(frame.ResponseCase, out Action<ResponseFrame> consumer))
-                    consumer(frame);
-            }
-            catch (Exception ex)
-            {
-                Trace.TraceError(_moduleID + ":HMsg - " + ex.Message);
-            }
         }
 
         /// <summary>
@@ -641,8 +699,11 @@ namespace QuantGate.API
         /// </summary>
         public void Dispose()
         {
-            if (IsConnected)
-                Disconnect();
+            Enqueue(() =>
+            {
+                if (IsConnected)
+                    Disconnect();
+            });
         }
 
         #region Subscriptions
@@ -690,8 +751,8 @@ namespace QuantGate.API
         /// <param name="compression">Compression timeframe to apply to the gauge. Default value is 50t.</param>
         /// <param name="throttleRate">Rate to throttle messages at (in ms). Enter 0 for no throttling.</param>
         /// <returns>The Sentiment data object that will receive the updates.</returns>
-        public Sentiment SubscribeSentiment(string symbol, string compression = "50t", int throttleRate = 0) => 
-            SubscribeAndReturn(new SentimentSubscription(this, _streamID, symbol, compression, 
+        public Sentiment SubscribeSentiment(string symbol, string compression = "50t", int throttleRate = 0) =>
+            SubscribeAndReturn(new SentimentSubscription(this, _streamID, symbol, compression,
                                                          throttleRate: (uint)throttleRate)) as Sentiment;
 
         /// <summary>
@@ -702,7 +763,7 @@ namespace QuantGate.API
         /// <param name="throttleRate">Rate to throttle messages at (in ms). Enter 0 for no throttling.</param>
         /// <returns>The Equilibrium data object that will receive the updates.</returns>
         public Equilibrium SubscribeEquilibrium(string symbol, string compression = "300s", int throttleRate = 0) =>
-            SubscribeAndReturn(new EquilibriumSubscription(this, _streamID, symbol, compression, 
+            SubscribeAndReturn(new EquilibriumSubscription(this, _streamID, symbol, compression,
                                                            throttleRate: (uint)throttleRate)) as Equilibrium;
 
         /// <summary>
@@ -711,8 +772,8 @@ namespace QuantGate.API
         /// <param name="symbol">Symbol to get the Multiframe Equilibrium data for.</param>
         /// <param name="throttleRate">Rate to throttle messages at (in ms). Enter 0 for no throttling.</param>
         /// <returns>The Multiframe Equilibrium data object that will receive the updates.</returns>
-        public MultiframeEquilibrium SubscribeMultiframeEquilibrium(string symbol, int throttleRate = 0) => 
-            SubscribeAndReturn(new MultiframeSubscription(this, _streamID, symbol, 
+        public MultiframeEquilibrium SubscribeMultiframeEquilibrium(string symbol, int throttleRate = 0) =>
+            SubscribeAndReturn(new MultiframeSubscription(this, _streamID, symbol,
                                                           throttleRate: (uint)throttleRate)) as MultiframeEquilibrium;
 
         /// <summary>
@@ -732,7 +793,7 @@ namespace QuantGate.API
         /// <param name="throttleRate">Rate to throttle messages at (in ms). Enter 0 for no throttling.</param>
         /// <returns>The Strategy data object that will receive the updates.</returns>
         public StrategyValues SubscribeStrategy(string strategyID, string symbol, int throttleRate = 0) =>
-            SubscribeAndReturn(new StrategySubscription(this, strategyID, _streamID, symbol, 
+            SubscribeAndReturn(new StrategySubscription(this, strategyID, _streamID, symbol,
                                                         throttleRate: (uint)throttleRate)) as StrategyValues;
 
         /// <summary>
@@ -752,10 +813,10 @@ namespace QuantGate.API
         /// <param name="instrumentType">The type of instrument to include in the results.</param>
         /// <param name="throttleRate">Rate to throttle messages at (in ms). Enter 0 for no throttling.</param>
         /// <returns>The Top Symbols data object that will receive the updates.</returns>
-        public TopSymbols SubscribeTopSymbols(string broker, InstrumentType instrumentType = 
+        public TopSymbols SubscribeTopSymbols(string broker, InstrumentType instrumentType =
                                               InstrumentType.NoInstrument, int throttleRate = 0) =>
             SubscribeAndReturn(new TopSymbolsSubscription(this, null, broker, instrumentType,
-                                                          throttleRate: (uint) throttleRate)) as TopSymbols;
+                                                          throttleRate: (uint)throttleRate)) as TopSymbols;
 
         /// <summary>
         /// Subscribes to a stream and returns the values from the stream.
@@ -773,7 +834,7 @@ namespace QuantGate.API
         /// </summary>
         /// <returns>A Symbol Search object that can be used to search for and receive search results.</returns>
         public SymbolSearch SubscribeSearch()
-        {            
+        {
             SearchSubscription subscription = new SearchSubscription(this, _streamID);
             subscription.Subscribe();
             return new SymbolSearch(subscription);

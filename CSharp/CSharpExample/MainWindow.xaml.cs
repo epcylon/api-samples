@@ -129,10 +129,7 @@ namespace BridgeRock.CSharpExample
             _client.Error += HandleError;
             _client.OnHeartbeat += HandleHeartbeat;
 
-            _client.Connect("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
-                            "eyJzdWIiOiJKb2huSCIsImlhdCI6MTYyNjk3NjExMiwiZXhwIjoxNjI4MTIx" +
-                            "NjAwLCJhdWQiOiIyV1VqZW9iUlhSVzlwc05ERWN4ZTFNRDl3dGRmZGgxQyJ9." +
-                            "DoeYRaAnK15I4LscisTHJm72zOqJhc1zKqbexP9vLro");
+            _client.Connect("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKb2huSCIsImlhdCI6MTYyODcxMzg2NywiZXhwIjoxNjMyOTYwMDAwLCJhdWQiOiIyV1VqZW9iUlhSVzlwc05ERWN4ZTFNRDl3dGRmZGgxQyJ9.Up48upDkCINp9znyjTkUXc0F2Rb5BWqfzmumF4mUcXA");
         }
 
         private void HandleSearchUpdate(object sender, TextChangedEventArgs e)
@@ -147,43 +144,40 @@ namespace BridgeRock.CSharpExample
             }
         }
 
-        private void HandleHeartbeat(APIClient client)
+        private void HandleHeartbeat(object client, EventArgs args)
         {
             Console.WriteLine("Heartbeat");
         }
 
-        private void HandleError(APIClient client, string message)
+        private void HandleError(object client, ErrorEventArgs args)
         {
-            Console.WriteLine("Error! " + message);
+            Console.WriteLine("Error! " + args.Message);
         }
 
-        private void HandleDisconnected(APIClient client)
+        private void HandleDisconnected(object client, EventArgs args)
         {
             Console.WriteLine("Disconnected!");
         }
 
-        private void HandleConnected(APIClient client)
+        private void HandleConnected(object client, EventArgs args)
         {
+            string symbol = "NQ U1";
+
             Console.WriteLine("Connected!");
 
-            Dispatcher.Invoke(delegate
-            {
-                string symbol = "NQ U1";
-                
-                Perception = _client.SubscribePerception(symbol);
-                Commitment = _client.SubscribeCommitment(symbol);
-                Equilibrium = _client.SubscribeEquilibrium(symbol, "300s");
-                Sentiment = _client.SubscribeSentiment(symbol, "50t");
-                Headroom = _client.SubscribeHeadroom(symbol);
-                BookPressure = _client.SubscribeBookPressure(symbol);
-                MultiFrame = _client.SubscribeMultiframeEquilibrium(symbol);
-                Trigger = _client.SubscribeTrigger(symbol);
-                Strategy = _client.SubscribeStrategy("Crb9.0", symbol);
-                _symbolSearch = _client.SubscribeSearch();
-                _symbolSearch.Update += HandleSearchUpdate;
-                _topSymbols = _client.SubscribeTopSymbols("ib");
-                _topSymbols.Updated += HandleTopSymbolsUpdate;
-            });
+            Perception = _client.SubscribePerception(symbol);
+            Commitment = _client.SubscribeCommitment(symbol);
+            Equilibrium = _client.SubscribeEquilibrium(symbol, "300s");
+            Sentiment = _client.SubscribeSentiment(symbol, "50t");
+            Headroom = _client.SubscribeHeadroom(symbol);
+            BookPressure = _client.SubscribeBookPressure(symbol);
+            MultiFrame = _client.SubscribeMultiframeEquilibrium(symbol);
+            Trigger = _client.SubscribeTrigger(symbol);
+            Strategy = _client.SubscribeStrategy("Crb9.0", symbol);
+            _symbolSearch = _client.SubscribeSearch();
+            _symbolSearch.Update += HandleSearchUpdate;
+            _topSymbols = _client.SubscribeTopSymbols("ib");
+            _topSymbols.Updated += HandleTopSymbolsUpdate;
         }
 
         private void HandleTopSymbolsUpdate(object sender, EventArgs e)
@@ -193,8 +187,13 @@ namespace BridgeRock.CSharpExample
 
             lvSearch.Items.Clear();
 
-            foreach (var x in _topSymbols.Symbols)
-                lvSearch.Items.Add(x);
+            foreach (TopSymbol symbol in _topSymbols.Symbols)
+                lvSearch.Items.Add(new SearchRow
+                {
+                    Symbol = symbol.Symbol,
+                    DisplayName = symbol.DisplayName,
+                    EntryProgress = symbol.EntryProgress.ToString("p1")
+                });
         }
 
         private void HandleSearchUpdate(object sender, SearchUpdateEventArgs e)
@@ -204,8 +203,13 @@ namespace BridgeRock.CSharpExample
 
             lvSearch.Items.Clear();
 
-            foreach (var x in e.Results)
-                lvSearch.Items.Add(x);
+            foreach (SearchResult result in e.Results)
+                lvSearch.Items.Add(new SearchRow
+                {
+                    Symbol = result.Symbol,
+                    DisplayName = result.DisplayName,
+                    EntryProgress = string.Empty
+                });
         }
     }
 }

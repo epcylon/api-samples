@@ -73,6 +73,7 @@
     <Compile Include="Controls\SentimentViewer.xaml.cs">
       <DependentUpon>SentimentViewer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SearchRow.cs" />
     <Page Include="Controls\SentimentViewer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
