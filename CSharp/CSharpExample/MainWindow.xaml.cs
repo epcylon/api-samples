@@ -149,6 +149,7 @@ namespace BridgeRock.CSharpExample
                 _client.Unsubscribe(Strategy);
                 _client.Unsubscribe(_topSymbols);
                 _symbolSearch.Dispose();
+                sViewer.ClearSpectrum();
             }
 
             Perception = _client.SubscribePerception(symbol);
@@ -163,7 +164,7 @@ namespace BridgeRock.CSharpExample
             _symbolSearch = _client.SubscribeSearch();
             _symbolSearch.Updated += HandleSearchUpdate;
             _topSymbols = _client.SubscribeTopSymbols("ib");
-            _topSymbols.Updated += HandleTopSymbolsUpdate;            
+            _topSymbols.Updated += HandleTopSymbolsUpdate;
         }
 
         private void HandleSearchUpdate(object sender, TextChangedEventArgs e)
@@ -223,6 +224,12 @@ namespace BridgeRock.CSharpExample
                     DisplayName = result.DisplayName,
                     EntryProgress = string.Empty
                 });
+        }
+
+        private void HandleSubscribeMenuClick(object sender, RoutedEventArgs e)
+        {
+            if (lvSearch.SelectedItem is SearchRow row)
+                Subscribe(row.Symbol);
         }
     }
 }

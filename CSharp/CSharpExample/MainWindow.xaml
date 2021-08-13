@@ -18,12 +18,17 @@
         <Slider HorizontalAlignment="Left" Margin="150,60,0,0" VerticalAlignment="Top" Orientation="Vertical" IsEnabled="False"
                 Height="300" Width="20" Minimum="-1" Maximum="1" Value="{Binding Path=Headroom.GaugeLevel}"/>
 
-        <controls:SentimentViewer HorizontalAlignment="Left" Margin="180,60,0,0" VerticalAlignment="Top" IsEnabled="False"
+        <controls:SentimentViewer x:Name="sViewer" HorizontalAlignment="Left" Margin="180,60,0,0" VerticalAlignment="Top" IsEnabled="False"
                                   Height="300" Width="300" Values="{Binding Path=Sentiment}" Background="#FFD0D0D0" />
 
         <TextBox x:Name="txtSearch" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text=""  VerticalAlignment="Top" Width="340" Margin="520,60,0,0"/>
 
         <ListView x:Name="lvSearch" HorizontalAlignment="Left" Height="272" VerticalAlignment="Top" Width="340" Margin="520,88,0,0">
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Subscribe" Click="HandleSubscribeMenuClick" />
+                </ContextMenu>
+            </ListView.ContextMenu>
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Symbol" DisplayMemberBinding="{Binding Symbol}" Width="60"/>
