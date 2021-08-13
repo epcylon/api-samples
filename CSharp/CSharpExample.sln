@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpExample", "CSharpExample\CSharpExample.csproj", "{2B27872C-D3BC-42F7-8D71-8AB07261D812}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuantGateAPI", "QuantGateAPI\QuantGateAPI.csproj", "{8D908C53-B75E-4237-9D3C-2B5907E03954}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuantGateSignalsAPI", "QuantGateSignalsAPI\QuantGateSignalsAPI.csproj", "{6E993EFA-26B3-48C3-B4C8-3C5D7E7C79A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{2B27872C-D3BC-42F7-8D71-8AB07261D812}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B27872C-D3BC-42F7-8D71-8AB07261D812}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B27872C-D3BC-42F7-8D71-8AB07261D812}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8D908C53-B75E-4237-9D3C-2B5907E03954}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8D908C53-B75E-4237-9D3C-2B5907E03954}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8D908C53-B75E-4237-9D3C-2B5907E03954}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8D908C53-B75E-4237-9D3C-2B5907E03954}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E993EFA-26B3-48C3-B4C8-3C5D7E7C79A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E993EFA-26B3-48C3-B4C8-3C5D7E7C79A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E993EFA-26B3-48C3-B4C8-3C5D7E7C79A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E993EFA-26B3-48C3-B4C8-3C5D7E7C79A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

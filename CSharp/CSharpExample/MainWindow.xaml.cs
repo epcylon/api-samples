@@ -1,5 +1,5 @@
-﻿using QuantGate.API;
-using QuantGate.API.Values;
+﻿using QuantGate.API.Signals;
+using QuantGate.API.Signals.Values;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -92,15 +92,15 @@ namespace BridgeRock.CSharpExample
             DependencyProperty.Register("MultiFrame", typeof(MultiframeEquilibrium), typeof(MainWindow), new PropertyMetadata(null));
 
 
-        public QuantGate.API.Values.Trigger Trigger
+        public QuantGate.API.Signals.Values.Trigger Trigger
         {
-            get { return (QuantGate.API.Values.Trigger)GetValue(TriggerProperty); }
+            get { return (QuantGate.API.Signals.Values.Trigger)GetValue(TriggerProperty); }
             set { SetValue(TriggerProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for Trigger.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty TriggerProperty =
-            DependencyProperty.Register("Trigger", typeof(QuantGate.API.Values.Trigger), typeof(MainWindow), new PropertyMetadata(null));
+            DependencyProperty.Register("Trigger", typeof(QuantGate.API.Signals.Values.Trigger), typeof(MainWindow), new PropertyMetadata(null));
 
 
         public StrategyValues Strategy
@@ -164,6 +164,9 @@ namespace BridgeRock.CSharpExample
             string symbol = "NQ U1";
 
             Console.WriteLine("Connected!");
+
+            if (Perception is object)
+                return;
 
             Perception = _client.SubscribePerception(symbol);
             Commitment = _client.SubscribeCommitment(symbol);
