@@ -127,10 +127,10 @@ namespace BridgeRock.CSharpExample
             _client.Connected += HandleConnected;
             _client.Disconnected += HandleDisconnected;
             _client.Error += HandleError;
-            _client.OnHeartbeat += HandleHeartbeat;
 
             _client.Connect("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKb2huSCIsImlhdCI6MTYyODcxMzg2NywiZXhwIjoxNjMyOTYwMDAwLCJhdWQiOiIyV1VqZW9iUlhSVzlwc05ERWN4ZTFNRDl3dGRmZGgxQyJ9.Up48upDkCINp9znyjTkUXc0F2Rb5BWqfzmumF4mUcXA");
-            
+
+            //Subscribe("QGSI-OTC");
             Subscribe("NQ U1");
         }
 
@@ -163,7 +163,7 @@ namespace BridgeRock.CSharpExample
             _symbolSearch = _client.SubscribeSearch();
             _symbolSearch.Updated += HandleSearchUpdate;
             _topSymbols = _client.SubscribeTopSymbols("ib");
-            _topSymbols.Updated += HandleTopSymbolsUpdate;
+            _topSymbols.Updated += HandleTopSymbolsUpdate;            
         }
 
         private void HandleSearchUpdate(object sender, TextChangedEventArgs e)
@@ -176,12 +176,7 @@ namespace BridgeRock.CSharpExample
             {
                 HandleTopSymbolsUpdate(_topSymbols, EventArgs.Empty);
             }
-        }
-
-        private void HandleHeartbeat(object client, EventArgs args)
-        {
-            Console.WriteLine("Heartbeat");
-        }
+        }        
 
         private void HandleError(object client, ErrorEventArgs args)
         {
