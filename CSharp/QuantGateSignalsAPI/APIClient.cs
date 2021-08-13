@@ -332,6 +332,7 @@ namespace QuantGate.API.Signals
                 StompVersion = frame.Connected.Version;
                 IsConnected = true;
 
+                IDGenerator.Reset();
                 Resubscribe();
 
                 Sync.Post(new SendOrPostCallback((o) => { Connected(this, EventArgs.Empty); }), null);
@@ -344,22 +345,27 @@ namespace QuantGate.API.Signals
 
         private void Resubscribe()
         {
+            List<ProtoStompSubscription> subscriptions;
+
             try
             {
-                List<ProtoStompSubscription> subscriptions;
-
+                // Get the current subscriptions list and clear the old.
                 subscriptions = _subscriptionReferences.Values.ToList();
                 _subscriptionReferences.Clear();
+                _receiptReferences.Clear();
 
                 foreach (ProtoStompSubscription subscription in subscriptions)
                 {
-                    subscription.ReceiptID = 0;
+                    // Go through all the subscriptions.
+                    if (subscription.ReceiptID != 0)
+                        subscription.ReceiptID = IDGenerator.NextID;
+
                     subscription.Subscribe();
                 }
             }
             catch (Exception ex)
             {
-                Trace.TraceError(_moduleID + ":OSCn - " + ex.Message);
+                Trace.TraceError(_moduleID + ":ReSub - " + ex.Message);
             }
         }
 
@@ -392,12 +398,10 @@ namespace QuantGate.API.Signals
 
         private void HandleReceiptFrame(ResponseFrame frame)
         {
-            IReceiptable receiptable;
-
             try
             {
-                // Try to get the receiptable and remove if found.                
-                if (_receiptReferences.TryGetValue(frame.Receipt.ReceiptId, out receiptable))
+                // Try to get the receiptable and remove if found.
+                if (_receiptReferences.TryGetValue(frame.Receipt.ReceiptId, out IReceiptable receiptable))
                     _receiptReferences.Remove(frame.Receipt.ReceiptId);
 
                 if (receiptable is object)
@@ -730,11 +734,15 @@ namespace QuantGate.API.Signals
                         if (subscription.ReceiptID != 0)
                             _receiptReferences.Add(subscription.ReceiptID, subscription);
 
-                        Send(new RequestFrame { Subscribe = subscription.Request });
+                        if (IsConnected & !_isDisconnecting)
+                        {
+                            // If connected, send the subscription request - otherwise, waiting for connection.
+                            Send(new RequestFrame { Subscribe = subscription.Request });
 
-                        // Log the subscription action.
-                        Trace.TraceInformation(_moduleID + ":Sub - Subscribe: " + subscription.Destination +
-                                                " [" + subscription.SubscriptionID.ToString() + "]");
+                            // Log the subscription action.
+                            Trace.TraceInformation(_moduleID + ":Sub - Subscribe: " + subscription.Destination +
+                                                    " [" + subscription.SubscriptionID.ToString() + "]");
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -766,12 +774,15 @@ namespace QuantGate.API.Signals
                         // Add to the receiptable requests.                        
                         _receiptReferences.Add(receipt.ReceiptID, receipt);
 
-                        // Send the message.
-                        Send(new RequestFrame { Throttle = throttle });
+                        if (IsConnected & !_isDisconnecting)
+                        {
+                            // If connected, send the throttle request - if not sent, will be applied to the initial subscription.
+                            Send(new RequestFrame { Throttle = throttle });
 
-                        // Log the throttle action.
-                        Trace.TraceInformation(_moduleID + ":Thr - Throttle: " + subscription.Destination +
-                                             " [" + subscription.SubscriptionID.ToString() + "]: " + rate.ToString());
+                            // Log the throttle action.
+                            Trace.TraceInformation(_moduleID + ":Thr - Throttle: " + subscription.Destination +
+                                                 " [" + subscription.SubscriptionID.ToString() + "]: " + rate.ToString());
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -810,12 +821,15 @@ namespace QuantGate.API.Signals
                         // Add to the receiptable requests.                        
                         _receiptReferences.Add(receipt.ReceiptID, receipt);
 
-                        // Send the message.
-                        Send(new RequestFrame { Unsubscribe = unsubscribe });
+                        if (IsConnected & !_isDisconnecting)
+                        {
+                            // If connected, send the message.
+                            Send(new RequestFrame { Unsubscribe = unsubscribe });
 
-                        // Log the subscription action.
-                        Trace.TraceInformation(_moduleID + ":USub - Unsubscribe: " +
-                                               subscription.Destination + " [" + subscription.SubscriptionID.ToString() + "]");
+                            // Log the subscription action.
+                            Trace.TraceInformation(_moduleID + ":USub - Unsubscribe: " +
+                                                   subscription.Destination + " [" + subscription.SubscriptionID.ToString() + "]");
+                        }
                     }
                 }
                 catch (Exception ex)

@@ -155,7 +155,11 @@ namespace QuantGate.API.Signals.ProtoStomp
 
         public event Action<ProtoStompSubscription> OnCompleted = delegate { };
 
-        void IReceiptable.OnReceipt() => OnReceipt(this);
+        void IReceiptable.OnReceipt()
+        {
+            OnReceipt(this);
+            _request.ReceiptId = 0;
+        }
 
         public event Action<IReceiptable> OnReceipt = delegate { };
 
