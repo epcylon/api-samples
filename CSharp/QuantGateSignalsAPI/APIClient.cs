@@ -63,11 +63,10 @@ namespace QuantGate.API.Signals
         /// <summary>
         /// The Stomp version the client is connected to.
         /// </summary>
-        public string StompVersion { get; private set; }
+        private string StompVersion { get; set; }
 
         public event EventHandler Connected = delegate { };
         public event EventHandler Disconnected = delegate { };
-        public event EventHandler OnHeartbeat = delegate { };
         public event EventHandler<ErrorEventArgs> Error = delegate { };
 
         /// <summary>
@@ -122,6 +121,19 @@ namespace QuantGate.API.Signals
         /// The time to kill a reconnection attempt.
         /// </summary>
         private long _killTicks = 0;
+
+        /// <summary>
+        /// The maximum time to wait before receiveing a message.
+        /// </summary>
+        private const long _maxHeartBeatWait = 1 * TimeSpan.TicksPerMinute;
+        /// <summary>
+        /// Time to wait after not receiving a message before sending a heartbeat request.
+        /// </summary>
+        private const long _heartBeatCheckTicks = 10 * TimeSpan.TicksPerSecond;
+        /// <summary>
+        /// The last time that a message was received.
+        /// </summary>
+        private long _lastMessageTicks = 0;
 
         /// <summary>
         /// The timer reference to use (if specified).
@@ -297,12 +309,14 @@ namespace QuantGate.API.Signals
 
                 try
                 {
+                    // Mark as the last time a message was received.
+                    _lastMessageTicks = DateTime.UtcNow.Ticks;
+
+                    // Parse the next message frame.
                     frame = ResponseFrame.Parser.ParseFrom(args.RawData);
 
-                    if (frame is null)
-                        return;
-
-                    if (_messageConsumers.TryGetValue(frame.ResponseCase, out Action<ResponseFrame> consumer))
+                    // If parsed properly and the consumer can be found, call the consumer for the message.
+                    if ((frame is object) && _messageConsumers.TryGetValue(frame.ResponseCase, out Action<ResponseFrame> consumer))
                         consumer(frame);
                 }
                 catch (Exception ex)
@@ -356,10 +370,14 @@ namespace QuantGate.API.Signals
 
                 foreach (ProtoStompSubscription subscription in subscriptions)
                 {
-                    // Go through all the subscriptions.
+                    // Go through all the subscriptions, generate a new receipt ID if necessary.
                     if (subscription.ReceiptID != 0)
                         subscription.ReceiptID = IDGenerator.NextID;
 
+                    // Generate a new subscription ID.
+                    subscription.SubscriptionID = IDGenerator.NextID;
+
+                    // Subscribe to the subscription.
                     subscription.Subscribe();
                 }
             }
@@ -453,18 +471,12 @@ namespace QuantGate.API.Signals
             }
         }
 
-        private void HandleHeartbeatFrame(ResponseFrame frame)
-        {
-            try
-            {
-                // Handle as message.
-                Sync.Post(new SendOrPostCallback((o) => { OnHeartbeat(this, EventArgs.Empty); }), null);
-            }
-            catch (Exception ex)
-            {
-                Trace.TraceError(_moduleID + ":HHbF - " + ex.Message);
-            }
-        }
+        /// <summary>
+        /// Handles the next heartbeat frame.
+        /// </summary>
+        /// <param name="frame">The heartbeat frame to handle.</param>
+        /// <remarks>Nothing to handle, since the last message time is already set.</remarks>
+        private void HandleHeartbeatFrame(ResponseFrame frame) { }
 
         #endregion
 
@@ -494,6 +506,20 @@ namespace QuantGate.API.Signals
                         {
                             Disconnect(false);
                             _killTicks = 0;
+                        }
+                    }
+                    else if (IsConnected && !_isDisconnecting)
+                    {
+                        // If connected and not disconnecting.
+                        if (utcTicks > _lastMessageTicks + _maxHeartBeatWait)
+                        {
+                            // If it's been too long before receiving a message, disconnect (to reconnect).
+                            Disconnect(false);
+                        }
+                        else if (utcTicks > _lastMessageTicks + _heartBeatCheckTicks)
+                        {
+                            // If past the last heartbeat checks, request a heartbeat.
+                            Send(new RequestFrame { Heartbeat = new Heartbeat() });
                         }
                     }
                 }
@@ -693,25 +719,6 @@ namespace QuantGate.API.Signals
                 catch (Exception ex)
                 {
                     Trace.TraceError(_moduleID + ":Snd - " + ex.Message);
-                }
-            });
-        }
-
-        /// <summary>
-        /// Sends a heartbeat message to the server.
-        /// </summary>
-        public void SendHeartbeat()
-        {
-            Enqueue(() =>
-            {
-                try
-                {
-                    // Send an empty message to the server.
-                    Send(new RequestFrame { Heartbeat = new Heartbeat() });
-                }
-                catch (Exception ex)
-                {
-                    Trace.TraceError(_moduleID + ":SHB - " + ex.Message);
                 }
             });
         }

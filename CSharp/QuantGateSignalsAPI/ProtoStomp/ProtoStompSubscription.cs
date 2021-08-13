@@ -64,12 +64,16 @@ namespace QuantGate.API.Signals.ProtoStomp
         /// <summary>
         /// The id used to identify this subscription instance.
         /// </summary>
-        public ulong SubscriptionID => _request.SubscriptionId;
+        public ulong SubscriptionID
+        {
+            get => _request.SubscriptionId;
+            set => _request.SubscriptionId = value;
+        }
 
         public ulong ReceiptID
         {
             get => _request.ReceiptId;
-            internal set => _request.ReceiptId = value;
+            set => _request.ReceiptId = value;
         }
 
         /// <summary>
