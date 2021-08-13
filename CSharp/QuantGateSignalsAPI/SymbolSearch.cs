@@ -18,7 +18,7 @@ namespace QuantGate.API.Signals
         /// <summary>
         /// Raised whenever a new symbol search result is received.
         /// </summary>
-        public event EventHandler<SearchUpdateEventArgs> Update = delegate { };
+        public event EventHandler<SearchUpdateEventArgs> Updated = delegate { };
 
         /// <summary>
         /// The internal search subscription object tied to the search.
@@ -41,7 +41,7 @@ namespace QuantGate.API.Signals
         private void HandleValuesUpdate(object sender, EventArgs e)
         {
             // Pass the event through.
-            Update(this, new SearchUpdateEventArgs(Subscription.Values.SearchTerm, 
+            Updated(this, new SearchUpdateEventArgs(Subscription.Values.SearchTerm, 
                                                    Subscription.Values.Results.ToList()));
         }
 

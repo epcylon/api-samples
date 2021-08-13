@@ -130,6 +130,40 @@ namespace BridgeRock.CSharpExample
             _client.OnHeartbeat += HandleHeartbeat;
 
             _client.Connect("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKb2huSCIsImlhdCI6MTYyODcxMzg2NywiZXhwIjoxNjMyOTYwMDAwLCJhdWQiOiIyV1VqZW9iUlhSVzlwc05ERWN4ZTFNRDl3dGRmZGgxQyJ9.Up48upDkCINp9znyjTkUXc0F2Rb5BWqfzmumF4mUcXA");
+            
+            Subscribe("NQ U1");
+        }
+
+        private void Subscribe(string symbol)
+        {
+            if (Perception is object)
+            {
+                _client.Unsubscribe(Perception);
+                _client.Unsubscribe(Commitment);
+                _client.Unsubscribe(Equilibrium);
+                _client.Unsubscribe(Sentiment);
+                _client.Unsubscribe(Headroom);
+                _client.Unsubscribe(BookPressure);
+                _client.Unsubscribe(MultiFrame);
+                _client.Unsubscribe(Trigger);
+                _client.Unsubscribe(Strategy);
+                _client.Unsubscribe(_topSymbols);
+                _symbolSearch.Dispose();
+            }
+
+            Perception = _client.SubscribePerception(symbol);
+            Commitment = _client.SubscribeCommitment(symbol);
+            Equilibrium = _client.SubscribeEquilibrium(symbol, "300s");
+            Sentiment = _client.SubscribeSentiment(symbol, "50t");
+            Headroom = _client.SubscribeHeadroom(symbol);
+            BookPressure = _client.SubscribeBookPressure(symbol);
+            MultiFrame = _client.SubscribeMultiframeEquilibrium(symbol);
+            Trigger = _client.SubscribeTrigger(symbol);
+            Strategy = _client.SubscribeStrategy("Crb9.0", symbol);
+            _symbolSearch = _client.SubscribeSearch();
+            _symbolSearch.Updated += HandleSearchUpdate;
+            _topSymbols = _client.SubscribeTopSymbols("ib");
+            _topSymbols.Updated += HandleTopSymbolsUpdate;
         }
 
         private void HandleSearchUpdate(object sender, TextChangedEventArgs e)
@@ -161,26 +195,7 @@ namespace BridgeRock.CSharpExample
 
         private void HandleConnected(object client, EventArgs args)
         {
-            string symbol = "NQ U1";
-
             Console.WriteLine("Connected!");
-
-            if (Perception is object)
-                return;
-
-            Perception = _client.SubscribePerception(symbol);
-            Commitment = _client.SubscribeCommitment(symbol);
-            Equilibrium = _client.SubscribeEquilibrium(symbol, "300s");
-            Sentiment = _client.SubscribeSentiment(symbol, "50t");
-            Headroom = _client.SubscribeHeadroom(symbol);
-            BookPressure = _client.SubscribeBookPressure(symbol);
-            MultiFrame = _client.SubscribeMultiframeEquilibrium(symbol);
-            Trigger = _client.SubscribeTrigger(symbol);
-            Strategy = _client.SubscribeStrategy("Crb9.0", symbol);
-            _symbolSearch = _client.SubscribeSearch();
-            _symbolSearch.Update += HandleSearchUpdate;
-            _topSymbols = _client.SubscribeTopSymbols("ib");
-            _topSymbols.Updated += HandleTopSymbolsUpdate;
         }
 
         private void HandleTopSymbolsUpdate(object sender, EventArgs e)
