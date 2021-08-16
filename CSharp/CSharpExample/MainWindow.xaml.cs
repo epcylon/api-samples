@@ -15,6 +15,8 @@ namespace BridgeRock.CSharpExample
         private SymbolSearch _symbolSearch;
         private TopSymbols _topSymbols;
 
+        #region Dependency Properties
+
         public Perception Perception
         {
             get => (Perception)GetValue(PerceptionProperty);
@@ -113,6 +115,8 @@ namespace BridgeRock.CSharpExample
         public static readonly DependencyProperty StrategyProperty =
             DependencyProperty.Register("Strategy", typeof(StrategyValues), typeof(MainWindow), new PropertyMetadata(null));
 
+        #endregion
+
         public MainWindow()
         {
             InitializeComponent();
@@ -122,7 +126,7 @@ namespace BridgeRock.CSharpExample
             txtSearch.TextChanged += HandleSearchUpdate;
 
             //_client = new ProtoStompClient("wss://feed.stealthtrader.com");
-            _client = new APIClient("wss://test.stealthtrader.com", stream: DataStream.Delayed);
+            _client = new APIClient("wss://test.stealthtrader.com", stream: DataStream.Realtime);
             //_client = new ProtoStompClient("ws://localhost", 2432);
             _client.Connected += HandleConnected;
             _client.Disconnected += HandleDisconnected;
@@ -130,11 +134,26 @@ namespace BridgeRock.CSharpExample
 
             _client.Connect("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKb2huSCIsImlhdCI6MTYyODcxMzg2NywiZXhwIjoxNjMyOTYwMDAwLCJhdWQiOiIyV1VqZW9iUlhSVzlwc05ERWN4ZTFNRDl3dGRmZGgxQyJ9.Up48upDkCINp9znyjTkUXc0F2Rb5BWqfzmumF4mUcXA");
 
-            //Subscribe("QGSI-OTC");
+            SubscribeSearch();
             Subscribe("NQ U1");
         }
 
         private void Subscribe(string symbol)
+        {
+            Unsubscribe();
+
+            Perception = _client.SubscribePerception(symbol);
+            Commitment = _client.SubscribeCommitment(symbol);
+            Equilibrium = _client.SubscribeEquilibrium(symbol, "300s");
+            Sentiment = _client.SubscribeSentiment(symbol, "50t");
+            Headroom = _client.SubscribeHeadroom(symbol);
+            BookPressure = _client.SubscribeBookPressure(symbol);
+            MultiFrame = _client.SubscribeMultiframeEquilibrium(symbol);
+            Trigger = _client.SubscribeTrigger(symbol);
+            Strategy = _client.SubscribeStrategy("Crb9.0", symbol);
+        }
+
+        private void Unsubscribe()
         {
             if (Perception is object)
             {
@@ -147,20 +166,12 @@ namespace BridgeRock.CSharpExample
                 _client.Unsubscribe(MultiFrame);
                 _client.Unsubscribe(Trigger);
                 _client.Unsubscribe(Strategy);
-                _client.Unsubscribe(_topSymbols);
-                _symbolSearch.Dispose();
                 sViewer.ClearSpectrum();
             }
+        }
 
-            Perception = _client.SubscribePerception(symbol);
-            Commitment = _client.SubscribeCommitment(symbol);
-            Equilibrium = _client.SubscribeEquilibrium(symbol, "300s");
-            Sentiment = _client.SubscribeSentiment(symbol, "50t");
-            Headroom = _client.SubscribeHeadroom(symbol);
-            BookPressure = _client.SubscribeBookPressure(symbol);
-            MultiFrame = _client.SubscribeMultiframeEquilibrium(symbol);
-            Trigger = _client.SubscribeTrigger(symbol);
-            Strategy = _client.SubscribeStrategy("Crb9.0", symbol);
+        private void SubscribeSearch()
+        {
             _symbolSearch = _client.SubscribeSearch();
             _symbolSearch.Updated += HandleSearchUpdate;
             _topSymbols = _client.SubscribeTopSymbols("ib");
