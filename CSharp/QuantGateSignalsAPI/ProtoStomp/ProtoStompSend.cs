@@ -26,7 +26,7 @@ namespace QuantGate.API.Signals.ProtoStomp
             else
                 Request.Destination = destination;
 
-            if (!ReferenceEquals(body, null))
+            if (body is object)
                 Request.Body = body;
 
             if (receipt)

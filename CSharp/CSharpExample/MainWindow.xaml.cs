@@ -11,7 +11,7 @@ namespace BridgeRock.CSharpExample
     /// </summary>
     public partial class MainWindow : Window
     {
-        private APIClient _client;
+        private readonly APIClient _client;
         private SymbolSearch _symbolSearch;
         private TopSymbols _topSymbols;
 

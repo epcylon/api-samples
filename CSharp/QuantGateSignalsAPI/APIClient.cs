@@ -128,7 +128,7 @@ namespace QuantGate.API.Signals
         /// <summary>
         /// Stream ID associated with the stream the client is connected to.
         /// </summary>
-        private string _streamID;
+        private readonly string _streamID;
 
         /// <summary>
         /// The timer reference to use (if specified).
@@ -418,12 +418,10 @@ namespace QuantGate.API.Signals
 
         private void HandleMessage(MessageResponse message)
         {
-            ProtoStompSubscription subscription;
-
             try
             {
                 // If the subscription id exists, try to get the subscription.                
-                _subscriptionReferences.TryGetValue(message.SubscriptionId, out subscription);
+                _subscriptionReferences.TryGetValue(message.SubscriptionId, out ProtoStompSubscription subscription);
 
                 if (subscription is object)
                 {
@@ -473,13 +471,11 @@ namespace QuantGate.API.Signals
 
         private void HandleSubscriptionError(ResponseFrame frame)
         {
-            ProtoStompSubscription subscription;
-
             try
             {
                 // If the subscription id exists, try to get the subscription.
                 _subscriptionReferences.TryGetValue(
-                    frame.SubscriptionError.SubscriptionId, out subscription);
+                    frame.SubscriptionError.SubscriptionId, out ProtoStompSubscription subscription);
 
                 if (subscription is object)
                 {
