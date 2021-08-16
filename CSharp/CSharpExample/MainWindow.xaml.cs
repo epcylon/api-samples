@@ -72,8 +72,8 @@ namespace BridgeRock.CSharpExample
 
         public Equilibrium Equilibrium
         {
-            get { return (Equilibrium)GetValue(EquilibriumProperty); }
-            set { SetValue(EquilibriumProperty, value); }
+            get => (Equilibrium)GetValue(EquilibriumProperty);
+            set => SetValue(EquilibriumProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for Equilibrium.  This enables animation, styling, binding, etc...
@@ -83,8 +83,8 @@ namespace BridgeRock.CSharpExample
 
         public MultiframeEquilibrium MultiFrame
         {
-            get { return (MultiframeEquilibrium)GetValue(MultiFrameProperty); }
-            set { SetValue(MultiFrameProperty, value); }
+            get => (MultiframeEquilibrium)GetValue(MultiFrameProperty);
+            set => SetValue(MultiFrameProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for MultiFrame.  This enables animation, styling, binding, etc...
@@ -94,8 +94,8 @@ namespace BridgeRock.CSharpExample
 
         public QuantGate.API.Signals.Values.Trigger Trigger
         {
-            get { return (QuantGate.API.Signals.Values.Trigger)GetValue(TriggerProperty); }
-            set { SetValue(TriggerProperty, value); }
+            get => (QuantGate.API.Signals.Values.Trigger)GetValue(TriggerProperty);
+            set => SetValue(TriggerProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for Trigger.  This enables animation, styling, binding, etc...
@@ -105,8 +105,8 @@ namespace BridgeRock.CSharpExample
 
         public StrategyValues Strategy
         {
-            get { return (StrategyValues)GetValue(StrategyProperty); }
-            set { SetValue(StrategyProperty, value); }
+            get => (StrategyValues)GetValue(StrategyProperty);
+            set => SetValue(StrategyProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for Strategy.  This enables animation, styling, binding, etc...

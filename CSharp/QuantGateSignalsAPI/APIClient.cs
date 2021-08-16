@@ -25,6 +25,16 @@ namespace QuantGate.API.Signals
         /// </summary>
         private const string _moduleID = "PSCl";
 
+        #region Events
+
+        public event EventHandler Connected = delegate { };
+        public event EventHandler Disconnected = delegate { };
+        public event EventHandler<ErrorEventArgs> Error = delegate { };
+
+        #endregion
+
+        #region Subscription Mappings
+
         /// <summary>
         /// Dictionary of message consumers to handle each message type.
         /// </summary>
@@ -40,53 +50,9 @@ namespace QuantGate.API.Signals
         private readonly Dictionary<ulong, IReceiptable> _receiptReferences =
             new Dictionary<ulong, IReceiptable>();
 
-        /// <summary>
-        /// Blocking message queue used in the main thread to process new actions within the thread.
-        /// </summary>
-        private readonly BlockingCollection<Action> _actions = new BlockingCollection<Action>();
+        #endregion
 
-        /// <summary>
-        /// Transport layer interface instance.
-        /// </summary>
-        private readonly WebSocket _transport;
-
-        /// <summary>
-        /// The dispatcher to use for threading.
-        /// </summary>
-        internal SynchronizationContext Sync { get; }
-
-        /// <summary>
-        /// Used to generate ids in messages, etc.
-        /// </summary>
-        internal IDGenerator IDGenerator { get; } = new IDGenerator();
-
-        /// <summary>
-        /// The Stomp version the client is connected to.
-        /// </summary>
-        private string StompVersion { get; set; }
-
-        public event EventHandler Connected = delegate { };
-        public event EventHandler Disconnected = delegate { };
-        public event EventHandler<ErrorEventArgs> Error = delegate { };
-
-        /// <summary>
-        /// The host address of the server to connect to.
-        /// </summary>
-        public string Host { get; }
-
-        /// <summary>
-        /// The port of the server to connect to.
-        /// </summary>
-        public int Port { get; }
-
-        public string Username { get; private set; }
-        public string Password { get; private set; }
-
-        /// <summary>
-        /// Stream ID associated with the stream the client is connected to.
-        /// </summary>
-        private string _streamID;
-        public DataStream Stream { get; }
+        #region Connection Variables
 
         /// <summary>
         /// Is the client disconnecting?
@@ -135,10 +101,43 @@ namespace QuantGate.API.Signals
         /// </summary>
         private long _lastMessageTicks = 0;
 
+        #endregion
+
+        #region Private and Internal Variables
+
+        /// <summary>
+        /// The dispatcher to use for threading.
+        /// </summary>
+        internal SynchronizationContext Sync { get; }
+
+        /// <summary>
+        /// Blocking message queue used in the main thread to process new actions within the thread.
+        /// </summary>
+        private readonly BlockingCollection<Action> _actions = new BlockingCollection<Action>();
+
+        /// <summary>
+        /// Transport layer interface instance.
+        /// </summary>
+        private readonly WebSocket _transport;
+
+        /// <summary>
+        /// Used to generate ids in messages, etc.
+        /// </summary>
+        internal IDGenerator IDGenerator { get; } = new IDGenerator();
+
+        /// <summary>
+        /// Stream ID associated with the stream the client is connected to.
+        /// </summary>
+        private string _streamID;
+
         /// <summary>
         /// The timer reference to use (if specified).
         /// </summary>
         private Timer _timer;
+
+        #endregion
+
+        #region Initialization
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StompClient" /> class.
@@ -202,6 +201,33 @@ namespace QuantGate.API.Signals
 
             _timer = new Timer(HandleTimer, null, 5000, 5000);
         }
+
+        #endregion
+
+        #region Public Properties
+
+        /// <summary>
+        /// The host address of the server to connect to.
+        /// </summary>
+        public string Host { get; }
+
+        /// <summary>
+        /// The port of the server to connect to.
+        /// </summary>
+        public int Port { get; }
+
+        public string Username { get; private set; }
+        public string Password { get; private set; }
+
+        public DataStream Stream { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether this <see cref = "APIClient" /> is connected.
+        /// </summary>
+        /// <value><c>true</c> if connected; otherwise, <c>false</c>.</value>
+        public bool IsConnected { get; private set; }
+
+        #endregion
 
         #region Thread Queue Handling
 
@@ -284,16 +310,23 @@ namespace QuantGate.API.Signals
         {
             Enqueue(() =>
             {
-                string message;
+                try
+                {
+                    string message;
 
-                message = e.Message + (e.Exception?.Message ?? string.Empty);
+                    message = e.Message + (e.Exception?.Message ?? string.Empty);
 
-                // Handle the error message.
-                Trace.TraceError(_moduleID + ":HE - Stomp transport error: " + message);
+                    // Handle the error message.
+                    Trace.TraceError(_moduleID + ":HE - Stomp transport error: " + message);
 
-                // Make sure it closes properly.                        
-                if ((_transport is object) && (_transport.ReadyState == WebSocketState.Closed))
-                    Close();
+                    // Make sure it closes properly.                        
+                    if ((_transport is object) && (_transport.ReadyState == WebSocketState.Closed))
+                        Close();
+                }
+                catch (Exception ex)
+                {
+                    Trace.TraceError(_moduleID + ":OCl - " + ex.Message);
+                }
             });
         }
 
@@ -342,48 +375,17 @@ namespace QuantGate.API.Signals
                 _reconnectCount = 0;
                 _reconnectTicks = 0;
                 _killTicks = 0;
-
-                StompVersion = frame.Connected.Version;
+                
                 IsConnected = true;
 
                 IDGenerator.Reset();
-                Resubscribe();
+                ResubscribeAll();
 
                 Sync.Post(new SendOrPostCallback((o) => { Connected(this, EventArgs.Empty); }), null);
             }
             catch (Exception ex)
             {
                 Trace.TraceError(_moduleID + ":OSCn - " + ex.Message);
-            }
-        }
-
-        private void Resubscribe()
-        {
-            List<ProtoStompSubscription> subscriptions;
-
-            try
-            {
-                // Get the current subscriptions list and clear the old.
-                subscriptions = _subscriptionReferences.Values.ToList();
-                _subscriptionReferences.Clear();
-                _receiptReferences.Clear();
-
-                foreach (ProtoStompSubscription subscription in subscriptions)
-                {
-                    // Go through all the subscriptions, generate a new receipt ID if necessary.
-                    if (subscription.ReceiptID != 0)
-                        subscription.ReceiptID = IDGenerator.NextID;
-
-                    // Generate a new subscription ID.
-                    subscription.SubscriptionID = IDGenerator.NextID;
-
-                    // Subscribe to the subscription.
-                    subscription.Subscribe();
-                }
-            }
-            catch (Exception ex)
-            {
-                Trace.TraceError(_moduleID + ":ReSub - " + ex.Message);
             }
         }
 
@@ -411,6 +413,33 @@ namespace QuantGate.API.Signals
             catch (Exception ex)
             {
                 Trace.TraceError(_moduleID + ":HMsF - " + ex.Message);
+            }
+        }
+
+        private void HandleMessage(MessageResponse message)
+        {
+            ProtoStompSubscription subscription;
+
+            try
+            {
+                // If the subscription id exists, try to get the subscription.                
+                _subscriptionReferences.TryGetValue(message.SubscriptionId, out subscription);
+
+                if (subscription is object)
+                {
+                    // If the subscription was found, handle the next message.
+                    (subscription as IObserver<ByteString>).OnNext(message.Body);
+                }
+                else if (!_isDisconnecting && IsConnected)
+                {
+                    // If not disconnecting, log an error.
+                    Trace.TraceInformation(_moduleID + ":HM - Subscription not found for id: " +
+                                           message.SubscriptionId.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError(_moduleID + ":HM - " + ex.Message);
             }
         }
 
@@ -533,60 +562,7 @@ namespace QuantGate.API.Signals
 
         #endregion
 
-        /// <summary>
-        /// Used to close the transport object.
-        /// </summary>
-        private void Close()
-        {
-            try
-            {
-                if (_transport is object)
-                {
-                    if (_transport.ReadyState != WebSocketState.Closed)
-                        _transport.CloseAsync();
-                    else
-                        OnClose(this, EventArgs.Empty);
-                }
-            }
-            catch (Exception ex)
-            {
-                Trace.TraceError(_moduleID + ":Cls - " + ex.Message);
-                OnClose(this, EventArgs.Empty);
-            }
-        }
-
-        private void HandleMessage(MessageResponse message)
-        {
-            ProtoStompSubscription subscription;
-
-            try
-            {
-                // If the subscription id exists, try to get the subscription.                
-                _subscriptionReferences.TryGetValue(message.SubscriptionId, out subscription);
-
-                if (subscription is object)
-                {
-                    // If the subscription was found, handle the next message.
-                    (subscription as IObserver<ByteString>).OnNext(message.Body);
-                }
-                else if (!_isDisconnecting && IsConnected)
-                {
-                    // If not disconnecting, log an error.
-                    Trace.TraceInformation(_moduleID + ":HM - Subscription not found for id: " +
-                                           message.SubscriptionId.ToString());
-                }
-            }
-            catch (Exception ex)
-            {
-                Trace.TraceError(_moduleID + ":HM - " + ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether this <see cref = "APIClient" /> is connected.
-        /// </summary>
-        /// <value><c>true</c> if connected; otherwise, <c>false</c>.</value>
-        public bool IsConnected { get; private set; }
+        #region Connection Handling
 
         /// <summary>
         /// Connects to the server on the specified address.
@@ -624,18 +600,6 @@ namespace QuantGate.API.Signals
             });
         }
 
-        private void Send(RequestFrame frame)
-        {
-            try
-            {
-                _transport.SendAsync(frame.ToByteArray(), null);
-            }
-            catch (Exception ex)
-            {
-                Trace.TraceError(_moduleID + ":Snd - " + ex.Message);
-            }
-        }
-
         /// <summary>
         /// Disconnects this instance.
         /// </summary>
@@ -655,8 +619,8 @@ namespace QuantGate.API.Signals
                 }
 
                 Send(new RequestFrame { Disconnect = new DisconnectRequest() });
-                _transport.Close();
 
+                Close();
             }
             catch (Exception ex)
             {
@@ -665,63 +629,42 @@ namespace QuantGate.API.Signals
         }
 
         /// <summary>
-        /// Clears subscriptions and receipt subscriptions.
+        /// Used to close the transport object.
         /// </summary>
-        private void ClearSubscriptions()
+        private void Close()
         {
-            List<ProtoStompSubscription> subscriptions = null;
-            List<IReceiptable> receiptables = null;
-
             try
             {
-                // Clear the subscription references.
-                subscriptions = _subscriptionReferences.Values.ToList();
-                _subscriptionReferences.Clear();
-
-                // Handle OnCompleted events for each subscription.
-                foreach (IObserver<ByteString> subscription in subscriptions)
-                    subscription.OnCompleted();
-
-                // Clear the receipt references.
-                receiptables = _receiptReferences.Values.ToList();
-                _receiptReferences.Clear();
-
-                // Handle the OnInvalidate events for each subscription.
-                foreach (IReceiptable receiptable in receiptables)
-                    receiptable.OnInvalidate();
+                if (_transport is object)
+                {
+                    if (_transport.ReadyState != WebSocketState.Closed)
+                        _transport.CloseAsync();
+                    else
+                        OnClose(this, EventArgs.Empty);
+                }
             }
             catch (Exception ex)
             {
-                Trace.TraceError(_moduleID + ":CSs - " + ex.Message);
-            }
-            finally
-            {
-                subscriptions?.Clear();
-                receiptables?.Clear();
+                Trace.TraceError(_moduleID + ":Cls - " + ex.Message);
+                OnClose(this, EventArgs.Empty);
             }
         }
 
-        /// <summary>
-        /// Sends a message to the specified address.
-        /// </summary>
-        /// <param name="toSend">The Stomp frame to send.</param>
-        internal void Send(ProtoStompSend toSend)
+        private void Send(RequestFrame frame)
         {
-            Enqueue(() =>
+            try
             {
-                try
-                {
-                    if (toSend.ReceiptID != 0)
-                        _receiptReferences.Add(toSend.ReceiptID, toSend);
-
-                    Send(new RequestFrame { Send = toSend.Request });
-                }
-                catch (Exception ex)
-                {
-                    Trace.TraceError(_moduleID + ":Snd - " + ex.Message);
-                }
-            });
+                _transport.SendAsync(frame.ToByteArray(), null);
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError(_moduleID + ":Snd - " + ex.Message);
+            }
         }
+
+        #endregion
+
+        #region Subscription Handling
 
         /// <summary>
         /// Subscribes to the specified destination.
@@ -845,6 +788,97 @@ namespace QuantGate.API.Signals
                 }
             });
         }
+
+        /// <summary>
+        /// Sends a message to the specified address.
+        /// </summary>
+        /// <param name="toSend">The Stomp frame to send.</param>
+        internal void Send(ProtoStompSend toSend)
+        {
+            Enqueue(() =>
+            {
+                try
+                {
+                    if (toSend.ReceiptID != 0)
+                        _receiptReferences.Add(toSend.ReceiptID, toSend);
+
+                    Send(new RequestFrame { Send = toSend.Request });
+                }
+                catch (Exception ex)
+                {
+                    Trace.TraceError(_moduleID + ":Snd - " + ex.Message);
+                }
+            });
+        }
+
+        private void ResubscribeAll()
+        {
+            List<ProtoStompSubscription> subscriptions;
+
+            try
+            {
+                // Get the current subscriptions list and clear the old.
+                subscriptions = _subscriptionReferences.Values.ToList();
+                _subscriptionReferences.Clear();
+                _receiptReferences.Clear();
+
+                foreach (ProtoStompSubscription subscription in subscriptions)
+                {
+                    // Go through all the subscriptions, generate a new receipt ID if necessary.
+                    if (subscription.ReceiptID != 0)
+                        subscription.ReceiptID = IDGenerator.NextID;
+
+                    // Generate a new subscription ID.
+                    subscription.SubscriptionID = IDGenerator.NextID;
+
+                    // Subscribe to the subscription.
+                    subscription.Subscribe();
+                }
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError(_moduleID + ":ReSub - " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Clears subscriptions and receipt subscriptions.
+        /// </summary>
+        private void ClearSubscriptions()
+        {
+            List<ProtoStompSubscription> subscriptions = null;
+            List<IReceiptable> receiptables = null;
+
+            try
+            {
+                // Clear the subscription references.
+                subscriptions = _subscriptionReferences.Values.ToList();
+                _subscriptionReferences.Clear();
+
+                // Handle OnCompleted events for each subscription.
+                foreach (IObserver<ByteString> subscription in subscriptions)
+                    subscription.OnCompleted();
+
+                // Clear the receipt references.
+                receiptables = _receiptReferences.Values.ToList();
+                _receiptReferences.Clear();
+
+                // Handle the OnInvalidate events for each subscription.
+                foreach (IReceiptable receiptable in receiptables)
+                    receiptable.OnInvalidate();
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError(_moduleID + ":CSs - " + ex.Message);
+            }
+            finally
+            {
+                subscriptions?.Clear();
+                receiptables?.Clear();
+            }
+        }
+
+        #endregion
 
         #region Subscriptions
 
