@@ -945,7 +945,7 @@ namespace QuantGate.API.Signals
         /// Subscribes to a Equilibrium gauge data stream for a specific symbol.
         /// </summary>
         /// <param name="symbol">Symbol to get the Equilibrium data for.</param>
-        /// <param name="compression">Compression timeframe to apply to the gauge. Default value is 50t.</param>
+        /// <param name="compression">Compression timeframe to apply to the gauge. Default value is 300s.</param>
         /// <param name="throttleRate">Rate to throttle messages at (in ms). Enter 0 for no throttling.</param>
         /// <returns>The Equilibrium data object that will receive the updates.</returns>
         public Subscription<EquilibriumEventArgs> SubscribeEquilibrium(string symbol, string compression = "300s", int throttleRate = 0) =>

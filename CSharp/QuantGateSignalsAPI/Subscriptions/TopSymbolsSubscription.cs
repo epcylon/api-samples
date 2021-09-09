@@ -35,32 +35,27 @@ namespace QuantGate.API.Signals.Subscriptions
             List<TopSymbol> results = new List<TopSymbol>();
 
             foreach (TopSymbolItem result in update.Symbols)
-                results.Add(new TopSymbol
-                {
-                    Timestamp = ProtoTimeEncoder.TimestampSecondsToDate(result.Timestamp),
-                    Symbol = result.Symbol,
-                    Underlying = result.Underlying,
-                    Currency = result.Currency,
-                    DisplayName = result.DisplayName,
-                    Exchange = result.Exchange,
-                    InstrumentType = (InstrumentType)result.InstrumentType,
-                    Signal = (StrategySignal)result.Signal,
-                    EntryProgress = result.EntryProgress / 1000.0,
-                    PerceptionSignal = (GaugeSignal)result.PerceptionSignal,
-                    CommitmentSignal = (GaugeSignal)result.CommitmentSignal,
-                    EquilibriumSignal = (GaugeSignal)result.EquilibriumSignal,
-                    SentimentSignal = (GaugeSignal)result.SentimentSignal
-                }); ;
+                results.Add(new TopSymbol(
+                    ProtoTimeEncoder.TimestampSecondsToDate(result.Timestamp),
+                    result.Symbol,
+                    result.Underlying,
+                    result.Currency,
+                    (InstrumentType)result.InstrumentType,
+                    result.Exchange,
+                    result.DisplayName,
+                    result.EntryProgress / 1000.0,
+                    (GaugeSignal)result.PerceptionSignal,
+                    (GaugeSignal)result.CommitmentSignal,
+                    (GaugeSignal)result.EquilibriumSignal,
+                    (GaugeSignal)result.SentimentSignal,
+                    (StrategySignal)result.Signal));
 
             return results;
         }
 
         protected override TopSymbolsEventArgs HandleUpdate(TopSymbolsUpdate update, object processed)
         {
-            return new TopSymbolsEventArgs
-            {
-                Symbols = processed as List<TopSymbol>,
-            };
+            return new TopSymbolsEventArgs(processed as List<TopSymbol>);
         }
     }
 }

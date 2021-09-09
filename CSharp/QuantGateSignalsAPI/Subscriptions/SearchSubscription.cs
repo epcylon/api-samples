@@ -26,26 +26,19 @@ namespace QuantGate.API.Signals.Subscriptions
             List<SearchResult> results = new List<SearchResult>();
 
             foreach (SymbolSearchResult result in update.Results)
-                results.Add(new SearchResult
-                {
-                    Symbol = result.Symbol,
-                    Underlying = result.Underlying,
-                    Currency = result.Currency,
-                    DisplayName = result.DisplayName,
-                    Exchange = result.Exchange,
-                    InstrumentType = (InstrumentType)result.InstrumentType,
-                }); ;
+                results.Add(new SearchResult(result.Symbol,
+                                             result.Underlying,
+                                             result.Currency,
+                                             (InstrumentType)result.InstrumentType,
+                                             result.Exchange,
+                                             result.DisplayName));
 
             return results;
         }
 
         protected override SearchResultsEventArgs HandleUpdate(SymbolSearchUpdate update, object processed)
         {
-            return new SearchResultsEventArgs
-            {                 
-                SearchTerm = update.SearchTerm,
-                Results = processed as List<SearchResult>,
-            };
+            return new SearchResultsEventArgs(update.SearchTerm, processed as List<SearchResult>);
         }
     }
 }

@@ -24,14 +24,13 @@ namespace QuantGate.API.Signals.Subscriptions
 
             foreach (TickValue range in update.TickValues)
             {
-                tickRanges.Add(new TickRange
-                {
-                    Start = range.Start,
-                    Tick = range.Tick,
-                    Decimals = range.Decimals,
-                    Denominator = (int)range.Denominator,
-                    Format = (TickFormat)range.Format,
-                });
+                tickRanges.Add(new TickRange(
+                    range.Start,
+                    range.Tick,
+                    (int)range.Denominator,
+                    range.Decimals,
+                    (TickFormat)range.Format
+                ));
             }
 
             for (int day = 0; day < update.TradingSessions.Count; day++)

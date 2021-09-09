@@ -44,7 +44,7 @@ namespace QuantGate.API.Signals.Values
         /// <param name="dayOfWeek">The day of the week that the trading session ends on.</param>
         /// <param name="close">The close time of the day.</param>
         /// <param name="length">The length of the trading session.</param>
-        public TradingSession(DayOfWeek dayOfWeek, int close, int length)
+        internal TradingSession(DayOfWeek dayOfWeek, int close, int length)
         {
             DayOfWeek = dayOfWeek;
             Close = TimeSpan.FromMinutes(close);

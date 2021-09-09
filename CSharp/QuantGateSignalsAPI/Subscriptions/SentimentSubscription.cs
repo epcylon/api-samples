@@ -38,16 +38,15 @@ namespace QuantGate.API.Signals.Subscriptions
             if (!(processed is Tuple<double[], double[]> converted))
                 return null;
 
-            return new SentimentEventArgs
-            {
-                Symbol = Symbol,
-                TimeStamp = ProtoTimeEncoder.TimestampSecondsToDate(update.Timestamp),
-                Lengths = converted.Item1,
-                Colors = converted.Item2,
-                AvgLength = update.Lengths.Average / 1000.0,
-                AvgColor = update.Lengths.Average / 1000.0,
-                IsDirty = update.IsDirty,
-            };
+            return new SentimentEventArgs(
+                Symbol,
+                ProtoTimeEncoder.TimestampSecondsToDate(update.Timestamp),
+                Compression,
+                converted.Item1,
+                converted.Item2,
+                update.Lengths.Average / 1000.0,
+                update.Lengths.Average / 1000.0,
+                update.IsDirty);
         }
 
         #region Height/Color Interpolation        

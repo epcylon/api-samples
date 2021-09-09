@@ -12,6 +12,15 @@ namespace QuantGate.API.Signals.Values
         /// <summary>
         /// Top symbol results.
         /// </summary>
-        public List<TopSymbol> Symbols { get; internal set; }
+        public IReadOnlyList<TopSymbol> Symbols { get; }
+
+        /// <summary>
+        /// Creates a new TopSymbolsEventArgs instance.
+        /// </summary>
+        /// <param name="symbols">Top symbol results.</param>
+        public TopSymbolsEventArgs(List<TopSymbol> symbols)
+        {
+            Symbols = symbols;
+        }
     }
 }
