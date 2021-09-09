@@ -9,23 +9,7 @@
         /// <summary>
         /// The level of the gauge at the last update.
         /// </summary>
-        private double _gaugeLevel;
-
-        /// <summary>
-        /// The level of the gauge at the last update.
-        /// </summary>
-        public double GaugeLevel
-        {
-            get => _gaugeLevel;
-            set
-            {
-                if (_gaugeLevel != value)
-                {
-                    _gaugeLevel = value;
-                    NotifyPropertyChanged();
-                }
-            }
-        }
+        public double GaugeLevel { get; internal set; }
     }
 
     /// <summary>

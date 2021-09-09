@@ -12,115 +12,32 @@
         public const int TotalBars = 55;
 
         /// <summary>
-        /// Holds the lengths of each bar.
-        /// </summary>
-        private readonly double[] _lengths;
-        /// <summary>
-        /// Holds the colors of each bar.
-        /// </summary>
-        private readonly double[] _colors;
-        /// <summary>
-        /// Average bar length.
-        /// </summary>
-        private double _avgLength;
-        /// <summary>
-        /// Average bar color.
-        /// </summary>
-        private double _avgColor;
-
-        /// <summary>
         /// Creates a new Sentiment instance.
         /// </summary>        
         public Sentiment()
         {
-            _lengths = new double[TotalBars];
-            _colors = new double[TotalBars];
+            Lengths = new double[TotalBars];
+            Colors = new double[TotalBars];
         }
 
         /// <summary>
         /// Holds the lengths of each bar.
         /// </summary>
-        public double[] Lengths
-        {
-            get => _lengths;
-            set
-            {
-                bool changed = false;
-
-                if (value.Length == TotalBars)
-                {
-                    for (int index = 0; index < TotalBars; index++)
-                    {
-                        if (_lengths[index] != value[index])
-                        {
-                            _lengths[index] = value[index];
-                            changed = true;
-                        }
-                    }
-
-                    if (changed)
-                        NotifyPropertyChanged();
-                }
-            }
-        }
+        public double[] Lengths { get; internal set; }
 
         /// <summary>
         /// Holds the colors of each bar.
         /// </summary>
-        public double[] Colors
-        {
-            get => _colors;
-            set
-            {
-                bool changed = false;
-
-                if (value.Length == TotalBars)
-                {
-                    for (int index = 0; index < TotalBars; index++)
-                    {
-                        if (_colors[index] != value[index])
-                        {
-                            _colors[index] = value[index];
-                            changed = true;
-                        }
-                    }
-
-                    if (changed)
-                        NotifyPropertyChanged();
-                }
-            }
-        }
+        public double[] Colors { get; internal set; }
 
         /// <summary>
         /// Average bar length.
         /// </summary>
-        public double AvgLength
-        {
-            get => _avgLength;
-            set
-            {
-                if (_avgLength != value)
-                {
-                    _avgLength = value;
-                    NotifyPropertyChanged();
-                }
-            }
-        }
+        public double AvgLength { get; internal set; }
 
         /// <summary>
         /// Average bar color.
         /// </summary>
-        public double AvgColor
-        {
-            get => _avgColor;
-            set
-            {
-                if (_avgColor != value)
-                {
-                    _avgColor = value;
-                    NotifyPropertyChanged();
-                }
-            }
-        }
+        public double AvgColor { get; internal set; }
     }
 }

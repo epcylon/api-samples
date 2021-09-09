@@ -9,95 +9,22 @@
         /// <summary>
         /// Bias value.
         /// </summary>
-        private double _bias;
-        /// <summary>
-        /// Perception value.
-        /// </summary>
-        private double _perception;
-        /// <summary>
-        /// Sentiment length value at point 0.
-        /// </summary>
-        private double _sentiment;
-        /// <summary>
-        /// Commitment value.
-        /// </summary>
-        private double _commitment;
-        /// <summary>
-        /// The Equilibrium Price.
-        /// </summary>
-        private double _equilibriumPrice;
-        /// <summary>
-        /// Gap size of each equilibrium deviation.
-        /// </summary>
-        private double _gapSize;
-        /// <summary>
-        /// Last traded price at the time of calculation.
-        /// </summary>
-        private double _lastPrice;
-
-        /// <summary>
-        /// Bias value.
-        /// </summary>
-        public double Bias
-        {
-            get => _bias;
-            set
-            {
-                if (_bias != value)
-                {
-                    _bias = value;
-                    NotifyPropertyChanged();
-                }
-            }
-        }
+        public double Bias { get; internal set; }
 
         /// <summary>
         /// Perception value.
         /// </summary>
-        public double Perception
-        {
-            get => _perception;
-            set
-            {
-                if (_perception != value)
-                {
-                    _perception = value;
-                    NotifyPropertyChanged();
-                }
-            }
-        }
+        public double Perception { get; internal set; }
 
         /// <summary>
         /// Sentiment length value at point 0.
         /// </summary>
-        public double Sentiment
-        {
-            get => _sentiment;
-            set
-            {
-                if (_sentiment != value)
-                {
-                    _sentiment = value;
-                    NotifyPropertyChanged();
-                }
-            }
-        }
+        public double Sentiment { get; internal set; }
 
         /// <summary>
         /// Commitment value.
         /// </summary>
-        public double Commitment
-        {
-            get => _commitment;
-            set
-            {
-                if (_commitment != value)
-                {
-                    _commitment = value;
-                    NotifyPropertyChanged();
-                }
-            }
-        }
+        public double Commitment { get; internal set; }
 
         /// <summary>
         /// The current equilibrium gauge level in standard deviations from the equilibrium price.
@@ -106,10 +33,10 @@
         {
             get
             {
-                if (_lastPrice == 0 || _equilibriumPrice == 0 || _gapSize == 0)
+                if (LastPrice == 0 || EquilibriumPrice == 0 || GapSize == 0)
                     return 0;
 
-                return (_lastPrice - _equilibriumPrice) / _gapSize;
+                return (LastPrice - EquilibriumPrice) / GapSize;
             }
         }
 
@@ -118,55 +45,21 @@
         /// </summary>
         /// <param name="level">The level of standard deviations above or below the equilibrium price to calculate.</param>
         /// <returns>The equilibrium band price at the given level of standard deviations.</returns>
-        public double EquilibriumBand(double level) =>
-            _equilibriumPrice + _gapSize * level;
+        public double EquilibriumBand(double level) => EquilibriumPrice + GapSize * level;
 
         /// <summary>
         /// The Equilibrium Price.
         /// </summary>
-        public double EquilibriumPrice
-        {
-            get => _equilibriumPrice;
-            set
-            {
-                if (_equilibriumPrice != value)
-                {
-                    _equilibriumPrice = value;
-                    NotifyPropertyChanged();
-                }
-            }
-        }
+        public double EquilibriumPrice { get; internal set; }
 
         /// <summary>
         /// Gap size of each equilibrium deviation.
         /// </summary>
-        public double GapSize
-        {
-            get => _gapSize;
-            set
-            {
-                if (_gapSize != value)
-                {
-                    _gapSize = value;
-                    NotifyPropertyChanged();
-                }
-            }
-        }
+        public double GapSize { get; internal set; }
 
         /// <summary>
         /// Last traded price at the time of calculation.
         /// </summary>
-        public double LastPrice
-        {
-            get => _lastPrice;
-            set
-            {
-                if (_lastPrice != value)
-                {
-                    _lastPrice = value;
-                    NotifyPropertyChanged();
-                }
-            }
-        }
+        public double LastPrice { get; internal set; }
     }
 }
