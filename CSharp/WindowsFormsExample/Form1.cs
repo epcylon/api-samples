@@ -12,20 +12,20 @@ namespace WindowsFormsExample
     {
         private readonly APIClient _client;
         private SymbolSearch _symbolSearch;
-        private Subscription<TopSymbols> _topSymbolsStream;
-        private TopSymbols _topSymbols;
+        private Subscription<TopSymbolsEventArgs> _topSymbolsStream;
+        private TopSymbolsEventArgs _topSymbols;
 
         #region Dependency Properties
 
-        public Subscription<Perception> Perception { get; set; }
-        public Subscription<Commitment> Commitment { get; set; }
-        public Subscription<Headroom> Headroom { get; set; }
-        public Subscription<BookPressure> BookPressure { get; set; }
-        public Subscription<Sentiment> Sentiment { get; set; }
-        public Subscription<Equilibrium> Equilibrium { get; set; }
-        public Subscription<MultiframeEquilibrium> MultiFrame { get; set; }
-        public Subscription<Trigger> Trigger { get; set; }
-        public Subscription<StrategyValues> Strategy { get; set; }
+        public Subscription<PerceptionEventArgs> Perception { get; set; }
+        public Subscription<CommitmentEventArgs> Commitment { get; set; }
+        public Subscription<HeadroomEventArgs> Headroom { get; set; }
+        public Subscription<BookPressureEventArgs> BookPressure { get; set; }
+        public Subscription<SentimentEventArgs> Sentiment { get; set; }
+        public Subscription<EquilibriumEventArgs> Equilibrium { get; set; }
+        public Subscription<MultiframeEquilibriumEventArgs> MultiFrame { get; set; }
+        public Subscription<TriggerEventArgs> Trigger { get; set; }
+        public Subscription<StrategyEventArgs> Strategy { get; set; }
 
         #endregion
 
@@ -70,9 +70,9 @@ namespace WindowsFormsExample
             Strategy = _client.SubscribeStrategy("Crb9.0", symbol);
         }
 
-        private void _client_PerceptionUpdated(object sender, Perception e)
+        private void _client_PerceptionUpdated(object sender, PerceptionEventArgs e)
         {
-            Debug.Print("Perception updated: " + e.Symbol + "  " + e.GaugeLevel);
+            Debug.Print("Perception updated: " + e.Symbol + "  " + e.Value);
         }
 
         private void Unsubscribe()
@@ -127,7 +127,7 @@ namespace WindowsFormsExample
             Console.WriteLine("Connected!");
         }
 
-        private void HandleTopSymbolsUpdate(object sender, TopSymbols topSymbols)
+        private void HandleTopSymbolsUpdate(object sender, TopSymbolsEventArgs topSymbols)
         {
             _topSymbols = topSymbols;
             if (!string.IsNullOrEmpty(txtSearch.Text))

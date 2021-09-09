@@ -60,16 +60,16 @@ namespace BridgeRock.CSharpExample.Controls
         /// <summary>
         /// The spectrum lines to display.
         /// </summary>
-        private readonly Rectangle[] _lines = new Rectangle[Sentiment.TotalBars];
+        private readonly Rectangle[] _lines = new Rectangle[SentimentEventArgs.TotalBars];
 
         /// <summary>
         /// Spectrum colors.
         /// </summary>
-        private readonly double[] _colors = new double[Sentiment.TotalBars];
+        private readonly double[] _colors = new double[SentimentEventArgs.TotalBars];
         /// <summary>
         /// Spectrum lengths.
         /// </summary>
-        private readonly double[] _lengths = new double[Sentiment.TotalBars];
+        private readonly double[] _lengths = new double[SentimentEventArgs.TotalBars];
 
         /// <summary>
         /// Is the data dirty?
@@ -344,8 +344,8 @@ namespace BridgeRock.CSharpExample.Controls
                 }
 
                 // Add the vertical lines.
-                Array.Clear(_lines, 0, Sentiment.TotalBars);
-                for (int i = 0; i < Sentiment.TotalBars; i += SkipBars)
+                Array.Clear(_lines, 0, SentimentEventArgs.TotalBars);
+                for (int i = 0; i < SentimentEventArgs.TotalBars; i += SkipBars)
                     AddVerticalLine(i);
 
                 // Add the center line.
@@ -449,7 +449,7 @@ namespace BridgeRock.CSharpExample.Controls
             try
             {
                 // Calculate the number of bars displayed.
-                effectiveBars = (Sentiment.TotalBars - 1) / SkipBars + 1;
+                effectiveBars = (SentimentEventArgs.TotalBars - 1) / SkipBars + 1;
                 center = effectiveBars / 2;
 
                 // Calculate the column index for this array index.
@@ -561,7 +561,7 @@ namespace BridgeRock.CSharpExample.Controls
         /// This method is used to update the current spectrum from the provided values.
         /// </summary>
         /// <param name="sentiment">The sentiment values to update from.</param>      
-        public void UpdateSpectrum(Sentiment sentiment)
+        public void UpdateSpectrum(SentimentEventArgs sentiment)
         {
             bool changed;                                                       // Have the values changed?
             int peaking = 0;                                                    // Is the spectrum peaking?
@@ -594,7 +594,7 @@ namespace BridgeRock.CSharpExample.Controls
                     Peaking = peaking;
                 }                
 
-                for (int index = 0; index <= Sentiment.TotalBars - 1; index++)
+                for (int index = 0; index <= SentimentEventArgs.TotalBars - 1; index++)
                 {
                     //Go through the bars, update the values.
                     if (Math.Abs(_lengths[index] - sentiment.Lengths[index]) > LengthSensitivity)
@@ -661,7 +661,7 @@ namespace BridgeRock.CSharpExample.Controls
                     UpdatePeaks();
 
                 // Go through the lines and, set the new values.
-                for (int index = 0; index < Sentiment.TotalBars; index++)
+                for (int index = 0; index < SentimentEventArgs.TotalBars; index++)
                     UpdateLine(_lines[index], index);
             }
             catch (Exception ex)
@@ -759,7 +759,7 @@ namespace BridgeRock.CSharpExample.Controls
             }
         }       
 
-        private void HandleSentimentUpdated(object sender, Sentiment sentiment)
+        private void HandleSentimentUpdated(object sender, SentimentEventArgs sentiment)
         {
             try
             {
@@ -835,15 +835,15 @@ namespace BridgeRock.CSharpExample.Controls
         /// <summary>
         /// The sentiment values to update.
         /// </summary>
-        public Subscription<Sentiment> Values
+        public Subscription<SentimentEventArgs> Values
         {
-            get { return (Subscription<Sentiment>)GetValue(ValuesProperty); }
+            get { return (Subscription<SentimentEventArgs>)GetValue(ValuesProperty); }
             set { SetValue(ValuesProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for Values.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ValuesProperty =
-            DependencyProperty.Register("Values", typeof(Subscription<Sentiment>), typeof(SentimentViewer), 
+            DependencyProperty.Register("Values", typeof(Subscription<SentimentEventArgs>), typeof(SentimentViewer), 
                                         new PropertyMetadata(null, HandleSentimentChange));
 
         /// <summary>
@@ -856,10 +856,10 @@ namespace BridgeRock.CSharpExample.Controls
             if (!(obj is SentimentViewer viewer))
                 return;
 
-            if (args.OldValue is Subscription<Sentiment> oldSentiment)
+            if (args.OldValue is Subscription<SentimentEventArgs> oldSentiment)
                 oldSentiment.Updated -= viewer.HandleSentimentUpdated;
 
-            if (args.NewValue is Subscription<Sentiment> newSentiment)
+            if (args.NewValue is Subscription<SentimentEventArgs> newSentiment)
                 newSentiment.Updated += viewer.HandleSentimentUpdated;
         }        
 

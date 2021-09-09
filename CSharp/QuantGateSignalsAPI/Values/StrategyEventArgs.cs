@@ -6,7 +6,7 @@ namespace QuantGate.API.Signals.Values
     /// Holds Strategy values. Will be updated by the stream with change notifications.
     /// Supply this object to the Unsubscribe method of the APIClient to stop the subscription.
     /// </summary>
-    public class StrategyValues : ValueBase
+    public class StrategyEventArgs : EventArgs
     {
         /// <summary>
         /// Symbol to get the Strategy update data for.

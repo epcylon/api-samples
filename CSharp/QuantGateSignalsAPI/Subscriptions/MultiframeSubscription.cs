@@ -4,7 +4,7 @@ using QuantGate.API.Signals.Values;
 
 namespace QuantGate.API.Signals.Subscriptions
 {
-    internal class MultiframeSubscription : GaugeSubscriptionBase<MultiframeUpdate, MultiframeEquilibrium>
+    internal class MultiframeSubscription : GaugeSubscriptionBase<MultiframeUpdate, MultiframeEquilibriumEventArgs>
     {
         public MultiframeSubscription(APIClient client, string streamID, string symbol,
                                       bool receipt = false, uint throttleRate = 0) :
@@ -13,9 +13,9 @@ namespace QuantGate.API.Signals.Subscriptions
         {
         }
 
-        protected override MultiframeEquilibrium HandleUpdate(MultiframeUpdate update, object processed)
+        protected override MultiframeEquilibriumEventArgs HandleUpdate(MultiframeUpdate update, object processed)
         {
-            return new MultiframeEquilibrium
+            return new MultiframeEquilibriumEventArgs
             {
                 Symbol = Symbol,
                 TimeStamp = ProtoTimeEncoder.TimestampSecondsToDate(update.Timestamp),

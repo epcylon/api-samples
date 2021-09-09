@@ -8,7 +8,7 @@ namespace QuantGate.API.Signals.Values
     /// Supply this object to the Unsubscribe method of the APIClient after values are received 
     /// to end the subscription.
     /// </summary>
-    public class Instrument : ValueBase
+    public class InstrumentEventArgs : EventArgs
     {
         /// <summary>
         /// Symbol as listed by the QuantGate servers.

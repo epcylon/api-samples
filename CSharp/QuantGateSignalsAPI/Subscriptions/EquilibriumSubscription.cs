@@ -4,7 +4,7 @@ using QuantGate.API.Signals.Values;
 
 namespace QuantGate.API.Signals.Subscriptions
 {
-    internal class EquilibriumSubscription : GaugeSubscriptionBase<EquilibriumUpdate, Equilibrium>
+    internal class EquilibriumSubscription : GaugeSubscriptionBase<EquilibriumUpdate, EquilibriumEventArgs>
     {
         public EquilibriumSubscription(APIClient client, string streamID, string symbol,
                                        string compression, bool receipt = false, uint throttleRate = 0) :
@@ -13,9 +13,9 @@ namespace QuantGate.API.Signals.Subscriptions
         {
         }
 
-        protected override Equilibrium HandleUpdate(EquilibriumUpdate update, object processed)
+        protected override EquilibriumEventArgs HandleUpdate(EquilibriumUpdate update, object processed)
         {
-            return new Equilibrium
+            return new EquilibriumEventArgs
             {
                 Symbol = Symbol,
                 TimeStamp = ProtoTimeEncoder.TimestampSecondsToDate(update.Timestamp),

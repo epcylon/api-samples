@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace QuantGate.API.Signals.Values
 {
@@ -6,7 +7,7 @@ namespace QuantGate.API.Signals.Values
     /// Holds Top Symbol values. Will be updated by the stream with change notifications.
     /// Supply this object to the Unsubscribe method of the APIClient to stop the subscription.
     /// </summary>
-    public class TopSymbols : ValueBase
+    public class TopSymbolsEventArgs : EventArgs
     {
         /// <summary>
         /// Top symbol results.

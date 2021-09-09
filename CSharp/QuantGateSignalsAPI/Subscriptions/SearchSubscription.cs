@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace QuantGate.API.Signals.Subscriptions
 {
-    internal class SearchSubscription : SubscriptionBase<SymbolSearchUpdate, SearchResults>
+    internal class SearchSubscription : SubscriptionBase<SymbolSearchUpdate, SearchResultsEventArgs>
     {
         public SearchSubscription(APIClient client, string streamID, bool receipt = false, uint throttleRate = 0) :
             base(client, SymbolSearchUpdate.Parser,
@@ -39,9 +39,9 @@ namespace QuantGate.API.Signals.Subscriptions
             return results;
         }
 
-        protected override SearchResults HandleUpdate(SymbolSearchUpdate update, object processed)
+        protected override SearchResultsEventArgs HandleUpdate(SymbolSearchUpdate update, object processed)
         {
-            return new SearchResults
+            return new SearchResultsEventArgs
             {                 
                 SearchTerm = update.SearchTerm,
                 Results = processed as List<SearchResult>,

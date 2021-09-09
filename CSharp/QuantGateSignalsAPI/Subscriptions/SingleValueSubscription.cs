@@ -5,7 +5,7 @@ using QuantGate.API.Signals.Values;
 namespace QuantGate.API.Signals.Subscriptions
 {
     internal abstract class SingleValueSubscription<V> : GaugeSubscriptionBase<SingleValueUpdate, V>
-        where V : SingleValueBase<V>, new()
+        where V : SingleValueBase, new()
     {
         public SingleValueSubscription(APIClient client, SubscriptionPath gaugePath, string streamID,
                                        string symbol, string compression = null, bool receipt = false, uint throttleRate = 0) :
@@ -20,7 +20,7 @@ namespace QuantGate.API.Signals.Subscriptions
             {
                 Symbol = Symbol,
                 TimeStamp = ProtoTimeEncoder.TimestampSecondsToDate(update.Timestamp),
-                GaugeLevel = update.Value / 1000.0,
+                Value = update.Value / 1000.0,
                 IsDirty = update.IsDirty,
             };
         }

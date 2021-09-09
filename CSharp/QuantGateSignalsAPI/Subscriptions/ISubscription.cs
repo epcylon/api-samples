@@ -1,9 +1,9 @@
-﻿using QuantGate.API.Signals.Values;
+﻿using System;
 
 namespace QuantGate.API.Signals.Subscriptions
 {
     internal interface ISubscription<V>
-        where V : ValueBase
+        where V : EventArgs
     {
         void Subscribe();
         void Unsubscribe();

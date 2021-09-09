@@ -6,7 +6,7 @@ namespace QuantGate.API.Signals.Subscriptions
 {
     internal abstract class GaugeSubscriptionBase<M, V> : SubscriptionBase<M, V>
         where M : IMessage<M>
-        where V : GaugeValueBase<V>, new()
+        where V : GaugeValueBase, new()
     {
         internal string Symbol { get; }
 

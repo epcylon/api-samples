@@ -4,7 +4,7 @@ using QuantGate.API.Signals.Values;
 
 namespace QuantGate.API.Signals.Subscriptions
 {
-    internal class StrategySubscription : SubscriptionBase<StrategyUpdate, StrategyValues>
+    internal class StrategySubscription : SubscriptionBase<StrategyUpdate, StrategyEventArgs>
     {
         private string _symbol;
         private string _strategyID;
@@ -21,9 +21,9 @@ namespace QuantGate.API.Signals.Subscriptions
             _strategyID = strategyID;
         }
 
-        protected override StrategyValues HandleUpdate(StrategyUpdate update, object processed)
+        protected override StrategyEventArgs HandleUpdate(StrategyUpdate update, object processed)
         {
-            return new StrategyValues
+            return new StrategyEventArgs
             {
                 Symbol = _symbol,
                 StrategyID = _strategyID,

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace QuantGate.API.Signals.Subscriptions
 {
-    internal class TopSymbolsSubscription : SubscriptionBase<TopSymbolsUpdate, TopSymbols>
+    internal class TopSymbolsSubscription : SubscriptionBase<TopSymbolsUpdate, TopSymbolsEventArgs>
     {
         public TopSymbolsSubscription(APIClient client, string streamID, string broker,
                                       InstrumentType instrumentType = InstrumentType.NoInstrument,
@@ -55,9 +55,9 @@ namespace QuantGate.API.Signals.Subscriptions
             return results;
         }
 
-        protected override TopSymbols HandleUpdate(TopSymbolsUpdate update, object processed)
+        protected override TopSymbolsEventArgs HandleUpdate(TopSymbolsUpdate update, object processed)
         {
-            return new TopSymbols
+            return new TopSymbolsEventArgs
             {
                 Symbols = processed as List<TopSymbol>,
             };

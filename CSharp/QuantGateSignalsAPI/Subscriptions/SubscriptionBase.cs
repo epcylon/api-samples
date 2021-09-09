@@ -1,13 +1,14 @@
 ﻿using Google.Protobuf;
 using QuantGate.API.Signals.ProtoStomp;
 using QuantGate.API.Signals.Values;
+using System;
 using System.Threading;
 
 namespace QuantGate.API.Signals.Subscriptions
 {
     internal abstract class SubscriptionBase<M, V> : ProtoStompSubscription, ISubscription<V>
         where M : IMessage<M>
-        where V : ValueBase, new()
+        where V : EventArgs, new()
     {
         private readonly MessageParser<M> _parser;
         public Subscription<V> External { get; }

@@ -5,7 +5,7 @@ using QuantGate.API.Signals.Values;
 using System;
 using System.Windows;
 using System.Windows.Controls;
-using Trigger = QuantGate.API.Signals.Values.Trigger;
+using TriggerEventArgs = QuantGate.API.Signals.Values.TriggerEventArgs;
 
 namespace BridgeRock.CSharpExample
 {
@@ -16,20 +16,29 @@ namespace BridgeRock.CSharpExample
     {
         private readonly APIClient _client;
         private SymbolSearch _symbolSearch;
-        private Subscription<TopSymbols> _topSymbolsStream;
-        private TopSymbols _topSymbols;
+        private Subscription<TopSymbolsEventArgs> _topSymbolsStream;
+        private TopSymbolsEventArgs _topSymbols;
 
         #region Dependency Properties
 
-        public Subscription<Perception> Perception { get; set; }
-        public Subscription<Commitment> Commitment { get; set; }
-        public Subscription<Headroom> Headroom { get; set; }
-        public Subscription<BookPressure> BookPressure { get; set; }
-        public Subscription<Sentiment> Sentiment { get; set; }
-        public Subscription<Equilibrium> Equilibrium { get; set; }
-        public Subscription<MultiframeEquilibrium> MultiFrame { get; set; }
-        public Subscription<Trigger> Trigger { get; set; }
-        public Subscription<StrategyValues> Strategy { get; set; }
+        private Subscription<PerceptionEventArgs> _perception;
+        private Subscription<CommitmentEventArgs> _commitment;
+        private Subscription<HeadroomEventArgs> _headroom;
+        private Subscription<BookPressureEventArgs> _bookPressure;
+        private Subscription<EquilibriumEventArgs> _equilibrium;
+        private Subscription<MultiframeEquilibriumEventArgs> _multiFrame;
+        private Subscription<TriggerEventArgs> _trigger;
+        private Subscription<StrategyEventArgs> _strategy;
+
+        public Subscription<SentimentEventArgs> Sentiment
+        {
+            get { return (Subscription<SentimentEventArgs>)GetValue(SentimentProperty); }
+            set { SetValue(SentimentProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Sentiment.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty SentimentProperty =
+            DependencyProperty.Register("Sentiment", typeof(Subscription<SentimentEventArgs>), typeof(MainWindow), new PropertyMetadata(null));
 
         #endregion
 
@@ -61,30 +70,30 @@ namespace BridgeRock.CSharpExample
         {
             Unsubscribe();
 
-            Perception = _client.SubscribePerception(symbol);
-            Commitment = _client.SubscribeCommitment(symbol);
-            Equilibrium = _client.SubscribeEquilibrium(symbol, "300s");
+            _perception = _client.SubscribePerception(symbol);
+            _commitment = _client.SubscribeCommitment(symbol);
+            _equilibrium = _client.SubscribeEquilibrium(symbol, "300s");
             Sentiment = _client.SubscribeSentiment(symbol, "50t");
-            Headroom = _client.SubscribeHeadroom(symbol);
-            BookPressure = _client.SubscribeBookPressure(symbol);
-            MultiFrame = _client.SubscribeMultiframeEquilibrium(symbol);
-            Trigger = _client.SubscribeTrigger(symbol);
-            Strategy = _client.SubscribeStrategy("Crb9.0", symbol);
+            _headroom = _client.SubscribeHeadroom(symbol);
+            _bookPressure = _client.SubscribeBookPressure(symbol);
+            _multiFrame = _client.SubscribeMultiframeEquilibrium(symbol);
+            _trigger = _client.SubscribeTrigger(symbol);
+            _strategy = _client.SubscribeStrategy("Crb9.0", symbol);
         }
 
         private void Unsubscribe()
         {
-            if (Perception is object)
+            if (_perception is object)
             {
-                _client.Unsubscribe(Perception);
-                _client.Unsubscribe(Commitment);
-                _client.Unsubscribe(Equilibrium);
+                _client.Unsubscribe(_perception);
+                _client.Unsubscribe(_commitment);
+                _client.Unsubscribe(_equilibrium);
                 _client.Unsubscribe(Sentiment);
-                _client.Unsubscribe(Headroom);
-                _client.Unsubscribe(BookPressure);
-                _client.Unsubscribe(MultiFrame);
-                _client.Unsubscribe(Trigger);
-                _client.Unsubscribe(Strategy);
+                _client.Unsubscribe(_headroom);
+                _client.Unsubscribe(_bookPressure);
+                _client.Unsubscribe(_multiFrame);
+                _client.Unsubscribe(_trigger);
+                _client.Unsubscribe(_strategy);
                 sViewer.ClearSpectrum();
             }
         }
@@ -124,7 +133,7 @@ namespace BridgeRock.CSharpExample
             Console.WriteLine("Connected!");
         }
 
-        private void HandleTopSymbolsUpdate(object sender, TopSymbols topSymbols)
+        private void HandleTopSymbolsUpdate(object sender, TopSymbolsEventArgs topSymbols)
         {
             _topSymbols = topSymbols;
             if (!string.IsNullOrEmpty(txtSearch.Text))

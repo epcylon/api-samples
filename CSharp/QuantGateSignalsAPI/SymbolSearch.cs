@@ -39,7 +39,7 @@ namespace QuantGate.API.Signals
         /// <summary>
         /// Called whenever the values are updated.
         /// </summary>
-        private void HandleValuesUpdate(object sender, SearchResults results)
+        private void HandleValuesUpdate(object sender, SearchResultsEventArgs results)
         {
             // Pass the event through.
             Updated(this, new SearchUpdateEventArgs(results.SearchTerm,

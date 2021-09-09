@@ -6,7 +6,7 @@ using System.Diagnostics;
 
 namespace QuantGate.API.Signals.Subscriptions
 {
-    internal class SentimentSubscription : GaugeSubscriptionBase<SentimentUpdate, Sentiment>
+    internal class SentimentSubscription : GaugeSubscriptionBase<SentimentUpdate, SentimentEventArgs>
     {
         /// <summary>
         /// Module-level Identifier.
@@ -33,12 +33,12 @@ namespace QuantGate.API.Signals.Subscriptions
             return Tuple.Create(lengths, colors);
         }
 
-        protected override Sentiment HandleUpdate(SentimentUpdate update, object processed)
+        protected override SentimentEventArgs HandleUpdate(SentimentUpdate update, object processed)
         {
             if (!(processed is Tuple<double[], double[]> converted))
                 return null;
 
-            return new Sentiment
+            return new SentimentEventArgs
             {
                 Symbol = Symbol,
                 TimeStamp = ProtoTimeEncoder.TimestampSecondsToDate(update.Timestamp),
@@ -63,7 +63,7 @@ namespace QuantGate.API.Signals.Subscriptions
         /// <returns>A list of 55 heights or colors.</returns>
         public static double[] InterpolateTo55(int i, int j, double x, double y, double z)
         {
-            double[] result = new double[Sentiment.TotalBars];
+            double[] result = new double[SentimentEventArgs.TotalBars];
             double[] values;
             int next = 0;
             int remaining;
@@ -71,7 +71,7 @@ namespace QuantGate.API.Signals.Subscriptions
             try
             {
                 // Calculate length between j and end.
-                remaining = Sentiment.TotalBars - 1 - j;
+                remaining = SentimentEventArgs.TotalBars - 1 - j;
 
                 // Interpolate from 0 to i.
                 values = new double[] { 2 * x - y, x, y, LinearInterpolate(i, y, j, z) };

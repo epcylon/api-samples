@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace QuantGate.API.Signals.Subscriptions
 {
-    internal class InstrumentSubscription : SubscriptionBase<InstrumentUpdate, Instrument>
+    internal class InstrumentSubscription : SubscriptionBase<InstrumentUpdate, InstrumentEventArgs>
     {
         public InstrumentSubscription(APIClient client, string streamID, string symbol,
                                       bool receipt = false, uint throttleRate = 0) :
@@ -16,7 +16,7 @@ namespace QuantGate.API.Signals.Subscriptions
         {
         }
 
-        protected override Instrument HandleUpdate(InstrumentUpdate update, object processed)
+        protected override InstrumentEventArgs HandleUpdate(InstrumentUpdate update, object processed)
         {
             List<TickRange> tickRanges = new List<TickRange>();
             List<Values.TradingSession> tradingSessions = new List<Values.TradingSession>();
@@ -43,7 +43,7 @@ namespace QuantGate.API.Signals.Subscriptions
             foreach (KeyValuePair<string, string> symbolMapping in update.BrokerSymbols)
                 brokerSymbols.Add(symbolMapping.Key, symbolMapping.Value);
 
-            return new Instrument
+            return new InstrumentEventArgs
             {
                 Symbol = update.Symbol,
                 Underlying = update.Underlying,

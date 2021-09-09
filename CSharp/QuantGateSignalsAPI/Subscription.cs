@@ -1,11 +1,10 @@
 ﻿using QuantGate.API.Signals.Subscriptions;
-using QuantGate.API.Signals.Values;
 using System;
 
 namespace QuantGate.API.Signals
 {
     public class Subscription<V>
-        where V : ValueBase
+        where V : EventArgs
     {
         /// <summary>
         /// Notifies that the object was updated (after complete update).

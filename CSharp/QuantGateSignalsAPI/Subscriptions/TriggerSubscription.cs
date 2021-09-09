@@ -4,16 +4,16 @@ using QuantGate.API.Signals.Values;
 
 namespace QuantGate.API.Signals.Subscriptions
 {
-    internal class TriggerSubscription : GaugeSubscriptionBase<TriggerUpdate, Trigger>
+    internal class TriggerSubscription : GaugeSubscriptionBase<TriggerUpdate, TriggerEventArgs>
     {
         public TriggerSubscription(APIClient client, string streamID, string symbol, bool receipt = false, uint throttleRate = 0) :
             base(client, TriggerUpdate.Parser, SubscriptionPath.GaugeTrigger, streamID, symbol, null, receipt, throttleRate)
         {
         }
 
-        protected override Trigger HandleUpdate(TriggerUpdate update, object processed)
+        protected override TriggerEventArgs HandleUpdate(TriggerUpdate update, object processed)
         {
-            return new Trigger
+            return new TriggerEventArgs
             {
                 Symbol = Symbol,
                 TimeStamp = ProtoTimeEncoder.TimestampSecondsToDate(update.Timestamp),

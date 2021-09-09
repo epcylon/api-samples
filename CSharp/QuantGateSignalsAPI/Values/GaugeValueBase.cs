@@ -5,8 +5,7 @@ namespace QuantGate.API.Signals.Values
     /// <summary>
     /// Base class for gauge values.
     /// </summary>
-    public abstract class GaugeValueBase<V> : ValueBase
-        where V : ValueBase
+    public abstract class GaugeValueBase : EventArgs
     {
         /// <summary>
         /// The symbol being subscribed to for this gauge.
