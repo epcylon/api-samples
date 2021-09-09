@@ -8,7 +8,7 @@ namespace QuantGate.API.Signals.Subscriptions
         void Subscribe();
         void Unsubscribe();
         APIClient Client { get; }
-        SignalStream<V> Stream { get; }
+        Subscription<V> External { get; }
         uint ThrottleRate { get; set; }
     }
 }

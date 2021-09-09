@@ -12,20 +12,20 @@ namespace WindowsFormsExample
     {
         private readonly APIClient _client;
         private SymbolSearch _symbolSearch;
-        private SignalStream<TopSymbols> _topSymbolsStream;
+        private Subscription<TopSymbols> _topSymbolsStream;
         private TopSymbols _topSymbols;
 
         #region Dependency Properties
 
-        public SignalStream<Perception> Perception { get; set; }
-        public SignalStream<Commitment> Commitment { get; set; }
-        public SignalStream<Headroom> Headroom { get; set; }
-        public SignalStream<BookPressure> BookPressure { get; set; }
-        public SignalStream<Sentiment> Sentiment { get; set; }
-        public SignalStream<Equilibrium> Equilibrium { get; set; }
-        public SignalStream<MultiframeEquilibrium> MultiFrame { get; set; }
-        public SignalStream<Trigger> Trigger { get; set; }
-        public SignalStream<StrategyValues> Strategy { get; set; }
+        public Subscription<Perception> Perception { get; set; }
+        public Subscription<Commitment> Commitment { get; set; }
+        public Subscription<Headroom> Headroom { get; set; }
+        public Subscription<BookPressure> BookPressure { get; set; }
+        public Subscription<Sentiment> Sentiment { get; set; }
+        public Subscription<Equilibrium> Equilibrium { get; set; }
+        public Subscription<MultiframeEquilibrium> MultiFrame { get; set; }
+        public Subscription<Trigger> Trigger { get; set; }
+        public Subscription<StrategyValues> Strategy { get; set; }
 
         #endregion
 
@@ -145,7 +145,7 @@ namespace WindowsFormsExample
         }
 
         private void HandleSearchUpdate(object sender, SearchUpdateEventArgs e)
-        {            
+        {       
             if (string.IsNullOrEmpty(txtSearch.Text))
                 return;
 

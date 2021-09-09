@@ -33,7 +33,7 @@ namespace QuantGate.API.Signals
         internal SymbolSearch(SearchSubscription subscription)
         {
             Subscription = subscription;
-            Subscription.Stream.Updated += HandleValuesUpdate;
+            Subscription.External.Updated += HandleValuesUpdate;
         }
 
         /// <summary>

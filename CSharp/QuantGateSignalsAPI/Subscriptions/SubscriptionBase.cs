@@ -10,8 +10,8 @@ namespace QuantGate.API.Signals.Subscriptions
         where V : ValueBase, new()
     {
         private readonly MessageParser<M> _parser;
-        public SignalStream<V> Stream { get; }
-        SignalStream<V> ISubscription<V>.Stream => Stream;
+        public Subscription<V> External { get; }
+        Subscription<V> ISubscription<V>.External => External;
         APIClient ISubscription<V>.Client => Client;
 
         public SubscriptionBase(APIClient client, MessageParser<M> parser,
@@ -19,7 +19,7 @@ namespace QuantGate.API.Signals.Subscriptions
             base(client, destination, receipt, throttleRate)
         {
             _parser = parser;
-            Stream = new SignalStream<V>() { Subscription = this };
+            External = new Subscription<V>() { Source = this };
             OnNext += HandleOnNext;
         }
 
@@ -31,7 +31,7 @@ namespace QuantGate.API.Signals.Subscriptions
             Client.Sync.Post(new SendOrPostCallback((o) =>
             {
                 V updated = HandleUpdate(update, processed);
-                Stream.SendUpdated(updated);
+                External.SendUpdated(updated);
             }), null);
         }
 
