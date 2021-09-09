@@ -11,52 +11,52 @@ namespace QuantGate.API.Signals.Values
         /// <summary>
         /// 5 minute value.
         /// </summary>
-        public double Min5 { get; internal set; }
+        public double Min5 { get; }
 
         /// <summary>
         /// 10 minute value.
         /// </summary>
-        public double Min10 { get; internal set; }
+        public double Min10 { get; }
 
         /// <summary>
         /// 15 minute value.
         /// </summary>
-        public double Min15 { get; internal set; }
+        public double Min15 { get; }
 
         /// <summary>
         /// 30 minute value.
         /// </summary>
-        public double Min30 { get; internal set; }
+        public double Min30 { get; }
 
         /// <summary>
         /// 45 minute value.
         /// </summary>
-        public double Min45 { get; internal set; }
+        public double Min45 { get; }
 
         /// <summary>
         /// 60 minute value.
         /// </summary>
-        public double Min60 { get; internal set; }
+        public double Min60 { get; }
 
         /// <summary>
         /// 120 minute value.
         /// </summary>
-        public double Min120 { get; internal set; }
+        public double Min120 { get; }
 
         /// <summary>
         /// 180 minute value.
         /// </summary>
-        public double Min180 { get; internal set; }
+        public double Min180 { get; }
 
         /// <summary>
         /// 240 minute value.
         /// </summary>
-        public double Min240 { get; internal set; }
+        public double Min240 { get; }
 
         /// <summary>
         /// 1 day value.
         /// </summary>
-        public double Day1 { get; internal set; }
+        public double Day1 { get; }
 
         /// <summary>
         /// Creates a new MultiframeEquilibriumEventArgs instance.

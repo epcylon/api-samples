@@ -23,23 +23,22 @@ namespace QuantGate.API.Signals.Subscriptions
 
         protected override StrategyEventArgs HandleUpdate(StrategyUpdate update, object processed)
         {
-            return new StrategyEventArgs
-            {
-                Symbol = _symbol,
-                StrategyID = _strategyID,
-                TimeStamp = ProtoTimeEncoder.TimestampSecondsToDate(update.Timestamp),
-                EntryProgress = update.EntryProgress / 1000.0,
-                ExitProgress = update.ExitProgress / 1000.0,
-                Signal = (StrategySignal)update.Signal,
-                PerceptionLevel = ConvertLevel(update.PerceptionLevel),
-                PerceptionSignal = (GaugeSignal)update.PerceptionSignal,
-                CommitmentLevel = ConvertLevel(update.CommitmentLevel),
-                CommitmentSignal = (GaugeSignal)update.CommitmentSignal,
-                EquilibriumLevel = ConvertLevel(update.EquilibriumLevel),
-                EquilibriumSignal = (GaugeSignal)update.EquilibriumSignal,
-                SentimentLevel = ConvertLevel(update.SentimentLevel),
-                SentimentSignal = (GaugeSignal)update.SentimentSignal,
-            };
+            return new StrategyEventArgs(
+                ProtoTimeEncoder.TimestampSecondsToDate(update.Timestamp),
+                _symbol,
+                _strategyID,
+                update.EntryProgress / 1000.0,
+                update.ExitProgress / 1000.0,
+                ConvertLevel(update.PerceptionLevel),
+                (GaugeSignal)update.PerceptionSignal,
+                ConvertLevel(update.CommitmentLevel),
+                (GaugeSignal)update.CommitmentSignal,
+                ConvertLevel(update.EquilibriumLevel),
+                (GaugeSignal)update.EquilibriumSignal,
+                ConvertLevel(update.SentimentLevel),
+                (GaugeSignal)update.SentimentSignal,
+                (StrategySignal)update.Signal
+            );
         }
 
         /// <summary>

@@ -16,37 +16,37 @@ namespace QuantGate.API.Signals.Values
         /// <summary>
         /// The Equilibrium Price.
         /// </summary>
-        public double EquilibriumPrice { get; internal set; }
+        public double EquilibriumPrice { get; }
 
         /// <summary>
         /// Gap size of each equilibrium deviation.
         /// </summary>
-        public double GapSize { get; internal set; }
+        public double GapSize { get; }
 
         /// <summary>
         /// Last traded price at the time of calculation.
         /// </summary>
-        public double LastPrice { get; internal set; }
+        public double LastPrice { get; }
 
         /// <summary>
         /// Position of the high value.
         /// </summary>
-        public double High { get; internal set; }
+        public double High { get; }
 
         /// <summary>
         /// Position of the low value.
         /// </summary>
-        public double Low { get; internal set; }
+        public double Low { get; }
 
         /// <summary>
         /// Position of the projected value.
         /// </summary>
-        public double Projected { get; internal set; }
+        public double Projected { get; }
 
         /// <summary>
         /// Bias (as determined by the slope).
         /// </summary>
-        public double Bias { get; internal set; }
+        public double Bias { get; }
 
         /// <summary>
         /// Creates a new EquilibriumEventArgs instance.

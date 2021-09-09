@@ -42,23 +42,22 @@ namespace QuantGate.API.Signals.Subscriptions
             foreach (KeyValuePair<string, string> symbolMapping in update.BrokerSymbols)
                 brokerSymbols.Add(symbolMapping.Key, symbolMapping.Value);
 
-            return new InstrumentEventArgs
-            {
-                Symbol = update.Symbol,
-                Underlying = update.Underlying,
-                Currency = update.Currency,
-                Exchange = update.Exchange,
-                InstrumentType = (InstrumentType)update.InstrumentType,
-                PutOrCall = (PutOrCall)update.PutOrCall,
-                Strike = update.Strike,
-                ExpiryDate = ProtoTimeEncoder.DaysToDate(update.ExpiryDate),
-                Multiplier = update.Multiplier,
-                DisplayName = update.DisplayName,
-                TimeZone = TimeZoneDecoder.OlsonTimeZoneToTimeZoneInfo(update.TimeZone),
-                TickRanges = tickRanges,
-                TradingSessions = tradingSessions,
-                BrokerSymbols = brokerSymbols,
-            };
+            return new InstrumentEventArgs(
+                update.Symbol,
+                update.Underlying,
+                update.Currency,
+                update.Exchange,
+                (InstrumentType)update.InstrumentType,
+                (PutOrCall)update.PutOrCall,
+                update.Strike,
+                ProtoTimeEncoder.DaysToDate(update.ExpiryDate),
+                update.Multiplier,
+                update.DisplayName,
+                TimeZoneDecoder.OlsonTimeZoneToTimeZoneInfo(update.TimeZone),
+                tickRanges,
+                tradingSessions,
+                brokerSymbols
+            );
         }
     }
 }
