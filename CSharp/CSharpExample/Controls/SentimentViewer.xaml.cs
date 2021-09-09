@@ -766,7 +766,7 @@ namespace BridgeRock.CSharpExample.Controls
             _sentimentUpdated = true;
         }
 
-        private void HandleSentimentUpdated(object sender, EventArgs e)
+        private void HandleSentimentUpdated(object sender, Sentiment sentiment)
         {
             try
             {

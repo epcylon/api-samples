@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace QuantGate.API.Signals.Values
+namespace QuantGate.API.Signals.Events
 {
     /// <summary>
     /// Arguments to be returned in a Search Update event.

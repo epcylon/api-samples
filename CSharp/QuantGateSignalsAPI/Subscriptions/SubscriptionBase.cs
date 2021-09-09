@@ -5,20 +5,21 @@ using System.Threading;
 
 namespace QuantGate.API.Signals.Subscriptions
 {
-    internal abstract class SubscriptionBase<M, V> : ProtoStompSubscription, ISubscription
+    internal abstract class SubscriptionBase<M, V> : ProtoStompSubscription, ISubscription<V>
         where M : IMessage<M>
         where V : ValueBase, new()
     {
         private readonly MessageParser<M> _parser;
-        public V Values { get; }
-        ValueBase ISubscription.Values => Values;
+        public SignalStream<V> Stream { get; }
+        SignalStream<V> ISubscription<V>.Stream => Stream;
+        APIClient ISubscription<V>.Client => Client;
 
         public SubscriptionBase(APIClient client, MessageParser<M> parser,
                                 string destination, bool receipt = false, uint throttleRate = 0) :
             base(client, destination, receipt, throttleRate)
         {
             _parser = parser;
-            Values = new V() { Subscription = this };
+            Stream = new SignalStream<V>() { Subscription = this };
             OnNext += HandleOnNext;
         }
 
@@ -29,12 +30,12 @@ namespace QuantGate.API.Signals.Subscriptions
 
             Client.Sync.Post(new SendOrPostCallback((o) =>
             {
-                HandleUpdate(update, processed);
-                Values.SendUpdated();
+                V updated = HandleUpdate(update, processed);
+                Stream.SendUpdated(updated);
             }), null);
         }
 
         protected virtual object Preprocess(M update) => null;
-        protected abstract void HandleUpdate(M update, object processed);
+        protected abstract V HandleUpdate(M update, object processed);
     }
 }

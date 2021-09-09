@@ -55,9 +55,12 @@ namespace QuantGate.API.Signals.Subscriptions
             return results;
         }
 
-        protected override void HandleUpdate(TopSymbolsUpdate update, object processed)
+        protected override TopSymbols HandleUpdate(TopSymbolsUpdate update, object processed)
         {
-            Values.Symbols = processed as List<TopSymbol>;
+            return new TopSymbols
+            {
+                Symbols = processed as List<TopSymbol>,
+            };
         }
     }
 }

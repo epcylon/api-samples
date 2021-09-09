@@ -102,7 +102,7 @@ namespace QuantGate.API.Signals.Values
         /// <summary>
         /// Currency the instrument is traded in.
         /// </summary>
-        public string Currency 
+        public string Currency
         {
             get => _currency;
             internal set
@@ -118,7 +118,7 @@ namespace QuantGate.API.Signals.Values
         /// <summary>
         /// Primary exchange (ISO 10383 MIC) the instrument is traded on.
         /// </summary>
-        public string Exchange 
+        public string Exchange
         {
             get => _exchange;
             internal set
@@ -150,7 +150,7 @@ namespace QuantGate.API.Signals.Values
         /// <summary>
         /// Type of instrument. 
         /// </summary>
-        public InstrumentType InstrumentType 
+        public InstrumentType InstrumentType
         {
             get => _instrumentType;
             internal set
@@ -166,7 +166,7 @@ namespace QuantGate.API.Signals.Values
         /// <summary>
         /// Right of an option, if an option (will be empty otherwise).
         /// </summary>
-        public PutOrCall PutOrCall 
+        public PutOrCall PutOrCall
         {
             get => _putOrCall;
             internal set
@@ -182,7 +182,7 @@ namespace QuantGate.API.Signals.Values
         /// <summary>
         /// Strike price of an option, if an option (will be zero otherwise).
         /// </summary>
-        public double Strike 
+        public double Strike
         {
             get => _strike;
             internal set
@@ -198,7 +198,7 @@ namespace QuantGate.API.Signals.Values
         /// <summary>
         /// Expiry date of the instrument, if applicable
         /// </summary>
-        public DateTime ExpiryDate 
+        public DateTime ExpiryDate
         {
             get => _expiryDate;
             internal set
@@ -246,7 +246,7 @@ namespace QuantGate.API.Signals.Values
         /// <summary>
         /// Tick ranges used to determine price levels.
         /// </summary>
-        public List<TickRange> TickRanges 
+        public List<TickRange> TickRanges
         {
             get => _tickRanges;
             internal set
@@ -260,31 +260,31 @@ namespace QuantGate.API.Signals.Values
         /// <summary>
         /// Trading session end times and lengths for each day Sunday-Saturday, specified in the exchange time_zone.
         /// </summary>
-        public List<TradingSession> TradingSessions 
+        public List<TradingSession> TradingSessions
         {
             get => _tradingSessions;
             internal set
-            {                
+            {
                 _tradingSessions.Clear();
                 _tradingSessions.AddRange(value);
-                NotifyPropertyChanged();                
+                NotifyPropertyChanged();
             }
         }
 
         /// <summary>
         /// Map of broker symbols according to broker (ib, cqg, dtniq, etc.).
         /// </summary>
-        public Dictionary<string, string> BrokerSymbols 
+        public Dictionary<string, string> BrokerSymbols
         {
             get => _brokerSymbols;
             internal set
-            {                
+            {
                 _brokerSymbols.Clear();
 
                 foreach (KeyValuePair<string, string> pair in value)
                     _brokerSymbols.Add(pair.Key, pair.Value);
 
-                NotifyPropertyChanged();                
+                NotifyPropertyChanged();
             }
         }
     }

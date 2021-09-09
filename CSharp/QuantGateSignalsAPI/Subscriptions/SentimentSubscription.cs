@@ -33,17 +33,21 @@ namespace QuantGate.API.Signals.Subscriptions
             return Tuple.Create(lengths, colors);
         }
 
-        protected override void HandleUpdate(SentimentUpdate update, object processed)
+        protected override Sentiment HandleUpdate(SentimentUpdate update, object processed)
         {
             if (!(processed is Tuple<double[], double[]> converted))
-                return;
+                return null;
 
-            Values.TimeStamp = ProtoTimeEncoder.TimestampSecondsToDate(update.Timestamp);
-            Values.Lengths = converted.Item1;
-            Values.Colors = converted.Item2;
-            Values.AvgLength = update.Lengths.Average / 1000.0;
-            Values.AvgColor = update.Lengths.Average / 1000.0;
-            Values.IsDirty = update.IsDirty;
+            return new Sentiment
+            {
+                Symbol = Symbol,
+                TimeStamp = ProtoTimeEncoder.TimestampSecondsToDate(update.Timestamp),
+                Lengths = converted.Item1,
+                Colors = converted.Item2,
+                AvgLength = update.Lengths.Average / 1000.0,
+                AvgColor = update.Lengths.Average / 1000.0,
+                IsDirty = update.IsDirty,
+            };
         }
 
         #region Height/Color Interpolation        

@@ -1,4 +1,6 @@
-﻿using QuantGate.API.Signals;
+﻿using QuantGate.API.Events;
+using QuantGate.API.Signals;
+using QuantGate.API.Signals.Events;
 using QuantGate.API.Signals.Values;
 using System;
 using System.Windows;
@@ -132,7 +134,10 @@ namespace BridgeRock.CSharpExample
             _client.Disconnected += HandleDisconnected;
             _client.Error += HandleError;
 
-            _client.Connect("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKb2huSCIsImlhdCI6MTYyODcxMzg2NywiZXhwIjoxNjMyOTYwMDAwLCJhdWQiOiIyV1VqZW9iUlhSVzlwc05ERWN4ZTFNRDl3dGRmZGgxQyJ9.Up48upDkCINp9znyjTkUXc0F2Rb5BWqfzmumF4mUcXA");
+            _client.Connect("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
+                            "eyJzdWIiOiJKb2huSCIsImlhdCI6MTYyODcxMzg2NywiZXhwIjoxNjMyOTYw" +
+                            "MDAwLCJhdWQiOiIyV1VqZW9iUlhSVzlwc05ERWN4ZTFNRDl3dGRmZGgxQyJ9." +
+                            "Up48upDkCINp9znyjTkUXc0F2Rb5BWqfzmumF4mUcXA");
 
             SubscribeSearch();
             Subscribe("NQ U1");
@@ -186,7 +191,7 @@ namespace BridgeRock.CSharpExample
             }
             else
             {
-                HandleTopSymbolsUpdate(_topSymbols, EventArgs.Empty);
+                HandleTopSymbolsUpdate(this, _topSymbols);
             }
         }        
 
@@ -205,14 +210,14 @@ namespace BridgeRock.CSharpExample
             Console.WriteLine("Connected!");
         }
 
-        private void HandleTopSymbolsUpdate(object sender, EventArgs e)
+        private void HandleTopSymbolsUpdate(object sender, TopSymbols topSymbols)
         {
             if (!string.IsNullOrEmpty(txtSearch.Text))
                 return;
 
             lvSearch.Items.Clear();
 
-            foreach (TopSymbol symbol in _topSymbols.Symbols)
+            foreach (TopSymbol symbol in topSymbols.Symbols)
                 lvSearch.Items.Add(new SearchRow
                 {
                     Symbol = symbol.Symbol,

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using QuantGate.API.Signals.Events;
+using System.Collections.Generic;
 
 namespace QuantGate.API.Signals.Values
 {
@@ -15,7 +16,7 @@ namespace QuantGate.API.Signals.Values
         /// <summary>
         /// Search results.
         /// </summary>
-        private List<SearchResult> _results = new List<SearchResult>();
+        private readonly List<SearchResult> _results = new List<SearchResult>();
 
         /// <summary>
         /// Search term the results are for.

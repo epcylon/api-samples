@@ -6,6 +6,9 @@ namespace QuantGate.API.Signals.Subscriptions
 {
     internal class StrategySubscription : SubscriptionBase<StrategyUpdate, StrategyValues>
     {
+        private string _symbol;
+        private string _strategyID;
+
         public StrategySubscription(APIClient client, string strategyID, string streamID,
                                     string symbol, bool receipt = false, uint throttleRate = 0) :
             base(client, StrategyUpdate.Parser,
@@ -14,22 +17,29 @@ namespace QuantGate.API.Signals.Subscriptions
                                        symbol, strategyID: strategyID).Destination,
                  receipt, throttleRate)
         {
+            _symbol = symbol;
+            _strategyID = strategyID;
         }
 
-        protected override void HandleUpdate(StrategyUpdate update, object processed)
+        protected override StrategyValues HandleUpdate(StrategyUpdate update, object processed)
         {
-            Values.TimeStamp = ProtoTimeEncoder.TimestampSecondsToDate(update.Timestamp);
-            Values.EntryProgress = update.EntryProgress / 1000.0;
-            Values.ExitProgress = update.ExitProgress / 1000.0;
-            Values.Signal = (StrategySignal)update.Signal;
-            Values.PerceptionLevel = ConvertLevel(update.PerceptionLevel);
-            Values.PerceptionSignal = (GaugeSignal)update.PerceptionSignal;
-            Values.CommitmentLevel = ConvertLevel(update.CommitmentLevel);
-            Values.CommitmentSignal = (GaugeSignal)update.CommitmentSignal;
-            Values.EquilibriumLevel = ConvertLevel(update.EquilibriumLevel);
-            Values.EquilibriumSignal = (GaugeSignal)update.EquilibriumSignal;
-            Values.SentimentLevel = ConvertLevel(update.SentimentLevel);
-            Values.SentimentSignal = (GaugeSignal)update.SentimentSignal;
+            return new StrategyValues
+            {
+                Symbol = _symbol,
+                StrategyID = _strategyID,
+                TimeStamp = ProtoTimeEncoder.TimestampSecondsToDate(update.Timestamp),
+                EntryProgress = update.EntryProgress / 1000.0,
+                ExitProgress = update.ExitProgress / 1000.0,
+                Signal = (StrategySignal)update.Signal,
+                PerceptionLevel = ConvertLevel(update.PerceptionLevel),
+                PerceptionSignal = (GaugeSignal)update.PerceptionSignal,
+                CommitmentLevel = ConvertLevel(update.CommitmentLevel),
+                CommitmentSignal = (GaugeSignal)update.CommitmentSignal,
+                EquilibriumLevel = ConvertLevel(update.EquilibriumLevel),
+                EquilibriumSignal = (GaugeSignal)update.EquilibriumSignal,
+                SentimentLevel = ConvertLevel(update.SentimentLevel),
+                SentimentSignal = (GaugeSignal)update.SentimentSignal,
+            };
         }
 
         /// <summary>

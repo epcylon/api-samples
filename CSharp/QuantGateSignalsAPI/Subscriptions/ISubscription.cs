@@ -2,11 +2,13 @@
 
 namespace QuantGate.API.Signals.Subscriptions
 {
-    internal interface ISubscription
+    internal interface ISubscription<V>
+        where V : ValueBase
     {
         void Subscribe();
         void Unsubscribe();
-        ValueBase Values { get; }
+        APIClient Client { get; }
+        SignalStream<V> Stream { get; }
         uint ThrottleRate { get; set; }
     }
 }

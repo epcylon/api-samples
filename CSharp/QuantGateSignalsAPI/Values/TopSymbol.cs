@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuantGate.API.Signals.Events;
+using System;
 
 namespace QuantGate.API.Signals.Values
 {

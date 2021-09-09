@@ -58,6 +58,15 @@ namespace QuantGate.API.Signals.Values
         private GaugeSignal _sentimentSignal;
 
         /// <summary>
+        /// Symbol to get the Strategy update data for.
+        /// </summary>
+        public string Symbol { get; internal set; }
+        /// <summary>
+        /// Strategy to subscribe to. Example enum values: PPr4.0, BTr4.0,  Crb.8.4.
+        /// </summary>
+        public string StrategyID { get; internal set; }
+
+        /// <summary>
         /// Timestamp of the latest update.
         /// </summary>
         public DateTime TimeStamp

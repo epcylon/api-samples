@@ -1,4 +1,5 @@
-﻿using QuantGate.API.Signals.Proto.Stealth;
+﻿using QuantGate.API.Signals.Events;
+using QuantGate.API.Signals.Proto.Stealth;
 using QuantGate.API.Signals.ProtoStomp;
 using QuantGate.API.Signals.Utilities;
 using QuantGate.API.Signals.Values;
@@ -24,7 +25,7 @@ namespace QuantGate.API.Signals.Subscriptions
         {
             List<SearchResult> results = new List<SearchResult>();
 
-            foreach (var result in update.Results)
+            foreach (SymbolSearchResult result in update.Results)
                 results.Add(new SearchResult
                 {
                     Symbol = result.Symbol,
@@ -38,10 +39,13 @@ namespace QuantGate.API.Signals.Subscriptions
             return results;
         }
 
-        protected override void HandleUpdate(SymbolSearchUpdate update, object processed)
+        protected override SearchResults HandleUpdate(SymbolSearchUpdate update, object processed)
         {
-            Values.SearchTerm = update.SearchTerm;
-            Values.Results = processed as List<SearchResult>;
+            return new SearchResults
+            {                 
+                SearchTerm = update.SearchTerm,
+                Results = processed as List<SearchResult>,
+            };
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace QuantGate.API.Signals.Values
+﻿namespace QuantGate.API.Signals.Events
 {
     /// <summary>
     /// The details of an individual symbol in response to a symbol search request.
@@ -20,7 +20,7 @@
         /// <summary>
         /// Type of instrument.
         /// </summary>
-        internal InstrumentType InstrumentType { get; set; }
+        public InstrumentType InstrumentType { get; internal set; }
         /// <summary>
         /// Primary exchange (ISO 10383 MIC) the instrument is traded on.
         /// </summary>

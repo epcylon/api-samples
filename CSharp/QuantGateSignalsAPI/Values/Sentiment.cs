@@ -4,7 +4,7 @@
     /// Holds Sentiment values. Will be updated by the stream with change notifications.
     /// Supply this object to the Unsubscribe method of the APIClient to stop the subscription.
     /// </summary>
-    public class Sentiment : GaugeValueBase
+    public class Sentiment : GaugeValueBase<Sentiment>
     {
         /// <summary>
         /// The total number of bars in the Sentiment gauge.
@@ -30,7 +30,7 @@
 
         /// <summary>
         /// Creates a new Sentiment instance.
-        /// </summary>
+        /// </summary>        
         public Sentiment()
         {
             _lengths = new double[TotalBars];

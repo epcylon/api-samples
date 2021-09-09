@@ -11,17 +11,21 @@ namespace QuantGate.API.Signals.Subscriptions
         {
         }
 
-        protected override void HandleUpdate(TriggerUpdate update, object processed)
+        protected override Trigger HandleUpdate(TriggerUpdate update, object processed)
         {
-            Values.TimeStamp = ProtoTimeEncoder.TimestampSecondsToDate(update.Timestamp);
-            Values.Bias = update.Bias / 1000.0;
-            Values.Perception = update.Perception / 1000.0;
-            Values.Sentiment = update.Sentiment / 1000.0;
-            Values.Commitment = update.Commitment / 1000.0;
-            Values.EquilibriumPrice = ProtoPriceEncoder.DecodePrice(update.EquilibriumPrice);
-            Values.GapSize = ProtoPriceEncoder.DecodePrice(update.GapSize);
-            Values.LastPrice = ProtoPriceEncoder.DecodePrice(update.LastPrice);
-            Values.IsDirty = update.IsDirty;
+            return new Trigger
+            {
+                Symbol = Symbol,
+                TimeStamp = ProtoTimeEncoder.TimestampSecondsToDate(update.Timestamp),
+                Bias = update.Bias / 1000.0,
+                Perception = update.Perception / 1000.0,
+                Sentiment = update.Sentiment / 1000.0,
+                Commitment = update.Commitment / 1000.0,
+                EquilibriumPrice = ProtoPriceEncoder.DecodePrice(update.EquilibriumPrice),
+                GapSize = ProtoPriceEncoder.DecodePrice(update.GapSize),
+                LastPrice = ProtoPriceEncoder.DecodePrice(update.LastPrice),
+                IsDirty = update.IsDirty,
+            };
         }
     }
 }

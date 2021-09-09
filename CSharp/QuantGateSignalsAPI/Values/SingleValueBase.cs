@@ -3,7 +3,8 @@
     /// <summary>
     /// Base class for single value results.
     /// </summary>
-    public class SingleValueBase : GaugeValueBase
+    public class SingleValueBase<V> : GaugeValueBase<V>
+        where V: ValueBase
     {
         /// <summary>
         /// The level of the gauge at the last update.
@@ -31,20 +32,20 @@
     /// Holds Book Pressure values. Will be updated by the stream with change notifications.
     /// Supply this object to the Unsubscribe method of the APIClient to stop the subscription.
     /// </summary>
-    public class BookPressure : SingleValueBase { }
+    public class BookPressure : SingleValueBase<BookPressure> { }
     /// <summary>
     /// Holds Headroom values. Will be updated by the stream with change notifications.
     /// Supply this object to the Unsubscribe method of the APIClient to stop the subscription.
     /// </summary>
-    public class Headroom : SingleValueBase {}
+    public class Headroom : SingleValueBase<Headroom> {}
     /// <summary>
     /// Holds Perception values. Will be updated by the stream with change notifications.
     /// Supply this object to the Unsubscribe method of the APIClient to stop the subscription.
     /// </summary>
-    public class Perception : SingleValueBase { }
+    public class Perception : SingleValueBase<Perception> { }
     /// <summary>
     /// Holds Commitment values. Will be updated by the stream with change notifications.
     /// Supply this object to the Unsubscribe method of the APIClient to stop the subscription.
     /// </summary>
-    public class Commitment : SingleValueBase { }
+    public class Commitment : SingleValueBase<Commitment> { }
 }

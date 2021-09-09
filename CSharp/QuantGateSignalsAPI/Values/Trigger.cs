@@ -4,7 +4,7 @@
     /// Holds Trigger values. Will be updated by the stream with change notifications.
     /// Supply this object to the Unsubscribe method of the APIClient to stop the subscription.
     /// </summary>
-    public class Trigger : GaugeValueBase
+    public class Trigger : GaugeValueBase<Trigger>
     {
         /// <summary>
         /// Bias value.

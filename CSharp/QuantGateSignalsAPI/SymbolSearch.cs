@@ -1,4 +1,5 @@
-﻿using QuantGate.API.Signals.Subscriptions;
+﻿using QuantGate.API.Signals.Events;
+using QuantGate.API.Signals.Subscriptions;
 using QuantGate.API.Signals.Values;
 using System;
 using System.Linq;
@@ -32,17 +33,17 @@ namespace QuantGate.API.Signals
         internal SymbolSearch(SearchSubscription subscription)
         {
             Subscription = subscription;
-            Subscription.Values.Updated += HandleValuesUpdate;
+            Subscription.Stream.Updated += HandleValuesUpdate;
         }
 
         /// <summary>
         /// Called whenever the values are updated.
         /// </summary>
-        private void HandleValuesUpdate(object sender, EventArgs e)
+        private void HandleValuesUpdate(object sender, SearchResults results)
         {
             // Pass the event through.
-            Updated(this, new SearchUpdateEventArgs(Subscription.Values.SearchTerm, 
-                                                   Subscription.Values.Results.ToList()));
+            Updated(this, new SearchUpdateEventArgs(results.SearchTerm,
+                                                    results.Results.ToList()));
         }
 
         /// <summary>
@@ -60,7 +61,7 @@ namespace QuantGate.API.Signals
         {
             if (!_isDisposed)
             {
-                Subscription.Unsubscribe();                
+                Subscription.Unsubscribe();
                 _isDisposed = true;
             }
         }               

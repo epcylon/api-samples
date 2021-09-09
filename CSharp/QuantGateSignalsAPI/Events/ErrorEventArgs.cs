@@ -1,4 +1,4 @@
-﻿namespace QuantGate.API.Signals
+﻿namespace QuantGate.API.Events
 {
     public class ErrorEventArgs
     {

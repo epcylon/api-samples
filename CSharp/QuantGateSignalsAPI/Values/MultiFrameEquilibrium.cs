@@ -4,7 +4,7 @@
     /// Holds Multiframe Equilibrium values. Will be updated by the stream with change notifications.
     /// Supply this object to the Unsubscribe method of the APIClient to stop the subscription.
     /// </summary>
-    public class MultiframeEquilibrium : GaugeValueBase
+    public class MultiframeEquilibrium : GaugeValueBase<MultiframeEquilibrium>
     {
         /// <summary>
         /// 5 minute value.
