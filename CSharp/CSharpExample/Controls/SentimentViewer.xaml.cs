@@ -1,6 +1,6 @@
-﻿using QuantGate.API.Signals.Values;
+﻿using QuantGate.API.Signals;
+using QuantGate.API.Signals.Values;
 using System;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
@@ -72,6 +72,11 @@ namespace BridgeRock.CSharpExample.Controls
         private readonly double[] _lengths = new double[Sentiment.TotalBars];
 
         /// <summary>
+        /// Is the data dirty?
+        /// </summary>
+        private bool _isDirty = false;
+
+        /// <summary>
         /// The top peak to display.
         /// </summary>
         private Ellipse _topPeak;
@@ -93,11 +98,6 @@ namespace BridgeRock.CSharpExample.Controls
         /// Is the (loading) storyboard currently running?
         /// </summary>
         private bool _storyboardRunning = false;
-
-        /// <summary>
-        /// Have the sentiment values been updated?
-        /// </summary>
-        private bool _sentimentUpdated = true;
 
         #endregion
 
@@ -560,19 +560,15 @@ namespace BridgeRock.CSharpExample.Controls
         /// <summary>
         /// This method is used to update the current spectrum from the provided values.
         /// </summary>
-        /// <param name="colors">The new color values to use to update this spectrum.</param>
-        /// <param name="lengths">The new length values to use to update this spectrum.</param>
-        /// <param name="peaking">Determines if the spectrum is peaking.</param>
-        /// <param name="active">Is the spectrum currently active?</param>        
-        public void UpdateSpectrum()
+        /// <param name="sentiment">The sentiment values to update from.</param>      
+        public void UpdateSpectrum(Sentiment sentiment)
         {
             bool changed;                                                       // Have the values changed?
-            Sentiment values = Values;                                          // Get the sentiment values.
             int peaking = 0;                                                    // Is the spectrum peaking?
 
             try
             {
-                if (values is null)
+                if (sentiment is null)
                 {
                     // If no sentiment values, clear the spectrum and return.
                     ClearSpectrum();
@@ -580,12 +576,15 @@ namespace BridgeRock.CSharpExample.Controls
                 }
 
                 // Changed if the "Dirty" value changed.
-                changed = ReferenceEquals(_lines[0]?.Fill, _inactiveColor) != values.IsDirty;
+                changed = _isDirty != sentiment.IsDirty;
+
+                // Set the dirty flag.
+                _isDirty = sentiment.IsDirty;
 
                 // Check if peaking.
-                if (values.Lengths[0] > 0.95)
+                if (sentiment.Lengths[0] > 0.95)
                     peaking = 1;
-                else if (values.Lengths[0] < -0.95)
+                else if (sentiment.Lengths[0] < -0.95)
                     peaking = -1;
 
                 // If we have new values, set the peaking state.
@@ -593,24 +592,24 @@ namespace BridgeRock.CSharpExample.Controls
                 {
                     changed = true;
                     Peaking = peaking;
-                }
+                }                
 
                 for (int index = 0; index <= Sentiment.TotalBars - 1; index++)
                 {
                     //Go through the bars, update the values.
-                    if (Math.Abs(_lengths[index] - values.Lengths[index]) > LengthSensitivity)
+                    if (Math.Abs(_lengths[index] - sentiment.Lengths[index]) > LengthSensitivity)
                     {
                         //If values changed, something has changed.
                         changed = true;
                         //Set the new values.
-                        _lengths[index] = values.Lengths[index];
+                        _lengths[index] = sentiment.Lengths[index];
                     }
-                    if (Math.Abs(_colors[index] - values.Colors[index]) > ColorSensitivity)
+                    if (Math.Abs(_colors[index] - sentiment.Colors[index]) > ColorSensitivity)
                     {
                         //If values changed, something has changed.
                         changed = true;
                         //Set the new values.
-                        _colors[index] = values.Colors[index];
+                        _colors[index] = sentiment.Colors[index];
                     }
                 }
 
@@ -743,7 +742,7 @@ namespace BridgeRock.CSharpExample.Controls
                     Canvas.SetTop(line, ActualHeight / 2.0 - line.Height);
                 }
 
-                if (!(Values?.IsDirty ?? true))
+                if (!_isDirty)
                 {
                     //If this control is active, calculate color, calculate the new color.                            
                     line.Fill = _brushes[(int)((_colors[barIndex] + 1) * 200)];
@@ -758,24 +757,14 @@ namespace BridgeRock.CSharpExample.Controls
             {
                 Trace.TraceError(_moduleID + ":UdLn - " + ex.Message);
             }
-        }
-        
-        private void HandleSentimentPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {               
-            // Something was updated.
-            _sentimentUpdated = true;
-        }
+        }       
 
         private void HandleSentimentUpdated(object sender, Sentiment sentiment)
         {
             try
             {
-                // If this is the last update, check if an actual update occured, and update if necessary.
-                if (_sentimentUpdated)
-                    UpdateSpectrum();
-
-                // No longer updated.
-                _sentimentUpdated = false;
+                // Update the spectrum.              
+                UpdateSpectrum(sentiment);
             }
             catch (Exception ex)
             {
@@ -846,15 +835,16 @@ namespace BridgeRock.CSharpExample.Controls
         /// <summary>
         /// The sentiment values to update.
         /// </summary>
-        public Sentiment Values
+        public Subscription<Sentiment> Values
         {
-            get { return (Sentiment)GetValue(ValuesProperty); }
+            get { return (Subscription<Sentiment>)GetValue(ValuesProperty); }
             set { SetValue(ValuesProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for Values.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ValuesProperty =
-            DependencyProperty.Register("Values", typeof(Sentiment), typeof(SentimentViewer), new PropertyMetadata(null, HandleSentimentChange));
+            DependencyProperty.Register("Values", typeof(Subscription<Sentiment>), typeof(SentimentViewer), 
+                                        new PropertyMetadata(null, HandleSentimentChange));
 
         /// <summary>
         /// Called whenever the Sentiment property changes.
@@ -866,17 +856,11 @@ namespace BridgeRock.CSharpExample.Controls
             if (!(obj is SentimentViewer viewer))
                 return;
 
-            if (args.OldValue is Sentiment oldSentiment)
-            {
-                oldSentiment.PropertyChanged -= viewer.HandleSentimentPropertyChanged;
+            if (args.OldValue is Subscription<Sentiment> oldSentiment)
                 oldSentiment.Updated -= viewer.HandleSentimentUpdated;
-            }
 
-            if (args.NewValue is Sentiment newSentiment)
-            {
-                newSentiment.PropertyChanged += viewer.HandleSentimentPropertyChanged;
+            if (args.NewValue is Subscription<Sentiment> newSentiment)
                 newSentiment.Updated += viewer.HandleSentimentUpdated;
-            }
         }        
 
         /// <summary>

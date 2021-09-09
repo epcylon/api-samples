@@ -5,6 +5,7 @@ using QuantGate.API.Signals.Values;
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using Trigger = QuantGate.API.Signals.Values.Trigger;
 
 namespace BridgeRock.CSharpExample
 {
@@ -15,107 +16,20 @@ namespace BridgeRock.CSharpExample
     {
         private readonly APIClient _client;
         private SymbolSearch _symbolSearch;
+        private Subscription<TopSymbols> _topSymbolsStream;
         private TopSymbols _topSymbols;
 
         #region Dependency Properties
 
-        public Perception Perception
-        {
-            get => (Perception)GetValue(PerceptionProperty);
-            set => SetValue(PerceptionProperty, value);
-        }
-
-        // Using a DependencyProperty as the backing store for Perception.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty PerceptionProperty =
-            DependencyProperty.Register("Perception", typeof(Perception), typeof(MainWindow), new PropertyMetadata(null));
-
-
-        public Commitment Commitment
-        {
-            get => (Commitment)GetValue(CommitmentProperty);
-            set => SetValue(CommitmentProperty, value);
-        }
-
-        // Using a DependencyProperty as the backing store for Commitment.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty CommitmentProperty =
-            DependencyProperty.Register("Commitment", typeof(Commitment), typeof(MainWindow), new PropertyMetadata(null));
-
-
-        public Headroom Headroom
-        {
-            get => (Headroom)GetValue(HeadroomProperty);
-            set => SetValue(HeadroomProperty, value);
-        }
-
-        // Using a DependencyProperty as the backing store for Headroom.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty HeadroomProperty =
-            DependencyProperty.Register("Headroom", typeof(Headroom), typeof(MainWindow), new PropertyMetadata(null));
-
-
-        public BookPressure BookPressure
-        {
-            get => (BookPressure)GetValue(BookPressureProperty);
-            set => SetValue(BookPressureProperty, value);
-        }
-
-        // Using a DependencyProperty as the backing store for BookPressure.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty BookPressureProperty =
-            DependencyProperty.Register("BookPressure", typeof(BookPressure), typeof(MainWindow), new PropertyMetadata(null));
-
-
-        public Sentiment Sentiment
-        {
-            get => (Sentiment)GetValue(SentimentProperty);
-            set => SetValue(SentimentProperty, value);
-        }
-
-        // Using a DependencyProperty as the backing store for Sentiment.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty SentimentProperty =
-            DependencyProperty.Register("Sentiment", typeof(Sentiment), typeof(MainWindow), new PropertyMetadata(null));
-
-
-        public Equilibrium Equilibrium
-        {
-            get => (Equilibrium)GetValue(EquilibriumProperty);
-            set => SetValue(EquilibriumProperty, value);
-        }
-
-        // Using a DependencyProperty as the backing store for Equilibrium.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty EquilibriumProperty =
-            DependencyProperty.Register("Equilibrium", typeof(Equilibrium), typeof(MainWindow), new PropertyMetadata(null));
-
-
-        public MultiframeEquilibrium MultiFrame
-        {
-            get => (MultiframeEquilibrium)GetValue(MultiFrameProperty);
-            set => SetValue(MultiFrameProperty, value);
-        }
-
-        // Using a DependencyProperty as the backing store for MultiFrame.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty MultiFrameProperty =
-            DependencyProperty.Register("MultiFrame", typeof(MultiframeEquilibrium), typeof(MainWindow), new PropertyMetadata(null));
-
-
-        public QuantGate.API.Signals.Values.Trigger Trigger
-        {
-            get => (QuantGate.API.Signals.Values.Trigger)GetValue(TriggerProperty);
-            set => SetValue(TriggerProperty, value);
-        }
-
-        // Using a DependencyProperty as the backing store for Trigger.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty TriggerProperty =
-            DependencyProperty.Register("Trigger", typeof(QuantGate.API.Signals.Values.Trigger), typeof(MainWindow), new PropertyMetadata(null));
-
-
-        public StrategyValues Strategy
-        {
-            get => (StrategyValues)GetValue(StrategyProperty);
-            set => SetValue(StrategyProperty, value);
-        }
-
-        // Using a DependencyProperty as the backing store for Strategy.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty StrategyProperty =
-            DependencyProperty.Register("Strategy", typeof(StrategyValues), typeof(MainWindow), new PropertyMetadata(null));
+        public Subscription<Perception> Perception { get; set; }
+        public Subscription<Commitment> Commitment { get; set; }
+        public Subscription<Headroom> Headroom { get; set; }
+        public Subscription<BookPressure> BookPressure { get; set; }
+        public Subscription<Sentiment> Sentiment { get; set; }
+        public Subscription<Equilibrium> Equilibrium { get; set; }
+        public Subscription<MultiframeEquilibrium> MultiFrame { get; set; }
+        public Subscription<Trigger> Trigger { get; set; }
+        public Subscription<StrategyValues> Strategy { get; set; }
 
         #endregion
 
@@ -179,8 +93,8 @@ namespace BridgeRock.CSharpExample
         {
             _symbolSearch = _client.SubscribeSearch();
             _symbolSearch.Updated += HandleSearchUpdate;
-            _topSymbols = _client.SubscribeTopSymbols("ib");
-            _topSymbols.Updated += HandleTopSymbolsUpdate;
+            _topSymbolsStream = _client.SubscribeTopSymbols("ib");
+            _topSymbolsStream.Updated += HandleTopSymbolsUpdate;
         }
 
         private void HandleSearchUpdate(object sender, TextChangedEventArgs e)
@@ -212,12 +126,13 @@ namespace BridgeRock.CSharpExample
 
         private void HandleTopSymbolsUpdate(object sender, TopSymbols topSymbols)
         {
+            _topSymbols = topSymbols;
             if (!string.IsNullOrEmpty(txtSearch.Text))
                 return;
 
             lvSearch.Items.Clear();
 
-            foreach (TopSymbol symbol in topSymbols.Symbols)
+            foreach (TopSymbol symbol in _topSymbols.Symbols)
                 lvSearch.Items.Add(new SearchRow
                 {
                     Symbol = symbol.Symbol,
