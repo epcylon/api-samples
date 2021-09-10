@@ -3,9 +3,14 @@ using System;
 
 namespace QuantGate.API.Signals
 {
-    public class Subscription<V>
+    public class Subscription<V> : IDisposable
         where V : EventArgs
     {
+        /// <summary>
+        /// True if the object is disposed.
+        /// </summary>
+        private bool _isDisposed;
+
         /// <summary>
         /// Notifies that the object was updated (after complete update).
         /// </summary>
@@ -26,14 +31,12 @@ namespace QuantGate.API.Signals
         /// </summary>
         internal void SendUpdated(V values)
         {
-            Updated?.Invoke(Source.Client, values);
-            ParentUpdatedEvent?.Invoke(Source.Client, values);
+            if (!_isDisposed)
+            {
+                Updated?.Invoke(Source.Client, values);
+                ParentUpdatedEvent?.Invoke(Source.Client, values);
+            }
         }
-
-        /// <summary>
-        /// Unsubscribe from the subscription.
-        /// </summary>
-        internal void Unsubscribe() => Source.Unsubscribe();
 
         /// <summary>
         /// The throttle rate of the subscription for these values (in ms).
@@ -42,7 +45,36 @@ namespace QuantGate.API.Signals
         public int ThrottleRate
         {
             get => (int)Source.ThrottleRate;
-            set => Source.ThrottleRate = (uint)value;
+            set
+            {
+                // If disposed, throw exception.
+                if (_isDisposed)
+                    throw new ObjectDisposedException("Subscription");
+
+                // Set the throttle rate.
+                Source.ThrottleRate = (uint)value;
+            }
+        }
+
+        /// <summary>
+        /// Handles the disposal of the subscription.
+        /// </summary>
+        /// <param name="disposing"></param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_isDisposed)
+            {
+                // Unsubscribe the subscription and set to disposed.
+                Source.Unsubscribe();
+                _isDisposed = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }

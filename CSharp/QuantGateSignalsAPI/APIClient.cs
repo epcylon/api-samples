@@ -1033,7 +1033,7 @@ namespace QuantGate.API.Signals
         /// Unsubscribes the from the stream for the given values.
         /// </summary>
         /// <param name="values">The values to unsubscribe the stream from.</param>
-        public void Unsubscribe<V>(Subscription<V> stream) where V: EventArgs => stream.Unsubscribe();
+        public void Unsubscribe<V>(Subscription<V> stream) where V: EventArgs => stream.Dispose();
 
         #endregion
 
