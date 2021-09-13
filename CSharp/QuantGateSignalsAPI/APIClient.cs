@@ -576,7 +576,7 @@ namespace QuantGate.API.Signals
         /// <summary>
         /// Connects to the server on the specified address.
         /// </summary>
-        /// <param name="jwtToken">Jwt Token to connect with.</param>
+        /// <param name="jwtToken">JWT Token to connect with.</param>
         public void Connect(string jwtToken)
         {
             Enqueue(() =>
