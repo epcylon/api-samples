@@ -13,7 +13,7 @@ namespace QuantGate.API.Signals.Values
         /// </summary>
         public string Symbol { get; }
         /// <summary>
-        /// Strategy to subscribe to. Example enum values: PPr4.0, BTr4.0,  Crb.8.4.
+        /// Strategy to subscribe to. Example enum values: PPr4.0, BTr4.0, Crb.8.4.
         /// </summary>
         public string StrategyID { get; }
 
