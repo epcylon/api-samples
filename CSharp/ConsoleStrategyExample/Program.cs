@@ -3,7 +3,7 @@ using QuantGate.API.Signals.Values;
 using System;
 using System.Threading;
 
-namespace ConsoleStrategyExample
+namespace QuantGate.Examples.ConsoleStrategy
 {
     /// <summary>
     /// Main program.
