@@ -38,7 +38,48 @@ namespace BridgeRock.CSharpExample
 
         // Using a DependencyProperty as the backing store for Sentiment.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SentimentProperty =
-            DependencyProperty.Register("Sentiment", typeof(Subscription<SentimentEventArgs>), typeof(MainWindow), new PropertyMetadata(null));
+            DependencyProperty.Register("Sentiment", typeof(Subscription<SentimentEventArgs>),
+                                        typeof(MainWindow), new PropertyMetadata(null));
+
+        public double Perception
+        {
+            get { return (double)GetValue(PerceptionProperty); }
+            set { SetValue(PerceptionProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Sentiment.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty PerceptionProperty =
+            DependencyProperty.Register("Perception", typeof(double), typeof(MainWindow), new PropertyMetadata(0.0));
+
+        public double Commitment
+        {
+            get { return (double)GetValue(CommitmentProperty); }
+            set { SetValue(CommitmentProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Commitment.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty CommitmentProperty =
+            DependencyProperty.Register("Commitment", typeof(double), typeof(MainWindow), new PropertyMetadata(0.0));
+
+        public double BookPressure
+        {
+            get { return (double)GetValue(BookPressureProperty); }
+            set { SetValue(BookPressureProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for BookPressure.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty BookPressureProperty =
+            DependencyProperty.Register("BookPressure", typeof(double), typeof(MainWindow), new PropertyMetadata(0.0));
+
+        public double Headroom
+        {
+            get { return (double)GetValue(HeadroomProperty); }
+            set { SetValue(HeadroomProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Headroom.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty HeadroomProperty =
+            DependencyProperty.Register("Headroom", typeof(double), typeof(MainWindow), new PropertyMetadata(0.0));
 
         #endregion
 
@@ -57,6 +98,11 @@ namespace BridgeRock.CSharpExample
             _client.Disconnected += HandleDisconnected;
             _client.Error += HandleError;
 
+            _client.PerceptionUpdated += (s, e) => Perception = e.Value;
+            _client.CommitmentUpdated += (s, e) => Commitment = e.Value;
+            _client.BookPressureUpdated += (s, e) => BookPressure = e.Value;
+            _client.HeadroomUpdated += (s, e) => Headroom = e.Value;
+
             _client.Connect("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
                             "eyJzdWIiOiJKb2huSCIsImlhdCI6MTYyODcxMzg2NywiZXhwIjoxNjMyOTYw" +
                             "MDAwLCJhdWQiOiIyV1VqZW9iUlhSVzlwc05ERWN4ZTFNRDl3dGRmZGgxQyJ9." +
@@ -64,7 +110,7 @@ namespace BridgeRock.CSharpExample
 
             SubscribeSearch();
             Subscribe("NQ U1");
-        }
+        }        
 
         private void Subscribe(string symbol)
         {

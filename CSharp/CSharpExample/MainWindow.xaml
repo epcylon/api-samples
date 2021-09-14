@@ -7,16 +7,16 @@
         Title="MainWindow" Height="600" Width="900">
     <Grid>
         <Slider HorizontalAlignment="Left" Margin="60,60,0,0" VerticalAlignment="Top" Orientation="Vertical" IsEnabled="False"
-                Height="300" Width="20" Minimum="-1" Maximum="1" Value="{Binding Path=Perception.GaugeLevel}"/>
+                Height="300" Width="20" Minimum="-1" Maximum="1" Value="{Binding Path=Perception}"/>
 
         <Slider HorizontalAlignment="Left" Margin="90,60,0,0" VerticalAlignment="Top" Orientation="Vertical" IsEnabled="False"
-                Height="300" Width="20" Minimum="-1" Maximum="1" Value="{Binding Path=Commitment.GaugeLevel}"/>
+                Height="300" Width="20" Minimum="-1" Maximum="1" Value="{Binding Path=Commitment}"/>
 
         <Slider HorizontalAlignment="Left" Margin="120,60,0,0" VerticalAlignment="Top" Orientation="Vertical" IsEnabled="False"
-                Height="300" Width="20" Minimum="-1" Maximum="1" Value="{Binding Path=BookPressure.GaugeLevel}"/>
+                Height="300" Width="20" Minimum="-1" Maximum="1" Value="{Binding Path=BookPressure}"/>
 
         <Slider HorizontalAlignment="Left" Margin="150,60,0,0" VerticalAlignment="Top" Orientation="Vertical" IsEnabled="False"
-                Height="300" Width="20" Minimum="-1" Maximum="1" Value="{Binding Path=Headroom.GaugeLevel}"/>
+                Height="300" Width="20" Minimum="-1" Maximum="1" Value="{Binding Path=Headroom}"/>
 
         <controls:SentimentViewer x:Name="sViewer" HorizontalAlignment="Left" Margin="180,60,0,0" VerticalAlignment="Top" IsEnabled="False"
                                   Height="300" Width="300" Values="{Binding Path=Sentiment}" Background="#FFD0D0D0" />
