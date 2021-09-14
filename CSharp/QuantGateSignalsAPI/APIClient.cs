@@ -3,7 +3,7 @@ using Google.Protobuf;
 using QuantGate.API.Signals.ProtoStomp;
 using QuantGate.API.Signals.Subscriptions;
 using QuantGate.API.Signals.Utilities;
-using QuantGate.API.Signals.Values;
+using QuantGate.API.Signals.Events;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -40,6 +40,7 @@ namespace QuantGate.API.Signals
         public event EventHandler<HeadroomEventArgs> HeadroomUpdated = delegate { };
         public event EventHandler<MultiframeEquilibriumEventArgs> MultiframeEquilibriumUpdated = delegate { };
         public event EventHandler<TriggerEventArgs> TriggerUpdated = delegate { };
+        public event EventHandler<SearchResultsEventArgs> SymbolSearchUpdated = delegate { };
         public event EventHandler<TopSymbolsEventArgs> TopSymbolsUpdated = delegate { };
         public event EventHandler<StrategyEventArgs> StrategyUpdated = delegate { };
         public event EventHandler<InstrumentEventArgs> InstrumentUpdated = delegate { };
@@ -68,6 +69,11 @@ namespace QuantGate.API.Signals
         /// </summary>
         private readonly Dictionary<ulong, IReceiptable> _receiptReferences =
             new Dictionary<ulong, IReceiptable>();
+
+        /// <summary>
+        /// Search subscription.
+        /// </summary>
+        private SearchSubscription _search = null;
 
         #endregion
 
@@ -864,6 +870,7 @@ namespace QuantGate.API.Signals
                 subscriptions = _subscriptionReferences.Values.ToList();
                 _subscriptionReferences.Clear();
                 _subscriptionsByDestination.Clear();
+                _search = null;
 
                 // Handle OnCompleted events for each subscription.
                 foreach (IObserver<ByteString> subscription in subscriptions)
@@ -1028,17 +1035,6 @@ namespace QuantGate.API.Signals
             });
         }
 
-        /// <summary>
-        /// Subscribes to a search stream and returns an object from which to request and receive search results.
-        /// </summary>
-        /// <returns>A Symbol Search object that can be used to search for and receive search results.</returns>
-        public SymbolSearch SubscribeSearch()
-        {
-            SearchSubscription subscription = new SearchSubscription(this, _streamID);
-            Enqueue(() => Subscribe(subscription));
-            return new SymbolSearch(subscription);
-        }
-
         public void UnsubscribePerception(string symbol) =>
             Unsubscribe(GetGaugeDestination(SubscriptionPath.GaugePerception, symbol));
 
@@ -1159,6 +1155,26 @@ namespace QuantGate.API.Signals
             return ParsedDestination.CreateGaugeDestination(
                         path, ParsedDestination.StreamIDForSymbol(_streamID, symbol),
                         symbol, CleanCompression(compression)).Destination;
+        }
+
+        /// <summary>
+        /// Requests symbols that match a specific term and (optionally) a specific broker. 
+        /// </summary>
+        /// <param name="term">Term to search for.</param>
+        /// <param name="broker">Broker to get the results for. If supplied, must match a valid broker type string.</param>
+        public void SearchSymbols(string term, string broker)
+        {
+            Enqueue(() =>
+            {
+                if (_search is null)
+                {
+                    _search = new SearchSubscription(this, _streamID);
+                    _search.ParentUpdatedEvent = SymbolSearchUpdated;
+                    Subscribe(_search);
+                }
+                
+                _search.Search(term, broker);
+            });
         }
 
         #endregion

@@ -1,7 +1,7 @@
 ﻿using QuantGate.API.Signals.Proto.Stealth;
 using QuantGate.API.Signals.ProtoStomp;
 using QuantGate.API.Signals.Utilities;
-using QuantGate.API.Signals.Values;
+using QuantGate.API.Signals.Events;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -40,7 +40,7 @@ namespace QuantGate.API.Signals.Subscriptions
         protected override InstrumentEventArgs HandleUpdate(InstrumentUpdate update, object processed)
         {
             List<TickRange> tickRanges = new List<TickRange>();
-            List<Values.TradingSession> tradingSessions = new List<Values.TradingSession>();
+            List<Events.TradingSession> tradingSessions = new List<Events.TradingSession>();
             Dictionary<string, string> brokerSymbols = new Dictionary<string, string>();
 
             try
@@ -59,7 +59,7 @@ namespace QuantGate.API.Signals.Subscriptions
                 for (int day = 0; day < update.TradingSessions.Count; day++)
                 {
                     Proto.Stealth.TradingSession session = update.TradingSessions[day];
-                    tradingSessions.Add(new Values.TradingSession((System.DayOfWeek)day, session.Close, session.Length));
+                    tradingSessions.Add(new Events.TradingSession((System.DayOfWeek)day, session.Close, session.Length));
                 }
 
                 foreach (KeyValuePair<string, string> symbolMapping in update.BrokerSymbols)

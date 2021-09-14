@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace QuantGate.API.Signals.Values
+namespace QuantGate.API.Signals.Events
 {
     /// <summary>
     /// Holds Strategy values. Will be updated by the stream with change notifications.

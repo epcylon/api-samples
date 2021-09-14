@@ -1,17 +1,32 @@
 ﻿using System;
 
-namespace QuantGate.API.Signals.Values
+namespace QuantGate.API.Signals.Events
 {
     /// <summary>
-    /// Holds Equilibrium values. Will be updated by the stream with change notifications.
+    /// Holds Trigger values. Will be updated by the stream with change notifications.
     /// Supply this object to the Unsubscribe method of the APIClient to stop the subscription.
     /// </summary>
-    public class EquilibriumEventArgs : GaugeArgsBase
+    public class TriggerEventArgs : GaugeArgsBase
     {
         /// <summary>
-        /// Compression timeframe to apply to the gauge. Default value is 300s.
+        /// Bias value.
         /// </summary>
-        public string Compression { get; }
+        public double Bias { get; }
+
+        /// <summary>
+        /// Perception value.
+        /// </summary>
+        public double Perception { get; }
+
+        /// <summary>
+        /// Sentiment length value at point 0 (center).
+        /// </summary>
+        public double Sentiment { get; }
+
+        /// <summary>
+        /// Commitment value.
+        /// </summary>
+        public double Commitment { get; }
 
         /// <summary>
         /// The Equilibrium Price.
@@ -29,54 +44,32 @@ namespace QuantGate.API.Signals.Values
         public double LastPrice { get; }
 
         /// <summary>
-        /// Position of the high value.
-        /// </summary>
-        public double High { get; }
-
-        /// <summary>
-        /// Position of the low value.
-        /// </summary>
-        public double Low { get; }
-
-        /// <summary>
-        /// Position of the projected value.
-        /// </summary>
-        public double Projected { get; }
-
-        /// <summary>
-        /// Bias (as determined by the slope).
-        /// </summary>
-        public double Bias { get; }
-
-        /// <summary>
-        /// Creates a new EquilibriumEventArgs instance.
+        /// Creates a new TriggerEventArgs instance.
         /// </summary>
         /// <param name="symbol">The symbol being subscribed to for this gauge.</param>
         /// <param name="timestamp">Timestamp of the latest update.</param>
-        /// <param name="compression">Compression timeframe to apply to the gauge. Default value is 300s.</param>
+        /// <param name="perception">Perception value.</param>
+        /// <param name="commitment">Commitment value.</param>
+        /// <param name="sentiment">Sentiment length value at point 0 (center).</param>
         /// <param name="equilibriumPrice">The Equilibrium Price.</param>
         /// <param name="gapSize">Gap size of each equilibrium deviation.</param>
         /// <param name="lastPrice">Last traded price at the time of calculation.</param>
-        /// <param name="high">Position of the high value.</param>
-        /// <param name="low">Position of the low value.</param>
-        /// <param name="projected">Position of the projected value.</param>
-        /// <param name="bias">Bias (as determined by the slope).</param>
+        /// <param name="bias">Bias value.</param>
         /// <param name="isDirty">
         /// Whether the data used to generate this gauge value is potentially dirty 
         /// (values are missing) or stale (not the most recent data).
         /// </param>
-        internal EquilibriumEventArgs(string symbol, DateTime timestamp, string compression,
-                                      double equilibriumPrice, double gapSize, double lastPrice,
-                                      double high, double low, double projected, double bias, bool isDirty) :
+        internal TriggerEventArgs(string symbol, DateTime timestamp, double perception,
+                                  double commitment, double sentiment, double equilibriumPrice, 
+                                  double gapSize, double lastPrice, double bias, bool isDirty) :
             base(symbol, timestamp, isDirty)
         {
-            Compression = compression;
+            Perception = perception;
+            Commitment = commitment;
+            Sentiment = sentiment;
             EquilibriumPrice = equilibriumPrice;
             GapSize = gapSize;
             LastPrice = lastPrice;
-            High = high;
-            Low = low;
-            Projected = projected;
             Bias = bias;
         }
 

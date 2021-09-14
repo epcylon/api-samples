@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace QuantGate.API.Signals.Values
+namespace QuantGate.API.Signals.Events
 {
     /// <summary>
     /// Holds Sentiment values. Will be updated by the stream with change notifications.

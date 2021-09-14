@@ -1,7 +1,6 @@
-﻿using QuantGate.API.Signals.Events;
-using System;
+﻿using System;
 
-namespace QuantGate.API.Signals.Values
+namespace QuantGate.API.Signals.Events
 {
     /// <summary>
     /// The details of an individual symbol in response to a top symbols request.

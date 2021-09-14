@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace QuantGate.API.Signals.Values
+namespace QuantGate.API.Signals.Events
 {
     /// <summary>
     /// Trading session end times and lengths for each day Sunday-Saturday, specified in the exchange Time Zone.

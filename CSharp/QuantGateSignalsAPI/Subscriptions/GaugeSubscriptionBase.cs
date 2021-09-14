@@ -1,6 +1,6 @@
 ﻿using Google.Protobuf;
 using QuantGate.API.Signals.Utilities;
-using QuantGate.API.Signals.Values;
+using QuantGate.API.Signals.Events;
 
 namespace QuantGate.API.Signals.Subscriptions
 {

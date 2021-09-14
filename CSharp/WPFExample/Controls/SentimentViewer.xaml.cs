@@ -1,4 +1,4 @@
-﻿using QuantGate.API.Signals.Values;
+﻿using QuantGate.API.Signals.Events;
 using System;
 using System.Diagnostics;
 using System.Windows;

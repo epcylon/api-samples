@@ -1,14 +1,13 @@
-﻿using QuantGate.API.Signals.Events;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace QuantGate.API.Signals.Values
+namespace QuantGate.API.Signals.Events
 {
     /// <summary>
     /// Holds Symbol Search Results values. Will be updated by the stream with change notifications.
     /// Supply this object to the Unsubscribe method of the APIClient to stop the subscription.
     /// </summary>
-    internal class SearchResultsEventArgs : EventArgs
+    public class SearchResultsEventArgs : EventArgs
     {
         /// <summary>
         /// Search term the results are for.

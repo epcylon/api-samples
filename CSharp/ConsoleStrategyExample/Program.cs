@@ -1,5 +1,5 @@
 ﻿using QuantGate.API.Signals;
-using QuantGate.API.Signals.Values;
+using QuantGate.API.Signals.Events;
 using System;
 using System.Threading;
 

@@ -2,7 +2,6 @@
 using QuantGate.API.Signals.Proto.Stealth;
 using QuantGate.API.Signals.ProtoStomp;
 using QuantGate.API.Signals.Utilities;
-using QuantGate.API.Signals.Values;
 using System.Collections.Generic;
 
 namespace QuantGate.API.Signals.Subscriptions

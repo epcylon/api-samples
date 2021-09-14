@@ -1,7 +1,6 @@
 ﻿using QuantGate.API.Events;
 using QuantGate.API.Signals;
 using QuantGate.API.Signals.Events;
-using QuantGate.API.Signals.Values;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,7 +13,6 @@ namespace BridgeRock.CSharpExample
     public partial class MainWindow : Window
     {
         private readonly APIClient _client;
-        private SymbolSearch _symbolSearch;
         private TopSymbolsEventArgs _topSymbols;
         private string _symbol = "NQ U1";
         private string _strategyId = "Crb9.0";
@@ -89,6 +87,7 @@ namespace BridgeRock.CSharpExample
             _client.Error += HandleError;
 
             _client.InstrumentUpdated += HandleInstrumentUpdate;
+            _client.SymbolSearchUpdated += HandleSearchUpdate;
             _client.TopSymbolsUpdated += HandleTopSymbolsUpdate;
             _client.PerceptionUpdated += (s, e) => Perception = e.Value;
             _client.CommitmentUpdated += (s, e) => Commitment = e.Value;
@@ -103,7 +102,7 @@ namespace BridgeRock.CSharpExample
 
             SubscribeSearch();
             Subscribe(_symbol);
-        }
+        } 
 
         private void _client_SentimentUpdated(object sender, SentimentEventArgs e)
         {
@@ -150,8 +149,6 @@ namespace BridgeRock.CSharpExample
 
         private void SubscribeSearch()
         {
-            _symbolSearch = _client.SubscribeSearch();
-            _symbolSearch.Updated += HandleSearchUpdate;
             _client.SubscribeTopSymbols("ib");
         }
 
@@ -159,7 +156,7 @@ namespace BridgeRock.CSharpExample
         {
             if (!string.IsNullOrEmpty(txtSearch.Text))
             {
-                _symbolSearch.Search(txtSearch.Text, "paper");
+                _client.SearchSymbols(txtSearch.Text, "paper");
             }
             else
             {
@@ -199,7 +196,7 @@ namespace BridgeRock.CSharpExample
                 });
         }
 
-        private void HandleSearchUpdate(object sender, SearchUpdateEventArgs e)
+        private void HandleSearchUpdate(object sender, SearchResultsEventArgs e)
         {
             if (string.IsNullOrEmpty(txtSearch.Text))
                 return;

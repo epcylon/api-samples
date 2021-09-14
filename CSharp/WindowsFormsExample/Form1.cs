@@ -1,7 +1,6 @@
 ﻿using QuantGate.API.Events;
 using QuantGate.API.Signals;
 using QuantGate.API.Signals.Events;
-using QuantGate.API.Signals.Values;
 using System;
 using System.Diagnostics;
 using System.Windows.Forms;
@@ -11,7 +10,6 @@ namespace WindowsFormsExample
     public partial class Form1 : Form
     {
         private readonly APIClient _client;
-        private SymbolSearch _symbolSearch;
         private TopSymbolsEventArgs _topSymbols;
         private string _symbol = "NQ U1";
         private string _strategyId = "Crb9.0";
@@ -32,6 +30,7 @@ namespace WindowsFormsExample
             _client.Error += HandleError;
 
             _client.PerceptionUpdated += _client_PerceptionUpdated;
+            _client.SymbolSearchUpdated += HandleSearchUpdate;
             _client.TopSymbolsUpdated += HandleTopSymbolsUpdate;
 
             _client.Connect("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
@@ -81,8 +80,6 @@ namespace WindowsFormsExample
 
         private void SubscribeSearch()
         {
-            _symbolSearch = _client.SubscribeSearch();
-            _symbolSearch.Updated += HandleSearchUpdate;
             _client.SubscribeTopSymbols("ib");
         }
 
@@ -90,7 +87,7 @@ namespace WindowsFormsExample
         {
             if (!string.IsNullOrEmpty(txtSearch.Text))
             {
-                _symbolSearch.Search(txtSearch.Text, "paper");
+                _client.SearchSymbols(txtSearch.Text, "paper");
             }
             else
             {
@@ -130,7 +127,7 @@ namespace WindowsFormsExample
                 }));
         }
 
-        private void HandleSearchUpdate(object sender, SearchUpdateEventArgs e)
+        private void HandleSearchUpdate(object sender, SearchResultsEventArgs e)
         {       
             if (string.IsNullOrEmpty(txtSearch.Text))
                 return;

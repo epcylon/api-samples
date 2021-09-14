@@ -1,4 +1,4 @@
-﻿namespace QuantGate.API.Signals.Values
+﻿namespace QuantGate.API.Signals.Events
 {
     /// <summary>
     /// Tick range used to determine price levels.

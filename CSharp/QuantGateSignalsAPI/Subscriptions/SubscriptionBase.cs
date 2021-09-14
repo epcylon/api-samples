@@ -10,11 +10,6 @@ namespace QuantGate.API.Signals.Subscriptions
         where V : EventArgs
     {
         /// <summary>
-        /// Notifies that the object was updated (after complete update).
-        /// </summary>
-        public event EventHandler<V> Updated;
-
-        /// <summary>
         /// Notifies that the object was updated (through the parent).
         /// </summary>
         public EventHandler<V> ParentUpdatedEvent { get; set; }
@@ -37,7 +32,7 @@ namespace QuantGate.API.Signals.Subscriptions
             Client.Sync.Post(new SendOrPostCallback((o) =>
             {
                 V updated = HandleUpdate(update, processed);
-                SendUpdated(updated);
+                ParentUpdatedEvent?.Invoke(Client, updated);
             }), null);
         }
 
@@ -45,17 +40,8 @@ namespace QuantGate.API.Signals.Subscriptions
         {
             Client.Sync.Post(new SendOrPostCallback((o) =>
             {
-                SendUpdated(update);
+                ParentUpdatedEvent?.Invoke(Client, update);
             }), null);
-        }
-
-        /// <summary>
-        /// Called whenever the values are finished updating.
-        /// </summary>
-        private void SendUpdated(V values)
-        {
-            Updated?.Invoke(Client, values);
-            ParentUpdatedEvent?.Invoke(Client, values);
         }
 
         protected virtual object Preprocess(M update) => null;
