@@ -720,39 +720,36 @@ namespace QuantGate.API.Signals
         /// </summary>
         internal void Throttle(ProtoStompSubscription subscription, uint rate)
         {
-            Enqueue(() =>
+            ThrottleRequest throttle = new ThrottleRequest();
+            ProtoStompReceipt receipt = new ProtoStompReceipt(IDGenerator.NextID);
+
+            try
             {
-                ThrottleRequest throttle = new ThrottleRequest();
-                ProtoStompReceipt receipt = new ProtoStompReceipt(IDGenerator.NextID);
-
-                try
+                if (subscription is object)
                 {
-                    if (subscription is object)
+                    // Create the unsubscribe message.
+                    throttle.SubscriptionId = subscription.SubscriptionID;
+                    throttle.ThrottleRate = rate;
+                    throttle.ReceiptId = receipt.ReceiptID;
+
+                    // Add to the receiptable requests.                        
+                    _receiptReferences.Add(receipt.ReceiptID, receipt);
+
+                    if (IsConnected & !_isDisconnecting)
                     {
-                        // Create the unsubscribe message.
-                        throttle.SubscriptionId = subscription.SubscriptionID;
-                        throttle.ThrottleRate = rate;
-                        throttle.ReceiptId = receipt.ReceiptID;
+                        // If connected, send the throttle request - if not sent, will be applied to the initial subscription.
+                        Send(new RequestFrame { Throttle = throttle });
 
-                        // Add to the receiptable requests.                        
-                        _receiptReferences.Add(receipt.ReceiptID, receipt);
-
-                        if (IsConnected & !_isDisconnecting)
-                        {
-                            // If connected, send the throttle request - if not sent, will be applied to the initial subscription.
-                            Send(new RequestFrame { Throttle = throttle });
-
-                            // Log the throttle action.
-                            Trace.TraceInformation(_moduleID + ":Thr - Throttle: " + subscription.Destination +
-                                                 " [" + subscription.SubscriptionID.ToString() + "]: " + rate.ToString());
-                        }
+                        // Log the throttle action.
+                        Trace.TraceInformation(_moduleID + ":Thr - Throttle: " + subscription.Destination +
+                                             " [" + subscription.SubscriptionID.ToString() + "]: " + rate.ToString());
                     }
                 }
-                catch (Exception ex)
-                {
-                    Trace.TraceError(_moduleID + ":Thr - " + ex.Message);
-                }
-            });
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError(_moduleID + ":Thr - " + ex.Message);
+            }
         }
 
         /// <summary>
@@ -797,7 +794,7 @@ namespace QuantGate.API.Signals
             catch (Exception ex)
             {
                 Trace.TraceError(_moduleID + ":USub - " + ex.Message);
-            }            
+            }
         }
 
         /// <summary>
@@ -1081,6 +1078,74 @@ namespace QuantGate.API.Signals
             Unsubscribe(destination);
         }
 
+        private void Unsubscribe(string destination)
+        {
+            Enqueue(() =>
+            {
+                // Make sure there is a leading slash.
+                if (!destination.StartsWith("/"))
+                    destination = '/' + destination;
+
+                // If the destination exists, unsubscribe.
+                if (_subscriptionsByDestination.TryGetValue(destination, out ProtoStompSubscription subscription))
+                    Unsubscribe(subscription);
+            });
+        }
+
+        public void ThrottlePerception(string symbol, int throttleRate = 0) =>
+            Throttle(GetGaugeDestination(SubscriptionPath.GaugePerception, symbol), throttleRate);
+
+        public void ThrottleCommitment(string symbol, int throttleRate = 0) =>
+            Throttle(GetGaugeDestination(SubscriptionPath.GaugeCommitment, symbol, "1m"), throttleRate);
+        public void ThrottleBookPressure(string symbol, int throttleRate = 0) =>
+            Throttle(GetGaugeDestination(SubscriptionPath.GaugeBookPressure, symbol, "0q"), throttleRate);
+
+        public void ThrottleHeadroom(string symbol, int throttleRate = 0) =>
+            Throttle(GetGaugeDestination(SubscriptionPath.GaugeHeadroom, symbol, "5m"), throttleRate);
+
+        public void ThrottleSentiment(string symbol, string compression = "50t", int throttleRate = 0) =>
+            Throttle(GetGaugeDestination(SubscriptionPath.GaugeSentiment, symbol, compression), throttleRate);
+
+        public void ThrottleEquilibrium(string symbol, string compression = "300s", int throttleRate = 0) =>
+            Throttle(GetGaugeDestination(SubscriptionPath.GaugeEquilibrium, symbol, compression), throttleRate);
+
+        public void ThrottleMultiframeEquilibrium(string symbol, int throttleRate = 0) =>
+            Throttle(GetGaugeDestination(SubscriptionPath.GaugeMultiframeEquilibrium, symbol), throttleRate);
+
+        public void ThrottleTrigger(string symbol, int throttleRate = 0) =>
+            Throttle(GetGaugeDestination(SubscriptionPath.GaugeTrigger, symbol), throttleRate);
+
+        public void ThrottleStrategy(string strategyID, string symbol, int throttleRate = 0)
+        {
+            string destination = ParsedDestination.CreateStrategyDestination(
+                strategyID, ParsedDestination.StreamIDForSymbol(_streamID, symbol), symbol).Destination;
+
+            Throttle(destination, throttleRate);
+        }
+
+        public void ThrottleTopSymbols(string broker, InstrumentType instrumentType =
+                                       InstrumentType.NoInstrument, int throttleRate = 0)
+        {
+            string destination = ParsedDestination.CreateTopSymbolsDestination(
+                broker, TopSymbolsSubscription.InstrumentTypeToString(instrumentType)).Destination;
+
+            Throttle(destination, throttleRate);
+        }
+
+        private void Throttle(string destination, int throttleRate)
+        {
+            Enqueue(() =>
+            {
+                // Make sure there is a leading slash.
+                if (!destination.StartsWith("/"))
+                    destination = '/' + destination;
+
+                // If the destination exists, unsubscribe.
+                if (_subscriptionsByDestination.TryGetValue(destination, out ProtoStompSubscription subscription))
+                    subscription.ThrottleRate = (uint)throttleRate;
+            });
+        }
+
         private string CleanCompression(string compression)
         {
             if (string.IsNullOrEmpty(compression))
@@ -1094,20 +1159,6 @@ namespace QuantGate.API.Signals
             return ParsedDestination.CreateGaugeDestination(
                         path, ParsedDestination.StreamIDForSymbol(_streamID, symbol),
                         symbol, CleanCompression(compression)).Destination;
-        }
-
-        private void Unsubscribe(string destination)
-        {
-            Enqueue(() =>
-            {
-                // Make sure there is a leading slash.
-                if (!destination.StartsWith("/"))
-                    destination = '/' + destination;
-
-                // If the destination exists, unsubscribe.
-                if (_subscriptionsByDestination.TryGetValue(destination, out ProtoStompSubscription subscription))
-                    Unsubscribe(subscription);
-            });
         }
 
         #endregion

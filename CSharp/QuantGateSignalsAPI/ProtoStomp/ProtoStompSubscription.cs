@@ -16,11 +16,6 @@ namespace QuantGate.API.Signals.ProtoStomp
         private const string _moduleID = "PSSubs";
 
         /// <summary>
-        /// Used for thread synchronization on Throttle-related calls.
-        /// </summary>
-        private readonly object _lock = new object();
-
-        /// <summary>
         /// The STOMP client that will handle this subscription.
         /// </summary>
         internal APIClient Client { get; private set; }
@@ -59,12 +54,12 @@ namespace QuantGate.API.Signals.ProtoStomp
         /// <summary>
         /// The destination to subscribe to.
         /// </summary>
-        public string Destination => _request.Destination;
+        internal string Destination => _request.Destination;
 
         /// <summary>
         /// The id used to identify this subscription instance.
         /// </summary>
-        public ulong SubscriptionID
+        internal ulong SubscriptionID
         {
             get => _request.SubscriptionId;
             set => _request.SubscriptionId = value;
@@ -79,18 +74,17 @@ namespace QuantGate.API.Signals.ProtoStomp
         /// <summary>
         /// The internal request object.
         /// </summary>
-        internal SubscribeRequest Request => _request; 
+        internal SubscribeRequest Request => _request;
 
         /// <summary>
         /// Sets the current throttle rate for this subscription.
         /// </summary>
         /// <remarks>The default throttle rate is zero (no throttling).</remarks>
-        public uint ThrottleRate
+        internal uint ThrottleRate
         {
             get
             {
-                lock (_lock)
-                    return _request.ThrottleRate;
+                return _request.ThrottleRate;
             }
             set
             {
@@ -98,16 +92,13 @@ namespace QuantGate.API.Signals.ProtoStomp
                 {
                     bool changed = false;
 
-                    lock (_lock)
-                    {
-                        // Check if the throttle rate changed.
-                        changed = _request.ThrottleRate != value;
+                    // Check if the throttle rate changed.
+                    changed = _request.ThrottleRate != value;
 
-                        // If throttle value changed, update it.
-                        if (changed)
-                            _request.ThrottleRate = value;
-                    }
-
+                    // If throttle value changed, update it.
+                    if (changed)
+                        _request.ThrottleRate = value;
+             
                     // If client exists and can throttle, set the throttle.
                     if (changed)
                         Client?.Throttle(this, value);
