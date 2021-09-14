@@ -122,7 +122,7 @@ namespace BridgeRock.CSharpExample
 
             _symbol = symbol;
 
-            _client.SubscribeInstrument(_symbol);
+            _client.RequestInstrumentDetails(_symbol);
             _client.SubscribePerception(_symbol);
             _client.SubscribeCommitment(_symbol);
             _client.SubscribeEquilibrium(_symbol, "300s");

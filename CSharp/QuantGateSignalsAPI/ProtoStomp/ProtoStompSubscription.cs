@@ -95,13 +95,12 @@ namespace QuantGate.API.Signals.ProtoStomp
                     // Check if the throttle rate changed.
                     changed = _request.ThrottleRate != value;
 
-                    // If throttle value changed, update it.
                     if (changed)
+                    { 
+                        // If throttle value changed, update it and set.
                         _request.ThrottleRate = value;
-             
-                    // If client exists and can throttle, set the throttle.
-                    if (changed)
                         Client?.Throttle(this, value);
+                    }
                 }
                 catch (Exception ex)
                 {

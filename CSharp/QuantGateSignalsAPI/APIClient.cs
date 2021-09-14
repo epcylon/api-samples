@@ -986,16 +986,6 @@ namespace QuantGate.API.Signals
                                                throttleRate: (uint)throttleRate), StrategyUpdated);
 
         /// <summary>
-        /// Used to retrieve the specification details of an instrument according to its symbol,
-        /// as listed by the QuantGate servers..
-        /// </summary>        
-        /// <param name="symbol">Symbol as listed by the QuantGate servers.</param>
-        /// <returns>The Instrument data object that will receive the updates.</returns>
-        /// <remarks>The client should unsubscribe as soon as the data is received.</remarks>
-        public void SubscribeInstrument(string symbol) =>
-            Subscribe(new InstrumentSubscription(this, _streamID, symbol), InstrumentUpdated);
-
-        /// <summary>
         /// Subscribes to a stream of Top Symbols according to broker and instrument type.
         /// </summary>
         /// <param name="broker">The broker to get the Top Symbols for. Must match a valid broker type string.</param>
@@ -1006,6 +996,16 @@ namespace QuantGate.API.Signals
                                         InstrumentType.NoInstrument, int throttleRate = 0) =>
             Subscribe(new TopSymbolsSubscription(this, null, broker, instrumentType,
                                                  throttleRate: (uint)throttleRate), TopSymbolsUpdated);
+
+        /// <summary>
+        /// Used to retrieve the specification details of an instrument according to its symbol,
+        /// as listed by the QuantGate servers..
+        /// </summary>        
+        /// <param name="symbol">Symbol as listed by the QuantGate servers.</param>
+        /// <returns>The Instrument data object that will receive the updates.</returns>
+        /// <remarks>The client should unsubscribe as soon as the data is received.</remarks>
+        public void RequestInstrumentDetails(string symbol) =>
+            Subscribe(new InstrumentSubscription(this, _streamID, symbol), InstrumentUpdated);
 
         /// <summary>
         /// Subscribes to a stream and returns the values from the stream.
