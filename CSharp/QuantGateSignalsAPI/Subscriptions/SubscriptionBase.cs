@@ -5,21 +5,27 @@ using System.Threading;
 
 namespace QuantGate.API.Signals.Subscriptions
 {
-    internal abstract class SubscriptionBase<M, V> : ProtoStompSubscription, ISubscription<V>
+    internal abstract class SubscriptionBase<M, V> : ProtoStompSubscription
         where M : IMessage<M>
         where V : EventArgs
     {
-        private readonly MessageParser<M> _parser;
-        public Subscription<V> External { get; }
-        Subscription<V> ISubscription<V>.External => External;
-        APIClient ISubscription<V>.Client => Client;
+        /// <summary>
+        /// Notifies that the object was updated (after complete update).
+        /// </summary>
+        public event EventHandler<V> Updated;
+
+        /// <summary>
+        /// Notifies that the object was updated (through the parent).
+        /// </summary>
+        public EventHandler<V> ParentUpdatedEvent { get; set; }
+
+        private readonly MessageParser<M> _parser;        
 
         public SubscriptionBase(APIClient client, MessageParser<M> parser,
                                 string destination, bool receipt = false, uint throttleRate = 0) :
             base(client, destination, receipt, throttleRate)
         {
             _parser = parser;
-            External = new Subscription<V>() { Source = this };
             OnNext += HandleOnNext;            
         }
 
@@ -31,7 +37,7 @@ namespace QuantGate.API.Signals.Subscriptions
             Client.Sync.Post(new SendOrPostCallback((o) =>
             {
                 V updated = HandleUpdate(update, processed);
-                External.SendUpdated(updated);
+                SendUpdated(updated);
             }), null);
         }
 
@@ -39,8 +45,17 @@ namespace QuantGate.API.Signals.Subscriptions
         {
             Client.Sync.Post(new SendOrPostCallback((o) =>
             {
-                External.SendUpdated(update);
+                SendUpdated(update);
             }), null);
+        }
+
+        /// <summary>
+        /// Called whenever the values are finished updating.
+        /// </summary>
+        private void SendUpdated(V values)
+        {
+            Updated?.Invoke(Client, values);
+            ParentUpdatedEvent?.Invoke(Client, values);
         }
 
         protected virtual object Preprocess(M update) => null;

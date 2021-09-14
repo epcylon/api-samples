@@ -688,34 +688,31 @@ namespace QuantGate.API.Signals
         /// <param name="reference">A reference object to associate with this request.</param>
         internal void Subscribe(ProtoStompSubscription subscription)
         {
-            Enqueue(() =>
+            try
             {
-                try
+                if (subscription is object)
                 {
-                    if (subscription is object)
+                    _subscriptionReferences[subscription.SubscriptionID] = subscription;
+                    _subscriptionsByDestination[subscription.Destination] = subscription;
+
+                    if (subscription.ReceiptID != 0)
+                        _receiptReferences.Add(subscription.ReceiptID, subscription);
+
+                    if (IsConnected & !_isDisconnecting)
                     {
-                        _subscriptionReferences[subscription.SubscriptionID] = subscription;
-                        _subscriptionsByDestination[subscription.Destination] = subscription;
+                        // If connected, send the subscription request - otherwise, waiting for connection.
+                        Send(new RequestFrame { Subscribe = subscription.Request });
 
-                        if (subscription.ReceiptID != 0)
-                            _receiptReferences.Add(subscription.ReceiptID, subscription);
-
-                        if (IsConnected & !_isDisconnecting)
-                        {
-                            // If connected, send the subscription request - otherwise, waiting for connection.
-                            Send(new RequestFrame { Subscribe = subscription.Request });
-
-                            // Log the subscription action.
-                            Trace.TraceInformation(_moduleID + ":Sub - Subscribe: " + subscription.Destination +
-                                                    " [" + subscription.SubscriptionID.ToString() + "]");
-                        }
+                        // Log the subscription action.
+                        Trace.TraceInformation(_moduleID + ":Sub - Subscribe: " + subscription.Destination +
+                                                " [" + subscription.SubscriptionID.ToString() + "]");
                     }
                 }
-                catch (Exception ex)
-                {
-                    Trace.TraceError(_moduleID + ":Sub - " + ex.Message);
-                }
-            });
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError(_moduleID + ":Sub - " + ex.Message);
+            }
         }
 
         /// <summary>
@@ -763,7 +760,7 @@ namespace QuantGate.API.Signals
         /// </summary>
         /// <param name="subscription">The subscription to unsubscribe from.</param>
         internal void Unsubscribe(ProtoStompSubscription subscription)
-        {            
+        {
             ProtoStompReceipt receipt = new ProtoStompReceipt(IDGenerator.NextID);
             UnsubscribeRequest unsubscribe = new UnsubscribeRequest();
 
@@ -847,7 +844,7 @@ namespace QuantGate.API.Signals
                     subscription.SubscriptionID = IDGenerator.NextID;
 
                     // Subscribe to the subscription.
-                    subscription.Subscribe();
+                    Subscribe(subscription);
                 }
             }
             catch (Exception ex)
@@ -1019,11 +1016,19 @@ namespace QuantGate.API.Signals
         /// <param name="subscription">The subscription to subscribe to and return.</param>
         /// <param name="parentHandler">The parent event handler.</param>
         /// <returns>The values data object that will receive the subscription updates.</returns>
-        private void Subscribe<V>(ISubscription<V> subscription, EventHandler<V> parentHandler)
+        private void Subscribe<M, V>(SubscriptionBase<M, V> subscription, EventHandler<V> parentHandler)
+            where M : IMessage<M>
             where V : EventArgs
         {
-            subscription.External.ParentUpdatedEvent = parentHandler;
-            subscription.Subscribe();
+            Enqueue(() =>
+            {
+                if (!_subscriptionsByDestination.ContainsKey(subscription.Destination))
+                {
+                    // If not yet subscribed, set the parent event handler and subscribe.
+                    subscription.ParentUpdatedEvent = parentHandler;
+                    Subscribe(subscription);
+                }
+            });
         }
 
         /// <summary>
@@ -1033,7 +1038,7 @@ namespace QuantGate.API.Signals
         public SymbolSearch SubscribeSearch()
         {
             SearchSubscription subscription = new SearchSubscription(this, _streamID);
-            subscription.Subscribe();
+            Enqueue(() => Subscribe(subscription));
             return new SymbolSearch(subscription);
         }
 

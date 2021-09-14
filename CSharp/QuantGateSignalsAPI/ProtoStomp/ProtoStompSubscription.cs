@@ -120,14 +120,6 @@ namespace QuantGate.API.Signals.ProtoStomp
         }
 
         /// <summary>
-        /// Subscribes to this subscription on the client.
-        /// </summary>
-        public void Subscribe()
-        {
-            Client?.Subscribe(this);
-        }
-
-        /// <summary>
         /// Unsubscribes from this subscription on the client and disconnects the client.
         /// </summary>
         public void Unsubscribe()
