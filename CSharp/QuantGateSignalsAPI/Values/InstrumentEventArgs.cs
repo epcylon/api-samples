@@ -81,6 +81,11 @@ namespace QuantGate.API.Signals.Values
         public IReadOnlyDictionary<string, string> BrokerSymbols { get; }
 
         /// <summary>
+        /// Describes an error if the instrument details request failed.
+        /// </summary>
+        public string ErrorMessage { get; }
+
+        /// <summary>
         /// Creates a new InstrumentEventArgs instance.
         /// </summary>
         /// <param name="symbol">Symbol as listed by the QuantGate servers.</param>
@@ -119,6 +124,31 @@ namespace QuantGate.API.Signals.Values
             TickRanges = tickRanges;
             TradingSessions = tradingSessions;
             BrokerSymbols = brokerSymbols;
+            ErrorMessage = null;
+        }
+
+        /// <summary>
+        /// Creates a new instance when an error occurs;
+        /// </summary>
+        /// <param name="symbol">Symbol as listed by the QuantGate servers.</param>
+        /// <param name="errorMessage">Describes the error if the instrument details request failed.</param>
+        public InstrumentEventArgs(string symbol, string errorMessage)
+        {
+            Symbol = symbol;
+            Underlying = null;
+            Currency = null;
+            Exchange = null;
+            InstrumentType = InstrumentType.NoInstrument;
+            PutOrCall = PutOrCall.NoPutCall;
+            Strike = 0;
+            ExpiryDate = default;
+            Multiplier = 0;
+            DisplayName = null;
+            TimeZone = null;
+            TickRanges = null;
+            TradingSessions = null;
+            BrokerSymbols = null;
+            ErrorMessage = errorMessage;
         }
     }
 }

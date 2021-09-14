@@ -17,7 +17,7 @@ namespace QuantGate.API.Signals.Subscriptions
         {
         }
 
-        private static string InstrumentTypeToString(InstrumentType type)
+        internal static string InstrumentTypeToString(InstrumentType type)
         {
             switch (type)
             {

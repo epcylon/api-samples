@@ -1,5 +1,4 @@
-﻿using QuantGate.API.Signals;
-using QuantGate.API.Signals.Values;
+﻿using QuantGate.API.Signals.Values;
 using System;
 using System.Diagnostics;
 using System.Windows;
@@ -835,15 +834,15 @@ namespace BridgeRock.CSharpExample.Controls
         /// <summary>
         /// The sentiment values to update.
         /// </summary>
-        public Subscription<SentimentEventArgs> Values
+        public SentimentEventArgs Values
         {
-            get { return (Subscription<SentimentEventArgs>)GetValue(ValuesProperty); }
+            get { return (SentimentEventArgs)GetValue(ValuesProperty); }
             set { SetValue(ValuesProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for Values.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ValuesProperty =
-            DependencyProperty.Register("Values", typeof(Subscription<SentimentEventArgs>), typeof(SentimentViewer), 
+            DependencyProperty.Register("Values", typeof(SentimentEventArgs), typeof(SentimentViewer), 
                                         new PropertyMetadata(null, HandleSentimentChange));
 
         /// <summary>
@@ -856,11 +855,8 @@ namespace BridgeRock.CSharpExample.Controls
             if (!(obj is SentimentViewer viewer))
                 return;
 
-            if (args.OldValue is Subscription<SentimentEventArgs> oldSentiment)
-                oldSentiment.Updated -= viewer.HandleSentimentUpdated;
-
-            if (args.NewValue is Subscription<SentimentEventArgs> newSentiment)
-                newSentiment.Updated += viewer.HandleSentimentUpdated;
+            if (args.NewValue is SentimentEventArgs newSentiment)
+                viewer.UpdateSpectrum(newSentiment);
         }        
 
         /// <summary>

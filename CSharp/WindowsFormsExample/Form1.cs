@@ -12,22 +12,9 @@ namespace WindowsFormsExample
     {
         private readonly APIClient _client;
         private SymbolSearch _symbolSearch;
-        private Subscription<TopSymbolsEventArgs> _topSymbolsStream;
         private TopSymbolsEventArgs _topSymbols;
-
-        #region Dependency Properties
-
-        public Subscription<PerceptionEventArgs> Perception { get; set; }
-        public Subscription<CommitmentEventArgs> Commitment { get; set; }
-        public Subscription<HeadroomEventArgs> Headroom { get; set; }
-        public Subscription<BookPressureEventArgs> BookPressure { get; set; }
-        public Subscription<SentimentEventArgs> Sentiment { get; set; }
-        public Subscription<EquilibriumEventArgs> Equilibrium { get; set; }
-        public Subscription<MultiframeEquilibriumEventArgs> MultiFrame { get; set; }
-        public Subscription<TriggerEventArgs> Trigger { get; set; }
-        public Subscription<StrategyEventArgs> Strategy { get; set; }
-
-        #endregion
+        private string _symbol = "NQ U1";
+        private string _strategyId = "Crb9.0";
 
         public Form1()
         {
@@ -45,6 +32,7 @@ namespace WindowsFormsExample
             _client.Error += HandleError;
 
             _client.PerceptionUpdated += _client_PerceptionUpdated;
+            _client.TopSymbolsUpdated += HandleTopSymbolsUpdate;
 
             _client.Connect("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
                             "eyJzdWIiOiJKb2huSCIsImlhdCI6MTYyODcxMzg2NywiZXhwIjoxNjMyOTYw" +
@@ -52,22 +40,24 @@ namespace WindowsFormsExample
                             "Up48upDkCINp9znyjTkUXc0F2Rb5BWqfzmumF4mUcXA");
 
             SubscribeSearch();
-            Subscribe("NQ U1");
+            Subscribe(_symbol);
         }
 
         private void Subscribe(string symbol)
         {
-            Unsubscribe();            
+            Unsubscribe();
 
-            Perception = _client.SubscribePerception(symbol);
-            Commitment = _client.SubscribeCommitment(symbol);
-            Equilibrium = _client.SubscribeEquilibrium(symbol, "300s");
-            Sentiment = _client.SubscribeSentiment(symbol, "50t");
-            Headroom = _client.SubscribeHeadroom(symbol);
-            BookPressure = _client.SubscribeBookPressure(symbol);
-            MultiFrame = _client.SubscribeMultiframeEquilibrium(symbol);
-            Trigger = _client.SubscribeTrigger(symbol);
-            Strategy = _client.SubscribeStrategy("Crb9.0", symbol);
+            _symbol = symbol;
+
+            _client.SubscribePerception(_symbol);
+            _client.SubscribeCommitment(_symbol);
+            _client.SubscribeEquilibrium(_symbol, "300s");
+            _client.SubscribeSentiment(_symbol, "50t");
+            _client.SubscribeHeadroom(_symbol);
+            _client.SubscribeBookPressure(_symbol);
+            _client.SubscribeMultiframeEquilibrium(_symbol);
+            _client.SubscribeTrigger(_symbol);
+            _client.SubscribeStrategy(_strategyId, _symbol);
         }
 
         private void _client_PerceptionUpdated(object sender, PerceptionEventArgs e)
@@ -76,28 +66,24 @@ namespace WindowsFormsExample
         }
 
         private void Unsubscribe()
-        {
-            if (Perception is object)
-            {
-                _client.Unsubscribe(Perception);
-                _client.Unsubscribe(Commitment);
-                _client.Unsubscribe(Equilibrium);
-                _client.Unsubscribe(Sentiment);
-                _client.Unsubscribe(Headroom);
-                _client.Unsubscribe(BookPressure);
-                _client.Unsubscribe(MultiFrame);
-                _client.Unsubscribe(Trigger);
-                _client.Unsubscribe(Strategy);
-                //sViewer.ClearSpectrum();
-            }
+        {            
+            _client.UnsubscribePerception(_symbol);
+            _client.UnsubscribeCommitment(_symbol);
+            _client.UnsubscribeEquilibrium(_symbol, "300s");
+            _client.UnsubscribeSentiment(_symbol, "50t");
+            _client.UnsubscribeHeadroom(_symbol);
+            _client.UnsubscribeBookPressure(_symbol);
+            _client.UnsubscribeMultiframeEquilibrium(_symbol);
+            _client.UnsubscribeTrigger(_symbol);
+            _client.UnsubscribeStrategy(_strategyId, _symbol);
+            //sViewer.ClearSpectrum();            
         }
 
         private void SubscribeSearch()
         {
             _symbolSearch = _client.SubscribeSearch();
             _symbolSearch.Updated += HandleSearchUpdate;
-            _topSymbolsStream = _client.SubscribeTopSymbols("ib");
-            _topSymbolsStream.Updated += HandleTopSymbolsUpdate;
+            _client.SubscribeTopSymbols("ib");
         }
 
         private void HandleSearchTextUpdate(object sender, EventArgs e)

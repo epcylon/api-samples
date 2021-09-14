@@ -5,7 +5,6 @@ using QuantGate.API.Signals.Values;
 using System;
 using System.Windows;
 using System.Windows.Controls;
-using TriggerEventArgs = QuantGate.API.Signals.Values.TriggerEventArgs;
 
 namespace BridgeRock.CSharpExample
 {
@@ -16,30 +15,21 @@ namespace BridgeRock.CSharpExample
     {
         private readonly APIClient _client;
         private SymbolSearch _symbolSearch;
-        private Subscription<TopSymbolsEventArgs> _topSymbolsStream;
         private TopSymbolsEventArgs _topSymbols;
+        private string _symbol = "NQ U1";
+        private string _strategyId = "Crb9.0";
 
         #region Dependency Properties
 
-        private Subscription<PerceptionEventArgs> _perception;
-        private Subscription<CommitmentEventArgs> _commitment;
-        private Subscription<HeadroomEventArgs> _headroom;
-        private Subscription<BookPressureEventArgs> _bookPressure;
-        private Subscription<EquilibriumEventArgs> _equilibrium;
-        private Subscription<MultiframeEquilibriumEventArgs> _multiFrame;
-        private Subscription<TriggerEventArgs> _trigger;
-        private Subscription<StrategyEventArgs> _strategy;
-
-        public Subscription<SentimentEventArgs> Sentiment
+        public SentimentEventArgs Sentiment
         {
-            get { return (Subscription<SentimentEventArgs>)GetValue(SentimentProperty); }
+            get { return (SentimentEventArgs)GetValue(SentimentProperty); }
             set { SetValue(SentimentProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for Sentiment.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SentimentProperty =
-            DependencyProperty.Register("Sentiment", typeof(Subscription<SentimentEventArgs>),
-                                        typeof(MainWindow), new PropertyMetadata(null));
+            DependencyProperty.Register("Sentiment", typeof(SentimentEventArgs), typeof(MainWindow), new PropertyMetadata(null));
 
         public double Perception
         {
@@ -98,10 +88,13 @@ namespace BridgeRock.CSharpExample
             _client.Disconnected += HandleDisconnected;
             _client.Error += HandleError;
 
+            _client.InstrumentUpdated += HandleInstrumentUpdate;
+            _client.TopSymbolsUpdated += HandleTopSymbolsUpdate;
             _client.PerceptionUpdated += (s, e) => Perception = e.Value;
             _client.CommitmentUpdated += (s, e) => Commitment = e.Value;
             _client.BookPressureUpdated += (s, e) => BookPressure = e.Value;
             _client.HeadroomUpdated += (s, e) => Headroom = e.Value;
+            _client.SentimentUpdated += (s, e) => Sentiment = e;
 
             _client.Connect("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
                             "eyJzdWIiOiJKb2huSCIsImlhdCI6MTYyODcxMzg2NywiZXhwIjoxNjMyOTYw" +
@@ -109,47 +102,57 @@ namespace BridgeRock.CSharpExample
                             "Up48upDkCINp9znyjTkUXc0F2Rb5BWqfzmumF4mUcXA");
 
             SubscribeSearch();
-            Subscribe("NQ U1");
-        }        
+            Subscribe(_symbol);
+        }
+
+        private void _client_SentimentUpdated(object sender, SentimentEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void HandleInstrumentUpdate(object sender, InstrumentEventArgs e)
+        {
+            Console.WriteLine(e.Symbol + " " + e.InstrumentType.ToString() + " " +
+                              e.ExpiryDate.ToString() + " " + e.ErrorMessage);
+        }
 
         private void Subscribe(string symbol)
         {
             Unsubscribe();
 
-            _perception = _client.SubscribePerception(symbol);
-            _commitment = _client.SubscribeCommitment(symbol);
-            _equilibrium = _client.SubscribeEquilibrium(symbol, "300s");
-            Sentiment = _client.SubscribeSentiment(symbol, "50t");
-            _headroom = _client.SubscribeHeadroom(symbol);
-            _bookPressure = _client.SubscribeBookPressure(symbol);
-            _multiFrame = _client.SubscribeMultiframeEquilibrium(symbol);
-            _trigger = _client.SubscribeTrigger(symbol);
-            _strategy = _client.SubscribeStrategy("Crb9.0", symbol);
+            _symbol = symbol;
+
+            _client.SubscribeInstrument(_symbol);
+            _client.SubscribePerception(_symbol);
+            _client.SubscribeCommitment(_symbol);
+            _client.SubscribeEquilibrium(_symbol, "300s");
+            _client.SubscribeSentiment(_symbol, "50t");
+            _client.SubscribeHeadroom(_symbol);
+            _client.SubscribeBookPressure(_symbol);
+            _client.SubscribeMultiframeEquilibrium(_symbol);
+            _client.SubscribeTrigger(_symbol);
+            _client.SubscribeStrategy(_strategyId, _symbol);
         }
 
         private void Unsubscribe()
-        {
-            if (_perception is object)
-            {
-                _client.Unsubscribe(_perception);
-                _client.Unsubscribe(_commitment);
-                _client.Unsubscribe(_equilibrium);
-                _client.Unsubscribe(Sentiment);
-                _client.Unsubscribe(_headroom);
-                _client.Unsubscribe(_bookPressure);
-                _client.Unsubscribe(_multiFrame);
-                _client.Unsubscribe(_trigger);
-                _client.Unsubscribe(_strategy);
-                sViewer.ClearSpectrum();
-            }
+        {            
+            _client.UnsubscribePerception(_symbol);
+            _client.UnsubscribeCommitment(_symbol);
+            _client.UnsubscribeEquilibrium(_symbol, "300s");
+            _client.UnsubscribeSentiment(_symbol, "50t");
+            _client.UnsubscribeHeadroom(_symbol);
+            _client.UnsubscribeBookPressure(_symbol);
+            _client.UnsubscribeMultiframeEquilibrium(_symbol);
+            _client.UnsubscribeTrigger(_symbol);
+            _client.UnsubscribeStrategy(_strategyId, _symbol);
+            sViewer.ClearSpectrum();
         }
 
         private void SubscribeSearch()
         {
             _symbolSearch = _client.SubscribeSearch();
             _symbolSearch.Updated += HandleSearchUpdate;
-            _topSymbolsStream = _client.SubscribeTopSymbols("ib");
-            _topSymbolsStream.Updated += HandleTopSymbolsUpdate;
+            _client.SubscribeTopSymbols("ib");
         }
 
         private void HandleSearchUpdate(object sender, TextChangedEventArgs e)
@@ -214,8 +217,13 @@ namespace BridgeRock.CSharpExample
 
         private void HandleSubscribeMenuClick(object sender, RoutedEventArgs e)
         {
-            if (lvSearch.SelectedItem is SearchRow row)
+            if (lvSearch.SelectedItem is SearchRow row)            
                 Subscribe(row.Symbol);
+        }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            _client.UnsubscribePerception(_symbol);
         }
     }
 }

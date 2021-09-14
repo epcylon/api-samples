@@ -1,12 +1,25 @@
 ﻿using QuantGate.API.Signals.Proto.Stealth;
+using QuantGate.API.Signals.ProtoStomp;
 using QuantGate.API.Signals.Utilities;
 using QuantGate.API.Signals.Values;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace QuantGate.API.Signals.Subscriptions
 {
     internal class InstrumentSubscription : SubscriptionBase<InstrumentUpdate, InstrumentEventArgs>
     {
+        /// <summary>
+        /// Module-level identifier.
+        /// </summary>
+        private const string _moduleID = "InstSub";
+
+        /// <summary>
+        /// The symbol that was requested.
+        /// </summary>
+        private string _symbol;
+
         public InstrumentSubscription(APIClient client, string streamID, string symbol,
                                       bool receipt = false, uint throttleRate = 0) :
             base(client, InstrumentUpdate.Parser,
@@ -14,6 +27,14 @@ namespace QuantGate.API.Signals.Subscriptions
                                        ParsedDestination.StreamIDForSymbol(streamID, symbol), symbol).Destination,
                  receipt, throttleRate)
         {
+            _symbol = symbol;
+            OnError += HandleError;
+        }
+
+        private void HandleError(ProtoStompSubscription subscription, Exception ex)
+        {
+            PostUpdate(new InstrumentEventArgs(_symbol, ex.Message));
+            Unsubscribe();
         }
 
         protected override InstrumentEventArgs HandleUpdate(InstrumentUpdate update, object processed)
@@ -22,42 +43,53 @@ namespace QuantGate.API.Signals.Subscriptions
             List<Values.TradingSession> tradingSessions = new List<Values.TradingSession>();
             Dictionary<string, string> brokerSymbols = new Dictionary<string, string>();
 
-            foreach (TickValue range in update.TickValues)
+            try
             {
-                tickRanges.Add(new TickRange(
-                    range.Start,
-                    range.Tick,
-                    (int)range.Denominator,
-                    range.Decimals,
-                    (TickFormat)range.Format
-                ));
-            }
+                foreach (TickValue range in update.TickValues)
+                {
+                    tickRanges.Add(new TickRange(
+                        range.Start,
+                        range.Tick,
+                        (int)range.Denominator,
+                        range.Decimals,
+                        (TickFormat)range.Format
+                    ));
+                }
 
-            for (int day = 0; day < update.TradingSessions.Count; day++)
+                for (int day = 0; day < update.TradingSessions.Count; day++)
+                {
+                    Proto.Stealth.TradingSession session = update.TradingSessions[day];
+                    tradingSessions.Add(new Values.TradingSession((System.DayOfWeek)day, session.Close, session.Length));
+                }
+
+                foreach (KeyValuePair<string, string> symbolMapping in update.BrokerSymbols)
+                    brokerSymbols.Add(symbolMapping.Key, symbolMapping.Value);
+
+                return new InstrumentEventArgs(
+                    update.Symbol,
+                    update.Underlying,
+                    update.Currency,
+                    update.Exchange,
+                    (InstrumentType)update.InstrumentType,
+                    (PutOrCall)update.PutOrCall,
+                    update.Strike,
+                    new DateTime((long)update.ExpiryDate, DateTimeKind.Utc),
+                    update.Multiplier,
+                    update.DisplayName,
+                    TimeZoneDecoder.OlsonTimeZoneToTimeZoneInfo(update.TimeZone),
+                    tickRanges,
+                    tradingSessions,
+                    brokerSymbols);
+            }
+            catch (Exception ex)
             {
-                Proto.Stealth.TradingSession session = update.TradingSessions[day];
-                tradingSessions.Add(new Values.TradingSession((System.DayOfWeek)day, session.Close, session.Length));
+                Trace.TraceError(_moduleID + ":HUd - " + ex.Message);
+                return new InstrumentEventArgs(_symbol, "Internal error handling update.");
             }
-
-            foreach (KeyValuePair<string, string> symbolMapping in update.BrokerSymbols)
-                brokerSymbols.Add(symbolMapping.Key, symbolMapping.Value);
-
-            return new InstrumentEventArgs(
-                update.Symbol,
-                update.Underlying,
-                update.Currency,
-                update.Exchange,
-                (InstrumentType)update.InstrumentType,
-                (PutOrCall)update.PutOrCall,
-                update.Strike,
-                ProtoTimeEncoder.DaysToDate(update.ExpiryDate),
-                update.Multiplier,
-                update.DisplayName,
-                TimeZoneDecoder.OlsonTimeZoneToTimeZoneInfo(update.TimeZone),
-                tickRanges,
-                tradingSessions,
-                brokerSymbols
-            );
+            finally
+            {
+                Unsubscribe();
+            }
         }
     }
 }

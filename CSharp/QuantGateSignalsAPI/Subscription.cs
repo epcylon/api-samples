@@ -3,7 +3,7 @@ using System;
 
 namespace QuantGate.API.Signals
 {
-    public class Subscription<V> : IDisposable
+    internal class Subscription<V> : IDisposable
         where V : EventArgs
     {
         /// <summary>

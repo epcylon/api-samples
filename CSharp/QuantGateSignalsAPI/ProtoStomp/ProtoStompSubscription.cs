@@ -132,7 +132,7 @@ namespace QuantGate.API.Signals.ProtoStomp
         /// </summary>
         public void Unsubscribe()
         {
-            Client?.Unsubscribe(this);
+            Client?.Enqueue(() => Client.Unsubscribe(this));
         }
 
         /// <summary>

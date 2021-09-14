@@ -20,7 +20,7 @@ namespace QuantGate.API.Signals.Subscriptions
         {
             _parser = parser;
             External = new Subscription<V>() { Source = this };
-            OnNext += HandleOnNext;
+            OnNext += HandleOnNext;            
         }
 
         private void HandleOnNext(ProtoStompSubscription subscription, ByteString values)
@@ -32,6 +32,14 @@ namespace QuantGate.API.Signals.Subscriptions
             {
                 V updated = HandleUpdate(update, processed);
                 External.SendUpdated(updated);
+            }), null);
+        }
+
+        protected void PostUpdate(V update)
+        {
+            Client.Sync.Post(new SendOrPostCallback((o) =>
+            {
+                External.SendUpdated(update);
             }), null);
         }
 
