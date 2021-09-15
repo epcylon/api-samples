@@ -4,11 +4,11 @@ using QuantGate.API.Signals.Events;
 
 namespace QuantGate.API.Signals.Subscriptions
 {
-    internal abstract class GaugeSubscriptionBase<M, V> : SubscriptionBase<M, V>
+    internal abstract class GaugeSubscriptionBase<M, V> : SubscriptionBase<M, V>, ISymbolSubscription
         where M : IMessage<M>
         where V : GaugeArgsBase
     {
-        internal string Symbol { get; }
+        public string Symbol { get; }
         internal string Compression { get; }
 
         public GaugeSubscriptionBase(APIClient client, MessageParser<M> parser, SubscriptionPath gaugePath, string streamID,

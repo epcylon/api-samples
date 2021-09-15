@@ -1130,6 +1130,48 @@ namespace QuantGate.API.Signals
             });
         }
 
+        /// <summary>
+        /// Unsubscribes from all active subscriptions.
+        /// </summary>
+        public void UnsubscribeAll()
+        {
+            Enqueue(() =>
+            {
+                // Get a list of all of the current subscriptions.
+                List<ProtoStompSubscription> subscriptions = _subscriptionReferences.Values.ToList();
+
+                // If no symbol supplied, unsubscribe from everything.
+                foreach (ProtoStompSubscription subscription in subscriptions)
+                    Unsubscribe(subscription);
+
+                // This includes the search.
+                _search = null;
+                
+            });
+        }
+
+        /// <summary>
+        /// Unsubscribes from all subscriptions for the specified symbol.
+        /// </summary>
+        /// <param name="symbol">The symbol to unsubscribe from.</param>
+        public void UnsubscribeAll(string symbol)
+        {
+            Enqueue(() =>
+            {
+                // Get a list of all of the current subscriptions.
+                List<ProtoStompSubscription> subscriptions = _subscriptionReferences.Values.ToList();
+               
+                // If a symbol was supplied, need to check each subscription.
+                foreach (ProtoStompSubscription subscription in subscriptions) 
+                {
+                    // If the subscription is tied to the symbol, unsubscribe.
+                    if ((subscription is ISymbolSubscription symbolSubscription) && 
+                        (symbolSubscription.Symbol == symbol))                        
+                        Unsubscribe(subscription);
+                }
+            });
+        }
+
         #endregion
 
         #region Subscription Throttling Methods

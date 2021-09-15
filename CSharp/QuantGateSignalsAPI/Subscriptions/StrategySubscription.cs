@@ -4,7 +4,7 @@ using QuantGate.API.Signals.Events;
 
 namespace QuantGate.API.Signals.Subscriptions
 {
-    internal class StrategySubscription : SubscriptionBase<StrategyUpdate, StrategyEventArgs>
+    internal class StrategySubscription : SubscriptionBase<StrategyUpdate, StrategyEventArgs>, ISymbolSubscription
     {
         private string _symbol;
         private string _strategyID;
@@ -20,6 +20,8 @@ namespace QuantGate.API.Signals.Subscriptions
             _symbol = symbol;
             _strategyID = strategyID;
         }
+
+        string ISymbolSubscription.Symbol => _symbol;
 
         protected override StrategyEventArgs HandleUpdate(StrategyUpdate update, object processed)
         {

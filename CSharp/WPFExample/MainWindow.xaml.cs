@@ -117,7 +117,9 @@ namespace BridgeRock.CSharpExample
 
         private void Subscribe(string symbol)
         {
-            Unsubscribe();
+            // Unsubscribe from all subscriptions for this symbol.
+            _client.UnsubscribeAll(_symbol);
+            sViewer.ClearSpectrum();
 
             _symbol = symbol;
 
@@ -131,20 +133,6 @@ namespace BridgeRock.CSharpExample
             _client.SubscribeMultiframeEquilibrium(_symbol);
             _client.SubscribeTrigger(_symbol);
             _client.SubscribeStrategy(_strategyId, _symbol);
-        }
-
-        private void Unsubscribe()
-        {            
-            _client.UnsubscribePerception(_symbol);
-            _client.UnsubscribeCommitment(_symbol);
-            _client.UnsubscribeEquilibrium(_symbol, "300s");
-            _client.UnsubscribeSentiment(_symbol, "50t");
-            _client.UnsubscribeHeadroom(_symbol);
-            _client.UnsubscribeBookPressure(_symbol);
-            _client.UnsubscribeMultiframeEquilibrium(_symbol);
-            _client.UnsubscribeTrigger(_symbol);
-            _client.UnsubscribeStrategy(_strategyId, _symbol);
-            sViewer.ClearSpectrum();
         }
 
         private void SubscribeSearch()
