@@ -213,6 +213,7 @@ namespace QuantGate.API.Signals
             _transport.OnMessage += HandleMessage;
             _transport.OnError += OnError;
 
+            // Set up the message consumers (dictionary of handlers for each response message type).
             _messageConsumers = new Dictionary<ResponseFrame.ResponseOneofCase, Action<ResponseFrame>>
             {
                 [ResponseFrame.ResponseOneofCase.SingleMessage] = HandleMessageFrame,
@@ -224,6 +225,7 @@ namespace QuantGate.API.Signals
                 [ResponseFrame.ResponseOneofCase.Heartbeat] = HandleHeartbeatFrame,
             };
 
+            // Create a new timer to handle disconnections/reconnections, etc.
             _timer = new Timer(HandleTimer, null, 5000, 5000);
         }
 
@@ -241,13 +243,22 @@ namespace QuantGate.API.Signals
         /// </summary>
         public int Port { get; }
 
+        /// <summary>
+        /// The currently connected username (client id).
+        /// </summary>
         public string Username { get; private set; }
+        /// <summary>
+        /// The password for the current connection (JWT Token).
+        /// </summary>
         public string Password { get; private set; }
 
+        /// <summary>
+        /// Returns the type of stream that this client is connected to (realtime/delay/demo).
+        /// </summary>
         public DataStream Stream { get; }
 
         /// <summary>
-        /// Gets a value indicating whether this <see cref = "APIClient" /> is connected.
+        /// Gets a value indicating whether this <see cref = "APIClient"/> is connected.
         /// </summary>
         /// <value><c>true</c> if connected; otherwise, <c>false</c>.</value>
         public bool IsConnected { get; private set; }
@@ -256,10 +267,18 @@ namespace QuantGate.API.Signals
 
         #region Thread Queue Handling
 
+        /// <summary>
+        /// Adds a new action to the list of actions to run in the main thread.
+        /// </summary>
+        /// <param name="action">The action to run within the thread.</param>
         internal void Enqueue(Action action) { _actions.Add(action); }
 
+        /// <summary>
+        /// This is the main thread loop. Handles actions from a blocking collection until cancelled.
+        /// </summary>
         private void HandleActions()
         {
+            // Go through each action in the blocking collection while not cancelled.
             foreach (Action action in _actions.GetConsumingEnumerable())
                 action();
         }
@@ -331,7 +350,7 @@ namespace QuantGate.API.Signals
             });
         }
 
-        private void OnError(object o, WebSocketSharp.ErrorEventArgs e)
+        private void OnError(object o, ErrorEventArgs e)
         {
             Enqueue(() =>
             {
@@ -528,60 +547,7 @@ namespace QuantGate.API.Signals
         /// <remarks>Nothing to handle, since the last message time is already set.</remarks>
         private void HandleHeartbeatFrame(ResponseFrame frame) { }
 
-        #endregion
-
-        #region Timer Handling
-
-        private void HandleTimer(object state)
-        {
-            Enqueue(() =>
-            {
-                long utcTicks;
-
-                try
-                {
-                    // Get the current time.
-                    utcTicks = DateTime.UtcNow.Ticks;
-
-                    if (!IsConnected && !_isDisconnecting)
-                    {
-                        // If not connected, check if we need to reconnect.
-                        if (utcTicks > _reconnectTicks && _reconnectTicks != 0)
-                        {
-                            Connect(Password);
-                            _reconnectTicks = 0;
-                            _killTicks = utcTicks + _connectKill;
-                        }
-                        else if (utcTicks > _killTicks && _killTicks != 0)
-                        {
-                            Disconnect(false);
-                            _killTicks = 0;
-                        }
-                    }
-                    else if (IsConnected && !_isDisconnecting)
-                    {
-                        // If connected and not disconnecting.
-                        if (utcTicks > _lastMessageTicks + _maxHeartBeatWait)
-                        {
-                            // If it's been too long before receiving a message, disconnect (to reconnect).
-                            Disconnect(false);
-                        }
-                        else if (utcTicks > _lastMessageTicks + _heartBeatCheckTicks)
-                        {
-                            // If past the last heartbeat checks, request a heartbeat.
-                            Send(new RequestFrame { Heartbeat = new Heartbeat() });
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Trace.TraceError(_moduleID + ":Tmr - " + ex.Message);
-                    OnClose(this, EventArgs.Empty);
-                }
-            });
-        }
-
-        #endregion
+        #endregion        
 
         #region Connection Handling
 
@@ -792,8 +758,8 @@ namespace QuantGate.API.Signals
                         Send(new RequestFrame { Unsubscribe = unsubscribe });
 
                         // Log the subscription action.
-                        Trace.TraceInformation(_moduleID + ":USub - Unsubscribe: " +
-                                                subscription.Destination + " [" + subscription.SubscriptionID.ToString() + "]");
+                        Trace.TraceInformation(_moduleID + ":USub - Unsubscribe: " + subscription.Destination +
+                                               " [" + subscription.SubscriptionID.ToString() + "]");
                     }
                 }
             }
@@ -808,23 +774,26 @@ namespace QuantGate.API.Signals
         /// </summary>
         /// <param name="toSend">The Stomp frame to send.</param>
         internal void Send(ProtoStompSend toSend)
-        {
-            Enqueue(() =>
+        {            
+            try
             {
-                try
-                {
-                    if (toSend.ReceiptID != 0)
-                        _receiptReferences.Add(toSend.ReceiptID, toSend);
+                // If there is a receipt requested, add to receipt references.
+                if (toSend.ReceiptID != 0)
+                    _receiptReferences.Add(toSend.ReceiptID, toSend);
 
-                    Send(new RequestFrame { Send = toSend.Request });
-                }
-                catch (Exception ex)
-                {
-                    Trace.TraceError(_moduleID + ":Snd - " + ex.Message);
-                }
-            });
+                // Send the Send request.
+                Send(new RequestFrame { Send = toSend.Request });
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError(_moduleID + ":Snd - " + ex.Message);
+            }            
         }
 
+        /// <summary>
+        /// Resubscribes all current subscriptions to the back-end
+        /// (after disconnect/initial connection - i.e. when not present in current connection).
+        /// </summary>
         private void ResubscribeAll()
         {
             List<ProtoStompSubscription> subscriptions;
@@ -897,7 +866,7 @@ namespace QuantGate.API.Signals
 
         #endregion
 
-        #region Subscriptions
+        #region Subscription Creation Methods
 
         /// <summary>
         /// Subscribes to a Perception gauge data stream for a specific symbol.
@@ -1035,128 +1004,6 @@ namespace QuantGate.API.Signals
             });
         }
 
-        public void UnsubscribePerception(string symbol) =>
-            Unsubscribe(GetGaugeDestination(SubscriptionPath.GaugePerception, symbol));
-
-        public void UnsubscribeCommitment(string symbol) =>
-            Unsubscribe(GetGaugeDestination(SubscriptionPath.GaugeCommitment, symbol, "1m"));
-        public void UnsubscribeBookPressure(string symbol) =>
-            Unsubscribe(GetGaugeDestination(SubscriptionPath.GaugeBookPressure, symbol, "0q"));
-
-        public void UnsubscribeHeadroom(string symbol) =>
-            Unsubscribe(GetGaugeDestination(SubscriptionPath.GaugeHeadroom, symbol, "5m"));
-
-        public void UnsubscribeSentiment(string symbol, string compression = "50t") =>
-            Unsubscribe(GetGaugeDestination(SubscriptionPath.GaugeSentiment, symbol, compression));
-
-        public void UnsubscribeEquilibrium(string symbol, string compression = "300s") =>
-            Unsubscribe(GetGaugeDestination(SubscriptionPath.GaugeEquilibrium, symbol, compression));
-
-        public void UnsubscribeMultiframeEquilibrium(string symbol) =>
-            Unsubscribe(GetGaugeDestination(SubscriptionPath.GaugeMultiframeEquilibrium, symbol));
-
-        public void UnsubscribeTrigger(string symbol) =>
-            Unsubscribe(GetGaugeDestination(SubscriptionPath.GaugeTrigger, symbol));
-
-        public void UnsubscribeStrategy(string strategyID, string symbol)
-        {
-            string destination = ParsedDestination.CreateStrategyDestination(
-                strategyID, ParsedDestination.StreamIDForSymbol(_streamID, symbol), symbol).Destination;
-
-            Unsubscribe(destination);
-        }
-
-        public void UnsubscribeTopSymbols(string broker, InstrumentType instrumentType = InstrumentType.NoInstrument)
-        {
-            string destination = ParsedDestination.CreateTopSymbolsDestination(
-                broker, TopSymbolsSubscription.InstrumentTypeToString(instrumentType)).Destination;
-
-            Unsubscribe(destination);
-        }
-
-        private void Unsubscribe(string destination)
-        {
-            Enqueue(() =>
-            {
-                // Make sure there is a leading slash.
-                if (!destination.StartsWith("/"))
-                    destination = '/' + destination;
-
-                // If the destination exists, unsubscribe.
-                if (_subscriptionsByDestination.TryGetValue(destination, out ProtoStompSubscription subscription))
-                    Unsubscribe(subscription);
-            });
-        }
-
-        public void ThrottlePerception(string symbol, int throttleRate = 0) =>
-            Throttle(GetGaugeDestination(SubscriptionPath.GaugePerception, symbol), throttleRate);
-
-        public void ThrottleCommitment(string symbol, int throttleRate = 0) =>
-            Throttle(GetGaugeDestination(SubscriptionPath.GaugeCommitment, symbol, "1m"), throttleRate);
-        public void ThrottleBookPressure(string symbol, int throttleRate = 0) =>
-            Throttle(GetGaugeDestination(SubscriptionPath.GaugeBookPressure, symbol, "0q"), throttleRate);
-
-        public void ThrottleHeadroom(string symbol, int throttleRate = 0) =>
-            Throttle(GetGaugeDestination(SubscriptionPath.GaugeHeadroom, symbol, "5m"), throttleRate);
-
-        public void ThrottleSentiment(string symbol, string compression = "50t", int throttleRate = 0) =>
-            Throttle(GetGaugeDestination(SubscriptionPath.GaugeSentiment, symbol, compression), throttleRate);
-
-        public void ThrottleEquilibrium(string symbol, string compression = "300s", int throttleRate = 0) =>
-            Throttle(GetGaugeDestination(SubscriptionPath.GaugeEquilibrium, symbol, compression), throttleRate);
-
-        public void ThrottleMultiframeEquilibrium(string symbol, int throttleRate = 0) =>
-            Throttle(GetGaugeDestination(SubscriptionPath.GaugeMultiframeEquilibrium, symbol), throttleRate);
-
-        public void ThrottleTrigger(string symbol, int throttleRate = 0) =>
-            Throttle(GetGaugeDestination(SubscriptionPath.GaugeTrigger, symbol), throttleRate);
-
-        public void ThrottleStrategy(string strategyID, string symbol, int throttleRate = 0)
-        {
-            string destination = ParsedDestination.CreateStrategyDestination(
-                strategyID, ParsedDestination.StreamIDForSymbol(_streamID, symbol), symbol).Destination;
-
-            Throttle(destination, throttleRate);
-        }
-
-        public void ThrottleTopSymbols(string broker, InstrumentType instrumentType =
-                                       InstrumentType.NoInstrument, int throttleRate = 0)
-        {
-            string destination = ParsedDestination.CreateTopSymbolsDestination(
-                broker, TopSymbolsSubscription.InstrumentTypeToString(instrumentType)).Destination;
-
-            Throttle(destination, throttleRate);
-        }
-
-        private void Throttle(string destination, int throttleRate)
-        {
-            Enqueue(() =>
-            {
-                // Make sure there is a leading slash.
-                if (!destination.StartsWith("/"))
-                    destination = '/' + destination;
-
-                // If the destination exists, unsubscribe.
-                if (_subscriptionsByDestination.TryGetValue(destination, out ProtoStompSubscription subscription))
-                    subscription.ThrottleRate = (uint)throttleRate;
-            });
-        }
-
-        private string CleanCompression(string compression)
-        {
-            if (string.IsNullOrEmpty(compression))
-                return null;
-
-            return compression.ToLower().Replace(" ", "");
-        }
-
-        private string GetGaugeDestination(SubscriptionPath path, string symbol, string compression = null)
-        {
-            return ParsedDestination.CreateGaugeDestination(
-                        path, ParsedDestination.StreamIDForSymbol(_streamID, symbol),
-                        symbol, CleanCompression(compression)).Destination;
-        }
-
         /// <summary>
         /// Requests symbols that match a specific term and (optionally) a specific broker. 
         /// </summary>
@@ -1172,8 +1019,328 @@ namespace QuantGate.API.Signals
                     _search.ParentUpdatedEvent = SymbolSearchUpdated;
                     Subscribe(_search);
                 }
-                
+
                 _search.Search(term, broker);
+            });
+        }
+
+        #endregion
+
+        #region Unsubscription Methods
+
+        /// <summary>
+        /// Unsubscribes from a Perception gauge data stream for a specific symbol.
+        /// </summary>
+        /// <param name="symbol">The symbol to stop getting Perception data for.</param>
+        public void UnsubscribePerception(string symbol) =>
+            Unsubscribe(GetGaugeDestination(SubscriptionPath.GaugePerception, symbol));
+
+        /// <summary>
+        /// Unsubscribes from a Commitment gauge data stream for a specific symbol.
+        /// </summary>
+        /// <param name="symbol">The symbol to stop getting Commitment data for.</param>
+        public void UnsubscribeCommitment(string symbol) =>
+            Unsubscribe(GetGaugeDestination(SubscriptionPath.GaugeCommitment, symbol, "1m"));
+
+        /// <summary>
+        /// Unsubscribes from a Book Pressure gauge data stream for a specific symbol.
+        /// </summary>
+        /// <param name="symbol">The symbol to stop getting Book Pressure data for.</param>
+        public void UnsubscribeBookPressure(string symbol) =>
+            Unsubscribe(GetGaugeDestination(SubscriptionPath.GaugeBookPressure, symbol, "0q"));
+
+        /// <summary>
+        /// Unsubscribes from a Headroom gauge data stream for a specific symbol.
+        /// </summary>
+        /// <param name="symbol">The symbol to stop getting Headroom data for.</param>
+        public void UnsubscribeHeadroom(string symbol) =>
+            Unsubscribe(GetGaugeDestination(SubscriptionPath.GaugeHeadroom, symbol, "5m"));
+
+        /// <summary>
+        /// Unsubscribes from a Sentiment gauge data stream at the speficied compression for a specific symbol.
+        /// </summary>
+        /// <param name="symbol">The symbol to stop getting Sentiment data for.</param>
+        /// <param name="compression">Compression timeframe being applied to the gauge. Default value is 50t.</param>
+        public void UnsubscribeSentiment(string symbol, string compression = "50t") =>
+            Unsubscribe(GetGaugeDestination(SubscriptionPath.GaugeSentiment, symbol, compression));
+
+        /// <summary>
+        /// Unsubscribes from a Equilibrium gauge data stream at the speficied compression for a specific symbol.
+        /// </summary>
+        /// <param name="symbol">The symbol to stop getting Equilibrium data for.</param>
+        /// <param name="compression">Compression timeframe being applied to the gauge. Default value is 300s.</param>
+        public void UnsubscribeEquilibrium(string symbol, string compression = "300s") =>
+            Unsubscribe(GetGaugeDestination(SubscriptionPath.GaugeEquilibrium, symbol, compression));
+
+        /// <summary>
+        /// Unsubscribes from a Multiframe Equilibrium gauge data stream for a specific symbol.
+        /// </summary>
+        /// <param name="symbol">The symbol to stop getting Multiframe Equilibrium data for.</param>
+        public void UnsubscribeMultiframeEquilibrium(string symbol) =>
+            Unsubscribe(GetGaugeDestination(SubscriptionPath.GaugeMultiframeEquilibrium, symbol));
+
+        /// <summary>
+        /// Unsubscribes from a Trigger data stream for a specific symbol.
+        /// </summary>
+        /// <param name="symbol">The symbol to stop getting Triger data for.</param>
+        public void UnsubscribeTrigger(string symbol) =>
+            Unsubscribe(GetGaugeDestination(SubscriptionPath.GaugeTrigger, symbol));
+
+        /// <summary>
+        /// Unsubscribes from Stategy data for the given strategy and symbol.
+        /// </summary>
+        /// <param name="strategyID">The identifier of the strategy to stop running.</param>
+        /// <param name="symbol">The symbol to stop getting Strategy data for.</param>
+        public void UnsubscribeStrategy(string strategyID, string symbol)
+        {
+            string destination = ParsedDestination.CreateStrategyDestination(
+                strategyID, ParsedDestination.StreamIDForSymbol(_streamID, symbol), symbol).Destination;
+
+            Unsubscribe(destination);
+        }
+
+        /// <summary>
+        /// Unsubscribes from Top Symbols data for the given broker and instrument type.
+        /// </summary>
+        /// <param name="broker">The broker to stop getting the Top Symbols for.</param>
+        /// <param name="instrumentType">The type of instrument to stop including from the results.</param>
+        public void UnsubscribeTopSymbols(string broker, InstrumentType instrumentType = InstrumentType.NoInstrument)
+        {
+            string destination = ParsedDestination.CreateTopSymbolsDestination(
+                broker, TopSymbolsSubscription.InstrumentTypeToString(instrumentType)).Destination;
+
+            Unsubscribe(destination);
+        }
+
+        /// <summary>
+        /// Used to unsubscribe from a stream of data with the destination supplied.
+        /// </summary>
+        /// <param name="destination">The destination of the stream to stop getting data for.</param>
+        private void Unsubscribe(string destination)
+        {
+            Enqueue(() =>
+            {
+                // Make sure there is a leading slash.
+                if (!destination.StartsWith("/"))
+                    destination = '/' + destination;
+
+                // If the destination exists, unsubscribe (otherwise, no need).
+                if (_subscriptionsByDestination.TryGetValue(destination, out ProtoStompSubscription subscription))
+                    Unsubscribe(subscription);
+            });
+        }
+
+        #endregion
+
+        #region Subscription Throttling Methods
+
+        /// <summary>
+        /// Changes the maximum rate at which the back-end sends Perception gauge updates for the given symbol.
+        /// </summary>
+        /// <param name="symbol">The symbol to change the Perception gauge throttle rate for.</param>
+        /// <param name="throttleRate">The new throttle rate to set to (in ms).</param>
+        public void ThrottlePerception(string symbol, int throttleRate = 0) =>
+            Throttle(GetGaugeDestination(SubscriptionPath.GaugePerception, symbol), throttleRate);
+
+        /// <summary>
+        /// Changes the maximum rate at which the back-end sends Commitment gauge updates for the given symbol.
+        /// </summary>
+        /// <param name="symbol">The symbol to change the Commitment gauge throttle rate for.</param>
+        /// <param name="throttleRate">The new throttle rate to set to (in ms).</param>
+        public void ThrottleCommitment(string symbol, int throttleRate = 0) =>
+            Throttle(GetGaugeDestination(SubscriptionPath.GaugeCommitment, symbol, "1m"), throttleRate);
+
+        /// <summary>
+        /// Changes the maximum rate at which the back-end sends Book Pressure gauge updates for the given symbol.
+        /// </summary>
+        /// <param name="symbol">The symbol to change the Book Pressure gauge throttle rate for.</param>
+        /// <param name="throttleRate">The new throttle rate to set to (in ms).</param>
+        public void ThrottleBookPressure(string symbol, int throttleRate = 0) =>
+            Throttle(GetGaugeDestination(SubscriptionPath.GaugeBookPressure, symbol, "0q"), throttleRate);
+
+        /// <summary>
+        /// Changes the maximum rate at which the back-end sends Headroom gauge updates for the given symbol.
+        /// </summary>
+        /// <param name="symbol">The symbol to change the Headroom gauge throttle rate for.</param>
+        /// <param name="throttleRate">The new throttle rate to set to (in ms).</param>
+        public void ThrottleHeadroom(string symbol, int throttleRate = 0) =>
+            Throttle(GetGaugeDestination(SubscriptionPath.GaugeHeadroom, symbol, "5m"), throttleRate);
+
+        /// <summary>
+        /// Changes the maximum rate at which the back-end sends Sentiment gauge updates for a 
+        /// specific symbol at the speficied compression.
+        /// </summary>
+        /// <param name="symbol">The symbol to change the Sentiment gauge throttle rate for.</param>
+        /// <param name="compression">Compression timeframe being applied to the gauge. Default value is 50t.</param>
+        /// <param name="throttleRate">The new throttle rate to set to (in ms).</param>
+        public void ThrottleSentiment(string symbol, string compression = "50t", int throttleRate = 0) =>
+            Throttle(GetGaugeDestination(SubscriptionPath.GaugeSentiment, symbol, compression), throttleRate);
+
+        /// <summary>
+        /// Changes the maximum rate at which the back-end sends Equilibrium gauge updates for a 
+        /// specific symbol at the speficied compression.
+        /// </summary>
+        /// <param name="symbol">The symbol to change the Equilibrium gauge throttle rate for.</param>
+        /// <param name="compression">Compression timeframe being applied to the gauge. Default value is 300s.</param>
+        /// <param name="throttleRate">The new throttle rate to set to (in ms).</param>
+        public void ThrottleEquilibrium(string symbol, string compression = "300s", int throttleRate = 0) =>
+            Throttle(GetGaugeDestination(SubscriptionPath.GaugeEquilibrium, symbol, compression), throttleRate);
+
+        /// <summary>
+        /// Changes the maximum rate at which the back-end sends Multiframe Equilibrium gauge updates for the given symbol.
+        /// </summary>
+        /// <param name="symbol">The symbol to change the Multiframe Equilibrium gauge throttle rate for.</param>
+        /// <param name="throttleRate">The new throttle rate to set to (in ms).</param>
+        public void ThrottleMultiframeEquilibrium(string symbol, int throttleRate = 0) =>
+            Throttle(GetGaugeDestination(SubscriptionPath.GaugeMultiframeEquilibrium, symbol), throttleRate);
+
+        /// <summary>
+        /// Changes the maximum rate at which the back-end sends Trigger updates for the given symbol.
+        /// </summary>
+        /// <param name="symbol">The symbol to change the Trigger throttle rate for.</param>
+        /// <param name="throttleRate">The new throttle rate to set to (in ms).</param>
+        public void ThrottleTrigger(string symbol, int throttleRate = 0) =>
+            Throttle(GetGaugeDestination(SubscriptionPath.GaugeTrigger, symbol), throttleRate);
+
+        /// <summary>
+        /// Changes the maximum rate at which the back-end sends Strategy updates for the 
+        /// given strategy and symbol.
+        /// </summary>
+        /// <param name="strategyID">The identifier of the strategy to throttle.</param>
+        /// <param name="symbol">The symbol to change the Strategy throttle rate for.</param>
+        /// <param name="throttleRate">The new throttle rate to set to (in ms).</param>
+        public void ThrottleStrategy(string strategyID, string symbol, int throttleRate = 0)
+        {
+            string destination = ParsedDestination.CreateStrategyDestination(
+                strategyID, ParsedDestination.StreamIDForSymbol(_streamID, symbol), symbol).Destination;
+
+            Throttle(destination, throttleRate);
+        }
+
+        /// <summary>
+        /// Changes the maximum rate at which the back-end sends Top Symbols updates for the 
+        /// given broker and instrument type.
+        /// </summary>
+        /// <param name="broker">The broker to throttle the Top Symbols for.</param>
+        /// <param name="instrumentType">The type of instrument to throttle the results for.</param>
+        /// <param name="throttleRate">The new throttle rate to set to (in ms).</param>
+        public void ThrottleTopSymbols(string broker, InstrumentType instrumentType =
+                                       InstrumentType.NoInstrument, int throttleRate = 0)
+        {
+            string destination = ParsedDestination.CreateTopSymbolsDestination(
+                broker, TopSymbolsSubscription.InstrumentTypeToString(instrumentType)).Destination;
+
+            Throttle(destination, throttleRate);
+        }
+
+        /// <summary>
+        /// Throttles the stream with the given destination.
+        /// </summary>
+        /// <param name="destination">The destination of the stream to throttle.</param>
+        /// <param name="throttleRate">The new throttle rate to set to (in ms).</param>
+        private void Throttle(string destination, int throttleRate)
+        {
+            Enqueue(() =>
+            {
+                // Make sure there is a leading slash.
+                if (!destination.StartsWith("/"))
+                    destination = '/' + destination;
+
+                // If the destination exists, unsubscribe.
+                if (_subscriptionsByDestination.TryGetValue(destination, out ProtoStompSubscription subscription))
+                    subscription.ThrottleRate = (uint)throttleRate;
+            });
+        }
+
+        #endregion
+
+        #region Utility Methods
+
+        /// <summary>
+        /// Cleans the compression string so that it is normalized.
+        /// </summary>
+        /// <param name="compression">The compression string to clean.</param>
+        /// <returns>The clean compression string.</returns>
+        private string CleanCompression(string compression)
+        {
+            // If no string, just return null.
+            if (string.IsNullOrEmpty(compression))
+                return null;
+
+            // Put in lower-case and get rid of any whitespace.
+            return compression.ToLower().Replace(" ", "");
+        }
+
+        /// <summary>
+        /// Creates a destination string for a gauge subscription.
+        /// </summary>
+        /// <param name="path">The type of subscription to create a destination path for.</param>
+        /// <param name="symbol">The symbol to get the destination path for.</param>
+        /// <param name="compression">The compression to include in the destination path.</param>
+        /// <returns>The standard format destination for the gauge.</returns>
+        private string GetGaugeDestination(SubscriptionPath path, string symbol, string compression = null)
+        {
+            return ParsedDestination.CreateGaugeDestination(
+                        path, ParsedDestination.StreamIDForSymbol(_streamID, symbol),
+                        symbol, CleanCompression(compression)).Destination;
+        }
+
+        #endregion
+
+        #region Timer Handling
+
+        /// <summary>
+        /// Handles timer events.
+        /// </summary>
+        /// <param name="state">State object (not used).</param>
+        private void HandleTimer(object state)
+        {
+            Enqueue(() =>
+            {
+                long utcTicks;
+
+                try
+                {
+                    // Get the current time.
+                    utcTicks = DateTime.UtcNow.Ticks;
+
+                    if (!IsConnected && !_isDisconnecting)
+                    {
+                        // If not connected, check if we need to reconnect.
+                        if (utcTicks > _reconnectTicks && _reconnectTicks != 0)
+                        {
+                            // If we need to connect, reconnect.
+                            Connect(Password);
+                            _reconnectTicks = 0;
+                            _killTicks = utcTicks + _connectKill;
+                        }
+                        else if (utcTicks > _killTicks && _killTicks != 0)
+                        {
+                            // If we need to kill the connection, kill it.
+                            Disconnect(false);
+                            _killTicks = 0;
+                        }
+                    }
+                    else if (IsConnected && !_isDisconnecting)
+                    {
+                        // If connected and not disconnecting.
+                        if (utcTicks > _lastMessageTicks + _maxHeartBeatWait)
+                        {
+                            // If it's been too long before receiving a message, disconnect (to reconnect).
+                            Disconnect(false);
+                        }
+                        else if (utcTicks > _lastMessageTicks + _heartBeatCheckTicks)
+                        {
+                            // If past the last heartbeat checks, request a heartbeat.
+                            Send(new RequestFrame { Heartbeat = new Heartbeat() });
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Trace.TraceError(_moduleID + ":Tmr - " + ex.Message);
+                    OnClose(this, EventArgs.Empty);
+                }
             });
         }
 
