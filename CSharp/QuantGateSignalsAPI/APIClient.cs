@@ -975,7 +975,7 @@ namespace QuantGate.API.Signals
 
         /// <summary>
         /// Used to retrieve the specification details of an instrument according to its symbol,
-        /// as listed by the QuantGate servers..
+        /// as listed by the QuantGate servers.
         /// </summary>        
         /// <param name="symbol">Symbol as listed by the QuantGate servers.</param>
         /// <returns>The Instrument data object that will receive the updates.</returns>
@@ -1057,7 +1057,7 @@ namespace QuantGate.API.Signals
             Unsubscribe(GetGaugeDestination(SubscriptionPath.GaugeHeadroom, symbol, "5m"));
 
         /// <summary>
-        /// Unsubscribes from a Sentiment gauge data stream at the speficied compression for a specific symbol.
+        /// Unsubscribes from a Sentiment gauge data stream at the specified compression for a specific symbol.
         /// </summary>
         /// <param name="symbol">The symbol to stop getting Sentiment data for.</param>
         /// <param name="compression">Compression timeframe being applied to the gauge. Default value is 50t.</param>
@@ -1065,7 +1065,7 @@ namespace QuantGate.API.Signals
             Unsubscribe(GetGaugeDestination(SubscriptionPath.GaugeSentiment, symbol, compression));
 
         /// <summary>
-        /// Unsubscribes from a Equilibrium gauge data stream at the speficied compression for a specific symbol.
+        /// Unsubscribes from an Equilibrium gauge data stream at the specified compression for a specific symbol.
         /// </summary>
         /// <param name="symbol">The symbol to stop getting Equilibrium data for.</param>
         /// <param name="compression">Compression timeframe being applied to the gauge. Default value is 300s.</param>
@@ -1138,7 +1138,7 @@ namespace QuantGate.API.Signals
         /// Changes the maximum rate at which the back-end sends Perception gauge updates for the given symbol.
         /// </summary>
         /// <param name="symbol">The symbol to change the Perception gauge throttle rate for.</param>
-        /// <param name="throttleRate">The new throttle rate to set to (in ms).</param>
+        /// <param name="throttleRate">The new throttle rate to set to (in ms). Enter 0 for no throttling.</param>
         public void ThrottlePerception(string symbol, int throttleRate = 0) =>
             Throttle(GetGaugeDestination(SubscriptionPath.GaugePerception, symbol), throttleRate);
 
@@ -1146,7 +1146,7 @@ namespace QuantGate.API.Signals
         /// Changes the maximum rate at which the back-end sends Commitment gauge updates for the given symbol.
         /// </summary>
         /// <param name="symbol">The symbol to change the Commitment gauge throttle rate for.</param>
-        /// <param name="throttleRate">The new throttle rate to set to (in ms).</param>
+        /// <param name="throttleRate">The new throttle rate to set to (in ms). Enter 0 for no throttling.</param>
         public void ThrottleCommitment(string symbol, int throttleRate = 0) =>
             Throttle(GetGaugeDestination(SubscriptionPath.GaugeCommitment, symbol, "1m"), throttleRate);
 
@@ -1154,7 +1154,7 @@ namespace QuantGate.API.Signals
         /// Changes the maximum rate at which the back-end sends Book Pressure gauge updates for the given symbol.
         /// </summary>
         /// <param name="symbol">The symbol to change the Book Pressure gauge throttle rate for.</param>
-        /// <param name="throttleRate">The new throttle rate to set to (in ms).</param>
+        /// <param name="throttleRate">The new throttle rate to set to (in ms). Enter 0 for no throttling.</param>
         public void ThrottleBookPressure(string symbol, int throttleRate = 0) =>
             Throttle(GetGaugeDestination(SubscriptionPath.GaugeBookPressure, symbol, "0q"), throttleRate);
 
@@ -1162,27 +1162,27 @@ namespace QuantGate.API.Signals
         /// Changes the maximum rate at which the back-end sends Headroom gauge updates for the given symbol.
         /// </summary>
         /// <param name="symbol">The symbol to change the Headroom gauge throttle rate for.</param>
-        /// <param name="throttleRate">The new throttle rate to set to (in ms).</param>
+        /// <param name="throttleRate">The new throttle rate to set to (in ms). Enter 0 for no throttling.</param>
         public void ThrottleHeadroom(string symbol, int throttleRate = 0) =>
             Throttle(GetGaugeDestination(SubscriptionPath.GaugeHeadroom, symbol, "5m"), throttleRate);
 
         /// <summary>
         /// Changes the maximum rate at which the back-end sends Sentiment gauge updates for a 
-        /// specific symbol at the speficied compression.
+        /// specific symbol at the specified compression.
         /// </summary>
         /// <param name="symbol">The symbol to change the Sentiment gauge throttle rate for.</param>
         /// <param name="compression">Compression timeframe being applied to the gauge. Default value is 50t.</param>
-        /// <param name="throttleRate">The new throttle rate to set to (in ms).</param>
+        /// <param name="throttleRate">The new throttle rate to set to (in ms). Enter 0 for no throttling.</param>
         public void ThrottleSentiment(string symbol, string compression = "50t", int throttleRate = 0) =>
             Throttle(GetGaugeDestination(SubscriptionPath.GaugeSentiment, symbol, compression), throttleRate);
 
         /// <summary>
         /// Changes the maximum rate at which the back-end sends Equilibrium gauge updates for a 
-        /// specific symbol at the speficied compression.
+        /// specific symbol at the specified compression.
         /// </summary>
         /// <param name="symbol">The symbol to change the Equilibrium gauge throttle rate for.</param>
         /// <param name="compression">Compression timeframe being applied to the gauge. Default value is 300s.</param>
-        /// <param name="throttleRate">The new throttle rate to set to (in ms).</param>
+        /// <param name="throttleRate">The new throttle rate to set to (in ms). Enter 0 for no throttling.</param>
         public void ThrottleEquilibrium(string symbol, string compression = "300s", int throttleRate = 0) =>
             Throttle(GetGaugeDestination(SubscriptionPath.GaugeEquilibrium, symbol, compression), throttleRate);
 
@@ -1190,7 +1190,7 @@ namespace QuantGate.API.Signals
         /// Changes the maximum rate at which the back-end sends Multiframe Equilibrium gauge updates for the given symbol.
         /// </summary>
         /// <param name="symbol">The symbol to change the Multiframe Equilibrium gauge throttle rate for.</param>
-        /// <param name="throttleRate">The new throttle rate to set to (in ms).</param>
+        /// <param name="throttleRate">The new throttle rate to set to (in ms). Enter 0 for no throttling.</param>
         public void ThrottleMultiframeEquilibrium(string symbol, int throttleRate = 0) =>
             Throttle(GetGaugeDestination(SubscriptionPath.GaugeMultiframeEquilibrium, symbol), throttleRate);
 
@@ -1198,7 +1198,7 @@ namespace QuantGate.API.Signals
         /// Changes the maximum rate at which the back-end sends Trigger updates for the given symbol.
         /// </summary>
         /// <param name="symbol">The symbol to change the Trigger throttle rate for.</param>
-        /// <param name="throttleRate">The new throttle rate to set to (in ms).</param>
+        /// <param name="throttleRate">The new throttle rate to set to (in ms). Enter 0 for no throttling.</param>
         public void ThrottleTrigger(string symbol, int throttleRate = 0) =>
             Throttle(GetGaugeDestination(SubscriptionPath.GaugeTrigger, symbol), throttleRate);
 
@@ -1208,7 +1208,7 @@ namespace QuantGate.API.Signals
         /// </summary>
         /// <param name="strategyID">The identifier of the strategy to throttle.</param>
         /// <param name="symbol">The symbol to change the Strategy throttle rate for.</param>
-        /// <param name="throttleRate">The new throttle rate to set to (in ms).</param>
+        /// <param name="throttleRate">The new throttle rate to set to (in ms). Enter 0 for no throttling.</param>
         public void ThrottleStrategy(string strategyID, string symbol, int throttleRate = 0)
         {
             string destination = ParsedDestination.CreateStrategyDestination(
@@ -1223,7 +1223,7 @@ namespace QuantGate.API.Signals
         /// </summary>
         /// <param name="broker">The broker to throttle the Top Symbols for.</param>
         /// <param name="instrumentType">The type of instrument to throttle the results for.</param>
-        /// <param name="throttleRate">The new throttle rate to set to (in ms).</param>
+        /// <param name="throttleRate">The new throttle rate to set to (in ms). Enter 0 for no throttling.</param>
         public void ThrottleTopSymbols(string broker, InstrumentType instrumentType =
                                        InstrumentType.NoInstrument, int throttleRate = 0)
         {
@@ -1237,7 +1237,7 @@ namespace QuantGate.API.Signals
         /// Throttles the stream with the given destination.
         /// </summary>
         /// <param name="destination">The destination of the stream to throttle.</param>
-        /// <param name="throttleRate">The new throttle rate to set to (in ms).</param>
+        /// <param name="throttleRate">The new throttle rate to set to (in ms). Enter 0 for no throttling. </param>
         private void Throttle(string destination, int throttleRate)
         {
             Enqueue(() =>

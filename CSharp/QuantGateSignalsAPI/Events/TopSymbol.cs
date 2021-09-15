@@ -39,12 +39,19 @@ namespace QuantGate.API.Signals.Events
         /// <summary>
         /// Creates a new TopSymbol instance.
         /// </summary>
+        /// <param name="timestamp">Timestamp of the latest update.</param>
         /// <param name="symbol">Symbol as listed by the QuantGate servers.</param>
         /// <param name="underlying">Underlying symbol.</param>
         /// <param name="currency">Currency the instrument is traded in.</param>
         /// <param name="instrumentType">Type of instrument.</param>
         /// <param name="exchange">Primary exchange (ISO 10383 MIC) the instrument is traded on.</param>
         /// <param name="displayName">Display name of the instrument.</param>
+        /// <param name="entryProgress">Entry progress value.</param>
+        /// <param name="perceptionSignal">Signal tied to the Perception level.</param>
+        /// <param name="commitmentSignal">Signal tied to the Commitment level.</param>
+        /// <param name="equilibriumSignal">Signal tied to the Equilibrium level.</param>
+        /// <param name="sentimentSignal">Signal tied to the Sentiment level.</param>
+        /// <param name="signal">Entry signal for the default strategy.</param>
         internal TopSymbol(DateTime timestamp, string symbol, string underlying, string currency,
                            InstrumentType instrumentType, string exchange, string displayName,
                            double entryProgress, GaugeSignal perceptionSignal, 

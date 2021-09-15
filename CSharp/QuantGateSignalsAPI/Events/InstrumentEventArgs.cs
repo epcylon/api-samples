@@ -51,7 +51,7 @@ namespace QuantGate.API.Signals.Events
         public double Strike { get; }
 
         /// <summary>
-        /// Expiry date of the instrument, if applicable
+        /// Expiry date of the instrument, if applicable.
         /// </summary>
         public DateTime ExpiryDate { get; }
 

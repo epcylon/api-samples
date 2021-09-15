@@ -22,7 +22,7 @@ namespace QuantGate.API.Signals.Events
         /// </summary>
         public DayOfWeek DayOfWeek { get; }
         /// <summary>
-        /// The close time of the day.
+        /// The close time of the trading day.
         /// </summary>
         public TimeSpan Close { get; }
         /// <summary>
@@ -30,7 +30,7 @@ namespace QuantGate.API.Signals.Events
         /// </summary>
         public TimeSpan Length { get; }
         /// <summary>
-        /// The open minute of the day
+        /// The open minute of the trading day.
         /// </summary>
         public TimeSpan Open { get; }
         /// <summary>
