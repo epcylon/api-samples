@@ -45,6 +45,8 @@ class ComposerStaticInitbffa70e880ca3048016ef96bf8b81166
         'G' => 
         array (
             'GuzzleHttp\\Psr7\\' => 16,
+            'Google\\Protobuf\\' => 16,
+            'GPBMetadata\\Google\\Protobuf\\' => 28,
         ),
     );
 
@@ -112,6 +114,14 @@ class ComposerStaticInitbffa70e880ca3048016ef96bf8b81166
         'GuzzleHttp\\Psr7\\' => 
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/psr7/src',
+        ),
+        'Google\\Protobuf\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/google/protobuf/src/Google/Protobuf',
+        ),
+        'GPBMetadata\\Google\\Protobuf\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/google/protobuf/src/GPBMetadata/Google/Protobuf',
         ),
     );
 

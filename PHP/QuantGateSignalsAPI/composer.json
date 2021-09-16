@@ -1,6 +1,7 @@
 {
     "require": {
         "cboden/ratchet": "^0.4.3",
-        "ratchet/pawl": "^0.3.5"
+        "ratchet/pawl": "^0.3.5",
+        "google/protobuf": "^3.18"
     }
 }

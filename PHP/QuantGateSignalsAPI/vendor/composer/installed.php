@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'c1faa5196df76afcc0d95bd31a23e12454f83f70',
+        'reference' => '5ba63d6f5f7b49ad3df17fb99c82455241c9fdfc',
         'name' => '__root__',
         'dev' => true,
     ),
@@ -16,7 +16,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'c1faa5196df76afcc0d95bd31a23e12454f83f70',
+            'reference' => '5ba63d6f5f7b49ad3df17fb99c82455241c9fdfc',
             'dev_requirement' => false,
         ),
         'cboden/ratchet' => array(
@@ -35,6 +35,15 @@
             'install_path' => __DIR__ . '/../evenement/evenement',
             'aliases' => array(),
             'reference' => '531bfb9d15f8aa57454f5f0285b18bec903b8fb7',
+            'dev_requirement' => false,
+        ),
+        'google/protobuf' => array(
+            'pretty_version' => 'v3.18.0',
+            'version' => '3.18.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../google/protobuf',
+            'aliases' => array(),
+            'reference' => '24fed401306c943be38a1371ca2f3db2cd8137fb',
             'dev_requirement' => false,
         ),
         'guzzlehttp/psr7' => array(
