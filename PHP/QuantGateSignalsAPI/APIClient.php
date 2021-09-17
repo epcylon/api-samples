@@ -1,5 +1,7 @@
 <?php
 
+    namespace QuantGate\API\Signals;
+
     require __DIR__ . '/vendor/autoload.php';    
     require __DIR__ . '/Proto/Stomp/RequestFrame.php';
     require __DIR__ . '/Proto/Stomp/ResponseFrame.php';

@@ -14,6 +14,7 @@
     use \Stomp\ConnectedResponse;
     use \Ratchet\Client;
     use \Ratchet\RFC6455\Messaging\Frame;
+    use \QuantGate\API\Signals\APIClient;
 
     $loop = \React\EventLoop\Factory::create();
 
