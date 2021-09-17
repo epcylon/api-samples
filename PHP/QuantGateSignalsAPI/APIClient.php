@@ -17,6 +17,7 @@
     use \Ratchet\RFC6455\Messaging\Frame;
     use \React\EventLoop\LoopInterface;
     use \Ratchet\Client\WebSocket;
+    use \Ratchet\RFC6455\Messaging\Message;
 
     class APIClient
     {
@@ -93,7 +94,7 @@
                 });
         }
 
-        function handleMessage(Ratchet\RFC6455\Messaging\Message $message)
+        function handleMessage(Message $message)
         {
             $response = new ResponseFrame();
             $response->mergeFromString($message->getPayload());
