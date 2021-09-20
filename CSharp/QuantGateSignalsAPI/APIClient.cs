@@ -953,7 +953,7 @@ namespace QuantGate.API.Signals
         /// <summary>
         /// Subscribes to a Strategy update data stream for a specific strategy and symbol.
         /// </summary>
-        /// <param name="strategyID">Strategy to subscribe to. Example enum values: PPr4.0, BTr4.0,  Crb.8.4.</param>
+        /// <param name="strategyID">Strategy to subscribe to. Example enum values: PPr4.0, BTr4.0, Crb.8.4.</param>
         /// <param name="symbol">Symbol to get the Strategy update data for.</param>
         /// <param name="throttleRate">Rate to throttle messages at (in ms). Enter 0 for no throttling.</param>
         /// <returns>The Strategy data object that will receive the updates.</returns>
