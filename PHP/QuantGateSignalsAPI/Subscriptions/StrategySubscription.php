@@ -10,12 +10,14 @@
         private string $strategyId;
         private string $symbol;
         private string $stream;
+        private $updateCallback;
 
-        function __construct(int $id, string $strategyId, string $symbol, string $stream, int $throttleRate = 0)
+        function __construct(int $id, string $strategyId, string $symbol, string $stream, int $throttleRate, $updateCallback)
         {
             $this->strategyId = $strategyId;
             $this->symbol = $symbol;
             $this->stream = $stream;
+            $this->updateCallback = $updateCallback;
 
             $destination = $this->createDestination($strategyId, $symbol, $stream);
 
@@ -45,7 +47,7 @@
                                          $commitmentSignal, $commitmentLevel, $equilibriumSignal,
                                          $equilibriumLevel, $sentimentSignal, $sentimentLevel, $signal);
 
-            echo "Entry Progress: ".$entryProgress."\n";
+            \call_user_func_array($this->updateCallback, array($result));            
         }
 
         private function convertGaugeLevel(int $level) : ?float

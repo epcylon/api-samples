@@ -36,6 +36,7 @@
     use \Ratchet\RFC6455\Messaging\Message;
     use \QuantGate\API\Signals\Subscriptions\SubscriptionBase;
     use \QuantGate\API\Signals\Subscriptions\StrategySubscription;
+    use \QuantGate\API\Signals\Events\StrategyUpdate;
 
     class APIClient
     {
@@ -89,7 +90,8 @@
         {
             $this->loop->futureTick(function() use ($strategyId, $symbol, $throttleRate)
             {
-                $subscription = new StrategySubscription($this->nextID, $strategyId, $symbol, $this->stream, $throttleRate);
+                $subscription = new StrategySubscription($this->nextID, $strategyId, $symbol, $this->stream,
+                                                         $throttleRate, array($this, 'sendStrategyUpdate'));
                 $this->nextID++;
                 $this->subscribe($subscription);
             });
@@ -112,6 +114,12 @@
 
                 $this->sendFrame($request);
             }
+        }
+
+        function sendStrategyUpdate(StrategyUpdate $update)
+        {            
+            $progress = $update->getEntryProgress();
+            echo "Entry Progress: ".$progress."\n";
         }
 
         function connect($jwtToken)

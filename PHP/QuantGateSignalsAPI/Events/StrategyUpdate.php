@@ -50,77 +50,77 @@
 
         public function getUpdateTime() : \DateTime
         {
-            return $updateTime;
+            return $this->updateTime;
         }
 
         public function getStrategyId() : string
         {
-            return $strategyId;
+            return $this->strategyId;
         }
 
         public function getSymbol() : string
         {
-            return $symbol;            
+            return $this->symbol;            
         }
 
         public function getStream() : string
         {
-            return $stream;
+            return $this->stream;
         }
 
         public function getEntryProgress() : float
         {
-            return $entryProgress;
+            return $this->entryProgress;
         }
 
         public function getExitProgress() : float
         {
-            return $exitProgress;
+            return $this->exitProgress;
         }
 
         public function getPerceptionSignal() : string
         {
-            return $perceptionSignal;
+            return $this->perceptionSignal;
         }
 
         public function getPerceptionLevel() : ?float
         {
-            return $perceptionLevel;
+            return $this->perceptionLevel;
         }
 
         public function getCommitmentSignal() : string
         {
-            return $commitmentSignal;
+            return $this->commitmentSignal;
         }
 
         public function getCommitmentLevel() : ?float
         {
-            return $commitmentLevel;
+            return $this->commitmentLevel;
         }
         
         public function getEquilibriumSignal() : string
         {
-            return $equilibriumSignal;
+            return $this->equilibriumSignal;
         }
 
         public function getEquilibriumLevel() : ?float
         {
-            return $equilibriumLevel;
+            return $this->equilibriumLevel;
         }
 
         public function getSentimentSignal() : string
         {
-            return $sentimentSignal;
+            return $this->sentimentSignal;
         }
 
         public function getSentimentLevel() : ?float
         {
-            return $sentimentLevel;
+            return $this->sentimentLevel;
         }
         
         public function getSignal() : string
         {
-            return $signal;
+            return $this->signal;
         }
     }
 
