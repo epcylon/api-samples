@@ -96,6 +96,10 @@
 
         function subscribe(SubscriptionBase $subscription)
         {
+            // If already subscribed, no need to subscribe again.
+            if (array_key_exists($subscription->getDestination(), $this->subscriptionsByDest))
+                return null;            
+
             $this->subscriptionsById[$subscription->getID()] = $subscription;
             $this->subscriptionsByDest[$subscription->getDestination()] = $subscription;
 
@@ -118,9 +122,7 @@
         function sendStrategyUpdate(StrategyUpdate $update)
         {
             foreach ($this->strategyUpdateCallbacks as $callback) 
-            {
                 \call_user_func_array($callback, array($update));
-            }
         }
 
         function addStrategyUpdateCallback($callback)
@@ -139,11 +141,11 @@
 
                     $conn->on('message', array($this, 'handleMessage'));        
                     
-                    echo "Connected!\n";                    
+                    echo "Connected!\n";
 
                     $connectReq = new ConnectRequest();
                     $connectReq->setAcceptVersion("1.0");
-                    $connectReq->setLogin("JohnH");
+                    $connectReq->setLogin($this->getUserFromJWT($this->jwtToken));
                     $connectReq->setPasscode($this->jwtToken);
                     
                     $request = new RequestFrame();
@@ -157,6 +159,13 @@
                 });
         }
 
+        function getUserFromJWT(string $jwtToken) : string
+        {
+            $payload = base64_decode(explode(".", $jwtToken, 3)[1]);
+            $user = explode("\"", explode("\"sub\":\"", $payload, 2)[1], 2)[0];
+            return $user;
+        }
+
         function resubscribeAll()
         {
             $toSubscribe = $this->subscriptionsById;            
@@ -165,9 +174,7 @@
             $this->subscriptionsByDest = [];
 
             foreach ($toSubscribe as $subscription)
-            {
                 $this->subscribe($subscription);
-            }
         }
 
         function handleMessage(Message $message)
@@ -206,9 +213,7 @@
             $subscription = $this->subscriptionsById[$message->getSubscriptionId()];
 
             if (isset($subscription))
-            {
                 $subscription->handleMessage($message->getBody());
-            }
         }
 
         function close()
