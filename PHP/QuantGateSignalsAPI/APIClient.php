@@ -73,17 +73,14 @@
             $request = new RequestFrame();
             $request->setHeartbeat(new Heartbeat());
             
-            $this->sendFrame($request);
-            echo "Heartbeat check\n";
+            $this->sendFrame($request);            
         }
 
         public function sendFrame(RequestFrame $frame)
-        {
-            echo "Sending\n";
+        {            
             $data = $frame->serializeToString();            
             $binary = new Frame($data, true, Frame::OP_BINARY);
-            $this->webSocket->send($binary);
-            echo "Sent\n";
+            $this->webSocket->send($binary);            
         }
 
         public function subscribeStrategy(string $strategyId, string $symbol, int $throttleRate = 0)        
@@ -116,17 +113,25 @@
             }
         }
 
+        private $strategyUpdateCallbacks = array();
+
         function sendStrategyUpdate(StrategyUpdate $update)
-        {            
-            $progress = $update->getEntryProgress();
-            echo "Entry Progress: ".$progress."\n";
+        {
+            foreach ($this->strategyUpdateCallbacks as $callback) 
+            {
+                \call_user_func_array($callback, array($update));
+            }
+        }
+
+        function addStrategyUpdateCallback($callback)
+        {
+            $this->strategyUpdateCallbacks[] = $callback;
         }
 
         function connect($jwtToken)
         {            
             $this->jwtToken = $jwtToken;
-
-            //\Ratchet\Client\connect('wss://test.stealthtrader.com:443')->then(function($conn)
+            
             Client\connect($this->host.':'.$this->port, [], [], $this->loop)->then(
                 function($conn)
                 {
@@ -134,8 +139,7 @@
 
                     $conn->on('message', array($this, 'handleMessage'));        
                     
-                    echo "Connected!\n";
-                    echo "Creating\n";
+                    echo "Connected!\n";                    
 
                     $connectReq = new ConnectRequest();
                     $connectReq->setAcceptVersion("1.0");
@@ -174,7 +178,6 @@
             switch ($response->getResponse())
             {
                 case 'connected':
-                    echo "Received: {$response->getConnected()->getVersion()}\n";
                     $this->isConnected = true;
                     $this->resubscribeAll();
                     break;
@@ -204,7 +207,6 @@
 
             if (isset($subscription))
             {
-                echo "Got the subscription!\n";
                 $subscription->handleMessage($message->getBody());
             }
         }

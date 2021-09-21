@@ -74,7 +74,7 @@
                                          $equilibriumLevel, $sentimentSignal, $sentimentLevel, $signal);
 
             // Send the results back to the APIClient class.
-            \call_user_func_array($this->updateCallback, array($result));            
+            \call_user_func_array($this->updateCallback, array($result));
         }
 
         /*
