@@ -2,6 +2,7 @@
 
     namespace QuantGate\API\Signals\Subscriptions;
 
+    use \QuantGate\API\Signals\APIClient;
     use \QuantGate\API\Signals\Events\StrategyUpdate;    
     use \QuantGate\API\Signals\Utilities;
 
@@ -26,10 +27,10 @@
          */
         private string $stream;
         /**
-         * Callback used to send updates back to the APIClient instance.
+         * Holds a reference to the parent APIClient instance to send updates to.
          * @var callback
          */        
-        private $updateCallback;
+        private APIClient $client;
 
         /** 
          * Creates a new StrategySubscription instance.          
@@ -38,15 +39,15 @@
          * @param string   $symbol         Symbol to get the Strategy update data for.
          * @param string   $stream         Stream ID associated with the stream the client is connected to (realtime, delay, demo).
          * @param int      $throttleRate   Rate to throttle messages at (in ms). Enter 0 for no throttling.
-         * @param          $updateCallback Callback used to send updates back to the APIClient instance.
+         * @param          $client         Reference to the parent APIClient instance to send updates to.
          */
-        function __construct(int $id, string $strategyId, string $symbol, string $stream, int $throttleRate, $updateCallback)
+        function __construct(int $id, string $strategyId, string $symbol, string $stream, int $throttleRate, APIClient $client)
         {
             // Set the properties.
             $this->strategyId = $strategyId;
             $this->symbol = $symbol;
             $this->stream = $stream;
-            $this->updateCallback = $updateCallback;
+            $this->client = $client;
 
             // Create the target destination.
             $destination = $this->createDestination($strategyId, $symbol, $stream);
@@ -87,7 +88,7 @@
                                          $equilibriumLevel, $sentimentSignal, $sentimentLevel, $signal);
 
             // Send the results back to the APIClient class.
-            \call_user_func_array($this->updateCallback, array($result));
+            $this->client->sendStrategyUpdate($result);
         }
 
         /**

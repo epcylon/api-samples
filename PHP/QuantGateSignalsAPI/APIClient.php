@@ -188,6 +188,7 @@
 
         /**
          * Used to close the APIClient connection.
+         * @return  void
          */
         function close()
         {
@@ -247,7 +248,7 @@
         /**
          * Resubscribes all current subscriptions to the back-end (after disconnect/initial 
          * connection - i.e. when not present in current connection).
-         * @return void
+         * @return  void
          */
         function resubscribeAll()
         {
@@ -265,20 +266,88 @@
                 $this->subscribe($subscription);
         }
 
+        /**
+         * Handles a Protostomp response message.
+         * @param   Message $message    The Protostomp response message to handle.
+         * @return  void
+         */
+        function handleMessage(Message $message)
+        {
+            // Convert the raw binary message to a response frame.
+            $response = new ResponseFrame();
+            $response->mergeFromString($message->getPayload());
 
+            switch ($response->getResponse())
+            {
+                case 'connected':
+                    // If this is a connected response, set connected flag.
+                    $this->isConnected = true;
+                    // Resubscribe all subscriptions.
+                    $this->resubscribeAll();
+                    break;
+                
+                case 'heartbeat':
+                    // Log heartbeat (for now).
+                    echo "Received: Heartbeat\n";
+                    break;
 
+                case 'single_message':
+                    // If a single update message was recieved, handle it.
+                    $this->handleMessageResponse($response->getSingleMessage());
+                    break;
 
+                default:
+                    // Log any unknown message types.
+                    echo "Received: Unknown ".$response->getResponse()."\n";
+                    break;
+            }            
+        }
 
         /**
-         * Runs heartbeat checks on a 5-second interval.
+         * Handles a MessageResponses message that includes multiple MessageResponse messages.
+         * @param   MessageResponses    $responses  Holds a group of MessageResponse messages.
+         * @return  void
          */
-        function checkHeartbeats()
+        function handleMessageResponses(MessageResponses $responses)
         {
-            // Create a new heartbeat request frame.
-            $request = new RequestFrame();
-            $request->setHeartbeat(new Heartbeat());
-            // Send the request to the server.
-            $this->sendFrame($request);
+            // Not yet implemented.
+        }
+
+        /**
+         * Handles a single MessageResponse message (i.e. stream message). Will find the
+         * appropriate subscription and have it handle the message accordingly.
+         * @param   MessageResponse $message    The single message to handle.
+         */
+        function handleMessageResponse(MessageResponse $message)
+        {
+            // Try to get the subscription tied to this message.
+            $subscription = $this->subscriptionsById[$message->getSubscriptionId()];
+
+            // If the subscription is found, handle the stream message.
+            if (isset($subscription))
+                $subscription->handleMessage($message->getBody());
+        }
+
+        /**
+         * Adds a callback subscriber for the StrategyUpdate event. 
+         * @param   Closure $callback   The callback used to handle StrategyUpdate events.
+         * @return  void
+         */
+        function addStrategyUpdateCallback(\Closure $callback)
+        {
+            $this->strategyUpdateCallbacks[] = $callback;
+        }
+
+        /**
+         * Called from the StrategySubscription to send a strategy update to all subscribed callbacks.
+         * @param   StrategyUpdate  $update The updated strategy details to send.
+         * @return  void
+         */
+        function sendStrategyUpdate(StrategyUpdate $update)
+        {
+            // Go through callback handlers and send.
+            foreach ($this->strategyUpdateCallbacks as $callback) 
+                \call_user_func_array($callback, array($update));
         }
 
         /**
@@ -294,80 +363,25 @@
             $this->loop->futureTick(function() use ($strategyId, $symbol, $throttleRate)
             {
                 // Create a new strategy subscription.
-                $subscription = new StrategySubscription($this->nextID, $strategyId, $symbol, $this->stream,
-                                                         $throttleRate, array($this, 'sendStrategyUpdate'));
+                $subscription = new StrategySubscription($this->nextID, $strategyId, $symbol, 
+                                                         $this->stream, $throttleRate, $this);
                 // Update the next ID and subscribe.
                 $this->nextID++;
                 $this->subscribe($subscription);
             });
         }
 
-
-
-
-            
-
         /**
-         * Adds a callback subscriber for the StrategyUpdate event. 
-         * @param   Closure $callback   The callback used to handle StrategyUpdate events.
+         * Runs heartbeat checks on a 5-second interval.
+         * @return  void
          */
-        function addStrategyUpdateCallback(\Closure $callback)
+        function checkHeartbeats()
         {
-            $this->strategyUpdateCallbacks[] = $callback;
-        }
-
-        /**
-         * Called from the StrategySubscription to send a strategy update to all subscribed callbacks.
-         * @param   StrategyUpdate  $update The updated strategy details to send.
-         */
-        function sendStrategyUpdate(StrategyUpdate $update)
-        {
-            // Go through callback handlers and send.
-            foreach ($this->strategyUpdateCallbacks as $callback) 
-                \call_user_func_array($callback, array($update));
-        }
-
-
-
-        function handleMessage(Message $message)
-        {
-            $response = new ResponseFrame();
-            $response->mergeFromString($message->getPayload());
-
-            switch ($response->getResponse())
-            {
-                case 'connected':
-                    $this->isConnected = true;
-                    $this->resubscribeAll();
-                    break;
-                
-                case 'heartbeat':
-                    echo "Received: Heartbeat\n";
-                    break;
-
-                case 'single_message':
-                    $this->handleMessageResponse($response->getSingleMessage());
-                    break;
-
-                default:
-                    echo "Received: Unknown ".$response->getResponse()."\n";
-                    break;
-            }            
-        }
-
-        function handleMessageResponses(MessageResponses $responses)
-        {
-            //$responses->
-        }
-
-        function handleMessageResponse(MessageResponse $message)
-        {
-            // Try to get the subscription tied to this message.
-            $subscription = $this->subscriptionsById[$message->getSubscriptionId()];
-
-            // If the subscription is found, handle the stream message.
-            if (isset($subscription))
-                $subscription->handleMessage($message->getBody());
+            // Create a new heartbeat request frame.
+            $request = new RequestFrame();
+            $request->setHeartbeat(new Heartbeat());
+            // Send the request to the server.
+            $this->sendFrame($request);
         }
     }
 
