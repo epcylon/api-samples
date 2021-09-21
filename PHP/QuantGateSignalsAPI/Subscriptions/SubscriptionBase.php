@@ -7,11 +7,20 @@
      */
     abstract class SubscriptionBase
     {
-        // The destination to subscribe to.
+        /**
+         * The destination to subscribe to.
+         * @var string
+         */        
         private string $destination;
-        // The (integer) identifier to associate with this subscription on the server's end.
+        /**
+         * The (integer) identifier to associate with this subscription on the server's end.
+         * @var int
+         */
         private int $id;
-        // Rate to throttle messages at (in ms). Enter 0 for no throttling.
+        /**
+         * Rate to throttle messages at (in ms). Enter 0 for no throttling.
+         * @var int
+         */
         private int $throttleRate;
 
         /**

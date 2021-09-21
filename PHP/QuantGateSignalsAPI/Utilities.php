@@ -13,6 +13,18 @@
         {
             return  (new \DateTime('1800-01-01Z'))->add(new \DateInterval('PT'.$timestamp.'S'));
         }  
+
+        /**
+         * Retrieves the user ('sub') from the given JWT token.
+         * @param   string  $jwtToken   The token to retrieve the user from.
+         * @return  string
+         */
+        public static function getUserFromJWT(string $jwtToken) : string
+        {
+            $payload = base64_decode(explode(".", $jwtToken, 3)[1]);
+            $user = explode("\"", explode("\"sub\":\"", $payload, 2)[1], 2)[0];
+            return $user;
+        }
     }
 
 ?>

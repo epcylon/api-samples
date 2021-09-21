@@ -10,18 +10,29 @@
      */
     class StrategySubscription extends SubscriptionBase
     {
-        // The strategy subscribed to. Example enum values: PPr4.0, BTr4.0, Crb.8.4.
+        /**
+         * The strategy subscribed to. Example enum values: PPr4.0, BTr4.0, Crb.8.4.
+         * @var string
+         */
         private string $strategyId;
-        // Symbol to get the Strategy update data for.
+        /**
+         * Symbol to get the Strategy update data for.
+         * @var string
+         */
         private string $symbol;
-        // Stream ID associated with the stream the client is connected to (realtime, delay, demo).
+        /**
+         * Stream ID associated with the stream the client is connected to (realtime, delay, demo).
+         * @var string
+         */
         private string $stream;
-        // Callback used to send updates back to the APIClient instance.
+        /**
+         * Callback used to send updates back to the APIClient instance.
+         * @var callback
+         */        
         private $updateCallback;
 
         /** 
-         * Creates a new StrategySubscription instance.
-         * 
+         * Creates a new StrategySubscription instance.          
          * @param int      $id             The (integer) identifier to associate with this subscription on the server's end.
          * @param string   $strategyId     The strategy to subscribe to. Example enum values: PPr4.0, BTr4.0, Crb.8.4.
          * @param string   $symbol         Symbol to get the Strategy update data for.
