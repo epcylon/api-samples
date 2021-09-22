@@ -14,7 +14,7 @@ namespace BridgeRock.CSharpExample
     {
         private readonly APIClient _client;
         private TopSymbolsEventArgs _topSymbols;
-        private string _symbol = "NQ U1";
+        private string _symbol = "NQ Z1";
         private string _strategyId = "Crb9.0";
 
         #region Dependency Properties

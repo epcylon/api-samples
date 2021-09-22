@@ -443,7 +443,7 @@ namespace QuantGate.API.Signals.Utilities
         /// Returns the proper stream ID for the given security type.
         /// </summary>
         /// <param name="streamID">The base stream ID in use by the broker.</param>
-        /// <param name="security">The identifiers of the security to return the stream ID for.</param>
+        /// <param name="symbol">The symbol to return the stream ID for.</param>
         /// <returns>The proper stream ID for the given security.</returns>
         public static string StreamIDForSymbol(string streamID, string symbol)
         {
