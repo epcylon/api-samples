@@ -40,7 +40,7 @@
          * Returns the (integer) identifier to associate with this subscription on the server's end.
          * @return int
          */
-        public function getID() : int
+        public function getId() : int
         {
             return $this->id;
         }

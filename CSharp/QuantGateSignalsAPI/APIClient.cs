@@ -688,7 +688,7 @@ namespace QuantGate.API.Signals
         }
 
         /// <summary>
-        /// Unsubscribes the specified destination.
+        /// Throttles the specified subscription.
         /// </summary>
         internal void Throttle(ProtoStompSubscription subscription, uint rate)
         {

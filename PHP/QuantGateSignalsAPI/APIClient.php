@@ -11,6 +11,7 @@
     require_once __DIR__ . '/Proto/Stomp/Heartbeat.php';
     require_once __DIR__ . '/Proto/Stomp/ConnectRequest.php';
     require_once __DIR__ . '/Proto/Stomp/SubscribeRequest.php';
+    require_once __DIR__ . '/Proto/Stomp/UnsubscribeRequest.php';
     require_once __DIR__ . '/Proto/Stomp/ConnectedResponse.php';
     require_once __DIR__ . '/Proto/Stomp/MessageResponse.php';
     require_once __DIR__ . '/Proto/Stomp/MessageResponses.php';
@@ -24,6 +25,7 @@
     use \Stomp\RequestFrame;
     use \Stomp\ConnectRequest;
     use \Stomp\SubscribeRequest;
+    use \Stomp\UnsubscribeRequest;
     use \Stomp\ResponseFrame;
     use \Stomp\ConnectedResponse;
     use \Stomp\MessageResponse;
@@ -46,6 +48,7 @@
      */
     class APIClient implements EventEmitterInterface
     {
+        // Set up event emitter capabilities.
         use EventEmitterTrait;
 
         /**
@@ -271,6 +274,36 @@
         }
 
         /**
+         * Unsubscribes the specified destination.
+         * @param   string  $destination    The destination of the stream to stop getting data for.
+         * @return  void
+         */
+        function unsubscribe(string $destination)
+        {            
+            // Get the subscription from the array.
+            $subscription = $this->subscriptionsByDest[$destination];
+
+            if (isset($subscription))
+            {
+                // If the subscription exists,
+                unset($this->subscriptionsById[$subscription->getId()]);
+                unset($this->subscriptionsByDest[$subscription->getDestination()]);
+
+                if ($this->isConnected)
+                {
+                    // If connected, send the unsubscription request.
+                    $unsubscribeReq = new UnsubscribeRequest();
+                    $unsubscribeReq->setSubscriptionId($subscription->getId());
+                    $request = new RequestFrame();
+                    $request->setUnsubscribe($unsubscribeReq);
+
+                    // Request the unsubscription from the server.
+                    $this->sendFrame($request);
+                }
+            }
+        }
+
+        /**
          * Resubscribes all current subscriptions to the back-end (after disconnect/initial 
          * connection - i.e. when not present in current connection).
          * @return  void
@@ -384,6 +417,22 @@
                 // Update the next ID and subscribe.
                 $this->nextID++;
                 $this->subscribe($subscription);
+            });
+        }
+
+        /**
+         * Unsubscribes from Stategy data for the given strategy and symbol.
+         * @param   string  $strategyID The identifier of the strategy to stop running.
+         * @param   string  $symbol     The symbol to stop getting Strategy data for.
+         * @return  void
+         */
+        public function unsubscribeStrategy(string $strategyId, string $symbol)
+        {            
+            // Unsubscribe within the loop.
+            $this->loop->futureTick(function() use ($destination)
+            {
+                // Create strategy destination and unsubscribe.
+                $this->unsubscribe(StrategySubscription::createDestination($strategyId, $symbol, $this->stream));            
             });
         }
 
