@@ -19,9 +19,12 @@
     require_once __DIR__ . '/Proto/Stomp/SubscriptionErrorResponse.php';
     require_once __DIR__ . '/Proto/Stomp/ServerErrorResponse.php';    
     require_once __DIR__ . '/Proto/Stealth/StrategyUpdate.php';
+    require_once __DIR__ . '/Proto/Stealth/SingleValueUpdate.php';
     require_once __DIR__ . '/Subscriptions/SubscriptionBase.php';
     require_once __DIR__ . '/Subscriptions/StrategySubscription.php';
+    require_once __DIR__ . '/Subscriptions/PerceptionSubscription.php';
     require_once __DIR__ . '/Events/StrategyUpdate.php';
+    require_once __DIR__ . '/Events/PerceptionUpdate.php';
 
     use \Stomp\RequestFrame;
     use \Stomp\ConnectRequest;
@@ -41,7 +44,9 @@
     use \Ratchet\RFC6455\Messaging\Message;
     use \QuantGate\API\Signals\Subscriptions\SubscriptionBase;
     use \QuantGate\API\Signals\Subscriptions\StrategySubscription;
+    use \QuantGate\API\Signals\Subscriptions\PerceptionSubscription;
     use \QuantGate\API\Signals\Events\StrategyUpdate;
+    use \QuantGate\API\Signals\Events\PerceptionUpdate;
     use Evenement\EventEmitterTrait;
     use Evenement\EventEmitterInterface;
 
@@ -432,17 +437,6 @@
         }
 
         /**
-         * Called from the StrategySubscription to send a strategy update to all subscribed callbacks.
-         * @param   StrategyUpdate  $update The updated strategy details to send.
-         * @return  void
-         */
-        function sendStrategyUpdate(StrategyUpdate $update)
-        {
-            // Send connected event.
-            $this->emit('strategyUpdated', [$update]);
-        }
-
-        /**
          * Subscribes to a Strategy update data stream for a specific strategy and symbol.
          * @param   string  $strategyID     Strategy to subscribe to. Example enum values: PPr4.0, BTr4.0, Crb.8.4.
          * @param   string  $symbol         Symbol to get the Strategy update data for.
@@ -457,7 +451,7 @@
                 // Create a new strategy subscription.
                 $subscription = new StrategySubscription($this->nextID, $strategyId, $symbol, 
                                                          $this->stream, $throttleRate, $this);
-                // Update the next ID and subscribe.                
+                // Subscribe.
                 $this->subscribe($subscription);
             });
         }
@@ -493,6 +487,56 @@
             {
                 // Create strategy destination and unsubscribe.
                 $this->unsubscribe(StrategySubscription::createDestination($strategyId, $symbol, $this->stream));
+            });
+        }
+
+        /**
+         * Subscribes to Perception gauge update data stream for a specific symbol.
+         * @param   string  $symbol         Symbol to get the Perception gauge update data for.
+         * @param   int     $throttleRate   Rate to throttle messages at (in ms). Enter 0 for no throttling.
+         * @return  void
+         */
+        public function subscribePerception(string $symbol, int $throttleRate = 0)        
+        {
+            // Subscribe within the loop.
+            $this->loop->futureTick(function() use ($symbol, $throttleRate)
+            {
+                // Create a new Perception subscription.
+                $subscription = new PerceptionSubscription($this->nextID, $symbol, 
+                                                           $this->stream, $throttleRate, $this);
+                // Subscribe.
+                $this->subscribe($subscription);
+            });
+        }
+
+        /**
+         * Changes the maximum rate at which the back-end sends Perception gauge updates for the given symbol.         
+         * @param   string  $symbol         The symbol to change the Perception gauge throttle rate for.
+         * @param   int     $throttleRate   The new throttle rate to set to (in ms). Enter 0 for no throttling.
+         * @return  void
+         */
+        public function throttlePerception(string $symbol, int $throttleRate = 0)        
+        {
+            // Throttle within the loop.
+            $this->loop->futureTick(function() use ($symbol, $throttleRate)
+            {
+                // Create Perception destination and throttle.
+                $this->throttle(PerceptionSubscription::createDestination($symbol, $this->stream), $throttleRate);
+            });
+        }
+
+        /**
+         * Unsubscribes from Perception gauge data for the given symbol.
+         * @param   string  $symbol     The symbol to stop getting Perception data for.
+         * @return  void
+         */
+        public function unsubscribePerception(string $symbol)
+        {            
+            // Unsubscribe within the loop.
+            $this->loop->futureTick(function() use ($strategyId, $symbol)
+            {
+                // Create Perception destination and unsubscribe.
+                $this->unsubscribe(PerceptionSubscription::createDestination($symbol, $this->stream));
             });
         }
 

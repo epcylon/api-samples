@@ -4,6 +4,7 @@
 
     use \QuantGate\API\Signals\APIClient;
     use \QuantGate\API\Signals\Events\StrategyUpdate;
+    use \QuantGate\API\Signals\Events\PerceptionUpdate;
 
     // Strategy ID constant.
     $strategyId = "Crb7.6";
@@ -33,7 +34,13 @@
     // Set up the callback to handle strategy updates.
     $client->on('strategyUpdated', function (StrategyUpdate $update)
     {        
-        echo $update->getSymbol().", ".($update->getEntryProgress() * 100.0)."%, ".$update->getSignal()."\n";
+        echo "Strategy Update: ".$update->getSymbol().", ".($update->getEntryProgress() * 100.0)."%, ".$update->getSignal()."\n";
+    });
+
+    // Set up the callback to handle perception updates.
+    $client->on('perceptionUpdated', function (PerceptionUpdate $update)
+    {        
+        echo "Perception Update: ".$update->getSymbol().", ".($update->getValue() * 100.0)."%\n";
     });
 
     // Connect with a JWT token.
@@ -46,6 +53,8 @@
     foreach ($symbols as $value)
         $client->subscribeStrategy($strategyId, $value, 100);
 
+    // Subscribe to Perception stream to test.
+    $client->subscribePerception("USD.CAD", 100);
     // Throttle the "USD.CAD" strategy to 10 seconds.
     $client->throttleStrategy($strategyId, "USD.CAD", 10000);
     // Unsubscribe from "CAD.JPY".

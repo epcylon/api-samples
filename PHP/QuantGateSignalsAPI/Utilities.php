@@ -2,6 +2,8 @@
 
     namespace QuantGate\API\Signals;
 
+    use \QuantGate\API\Signals\APIClient;
+
     class Utilities
     {     
         /**
@@ -24,6 +26,22 @@
             $payload = base64_decode(explode(".", $jwtToken, 3)[1]);
             $user = explode("\"", explode("\"sub\":\"", $payload, 2)[1], 2)[0];
             return $user;
+        }
+
+        /**
+         * Returns the proper stream ID for the given security type.
+         * @param   string  $streamId   The base stream ID in use by the broker.
+         * @param   string  $symbol     The symbol to return the stream ID for.
+         * @return  string
+         */
+        public static function streamIdForSymbol(string $streamId, string $symbol) : string
+        {
+            // If delayed for currency pair, just use realtime. Otherwise, Set the stream ID.
+            if (($streamId == APIClient::DELAY_STREAM) && 
+                ((strpos($symbol, '.') !== false) || (strpos($symbol, ':') !== false)))
+                return APIClient::REALTIME_STREAM;
+            else
+                return $streamId;
         }
     }
 

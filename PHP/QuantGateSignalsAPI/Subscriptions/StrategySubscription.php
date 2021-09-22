@@ -88,7 +88,7 @@
                                          $equilibriumLevel, $sentimentSignal, $sentimentLevel, $signal);
 
             // Send the results back to the APIClient class.
-            $this->client->sendStrategyUpdate($result);
+            $this->client->emit('strategyUpdated', [$result]);
         }
 
         /**
@@ -149,7 +149,7 @@
          */
         public static function createDestination(string $strategyID, string $symbol, string $stream) : string
         {            
-            return "/strategy/".$strategyID."/".$stream."/".$symbol;
+            return "/strategy/".$strategyID."/".Utilities::streamIdForSymbol($stream, $symbol)."/".$symbol;
         }
     }
 
