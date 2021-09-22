@@ -254,6 +254,9 @@
             if (array_key_exists($subscription->getDestination(), $this->subscriptionsByDest))
                 return null;            
 
+            // Increment the next ID.
+            $this->nextID++;
+
             // Add the subscription to the arrays.
             $this->subscriptionsById[$subscription->getID()] = $subscription;
             $this->subscriptionsByDest[$subscription->getDestination()] = $subscription;
@@ -356,6 +359,11 @@
                     $this->handleMessageResponse($response->getSingleMessage());
                     break;
 
+                case 'batch_messages':
+                    // If a batch update message was recieved, handle it.
+                    $this->handleMessageResponses($response->getBatchMessages());
+                    break;
+
                 default:
                     // Log any unknown message types.
                     echo "Received: Unknown ".$response->getResponse()."\n";
@@ -369,8 +377,10 @@
          * @return  void
          */
         function handleMessageResponses(MessageResponses $responses)
-        {
-            // Not yet implemented.
+        {            
+            // Go through messages and handle each.
+            foreach ($responses->getMessage() as $message) 
+                $this->handleMessageResponse($message);
         }
 
         /**
@@ -414,8 +424,7 @@
                 // Create a new strategy subscription.
                 $subscription = new StrategySubscription($this->nextID, $strategyId, $symbol, 
                                                          $this->stream, $throttleRate, $this);
-                // Update the next ID and subscribe.
-                $this->nextID++;
+                // Update the next ID and subscribe.                
                 $this->subscribe($subscription);
             });
         }
@@ -429,7 +438,7 @@
         public function unsubscribeStrategy(string $strategyId, string $symbol)
         {            
             // Unsubscribe within the loop.
-            $this->loop->futureTick(function() use ($destination)
+            $this->loop->futureTick(function() use ($strategyId, $symbol)
             {
                 // Create strategy destination and unsubscribe.
                 $this->unsubscribe(StrategySubscription::createDestination($strategyId, $symbol, $this->stream));            

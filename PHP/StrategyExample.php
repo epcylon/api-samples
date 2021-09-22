@@ -44,7 +44,7 @@
 
     // Go through the symbols and subscribe to each.
     foreach ($symbols as $value)
-        $client->subscribeStrategy($strategyId, $value, 0);
+        $client->subscribeStrategy($strategyId, $value, 100);
 
     // Close after 60 seconds (remove this line and the cancellation to keep going indefinitely)
     $loop->addTimer(10, function() use ($client, $strategyId) 
