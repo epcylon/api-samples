@@ -38,12 +38,16 @@
     use \QuantGate\API\Signals\Subscriptions\SubscriptionBase;
     use \QuantGate\API\Signals\Subscriptions\StrategySubscription;
     use \QuantGate\API\Signals\Events\StrategyUpdate;
+    use Evenement\EventEmitterTrait;
+    use Evenement\EventEmitterInterface;
 
     /**
      * Simple QuantGate signals API client.
      */
-    class APIClient
+    class APIClient implements EventEmitterInterface
     {
+        use EventEmitterTrait;
+
         /**
          * Represents a real-time data stream.
          * @var string
@@ -113,12 +117,6 @@
          * @var array
          */
         private array $subscriptionsByDest = [];
-         
-        /**
-         * Holds all the callbacks attached to the strategy update 'event'.
-         * @var array
-         */
-        private array $strategyUpdateCallbacks = array();
 
         /**
          * Holds a reference to the timer used to send heartbeat messages.
@@ -154,7 +152,16 @@
         {            
             // Remember the JWT token.
             $this->jwtToken = $jwtToken;
-            
+            // Connect to the websocket.
+            $this->connectWebsocket();
+        }
+
+        /**
+         * Creates a websocket connection and connects.
+         * @return  void
+         */
+        function connectWebsocket()
+        {
             // Connect to the client at the appropriate host, with the given message loop.
             Client\connect($this->host.':'.$this->port, [], [], $this->loop)->then(
                 function(WebSocket $connection)
@@ -162,28 +169,48 @@
                     // Keep a reference to this WebSocket connection.
                     $this->webSocket = $connection;
 
-                    // Log as connected.
-                    echo "Connected!\n";
-
-                    // Add a handler to handle the messages received.
+                    // Add handlers to handle the events received.
                     $connection->on('message', array($this, 'handleMessage'));
-                                        
-                    // Create the connection request frame.
-                    $connectReq = new ConnectRequest();
-                    $connectReq->setAcceptVersion("1.0");
-                    $connectReq->setLogin(Utilities::getUserFromJWT($this->jwtToken));
-                    $connectReq->setPasscode($this->jwtToken);                    
-                    $request = new RequestFrame();
-                    $request->setConnect($connectReq);
-
-                    // Send the connection request to the server.
-                    $this->sendFrame($request);
+                    $connection->on('close', array($this, 'handleClosed'));
+                    
+                    // Handle as connected.
+                    $this->handleConnected();
                 }, 
                 function ($e) 
                 {
                     // Handle any errors.
                     echo "Could not connect: {$e->getMessage()}\n";
+                    $this->handleClosed();
                 });
+        }
+
+        /**
+         * Logs in when the Websocket establishes a connection.
+         * @return  void
+         */
+        function handleConnected()
+        {
+            // Create the connection request frame.
+            $connectReq = new ConnectRequest();
+            $connectReq->setAcceptVersion("1.0");
+            $connectReq->setLogin(Utilities::getUserFromJWT($this->jwtToken));
+            $connectReq->setPasscode($this->jwtToken);
+            $request = new RequestFrame();
+            $request->setConnect($connectReq);
+
+            // Send the connection request to the server.
+            $this->sendFrame($request);
+        }
+
+        /**
+         * Handles WebSocket close events.
+         * @return  void
+         */
+        function handleClosed()
+        {
+            $this->isConnected = false;            
+            $this->emit('disconnected', []);
+            $this->loop->cancelTimer($this->heartbeatTimer);
         }
 
         /**
@@ -196,8 +223,6 @@
             $this->isConnected = false;
             // Close the websocket.
             $this->webSocket->close();
-            // Cancel the heartbeat timer.
-            $this->loop->cancelTimer($this->heartbeatTimer);
         }
 
         /**
@@ -282,6 +307,8 @@
                 case 'connected':
                     // If this is a connected response, set connected flag.
                     $this->isConnected = true;
+                    // Send the connected event.
+                    $this->emit('connected', []);
                     // Resubscribe all subscriptions.
                     $this->resubscribeAll();
                     break;
@@ -329,25 +356,14 @@
         }
 
         /**
-         * Adds a callback subscriber for the StrategyUpdate event. 
-         * @param   Closure $callback   The callback used to handle StrategyUpdate events.
-         * @return  void
-         */
-        function addStrategyUpdateCallback(\Closure $callback)
-        {
-            $this->strategyUpdateCallbacks[] = $callback;
-        }
-
-        /**
          * Called from the StrategySubscription to send a strategy update to all subscribed callbacks.
          * @param   StrategyUpdate  $update The updated strategy details to send.
          * @return  void
          */
         function sendStrategyUpdate(StrategyUpdate $update)
         {
-            // Go through callback handlers and send.
-            foreach ($this->strategyUpdateCallbacks as $callback) 
-                \call_user_func_array($callback, array($update));
+            // Send connected event.
+            $this->emit('strategyUpdated', [$update]);
         }
 
         /**
@@ -377,6 +393,10 @@
          */
         function checkHeartbeats()
         {
+            // If not connected, don't send heartbeats.
+            if (!$this->isConnected)
+                return;
+
             // Create a new heartbeat request frame.
             $request = new RequestFrame();
             $request->setHeartbeat(new Heartbeat());

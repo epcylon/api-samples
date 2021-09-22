@@ -17,24 +17,34 @@
     
     // Create the client with the event loop reference, and pointing to the test server.
     $client = new APIClient($loop, "wss://test.stealthtrader.com");
-    // Connect with a JWT token.
-    $client->connect("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.".
-                     "eyJzdWIiOiJKb2huSCIsImlhdCI6MTYyODcxMzg2NywiZXhwIjoxNjMyOTYw".
-                     "MDAwLCJhdWQiOiIyV1VqZW9iUlhSVzlwc05ERWN4ZTFNRDl3dGRmZGgxQyJ9.".
-                     "Up48upDkCINp9znyjTkUXc0F2Rb5BWqfzmumF4mUcXA");    
+
+    // Close after 60 seconds (remove this line and the cancellation to keep going indefinitely)
+    $timer = $loop->addTimer(60, function() use (&$client) { $client->close(); });
+
+    // Add event handler to signal when connected/disconnected.
+    $client->on('connected', function() { echo "Connected!\n"; });
+    $client->on('disconnected', function() use ($loop, $timer)
+    {
+        // Log disconnected, and cancel the closure timer.
+        echo "Disonnected!\n";
+        $loop->cancelTimer($timer);
+    });
 
     // Set up the callback to handle strategy updates.
-    $client->addStrategyUpdateCallback(function (StrategyUpdate $update)
+    $client->on('strategyUpdated', function (StrategyUpdate $update)
     {        
         echo $update->getSymbol().", ".($update->getEntryProgress() * 100.0)."%, ".$update->getSignal()."\n";
     });
 
+    // Connect with a JWT token.
+    $client->connect("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.".
+                     "eyJzdWIiOiJKb2huSCIsImlhdCI6MTYyODcxMzg2NywiZXhwIjoxNjMyOTYw".
+                     "MDAwLCJhdWQiOiIyV1VqZW9iUlhSVzlwc05ERWN4ZTFNRDl3dGRmZGgxQyJ9.".
+                     "Up48upDkCINp9znyjTkUXc0F2Rb5BWqfzmumF4mUcXA");
+
     // Go through the symbols and subscribe to each.
     foreach ($symbols as $value)
         $client->subscribeStrategy($strategyId, $value, 0);
-
-    // Close after 60 seconds (remove this line to keep going indefinitely)
-    $loop->addTimer(60, function() use (&$client) { $client->close(); });
 
     // Continue running until there are no more events to handle.
     $loop->run();
