@@ -64,6 +64,16 @@
         }
 
         /**
+         * Returns the rate to throttle messages at (in ms). (0 = no throttling.)
+         * @param   int $throttleRate   The new throttle rate to set to.
+         * @return  void
+         */
+        public function setThrottleRate(int $throttleRate)
+        {
+            $this->throttleRate = $throttleRate;
+        }
+
+        /**
          * Called whenever a new stream update message is received.
          * @param   $body   The raw message received from the stream.
          * @return  void

@@ -46,12 +46,10 @@
     foreach ($symbols as $value)
         $client->subscribeStrategy($strategyId, $value, 100);
 
-    // Close after 60 seconds (remove this line and the cancellation to keep going indefinitely)
-    $loop->addTimer(10, function() use ($client, $strategyId) 
-    {
-        echo "Unsubscribing from CAD.JPY\n";
-        $client->unsubscribeStrategy($strategyId, "CAD.JPY"); 
-    });
+    // Throttle the "USD.CAD" strategy to 10 seconds.
+    $client->throttleStrategy($strategyId, "USD.CAD", 10000);
+    // Unsubscribe from "CAD.JPY".
+    $client->unsubscribeStrategy($strategyId, "CAD.JPY");    
 
     // Continue running until there are no more events to handle.
     $loop->run();

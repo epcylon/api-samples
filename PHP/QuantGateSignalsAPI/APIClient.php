@@ -11,6 +11,7 @@
     require_once __DIR__ . '/Proto/Stomp/Heartbeat.php';
     require_once __DIR__ . '/Proto/Stomp/ConnectRequest.php';
     require_once __DIR__ . '/Proto/Stomp/SubscribeRequest.php';
+    require_once __DIR__ . '/Proto/Stomp/ThrottleRequest.php';
     require_once __DIR__ . '/Proto/Stomp/UnsubscribeRequest.php';
     require_once __DIR__ . '/Proto/Stomp/ConnectedResponse.php';
     require_once __DIR__ . '/Proto/Stomp/MessageResponse.php';
@@ -25,6 +26,7 @@
     use \Stomp\RequestFrame;
     use \Stomp\ConnectRequest;
     use \Stomp\SubscribeRequest;
+    use \Stomp\ThrottleRequest;
     use \Stomp\UnsubscribeRequest;
     use \Stomp\ResponseFrame;
     use \Stomp\ConnectedResponse;
@@ -277,6 +279,37 @@
         }
 
         /**
+         * Throttles the stream with the given destination.
+         * @param   string  $destination    The destination of the stream to stop getting data for.
+         * @param   int     $throttleRate   The new throttle rate to set to (in ms). Enter 0 for no throttling.
+         * @return  void
+         */
+        function throttle(string $destination, int $throttleRate)
+        {
+            // Get the subscription from the array.
+            $subscription = $this->subscriptionsByDest[$destination];
+
+            if (isset($subscription))
+            {
+                // If the subscription exists, set the throttle rate.
+                $subscription->setThrottleRate($throttleRate);
+
+                if ($this->isConnected)
+                {
+                    // If connected, send the throttle request.
+                    $throttleReq = new ThrottleRequest();
+                    $throttleReq->setSubscriptionId($subscription->getId());
+                    $throttleReq->setThrottleRate($throttleRate);
+                    $request = new RequestFrame();
+                    $request->setUnsubscribe($throttleReq);
+
+                    // Request the unsubscription from the server.
+                    $this->sendFrame($request);
+                }
+            }
+        }
+
+        /**
          * Unsubscribes the specified destination.
          * @param   string  $destination    The destination of the stream to stop getting data for.
          * @return  void
@@ -430,6 +463,24 @@
         }
 
         /**
+         * Changes the maximum rate at which the back-end sends Strategy updates for the given strategy and symbol.
+         * @param   string  $strategyID     The identifier of the strategy to throttle.
+         * @param   string  $symbol         The symbol to change the Strategy throttle rate for.
+         * @param   int     $throttleRate   The new throttle rate to set to (in ms). Enter 0 for no throttling.
+         * @return  void
+         */
+        public function throttleStrategy(string $strategyId, string $symbol, int $throttleRate = 0)        
+        {
+            // Throttle within the loop.
+            $this->loop->futureTick(function() use ($strategyId, $symbol, $throttleRate)
+            {
+                // Create strategy destination and throttle.
+                $this->throttle(StrategySubscription::createDestination(
+                                    $strategyId, $symbol, $this->stream), $throttleRate);
+            });
+        }
+
+        /**
          * Unsubscribes from Stategy data for the given strategy and symbol.
          * @param   string  $strategyID The identifier of the strategy to stop running.
          * @param   string  $symbol     The symbol to stop getting Strategy data for.
@@ -441,7 +492,7 @@
             $this->loop->futureTick(function() use ($strategyId, $symbol)
             {
                 // Create strategy destination and unsubscribe.
-                $this->unsubscribe(StrategySubscription::createDestination($strategyId, $symbol, $this->stream));            
+                $this->unsubscribe(StrategySubscription::createDestination($strategyId, $symbol, $this->stream));
             });
         }
 

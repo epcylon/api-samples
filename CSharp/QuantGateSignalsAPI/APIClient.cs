@@ -1267,7 +1267,7 @@ namespace QuantGate.API.Signals
         /// Throttles the stream with the given destination.
         /// </summary>
         /// <param name="destination">The destination of the stream to throttle.</param>
-        /// <param name="throttleRate">The new throttle rate to set to (in ms). Enter 0 for no throttling. </param>
+        /// <param name="throttleRate">The new throttle rate to set to (in ms). Enter 0 for no throttling.</param>
         private void Throttle(string destination, int throttleRate)
         {
             Enqueue(() =>
