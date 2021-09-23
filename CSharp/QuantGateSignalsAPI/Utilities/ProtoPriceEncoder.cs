@@ -17,14 +17,14 @@
     /// value, we assume one decimal place always, and the values are from 0.0 to 12.7.
     /// 
     /// Starting from a two byte value, the first bit determines the number of decimal
-    /// places, and the remaining 13 bits form the (base 10) mantessa. So for a two-byte
+    /// places, and the remaining 13 bits form the (base 10) mantissa. So for a two-byte
     /// value, the range of values is from 0.0 to 819.1 and from 0.00 to 81.91. For
     /// lengths greater than this, the lowest number of decimal places is two (thus,
     /// none of the scale bits will be zero, allowing the x-byte values to be 
     /// distinguished from one another in edge-cases.
     /// 
     /// Two bits are used for the scale in a three-byte value, and the remaining 19 
-    /// bits form the mantessa. So for a three-byte value, the range of values is from
+    /// bits form the mantissa. So for a three-byte value, the range of values is from
     /// 0.00 to ‭5,242.87 up to 0.0000 to ‭52.4287.
     /// 
     /// Four byte values will use three bits for the scale and the remaining
@@ -43,7 +43,7 @@
     /// The up to 8-byte values adhere to the following pattern:
     /// 
     ///  Enc  ---------- Bits -------- ---------------- Range --------------   Sig
-    /// Bytes Effective Scale Mantessa        Min                  Max       Digits
+    /// Bytes Effective Scale Mantissa        Min                  Max       Digits
     /// 
     ///     1         7     0        7 00.0                            12.7    2-3   
     ///     2        14     1       13 01.28                          819.1    3-4
@@ -77,11 +77,11 @@
         /// <summary>
         /// Maximum values for each level.
         /// </summary>
-        private static readonly ulong[] _maxMantessas = new ulong[8];
+        private static readonly ulong[] _maxMantissas = new ulong[8];
         /// <summary>
-        /// The lengths of each mantessa (in bits).
+        /// The lengths of each mantissa (in bits).
         /// </summary>
-        private static readonly int[] _mantessaLengths = new int[8];
+        private static readonly int[] _mantissaLengths = new int[8];
         /// <summary>
         /// The maximum allowable scale value for each level.
         /// </summary>
@@ -109,8 +109,8 @@
 
                 // Max scale = 2 ^ scale bits
                 _maxScales[level] = 1UL << scaleBits;
-                _mantessaLengths[level] = 7 * (level + 1) - scaleBits;
-                _maxMantessas[level] = value >> scaleBits;
+                _mantissaLengths[level] = 7 * (level + 1) - scaleBits;
+                _maxMantissas[level] = value >> scaleBits;
                 _levelMask[level] = 0x7FUL << (7 * level);
                 
                 // Don't need more than 16.
@@ -130,7 +130,7 @@
         /// <returns>The decoded price.</returns>
         public static double DecodePrice(ulong encoded)
         {
-            ulong mantessa;
+            ulong mantissa;
             ulong scale;
 
             // If NaN or too large, return as NaN.
@@ -140,15 +140,15 @@
             for (int level = 7; level > -1; level--)
                 if ((encoded & _levelMask[level]) != 0)
                 {
-                    // Get the mantessa and scale.
-                    mantessa = encoded & _maxMantessas[level];
-                    scale = (encoded >> _mantessaLengths[level]) + 1;
+                    // Get the mantissa and scale.
+                    mantissa = encoded & _maxMantissas[level];
+                    scale = (encoded >> _mantissaLengths[level]) + 1;
 
                     // Below is faster than simple multiplication.
-                    // Naive implementation: return mantessa * Math.pow(0.1, scale);
+                    // Naive implementation: return mantissa * Math.pow(0.1, scale);
                     return decimal.ToDouble(
-                        new decimal((int)(mantessa & 0xFFFFFFFF),
-                                    (int)(mantessa >> 32),
+                        new decimal((int)(mantissa & 0xFFFFFFFF),
+                                    (int)(mantissa >> 32),
                                     0, false, (byte)scale));
                 }
 
