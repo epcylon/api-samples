@@ -5,11 +5,13 @@
     require_once __DIR__ . '/vendor/autoload.php';
     require_once __DIR__ . '/Events/PerceptionUpdate.php';
     require_once __DIR__ . '/Events/CommitmentUpdate.php';
+    require_once __DIR__ . '/Events/EquilibriumUpdate.php';
     require_once __DIR__ . '/Events/SentimentUpdate.php';
     require_once __DIR__ . '/Events/StrategyUpdate.php';
     require_once __DIR__ . '/Proto/GPBMetadata/StealthApiV20.php';    
     require_once __DIR__ . '/Proto/GPBMetadata/StompV01.php'; 
     require_once __DIR__ . '/Proto/Stealth/SingleValueUpdate.php';
+    require_once __DIR__ . '/Proto/Stealth/EquilibriumUpdate.php';
     require_once __DIR__ . '/Proto/Stealth/SentimentUpdate.php';
     require_once __DIR__ . '/Proto/Stealth/SentimentSpline.php';
     require_once __DIR__ . '/Proto/Stealth/StrategyUpdate.php';
@@ -29,6 +31,7 @@
     require_once __DIR__ . '/Subscriptions/SubscriptionBase.php';
     require_once __DIR__ . '/Subscriptions/PerceptionSubscription.php';
     require_once __DIR__ . '/Subscriptions/CommitmentSubscription.php';
+    require_once __DIR__ . '/Subscriptions/EquilibriumSubscription.php';
     require_once __DIR__ . '/Subscriptions/SentimentSubscription.php';
     require_once __DIR__ . '/Subscriptions/StrategySubscription.php';
     require_once __DIR__ . '/Utilities.php';
@@ -37,10 +40,12 @@
     use \Evenement\EventEmitterTrait;
     use \QuantGate\API\Signals\Events\PerceptionUpdate;
     use \QuantGate\API\Signals\Events\CommitmentUpdate;
+    use \QuantGate\API\Signals\Events\EquilibriumUpdate;
     use \QuantGate\API\Signals\Events\SentimentUpdate;
     use \QuantGate\API\Signals\Events\StrategyUpdate;
     use \QuantGate\API\Signals\Subscriptions\PerceptionSubscription;
     use \QuantGate\API\Signals\Subscriptions\CommitmentSubscription;
+    use \QuantGate\API\Signals\Subscriptions\EquilibriumSubscription;
     use \QuantGate\API\Signals\Subscriptions\SentimentSubscription;
     use \QuantGate\API\Signals\Subscriptions\StrategySubscription;
     use \QuantGate\API\Signals\Subscriptions\SubscriptionBase;
@@ -600,60 +605,6 @@
         }
 
         /**
-         * Subscribes to a Strategy update data stream for a specific strategy and symbol.
-         * @param   string  $strategyID     Strategy to subscribe to. Example enum values: PPr4.0, BTr4.0, Crb.8.4.
-         * @param   string  $symbol         Symbol to get the Strategy update data for.
-         * @param   int     $throttleRate   Rate to throttle messages at (in ms). Enter 0 for no throttling.
-         * @return  void
-         */
-        public function subscribeStrategy(string $strategyId, string $symbol, int $throttleRate = 0)        
-        {
-            // Subscribe within the loop.
-            $this->loop->futureTick(function() use ($strategyId, $symbol, $throttleRate)
-            {
-                // Create a new strategy subscription.
-                $subscription = new StrategySubscription($this->nextId, $strategyId, $symbol, 
-                                                         $this->stream, $throttleRate, $this);
-                // Subscribe.
-                $this->subscribe($subscription);
-            });
-        }
-
-        /**
-         * Changes the maximum rate at which the back-end sends Strategy updates for the given strategy and symbol.
-         * @param   string  $strategyID     The identifier of the strategy to throttle.
-         * @param   string  $symbol         The symbol to change the Strategy throttle rate for.
-         * @param   int     $throttleRate   The new throttle rate to set to (in ms). Enter 0 for no throttling.
-         * @return  void
-         */
-        public function throttleStrategy(string $strategyId, string $symbol, int $throttleRate = 0)        
-        {
-            // Throttle within the loop.
-            $this->loop->futureTick(function() use ($strategyId, $symbol, $throttleRate)
-            {
-                // Create strategy destination and throttle.
-                $this->throttle(StrategySubscription::createDestination(
-                                    $strategyId, $symbol, $this->stream), $throttleRate);
-            });
-        }
-
-        /**
-         * Unsubscribes from Stategy data for the given strategy and symbol.
-         * @param   string  $strategyID The identifier of the strategy to stop running.
-         * @param   string  $symbol     The symbol to stop getting Strategy data for.
-         * @return  void
-         */
-        public function unsubscribeStrategy(string $strategyId, string $symbol)
-        {            
-            // Unsubscribe within the loop.
-            $this->loop->futureTick(function() use ($strategyId, $symbol)
-            {
-                // Create strategy destination and unsubscribe.
-                $this->unsubscribe(StrategySubscription::createDestination($strategyId, $symbol, $this->stream));
-            });
-        }
-
-        /**
          * Subscribes to Perception gauge update data stream for a specific symbol.
          * @param   string  $symbol         Symbol to get the Perception gauge update data for.
          * @param   int     $throttleRate   Rate to throttle messages at (in ms). Enter 0 for no throttling.
@@ -754,6 +705,60 @@
         }
 
         /**
+         * Subscribes to Equilibrium gauge update data stream for a specific symbol.
+         * @param   string  $symbol         Symbol to get the Equilibrium gauge update data for.
+         * @param   string  $compression    Compression timeframe to apply to the gauge. Default value is 300s.
+         * @param   int     $throttleRate   Rate to throttle messages at (in ms). Enter 0 for no throttling.
+         * @return  void
+         */
+        public function subscribeEquilibrium(string $symbol, string $compression = "300s", int $throttleRate = 0)        
+        {
+            // Subscribe within the loop.
+            $this->loop->futureTick(function() use ($symbol, $compression, $throttleRate)
+            {
+                // Create a new Equilibrium subscription.
+                $subscription = new EquilibriumSubscription($this->nextId, $symbol, $this->stream, 
+                                                            $compression, $throttleRate, $this);
+                // Subscribe.
+                $this->subscribe($subscription);
+            });
+        }
+
+        /**
+         * Changes the maximum rate at which the back-end sends Equilibrium gauge updates for the given symbol.         
+         * @param   string  $symbol         The symbol to change the Equilibrium gauge throttle rate for.
+         * @param   string  $compression    Compression timeframe being applied to the gauge. Default value is 300s.
+         * @param   int     $throttleRate   The new throttle rate to set to (in ms). Enter 0 for no throttling.
+         * @return  void
+         */
+        public function throttleEquilibrium(string $symbol, string $compression = "300s", int $throttleRate = 0)        
+        {
+            // Throttle within the loop.
+            $this->loop->futureTick(function() use ($symbol, $compression, $throttleRate)
+            {
+                // Create Equilibrium destination and throttle.
+                $this->throttle(EquilibriumSubscription::createDestination($symbol, $this->stream, 
+                                                                           $compression), $throttleRate);
+            });
+        }
+
+        /**
+         * Unsubscribes from Equilibrium gauge data for the given symbol.
+         * @param   string  $symbol         The symbol to stop getting Equilibrium data for.
+         * @param   string  $compression    Compression timeframe being applied to the gauge. Default value is 300s.
+         * @return  void
+         */
+        public function unsubscribeEquilibrium(string $symbol, string $compression = "300s")
+        {            
+            // Unsubscribe within the loop.
+            $this->loop->futureTick(function() use ($strategyId, $compression, $symbol)
+            {
+                // Create Equilibrium destination and unsubscribe.
+                $this->unsubscribe(EquilibriumSubscription::createDestination($symbol, $this->stream, $compression));
+            });
+        }
+
+        /**
          * Subscribes to Sentiment gauge update data stream for a specific symbol.
          * @param   string  $symbol         Symbol to get the Sentiment gauge update data for.
          * @param   string  $compression    Compression timeframe to apply to the gauge. Default value is 50t.
@@ -804,6 +809,60 @@
             {
                 // Create Sentiment destination and unsubscribe.
                 $this->unsubscribe(SentimentSubscription::createDestination($symbol, $this->stream, $compression));
+            });
+        }
+
+        /**
+         * Subscribes to a Strategy update data stream for a specific strategy and symbol.
+         * @param   string  $strategyID     Strategy to subscribe to. Example enum values: PPr4.0, BTr4.0, Crb.8.4.
+         * @param   string  $symbol         Symbol to get the Strategy update data for.
+         * @param   int     $throttleRate   Rate to throttle messages at (in ms). Enter 0 for no throttling.
+         * @return  void
+         */
+        public function subscribeStrategy(string $strategyId, string $symbol, int $throttleRate = 0)        
+        {
+            // Subscribe within the loop.
+            $this->loop->futureTick(function() use ($strategyId, $symbol, $throttleRate)
+            {
+                // Create a new strategy subscription.
+                $subscription = new StrategySubscription($this->nextId, $strategyId, $symbol, 
+                                                         $this->stream, $throttleRate, $this);
+                // Subscribe.
+                $this->subscribe($subscription);
+            });
+        }
+
+        /**
+         * Changes the maximum rate at which the back-end sends Strategy updates for the given strategy and symbol.
+         * @param   string  $strategyID     The identifier of the strategy to throttle.
+         * @param   string  $symbol         The symbol to change the Strategy throttle rate for.
+         * @param   int     $throttleRate   The new throttle rate to set to (in ms). Enter 0 for no throttling.
+         * @return  void
+         */
+        public function throttleStrategy(string $strategyId, string $symbol, int $throttleRate = 0)        
+        {
+            // Throttle within the loop.
+            $this->loop->futureTick(function() use ($strategyId, $symbol, $throttleRate)
+            {
+                // Create strategy destination and throttle.
+                $this->throttle(StrategySubscription::createDestination(
+                                    $strategyId, $symbol, $this->stream), $throttleRate);
+            });
+        }
+
+        /**
+         * Unsubscribes from Stategy data for the given strategy and symbol.
+         * @param   string  $strategyID The identifier of the strategy to stop running.
+         * @param   string  $symbol     The symbol to stop getting Strategy data for.
+         * @return  void
+         */
+        public function unsubscribeStrategy(string $strategyId, string $symbol)
+        {            
+            // Unsubscribe within the loop.
+            $this->loop->futureTick(function() use ($strategyId, $symbol)
+            {
+                // Create strategy destination and unsubscribe.
+                $this->unsubscribe(StrategySubscription::createDestination($strategyId, $symbol, $this->stream));
             });
         }
 
