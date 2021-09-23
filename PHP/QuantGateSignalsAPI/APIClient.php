@@ -2,53 +2,55 @@
 
     namespace QuantGate\API\Signals;
 
-    require_once __DIR__ . '/vendor/autoload.php';    
-    require_once __DIR__ . '/Utilities.php';    
+    require_once __DIR__ . '/vendor/autoload.php';
+    require_once __DIR__ . '/Events/PerceptionUpdate.php';
+    require_once __DIR__ . '/Events/StrategyUpdate.php';
     require_once __DIR__ . '/Proto/GPBMetadata/StealthApiV20.php';    
     require_once __DIR__ . '/Proto/GPBMetadata/StompV01.php'; 
-    require_once __DIR__ . '/Proto/Stomp/RequestFrame.php';
-    require_once __DIR__ . '/Proto/Stomp/ResponseFrame.php';
-    require_once __DIR__ . '/Proto/Stomp/Heartbeat.php';
+    require_once __DIR__ . '/Proto/Stealth/SingleValueUpdate.php';
+    require_once __DIR__ . '/Proto/Stealth/StrategyUpdate.php';
     require_once __DIR__ . '/Proto/Stomp/ConnectRequest.php';
-    require_once __DIR__ . '/Proto/Stomp/SubscribeRequest.php';
-    require_once __DIR__ . '/Proto/Stomp/ThrottleRequest.php';
-    require_once __DIR__ . '/Proto/Stomp/UnsubscribeRequest.php';
+    require_once __DIR__ . '/Proto/Stomp/DisconnectRequest.php';
     require_once __DIR__ . '/Proto/Stomp/ConnectedResponse.php';
+    require_once __DIR__ . '/Proto/Stomp/Heartbeat.php';
     require_once __DIR__ . '/Proto/Stomp/MessageResponse.php';
     require_once __DIR__ . '/Proto/Stomp/MessageResponses.php';
-    require_once __DIR__ . '/Proto/Stomp/SubscriptionErrorResponse.php';
+    require_once __DIR__ . '/Proto/Stomp/RequestFrame.php';
+    require_once __DIR__ . '/Proto/Stomp/ResponseFrame.php';
     require_once __DIR__ . '/Proto/Stomp/ServerErrorResponse.php';    
-    require_once __DIR__ . '/Proto/Stealth/StrategyUpdate.php';
-    require_once __DIR__ . '/Proto/Stealth/SingleValueUpdate.php';
+    require_once __DIR__ . '/Proto/Stomp/SubscribeRequest.php';
+    require_once __DIR__ . '/Proto/Stomp/SubscriptionErrorResponse.php';
+    require_once __DIR__ . '/Proto/Stomp/ThrottleRequest.php';
+    require_once __DIR__ . '/Proto/Stomp/UnsubscribeRequest.php';
     require_once __DIR__ . '/Subscriptions/SubscriptionBase.php';
-    require_once __DIR__ . '/Subscriptions/StrategySubscription.php';
     require_once __DIR__ . '/Subscriptions/PerceptionSubscription.php';
-    require_once __DIR__ . '/Events/StrategyUpdate.php';
-    require_once __DIR__ . '/Events/PerceptionUpdate.php';
+    require_once __DIR__ . '/Subscriptions/StrategySubscription.php';
+    require_once __DIR__ . '/Utilities.php';
 
-    use \Stomp\RequestFrame;
+    use \Evenement\EventEmitterInterface;
+    use \Evenement\EventEmitterTrait;
+    use \QuantGate\API\Signals\Events\PerceptionUpdate;
+    use \QuantGate\API\Signals\Events\StrategyUpdate;
+    use \QuantGate\API\Signals\Subscriptions\PerceptionSubscription;
+    use \QuantGate\API\Signals\Subscriptions\StrategySubscription;
+    use \QuantGate\API\Signals\Subscriptions\SubscriptionBase;
+    use \Ratchet\Client;
+    use \Ratchet\Client\WebSocket;
+    use \Ratchet\RFC6455\Messaging\Frame;
+    use \Ratchet\RFC6455\Messaging\Message;
+    use \React\EventLoop\LoopInterface;
+    use \React\EventLoop\Timer\Timer;
     use \Stomp\ConnectRequest;
+    use \Stomp\DisconnectRequest;
+    use \Stomp\ConnectedResponse;
+    use \Stomp\Heartbeat;    
+    use \Stomp\MessageResponse;
+    use \Stomp\MessageResponses;
+    use \Stomp\RequestFrame;
+    use \Stomp\ResponseFrame;
     use \Stomp\SubscribeRequest;
     use \Stomp\ThrottleRequest;
     use \Stomp\UnsubscribeRequest;
-    use \Stomp\ResponseFrame;
-    use \Stomp\ConnectedResponse;
-    use \Stomp\MessageResponse;
-    use \Stomp\MessageResponses;
-    use \Stomp\Heartbeat;    
-    use \Ratchet\Client;
-    use \Ratchet\RFC6455\Messaging\Frame;
-    use \React\EventLoop\LoopInterface;
-    use \React\EventLoop\Timer\Timer;
-    use \Ratchet\Client\WebSocket;
-    use \Ratchet\RFC6455\Messaging\Message;
-    use \QuantGate\API\Signals\Subscriptions\SubscriptionBase;
-    use \QuantGate\API\Signals\Subscriptions\StrategySubscription;
-    use \QuantGate\API\Signals\Subscriptions\PerceptionSubscription;
-    use \QuantGate\API\Signals\Events\StrategyUpdate;
-    use \QuantGate\API\Signals\Events\PerceptionUpdate;
-    use Evenement\EventEmitterTrait;
-    use Evenement\EventEmitterInterface;
 
     /**
      * Simple QuantGate signals API client.
@@ -74,6 +76,32 @@
          */
         public const DEMO_STREAM = "demo";
         
+        /**
+         * The time (in seconds) to wait after a connection attempt before killing the attempt.
+         * @var float
+         */
+        const CONNECT_KILL = 20.0;
+        /**
+         * The minimum time (in seconds) to wait to reconnect.
+         * @var float
+         */
+        const MIN_RECONNECT = 5.0;
+        /**
+         * The maximum reconnection attempt count to use to adjust reconnection attempts.
+         * @var int
+         */
+        const MAX_RECONNECT = 10;
+        /**
+         * The maximum time to wait (in seconds) before receiveing a message.
+         * @var float
+         */
+        const MAX_HEARTBEAT_WAIT = 60.0;
+        /**
+         * Time to wait (in seconds) after not receiving a message before sending a heartbeat request.
+         * @var float
+         */
+        const HEARTBEAT_CHECK_WAIT = 10.0;
+
         /**
          * The message loop that all events will be run within.
          * @var LoopInterface
@@ -112,10 +140,15 @@
          */
         private bool $isConnected = false;
         /**
+         * Are we currently disconnecting the client?
+         * @var bool
+         */
+        private bool $isDisconnecting = false;
+        /**
          * Used to generate ids for each new subscription.
          * @var int
          */
-        private int $nextID = 1;
+        private int $nextId = 1;
         
         /**
          * Holds a list of all current subscriptions by subscription id.
@@ -132,7 +165,27 @@
          * Holds a reference to the timer used to send heartbeat messages.
          * @var Timer
          */
-        private Timer $heartbeatTimer;
+        private Timer $timer;
+        /**
+         * Holds the last time that a message was received from the server.
+         * @var float
+         */
+        private float $lastMessageTime = 0.0;
+        /**
+         * The next time to attempt a reconnection.
+         * @var float
+         */
+        private float $reconnectTime = 0.0;
+        /**
+         * The time to kill a reconnection attempt.
+         * @var float
+         */
+        private float $killTime = 0.0;
+        /**
+         * The number of times a reconnection has been attempted.
+         * @var int
+         */
+        private int $reconnectCount = 0;
 
         /**
          * Creates a new APIClient instance.
@@ -148,9 +201,6 @@
             $this->host = $host;
             $this->port = $port;
             $this->stream = $stream;
-            
-            // Add the timer to use for heartbeat checking.
-            $this->heartbeatTimer = $this->loop->addPeriodicTimer(5, array($this, 'checkHeartbeats'));
         }
 
         /**
@@ -162,6 +212,8 @@
         {            
             // Remember the JWT token.
             $this->jwtToken = $jwtToken;
+            // Add the timer to use for heartbeat checking.
+            $this->timer = $this->loop->addPeriodicTimer(5, array($this, 'handleTimer'));
             // Connect to the websocket.
             $this->connectWebsocket();
         }
@@ -172,6 +224,14 @@
          */
         function connectWebsocket()
         {
+            // Set last message time to now.
+            $this->lastMessageTime = microtime(true);
+
+            // Set up the connection timers.
+            $this->isDisconnecting = false;
+            $this->reconnectTime = 0.0;
+            $this->killTime = $this->lastMessageTime + APIClient::CONNECT_KILL;
+
             // Connect to the client at the appropriate host, with the given message loop.
             Client\connect($this->host.':'.$this->port, [], [], $this->loop)->then(
                 function(WebSocket $connection)
@@ -213,14 +273,60 @@
         }
 
         /**
+         *  Called when connected received after login.
+         * @return void
+         */
+        function handleLoggedIn()
+        {
+            // If connected, clear the reconnect properties.
+            $this->reconnectCount = 0.0;
+            $this->reconnectTime = 0.0;
+            $this->killTime = 0.0;
+
+            // Set the connected flag.
+            $this->isConnected = true;
+            // Send the connected event.
+            $this->emit('connected', []);
+            // Resubscribe all subscriptions.
+            $this->resubscribeAll();
+        }
+
+        /**
          * Handles WebSocket close events.
          * @return  void
          */
         function handleClosed()
         {
-            $this->isConnected = false;            
+            if ($this->isDisconnecting)
+            {
+                $this->clearSubscriptions();
+                $this->reconnectTime = 0.0;
+            }
+            else
+            {
+                $this->reconnectCount++;
+                if ($this->reconnectCount > APIClient::MAX_RECONNECT)
+                    $this->reconnectCount = APIClient::MAX_RECONNECT;
+                
+                $this->reconnectTime = microtime(true) + APIClient::MIN_RECONNECT * $this->reconnectCount;
+            }
+
+            // Clear the websocket reference.
+            unset($this->webSocket);
+            // No longer connected
+            $this->isConnected = false;
+            // Send out the disconnected event.
             $this->emit('disconnected', []);
-            $this->loop->cancelTimer($this->heartbeatTimer);
+
+            if ($this->isDisconnecting)
+            {
+                if (isset($this->timer))
+                {
+                    // If there is a heartbeat timer, cancel it.
+                    $this->loop->cancelTimer($this->timer);
+                    unset($this->timer);
+                }
+            }
         }
 
         /**
@@ -229,10 +335,39 @@
          */
         function close()
         {
-            // No longer connected.
-            $this->isConnected = false;
-            // Close the websocket.
-            $this->webSocket->close();
+            // No need to close twice.
+            if ($this->isDisconnecting)
+                return;
+
+            // Set to disconnecting/not connected.
+            $this->isDisconnecting = true;
+            // Disconnect the websocket.
+            $this->disconnect();
+        }
+
+        /**
+         * Disconnects from the open websocket (if open).
+         * @return  void
+         */
+        private function disconnect()
+        {
+            if (isset($this->webSocket))
+            {
+                 // Create the connection request frame.
+                $request = new RequestFrame();
+                $request->setDisconnect(new DisconnectRequest());
+
+                // Send the connection request to the server.
+                $this->sendFrame($request);
+
+                // Close the websocket.
+                $this->webSocket->close();
+            }
+            else
+            {
+                // Handle as closed.
+                $this->handleClosed();
+            }
         }
 
         /**
@@ -242,12 +377,15 @@
          */
         public function sendFrame(RequestFrame $frame)
         {
-            // Serialize the request frame.
-            $data = $frame->serializeToString();
-            // Convert the frame to a binary frame.
-            $binary = new Frame($data, true, Frame::OP_BINARY);
-            // Send the binary data through the WebSocket.
-            $this->webSocket->send($binary);            
+            if (isset($this->webSocket))
+            {
+                // Serialize the request frame.
+                $data = $frame->serializeToString();
+                // Convert the frame to a binary frame.
+                $binary = new Frame($data, true, Frame::OP_BINARY);
+                // Send the binary data through the WebSocket.
+                $this->webSocket->send($binary);
+            }
         }
 
         /**
@@ -262,7 +400,7 @@
                 return null;            
 
             // Increment the next ID.
-            $this->nextID++;
+            $this->nextId++;
 
             // Add the subscription to the arrays.
             $this->subscriptionsById[$subscription->getID()] = $subscription;
@@ -352,17 +490,30 @@
         function resubscribeAll()
         {
             // Reset the subscription ID.
-            $this->nextID = 0;
+            $this->nextId = 0;
             // Get a copy of the subscriptions array.
             $toSubscribe = $this->subscriptionsById;            
 
             // Clear the subscriptions arrays.
+            $this->clearSubscriptions();
+            
+            foreach ($toSubscribe as $subscription)
+            {
+                // Go through all subscriptions and subscribe (with new ids).
+                $subscription->setId($this->nextId);
+                $this->subscribe($subscription);
+            }
+        }
+
+        /**
+         * Clears the subscription references.
+         * @return  void
+         */
+        function clearSubscriptions()
+        {
+            // Clear the subscriptions arrays.
             $this->subscriptionsById = [];
             $this->subscriptionsByDest = [];
-
-            // Go through all subscriptions and subscribe.
-            foreach ($toSubscribe as $subscription)
-                $this->subscribe($subscription);
         }
 
         /**
@@ -380,26 +531,28 @@
             {
                 case 'connected':
                     // If this is a connected response, set connected flag.
-                    $this->isConnected = true;
-                    // Send the connected event.
-                    $this->emit('connected', []);
-                    // Resubscribe all subscriptions.
-                    $this->resubscribeAll();
+                    $this->handleLoggedIn();
                     break;
                 
                 case 'heartbeat':
                     // Log heartbeat (for now).
                     echo "Received: Heartbeat\n";
+                    // Mark as the last time a message was received.
+                    $this->lastMessageTime = microtime(true);
                     break;
 
                 case 'single_message':
                     // If a single update message was recieved, handle it.
                     $this->handleMessageResponse($response->getSingleMessage());
+                    // Set last message time to now.
+                    $this->lastMessageTime = microtime(true);
                     break;
 
                 case 'batch_messages':
                     // If a batch update message was recieved, handle it.
                     $this->handleMessageResponses($response->getBatchMessages());
+                    // Set last message time to now.
+                    $this->lastMessageTime = microtime(true);
                     break;
 
                 default:
@@ -449,7 +602,7 @@
             $this->loop->futureTick(function() use ($strategyId, $symbol, $throttleRate)
             {
                 // Create a new strategy subscription.
-                $subscription = new StrategySubscription($this->nextID, $strategyId, $symbol, 
+                $subscription = new StrategySubscription($this->nextId, $strategyId, $symbol, 
                                                          $this->stream, $throttleRate, $this);
                 // Subscribe.
                 $this->subscribe($subscription);
@@ -502,7 +655,7 @@
             $this->loop->futureTick(function() use ($symbol, $throttleRate)
             {
                 // Create a new Perception subscription.
-                $subscription = new PerceptionSubscription($this->nextID, $symbol, 
+                $subscription = new PerceptionSubscription($this->nextId, $symbol, 
                                                            $this->stream, $throttleRate, $this);
                 // Subscribe.
                 $this->subscribe($subscription);
@@ -541,20 +694,48 @@
         }
 
         /**
-         * Runs heartbeat checks on a 5-second interval.
+         * Handles the timer on a 5-second interval.
          * @return  void
          */
-        function checkHeartbeats()
+        function handleTimer()
         {
-            // If not connected, don't send heartbeats.
-            if (!$this->isConnected)
-                return;
+            // Get the current time.
+            $time = microtime(true);
 
-            // Create a new heartbeat request frame.
-            $request = new RequestFrame();
-            $request->setHeartbeat(new Heartbeat());
-            // Send the request to the server.
-            $this->sendFrame($request);
+            if (!$this->isConnected && !$this->isDisconnecting)
+            {
+                // If not connected, check if we need to reconnect.
+                if ($time > $this->reconnectTime && $this->reconnectTime !== 0.0)
+                {
+                    // If we need to connect, reconnect.
+                    $this->connectWebsocket();
+                    $this->reconnectTime = 0.0;
+                    $this->killTime = $time + APIClient::CONNECT_KILL;
+                }
+                else if ($time > $this->killTime && $this->killTime !== 0.0)
+                {
+                    // If we need to kill the connection, kill it.
+                    $this->disconnect();
+                    $this->killTime = 0;
+                }
+            }
+            else if ($this->isConnected && !$this->isDisconnecting)
+            {
+                // If connected and not in the process of disconnecting.
+                if ($time > $this->lastMessageTime + APIClient::MAX_HEARTBEAT_WAIT)
+                {
+                    // If it's been too long before receiving a message, disconnect (to reconnect).
+                    $this->disconnect();
+                }
+                else if ($time > $this->lastMessageTime + APIClient::HEARTBEAT_CHECK_WAIT)
+                {
+                    // If past the last heartbeat checks, create a new heartbeat request frame.
+                    $request = new RequestFrame();
+                    $request->setHeartbeat(new Heartbeat());
+                    // Send the request to the server.
+                    $this->sendFrame($request);
+                }
+            }
         }
     }
 

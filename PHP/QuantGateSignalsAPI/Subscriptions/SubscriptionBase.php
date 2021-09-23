@@ -46,6 +46,16 @@
         }
 
         /**
+         * Returns the (integer) identifier to associate with this subscription on the server's end.
+         * @param   int $id     The new identifier to set to.
+         * @return void
+         */
+        public function setId(int $id)
+        {
+            $this->id = $id;
+        }
+
+        /**
          * Returns the destination to subscribe to.
          * @return string
          */

@@ -10,8 +10,8 @@
     $strategyId = "Crb7.6";
     // Symbols we will be subscribing to.
     $symbols = array("USD.CAD", "AUD.CAD", "AUD.USD", "CAD.JPY", "CHF.JPY", "EUR.AUD", "EUR.GBP", "EUR.NOK",
-                     "EUR.USD", "GBP.CAD", "GBP.JPY", "NZD.USD", "USD.CAD", "USD.JPY", "USD.SEK", "CCM X1-B3",
-                     "DOL V1-B3", "IND V1-B3", "BGI V1-B3", "WDO V1-B3", "WIN V1-B3");
+                     "EUR.USD", "GBP.CAD", "GBP.JPY", "NZD.USD", "USD.CAD", "USD.JPY", "USD.SEK",
+                     "CCM X1-B3", "DOL V1-B3", "IND V1-B3", "BGI V1-B3", "WDO V1-B3", "WIN V1-B3");
 
     // Create an event loop to run with.
     $loop = \React\EventLoop\Factory::create();
@@ -20,7 +20,7 @@
     $client = new APIClient($loop, "wss://test.stealthtrader.com");
 
     // Close after 60 seconds (remove this line and the cancellation to keep going indefinitely)
-    $timer = $loop->addTimer(60, function() use ($client) { $client->close(); });
+    $timer = $loop->addTimer(40, function() use ($client) { $client->close(); });
 
     // Add event handler to signal when connected/disconnected.
     $client->on('connected', function() { echo "Connected!\n"; });

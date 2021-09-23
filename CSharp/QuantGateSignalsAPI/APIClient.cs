@@ -105,7 +105,7 @@ namespace QuantGate.API.Signals
         /// </summary>
         private long _reconnectCount = 0;
         /// <summary>
-        /// The next time to attempt a reconnection
+        /// The next time to attempt a reconnection.
         /// </summary>
         private long _reconnectTicks = 0;
         /// <summary>
