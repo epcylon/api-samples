@@ -4,6 +4,7 @@
 
     require_once __DIR__ . '/vendor/autoload.php';
     require_once __DIR__ . '/Events/PerceptionUpdate.php';
+    require_once __DIR__ . '/Events/CommitmentUpdate.php';
     require_once __DIR__ . '/Events/StrategyUpdate.php';
     require_once __DIR__ . '/Proto/GPBMetadata/StealthApiV20.php';    
     require_once __DIR__ . '/Proto/GPBMetadata/StompV01.php'; 
@@ -24,14 +25,17 @@
     require_once __DIR__ . '/Proto/Stomp/UnsubscribeRequest.php';
     require_once __DIR__ . '/Subscriptions/SubscriptionBase.php';
     require_once __DIR__ . '/Subscriptions/PerceptionSubscription.php';
+    require_once __DIR__ . '/Subscriptions/CommitmentSubscription.php';
     require_once __DIR__ . '/Subscriptions/StrategySubscription.php';
     require_once __DIR__ . '/Utilities.php';
 
     use \Evenement\EventEmitterInterface;
     use \Evenement\EventEmitterTrait;
     use \QuantGate\API\Signals\Events\PerceptionUpdate;
+    use \QuantGate\API\Signals\Events\CommitmentUpdate;
     use \QuantGate\API\Signals\Events\StrategyUpdate;
     use \QuantGate\API\Signals\Subscriptions\PerceptionSubscription;
+    use \QuantGate\API\Signals\Subscriptions\CommitmentSubscription;
     use \QuantGate\API\Signals\Subscriptions\StrategySubscription;
     use \QuantGate\API\Signals\Subscriptions\SubscriptionBase;
     use \Ratchet\Client;
@@ -53,7 +57,7 @@
     use \Stomp\UnsubscribeRequest;
 
     /**
-     * Simple QuantGate signals API client.
+     * QuantGate signals API client, with automatic reconnection and subscription handling.
      */
     class APIClient implements EventEmitterInterface
     {
@@ -690,6 +694,56 @@
             {
                 // Create Perception destination and unsubscribe.
                 $this->unsubscribe(PerceptionSubscription::createDestination($symbol, $this->stream));
+            });
+        }
+
+        /**
+         * Subscribes to Commitment gauge update data stream for a specific symbol.
+         * @param   string  $symbol         Symbol to get the Commitment gauge update data for.
+         * @param   int     $throttleRate   Rate to throttle messages at (in ms). Enter 0 for no throttling.
+         * @return  void
+         */
+        public function subscribeCommitment(string $symbol, int $throttleRate = 0)        
+        {
+            // Subscribe within the loop.
+            $this->loop->futureTick(function() use ($symbol, $throttleRate)
+            {
+                // Create a new Commitment subscription.
+                $subscription = new CommitmentSubscription($this->nextId, $symbol, 
+                                                           $this->stream, $throttleRate, $this);
+                // Subscribe.
+                $this->subscribe($subscription);
+            });
+        }
+
+        /**
+         * Changes the maximum rate at which the back-end sends Commitment gauge updates for the given symbol.         
+         * @param   string  $symbol         The symbol to change the Commitment gauge throttle rate for.
+         * @param   int     $throttleRate   The new throttle rate to set to (in ms). Enter 0 for no throttling.
+         * @return  void
+         */
+        public function throttleCommitment(string $symbol, int $throttleRate = 0)        
+        {
+            // Throttle within the loop.
+            $this->loop->futureTick(function() use ($symbol, $throttleRate)
+            {
+                // Create Commitment destination and throttle.
+                $this->throttle(CommitmentSubscription::createDestination($symbol, $this->stream), $throttleRate);
+            });
+        }
+
+        /**
+         * Unsubscribes from Commitment gauge data for the given symbol.
+         * @param   string  $symbol     The symbol to stop getting Commitment data for.
+         * @return  void
+         */
+        public function unsubscribeCommitment(string $symbol)
+        {            
+            // Unsubscribe within the loop.
+            $this->loop->futureTick(function() use ($strategyId, $symbol)
+            {
+                // Create Commitment destination and unsubscribe.
+                $this->unsubscribe(CommitmentSubscription::createDestination($symbol, $this->stream));
             });
         }
 

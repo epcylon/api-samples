@@ -3,16 +3,16 @@
     namespace QuantGate\API\Signals\Subscriptions;
 
     use \QuantGate\API\Signals\APIClient;
-    use \QuantGate\API\Signals\Events\PerceptionUpdate;    
+    use \QuantGate\API\Signals\Events\CommitmentUpdate;    
     use \QuantGate\API\Signals\Utilities;
 
     /**
-     * Used to subscribe to a perception gauge stream subscription and convert the received messages.
+     * Used to subscribe to a commitment gauge stream subscription and convert the received messages.
      */
-    class PerceptionSubscription extends SubscriptionBase
+    class CommitmentSubscription extends SubscriptionBase
     {
         /**
-         * Symbol to get the Perception gauge updates data for.
+         * Symbol to get the Commitment gauge updates data for.
          * @var string
          */
         private string $symbol;
@@ -28,9 +28,9 @@
         private APIClient $client;
 
         /** 
-         * Creates a new PerceptionSubscription instance.          
+         * Creates a new CommitmentSubscription instance.          
          * @param int      $id             The (integer) identifier to associate with this subscription on the server's end.
-         * @param string   $symbol         Symbol to get the Perception gauge updates data for.
+         * @param string   $symbol         Symbol to get the Commitment gauge updates data for.
          * @param string   $stream         Stream ID associated with the stream the client is connected to (realtime, delay, demo).
          * @param int      $throttleRate   Rate to throttle messages at (in ms). Enter 0 for no throttling.
          * @param          $client         Reference to the parent APIClient instance to send updates to.
@@ -66,23 +66,22 @@
             $isDirty = $update->getIsDirty();         
 
             // Create the update object.
-            $result = new PerceptionUpdate($updateTime, $this->symbol, $this->stream, $value, $isDirty);
+            $result = new CommitmentUpdate($updateTime, $this->symbol, $this->stream, $value, $isDirty);
 
             // Send the results back to the APIClient class.
-            $this->client->emit('perceptionUpdated', [$result]);
+            $this->client->emit('commitmentUpdated', [$result]);
         }
 
         /**
-         * Creates the destination string that identifies this Perception gauge stream.
-         * @param   string  $symbol   Symbol to get the Perception update data for.
-         * @param   string  $stream   Stream ID associated with the stream the client is connected to (realtime, delay, demo).
+         * Creates the destination string that identifies this Commitment gauge stream.
+         * @param   string  $symbol   Symbol to get the Commitment update data for.
+         * @param   string  $stream   Stream ID associated with the stream the client is connected to (realtime, delay, demo).         
          * @return  string
          */
         public static function createDestination(string $symbol, string $stream) : string
         {            
-            return "/gauge/per2/".Utilities::streamIdForSymbol($stream, $symbol)."/".$symbol;
+            return "/gauge/comm/".Utilities::streamIdForSymbol($stream, $symbol)."/".$symbol."/1m";
         }
     }
 
 ?>
-    

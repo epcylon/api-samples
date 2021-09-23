@@ -175,13 +175,14 @@ namespace BridgeRock.CSharpExample
 
             lvSearch.Items.Clear();
 
-            foreach (TopSymbol symbol in _topSymbols.Symbols)
-                lvSearch.Items.Add(new SearchRow
-                {
-                    Symbol = symbol.Symbol,
-                    DisplayName = symbol.DisplayName,
-                    EntryProgress = symbol.EntryProgress.ToString("p1")
-                });
+            if (_topSymbols?.Symbols is object)
+                foreach (TopSymbol symbol in _topSymbols.Symbols)
+                    lvSearch.Items.Add(new SearchRow
+                    {
+                        Symbol = symbol.Symbol,
+                        DisplayName = symbol.DisplayName,
+                        EntryProgress = symbol.EntryProgress.ToString("p1")
+                    });
         }
 
         private void HandleSearchUpdate(object sender, SearchResultsEventArgs e)
