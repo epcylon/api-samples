@@ -60,7 +60,7 @@ namespace QuantGate.API.Signals.Subscriptions
         /// <param name="y">Value at point i.</param>
         /// <param name="z">Value at point j.</param>
         /// <returns>A list of 55 heights or colors.</returns>
-        public static double[] InterpolateTo55(int i, int j, double x, double y, double z)
+        private static double[] InterpolateTo55(int i, int j, double x, double y, double z)
         {
             double[] result = new double[SentimentEventArgs.TotalBars];
             double[] values;

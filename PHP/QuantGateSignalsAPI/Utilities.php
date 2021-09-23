@@ -43,6 +43,17 @@
             else
                 return $streamId;
         }
+
+        /**
+         * Cleans the compression string so that it is normalized.
+         * @param   string  $compression    The compression string to clean.
+         * @return  string
+         */
+        public static function cleanCompression(string $compression) : string
+        {
+            // Put in lower-case and get rid of any whitespace.
+            return str_replace(' ', '', strtolower($compression));
+        }
     }
 
 ?>

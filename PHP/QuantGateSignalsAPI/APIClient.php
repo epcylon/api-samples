@@ -5,10 +5,13 @@
     require_once __DIR__ . '/vendor/autoload.php';
     require_once __DIR__ . '/Events/PerceptionUpdate.php';
     require_once __DIR__ . '/Events/CommitmentUpdate.php';
+    require_once __DIR__ . '/Events/SentimentUpdate.php';
     require_once __DIR__ . '/Events/StrategyUpdate.php';
     require_once __DIR__ . '/Proto/GPBMetadata/StealthApiV20.php';    
     require_once __DIR__ . '/Proto/GPBMetadata/StompV01.php'; 
     require_once __DIR__ . '/Proto/Stealth/SingleValueUpdate.php';
+    require_once __DIR__ . '/Proto/Stealth/SentimentUpdate.php';
+    require_once __DIR__ . '/Proto/Stealth/SentimentSpline.php';
     require_once __DIR__ . '/Proto/Stealth/StrategyUpdate.php';
     require_once __DIR__ . '/Proto/Stomp/ConnectRequest.php';
     require_once __DIR__ . '/Proto/Stomp/DisconnectRequest.php';
@@ -26,6 +29,7 @@
     require_once __DIR__ . '/Subscriptions/SubscriptionBase.php';
     require_once __DIR__ . '/Subscriptions/PerceptionSubscription.php';
     require_once __DIR__ . '/Subscriptions/CommitmentSubscription.php';
+    require_once __DIR__ . '/Subscriptions/SentimentSubscription.php';
     require_once __DIR__ . '/Subscriptions/StrategySubscription.php';
     require_once __DIR__ . '/Utilities.php';
 
@@ -33,9 +37,11 @@
     use \Evenement\EventEmitterTrait;
     use \QuantGate\API\Signals\Events\PerceptionUpdate;
     use \QuantGate\API\Signals\Events\CommitmentUpdate;
+    use \QuantGate\API\Signals\Events\SentimentUpdate;
     use \QuantGate\API\Signals\Events\StrategyUpdate;
     use \QuantGate\API\Signals\Subscriptions\PerceptionSubscription;
     use \QuantGate\API\Signals\Subscriptions\CommitmentSubscription;
+    use \QuantGate\API\Signals\Subscriptions\SentimentSubscription;
     use \QuantGate\API\Signals\Subscriptions\StrategySubscription;
     use \QuantGate\API\Signals\Subscriptions\SubscriptionBase;
     use \Ratchet\Client;
@@ -744,6 +750,60 @@
             {
                 // Create Commitment destination and unsubscribe.
                 $this->unsubscribe(CommitmentSubscription::createDestination($symbol, $this->stream));
+            });
+        }
+
+        /**
+         * Subscribes to Sentiment gauge update data stream for a specific symbol.
+         * @param   string  $symbol         Symbol to get the Sentiment gauge update data for.
+         * @param   string  $compression    Compression timeframe to apply to the gauge. Default value is 50t.
+         * @param   int     $throttleRate   Rate to throttle messages at (in ms). Enter 0 for no throttling.
+         * @return  void
+         */
+        public function subscribeSentiment(string $symbol, string $compression = "50t", int $throttleRate = 0)        
+        {
+            // Subscribe within the loop.
+            $this->loop->futureTick(function() use ($symbol, $compression, $throttleRate)
+            {
+                // Create a new Sentiment subscription.
+                $subscription = new SentimentSubscription($this->nextId, $symbol, $this->stream, 
+                                                          $compression, $throttleRate, $this);
+                // Subscribe.
+                $this->subscribe($subscription);
+            });
+        }
+
+        /**
+         * Changes the maximum rate at which the back-end sends Sentiment gauge updates for the given symbol.         
+         * @param   string  $symbol         The symbol to change the Sentiment gauge throttle rate for.
+         * @param   string  $compression    Compression timeframe being applied to the gauge. Default value is 50t.
+         * @param   int     $throttleRate   The new throttle rate to set to (in ms). Enter 0 for no throttling.
+         * @return  void
+         */
+        public function throttleSentiment(string $symbol, string $compression = "50t", int $throttleRate = 0)        
+        {
+            // Throttle within the loop.
+            $this->loop->futureTick(function() use ($symbol, $compression, $throttleRate)
+            {
+                // Create Sentiment destination and throttle.
+                $this->throttle(SentimentSubscription::createDestination($symbol, $this->stream, 
+                                                                         $compression), $throttleRate);
+            });
+        }
+
+        /**
+         * Unsubscribes from Sentiment gauge data for the given symbol.
+         * @param   string  $symbol         The symbol to stop getting Sentiment data for.
+         * @param   string  $compression    Compression timeframe being applied to the gauge. Default value is 50t.
+         * @return  void
+         */
+        public function unsubscribeSentiment(string $symbol, string $compression = "50t")
+        {            
+            // Unsubscribe within the loop.
+            $this->loop->futureTick(function() use ($strategyId, $compression, $symbol)
+            {
+                // Create Sentiment destination and unsubscribe.
+                $this->unsubscribe(SentimentSubscription::createDestination($symbol, $this->stream, $compression));
             });
         }
 
