@@ -545,7 +545,11 @@ namespace QuantGate.API.Signals
         /// </summary>
         /// <param name="frame">The heartbeat frame to handle.</param>
         /// <remarks>Nothing to handle, since the last message time is already set.</remarks>
-        private void HandleHeartbeatFrame(ResponseFrame frame) { }
+        private void HandleHeartbeatFrame(ResponseFrame frame)
+        {
+            // Mark as the last time a message was received.
+            _lastMessageTicks = DateTime.UtcNow.Ticks;
+        }
 
         #endregion        
 
