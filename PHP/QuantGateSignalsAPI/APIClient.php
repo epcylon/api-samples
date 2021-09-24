@@ -69,6 +69,15 @@
 
     /**
      * QuantGate signals API client, with automatic reconnection and subscription handling.
+     * 
+     * Available Events:
+     *  $client->on('connected', function() {});
+     *  $client->on('disconnected', function() {});
+     *  $client->on('perceptionUpdated', function (PerceptionUpdate $update) {});
+     *  $client->on('commitmentUpdated', function (CommitmentUpdate $update) {});
+     *  $client->on('equilibriumUpdated', function (EquilibriumUpdate $update) {});
+     *  $client->on('sentimentUpdated', function (SentimentUpdate $update) {});
+     *  $client->on('strategyUpdated', function (StrategyUpdate $update) {});
      */
     class APIClient implements EventEmitterInterface
     {
