@@ -7,6 +7,7 @@
     require_once __DIR__ . '/Events/CommitmentUpdate.php';
     require_once __DIR__ . '/Events/EquilibriumUpdate.php';
     require_once __DIR__ . '/Events/SentimentUpdate.php';
+    require_once __DIR__ . '/Events/HeadroomUpdate.php';
     require_once __DIR__ . '/Events/StrategyUpdate.php';
     require_once __DIR__ . '/Proto/GPBMetadata/StealthApiV20.php';    
     require_once __DIR__ . '/Proto/GPBMetadata/StompV01.php'; 
@@ -33,6 +34,7 @@
     require_once __DIR__ . '/Subscriptions/CommitmentSubscription.php';
     require_once __DIR__ . '/Subscriptions/EquilibriumSubscription.php';
     require_once __DIR__ . '/Subscriptions/SentimentSubscription.php';
+    require_once __DIR__ . '/Subscriptions/HeadroomSubscription.php';
     require_once __DIR__ . '/Subscriptions/StrategySubscription.php';
     require_once __DIR__ . '/Utilities.php';
 
@@ -42,11 +44,13 @@
     use \QuantGate\API\Signals\Events\CommitmentUpdate;
     use \QuantGate\API\Signals\Events\EquilibriumUpdate;
     use \QuantGate\API\Signals\Events\SentimentUpdate;
+    use \QuantGate\API\Signals\Events\HeadroomUpdate;
     use \QuantGate\API\Signals\Events\StrategyUpdate;
     use \QuantGate\API\Signals\Subscriptions\PerceptionSubscription;
     use \QuantGate\API\Signals\Subscriptions\CommitmentSubscription;
     use \QuantGate\API\Signals\Subscriptions\EquilibriumSubscription;
     use \QuantGate\API\Signals\Subscriptions\SentimentSubscription;
+    use \QuantGate\API\Signals\Subscriptions\HeadroomSubscription;
     use \QuantGate\API\Signals\Subscriptions\StrategySubscription;
     use \QuantGate\API\Signals\Subscriptions\SubscriptionBase;
     use \Ratchet\Client;
@@ -77,6 +81,7 @@
      *  $client->on('commitmentUpdated', function (CommitmentUpdate $update) {});
      *  $client->on('equilibriumUpdated', function (EquilibriumUpdate $update) {});
      *  $client->on('sentimentUpdated', function (SentimentUpdate $update) {});
+     *  $client->on('headroomUpdated', function (HeadroomUpdate $update) {});
      *  $client->on('strategyUpdated', function (StrategyUpdate $update) {});
      */
     class APIClient implements EventEmitterInterface
@@ -818,6 +823,56 @@
             {
                 // Create Sentiment destination and unsubscribe.
                 $this->unsubscribe(SentimentSubscription::createDestination($symbol, $this->stream, $compression));
+            });
+        }
+
+        /**
+         * Subscribes to Headroom gauge update data stream for a specific symbol.
+         * @param   string  $symbol         Symbol to get the Headroom gauge update data for.
+         * @param   int     $throttleRate   Rate to throttle messages at (in ms). Enter 0 for no throttling.
+         * @return  void
+         */
+        public function subscribeHeadroom(string $symbol, int $throttleRate = 0)        
+        {
+            // Subscribe within the loop.
+            $this->loop->futureTick(function() use ($symbol, $throttleRate)
+            {
+                // Create a new Headroom subscription.
+                $subscription = new HeadroomSubscription($this->nextId, $symbol, 
+                                                           $this->stream, $throttleRate, $this);
+                // Subscribe.
+                $this->subscribe($subscription);
+            });
+        }
+
+        /**
+         * Changes the maximum rate at which the back-end sends Headroom gauge updates for the given symbol.         
+         * @param   string  $symbol         The symbol to change the Headroom gauge throttle rate for.
+         * @param   int     $throttleRate   The new throttle rate to set to (in ms). Enter 0 for no throttling.
+         * @return  void
+         */
+        public function throttleHeadroom(string $symbol, int $throttleRate = 0)        
+        {
+            // Throttle within the loop.
+            $this->loop->futureTick(function() use ($symbol, $throttleRate)
+            {
+                // Create Headroom destination and throttle.
+                $this->throttle(HeadroomSubscription::createDestination($symbol, $this->stream), $throttleRate);
+            });
+        }
+
+        /**
+         * Unsubscribes from Headroom gauge data for the given symbol.
+         * @param   string  $symbol     The symbol to stop getting Headroom data for.
+         * @return  void
+         */
+        public function unsubscribeHeadroom(string $symbol)
+        {            
+            // Unsubscribe within the loop.
+            $this->loop->futureTick(function() use ($strategyId, $symbol)
+            {
+                // Create Headroom destination and unsubscribe.
+                $this->unsubscribe(HeadroomSubscription::createDestination($symbol, $this->stream));
             });
         }
 
