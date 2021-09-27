@@ -9,6 +9,7 @@
     require_once __DIR__ . '/Events/SentimentUpdate.php';
     require_once __DIR__ . '/Events/BookPressureUpdate.php';
     require_once __DIR__ . '/Events/HeadroomUpdate.php';
+    require_once __DIR__ . '/Events/TriggerUpdate.php';
     require_once __DIR__ . '/Events/StrategyUpdate.php';
     require_once __DIR__ . '/Proto/GPBMetadata/StealthApiV20.php';    
     require_once __DIR__ . '/Proto/GPBMetadata/StompV01.php'; 
@@ -17,6 +18,7 @@
     require_once __DIR__ . '/Proto/Stealth/SentimentUpdate.php';
     require_once __DIR__ . '/Proto/Stealth/SentimentSpline.php';
     require_once __DIR__ . '/Proto/Stealth/StrategyUpdate.php';
+    require_once __DIR__ . '/Proto/Stealth/TriggerUpdate.php';
     require_once __DIR__ . '/Proto/Stomp/ConnectRequest.php';
     require_once __DIR__ . '/Proto/Stomp/DisconnectRequest.php';
     require_once __DIR__ . '/Proto/Stomp/ConnectedResponse.php';
@@ -37,6 +39,7 @@
     require_once __DIR__ . '/Subscriptions/SentimentSubscription.php';
     require_once __DIR__ . '/Subscriptions/BookPressureSubscription.php';
     require_once __DIR__ . '/Subscriptions/HeadroomSubscription.php';
+    require_once __DIR__ . '/Subscriptions/TriggerSubscription.php';
     require_once __DIR__ . '/Subscriptions/StrategySubscription.php';
     require_once __DIR__ . '/Utilities.php';
 
@@ -48,6 +51,7 @@
     use \QuantGate\API\Signals\Events\SentimentUpdate;
     use \QuantGate\API\Signals\Events\BookPressureUpdate;
     use \QuantGate\API\Signals\Events\HeadroomUpdate;
+    use \QuantGate\API\Signals\Events\TriggerUpdate;
     use \QuantGate\API\Signals\Events\StrategyUpdate;
     use \QuantGate\API\Signals\Subscriptions\PerceptionSubscription;
     use \QuantGate\API\Signals\Subscriptions\CommitmentSubscription;
@@ -55,6 +59,7 @@
     use \QuantGate\API\Signals\Subscriptions\SentimentSubscription;
     use \QuantGate\API\Signals\Subscriptions\BookPressureSubscription;
     use \QuantGate\API\Signals\Subscriptions\HeadroomSubscription;
+    use \QuantGate\API\Signals\Subscriptions\TriggerSubscription;
     use \QuantGate\API\Signals\Subscriptions\StrategySubscription;
     use \QuantGate\API\Signals\Subscriptions\SubscriptionBase;
     use \Ratchet\Client;
@@ -87,6 +92,7 @@
      *  $client->on('sentimentUpdated', function (SentimentUpdate $update) {});
      *  $client->on('bookPressureUpdated', function (BookPressureUpdate $update) {});
      *  $client->on('headroomUpdated', function (HeadroomUpdate $update) {});
+     *  $client->on('triggerUpdated', function (TriggerUpdate $update) {});
      *  $client->on('strategyUpdated', function (StrategyUpdate $update) {});
      */
     class APIClient implements EventEmitterInterface
@@ -973,6 +979,56 @@
             {
                 // Create Headroom destination and unsubscribe.
                 $this->unsubscribe(HeadroomSubscription::createDestination($symbol, $this->stream));
+            });
+        }
+
+        /**
+         * Subscribes to Trigger update data stream for a specific symbol.
+         * @param   string  $symbol         Symbol to get the Trigger update data for.
+         * @param   int     $throttleRate   Rate to throttle messages at (in ms). Enter 0 for no throttling.
+         * @return  void
+         */
+        public function subscribeTrigger(string $symbol, int $throttleRate = 0)        
+        {
+            // Subscribe within the loop.
+            $this->loop->futureTick(function() use ($symbol, $throttleRate)
+            {
+                // Create a new Trigger subscription.
+                $subscription = new TriggerSubscription($this->nextId, $symbol, 
+                                                         $this->stream, $throttleRate, $this);
+                // Subscribe.
+                $this->subscribe($subscription);
+            });
+        }
+
+        /**
+         * Changes the maximum rate at which the back-end sends Trigger updates for the given symbol.         
+         * @param   string  $symbol         The symbol to change the Trigger throttle rate for.
+         * @param   int     $throttleRate   The new throttle rate to set to (in ms). Enter 0 for no throttling.
+         * @return  void
+         */
+        public function throttleTrigger(string $symbol, int $throttleRate = 0)        
+        {
+            // Throttle within the loop.
+            $this->loop->futureTick(function() use ($symbol, $throttleRate)
+            {
+                // Create Trigger destination and throttle.
+                $this->throttle(TriggerSubscription::createDestination($symbol, $this->stream), $throttleRate);
+            });
+        }
+
+        /**
+         * Unsubscribes from Trigger data for the given symbol.
+         * @param   string  $symbol     The symbol to stop getting Trigger data for.
+         * @return  void
+         */
+        public function unsubscribeTrigger(string $symbol)
+        {            
+            // Unsubscribe within the loop.
+            $this->loop->futureTick(function() use ($strategyId, $symbol)
+            {
+                // Create Trigger destination and unsubscribe.
+                $this->unsubscribe(TriggerSubscription::createDestination($symbol, $this->stream));
             });
         }
 

@@ -4,7 +4,7 @@
 
     use \QuantGate\API\Signals\APIClient;
     use \QuantGate\API\Signals\Events\StrategyUpdate;
-    use \QuantGate\API\Signals\Events\EquilibriumUpdate;
+    use \QuantGate\API\Signals\Events\TriggerUpdate;
 
     // Strategy ID constant.
     $strategyId = "Crb7.6";
@@ -37,10 +37,10 @@
         echo "Strategy Update: ".$update->getSymbol().", ".($update->getEntryProgress() * 100.0)."%, ".$update->getSignal()."\n";
     });
 
-    // Set up the callback to handle sentiment updates.
-    $client->on('equilibriumUpdated', function (EquilibriumUpdate $update)
+    // Set up the callback to handle trigger updates.
+    $client->on('triggerUpdated', function (TriggerUpdate $update)
     {        
-        echo "Equilibrium Update: ".$update->getSymbol().", ".$update->getEquilibriumStd()."\n";
+        echo "Trigger Update: ".$update->getSymbol().", ".$update->getEquilibriumStd()."\n";
     });
 
     // Connect with a JWT token.
@@ -54,7 +54,7 @@
         $client->subscribeStrategy($strategyId, $value, 100);
 
     // Subscribe to Commitment stream to test.
-    $client->subscribeEquilibrium("EUR.USD");
+    $client->subscribeTrigger("EUR.USD");
     // Throttle the "USD.CAD" strategy to 10 seconds.
     $client->throttleStrategy($strategyId, "USD.CAD", 10000);
     // Unsubscribe from "CAD.JPY".
