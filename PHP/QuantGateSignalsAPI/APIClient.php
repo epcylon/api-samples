@@ -7,6 +7,7 @@
     require_once __DIR__ . '/Events/CommitmentUpdate.php';
     require_once __DIR__ . '/Events/EquilibriumUpdate.php';
     require_once __DIR__ . '/Events/SentimentUpdate.php';
+    require_once __DIR__ . '/Events/BookPressureUpdate.php';
     require_once __DIR__ . '/Events/HeadroomUpdate.php';
     require_once __DIR__ . '/Events/StrategyUpdate.php';
     require_once __DIR__ . '/Proto/GPBMetadata/StealthApiV20.php';    
@@ -34,6 +35,7 @@
     require_once __DIR__ . '/Subscriptions/CommitmentSubscription.php';
     require_once __DIR__ . '/Subscriptions/EquilibriumSubscription.php';
     require_once __DIR__ . '/Subscriptions/SentimentSubscription.php';
+    require_once __DIR__ . '/Subscriptions/BookPressureSubscription.php';
     require_once __DIR__ . '/Subscriptions/HeadroomSubscription.php';
     require_once __DIR__ . '/Subscriptions/StrategySubscription.php';
     require_once __DIR__ . '/Utilities.php';
@@ -44,12 +46,14 @@
     use \QuantGate\API\Signals\Events\CommitmentUpdate;
     use \QuantGate\API\Signals\Events\EquilibriumUpdate;
     use \QuantGate\API\Signals\Events\SentimentUpdate;
+    use \QuantGate\API\Signals\Events\BookPressureUpdate;
     use \QuantGate\API\Signals\Events\HeadroomUpdate;
     use \QuantGate\API\Signals\Events\StrategyUpdate;
     use \QuantGate\API\Signals\Subscriptions\PerceptionSubscription;
     use \QuantGate\API\Signals\Subscriptions\CommitmentSubscription;
     use \QuantGate\API\Signals\Subscriptions\EquilibriumSubscription;
     use \QuantGate\API\Signals\Subscriptions\SentimentSubscription;
+    use \QuantGate\API\Signals\Subscriptions\BookPressureSubscription;
     use \QuantGate\API\Signals\Subscriptions\HeadroomSubscription;
     use \QuantGate\API\Signals\Subscriptions\StrategySubscription;
     use \QuantGate\API\Signals\Subscriptions\SubscriptionBase;
@@ -81,6 +85,7 @@
      *  $client->on('commitmentUpdated', function (CommitmentUpdate $update) {});
      *  $client->on('equilibriumUpdated', function (EquilibriumUpdate $update) {});
      *  $client->on('sentimentUpdated', function (SentimentUpdate $update) {});
+     *  $client->on('bookPressureUpdated', function (BookPressureUpdate $update) {});
      *  $client->on('headroomUpdated', function (HeadroomUpdate $update) {});
      *  $client->on('strategyUpdated', function (StrategyUpdate $update) {});
      */
@@ -619,6 +624,51 @@
         }
 
         /**
+         * Handles the timer on a 5-second interval.
+         * @return  void
+         */
+        function handleTimer()
+        {
+            // Get the current time.
+            $time = microtime(true);
+
+            if (!$this->isConnected && !$this->isDisconnecting)
+            {
+                // If not connected, check if we need to reconnect.
+                if ($time > $this->reconnectTime && $this->reconnectTime !== 0.0)
+                {
+                    // If we need to connect, reconnect.
+                    $this->connectWebsocket();
+                    $this->reconnectTime = 0.0;
+                    $this->killTime = $time + APIClient::CONNECT_KILL;
+                }
+                else if ($time > $this->killTime && $this->killTime !== 0.0)
+                {
+                    // If we need to kill the connection, kill it.
+                    $this->disconnect();
+                    $this->killTime = 0;
+                }
+            }
+            else if ($this->isConnected && !$this->isDisconnecting)
+            {
+                // If connected and not in the process of disconnecting.
+                if ($time > $this->lastMessageTime + APIClient::MAX_HEARTBEAT_WAIT)
+                {
+                    // If it's been too long before receiving a message, disconnect (to reconnect).
+                    $this->disconnect();
+                }
+                else if ($time > $this->lastMessageTime + APIClient::HEARTBEAT_CHECK_WAIT)
+                {
+                    // If past the last heartbeat checks, create a new heartbeat request frame.
+                    $request = new RequestFrame();
+                    $request->setHeartbeat(new Heartbeat());
+                    // Send the request to the server.
+                    $this->sendFrame($request);
+                }
+            }
+        }
+
+        /**
          * Subscribes to Perception gauge update data stream for a specific symbol.
          * @param   string  $symbol         Symbol to get the Perception gauge update data for.
          * @param   int     $throttleRate   Rate to throttle messages at (in ms). Enter 0 for no throttling.
@@ -827,6 +877,56 @@
         }
 
         /**
+         * Subscribes to Book Pressure gauge update data stream for a specific symbol.
+         * @param   string  $symbol         Symbol to get the Book Pressure gauge update data for.
+         * @param   int     $throttleRate   Rate to throttle messages at (in ms). Enter 0 for no throttling.
+         * @return  void
+         */
+        public function subscribeBookPressure(string $symbol, int $throttleRate = 0)        
+        {
+            // Subscribe within the loop.
+            $this->loop->futureTick(function() use ($symbol, $throttleRate)
+            {
+                // Create a new Book Pressure subscription.
+                $subscription = new BookPressureSubscription($this->nextId, $symbol, 
+                                                             $this->stream, $throttleRate, $this);
+                // Subscribe.
+                $this->subscribe($subscription);
+            });
+        }
+
+        /**
+         * Changes the maximum rate at which the back-end sends Book Pressure gauge updates for the given symbol.         
+         * @param   string  $symbol         The symbol to change the Book Pressure gauge throttle rate for.
+         * @param   int     $throttleRate   The new throttle rate to set to (in ms). Enter 0 for no throttling.
+         * @return  void
+         */
+        public function throttleBookPressure(string $symbol, int $throttleRate = 0)        
+        {
+            // Throttle within the loop.
+            $this->loop->futureTick(function() use ($symbol, $throttleRate)
+            {
+                // Create Book Pressure destination and throttle.
+                $this->throttle(BookPressureSubscription::createDestination($symbol, $this->stream), $throttleRate);
+            });
+        }
+
+        /**
+         * Unsubscribes from Book Pressure gauge data for the given symbol.
+         * @param   string  $symbol     The symbol to stop getting Book Pressure data for.
+         * @return  void
+         */
+        public function unsubscribeBookPressure(string $symbol)
+        {            
+            // Unsubscribe within the loop.
+            $this->loop->futureTick(function() use ($strategyId, $symbol)
+            {
+                // Create Book Pressure destination and unsubscribe.
+                $this->unsubscribe(BookPressureSubscription::createDestination($symbol, $this->stream));
+            });
+        }
+
+        /**
          * Subscribes to Headroom gauge update data stream for a specific symbol.
          * @param   string  $symbol         Symbol to get the Headroom gauge update data for.
          * @param   int     $throttleRate   Rate to throttle messages at (in ms). Enter 0 for no throttling.
@@ -839,7 +939,7 @@
             {
                 // Create a new Headroom subscription.
                 $subscription = new HeadroomSubscription($this->nextId, $symbol, 
-                                                           $this->stream, $throttleRate, $this);
+                                                         $this->stream, $throttleRate, $this);
                 // Subscribe.
                 $this->subscribe($subscription);
             });
@@ -928,52 +1028,7 @@
                 // Create strategy destination and unsubscribe.
                 $this->unsubscribe(StrategySubscription::createDestination($strategyId, $symbol, $this->stream));
             });
-        }
-
-        /**
-         * Handles the timer on a 5-second interval.
-         * @return  void
-         */
-        function handleTimer()
-        {
-            // Get the current time.
-            $time = microtime(true);
-
-            if (!$this->isConnected && !$this->isDisconnecting)
-            {
-                // If not connected, check if we need to reconnect.
-                if ($time > $this->reconnectTime && $this->reconnectTime !== 0.0)
-                {
-                    // If we need to connect, reconnect.
-                    $this->connectWebsocket();
-                    $this->reconnectTime = 0.0;
-                    $this->killTime = $time + APIClient::CONNECT_KILL;
-                }
-                else if ($time > $this->killTime && $this->killTime !== 0.0)
-                {
-                    // If we need to kill the connection, kill it.
-                    $this->disconnect();
-                    $this->killTime = 0;
-                }
-            }
-            else if ($this->isConnected && !$this->isDisconnecting)
-            {
-                // If connected and not in the process of disconnecting.
-                if ($time > $this->lastMessageTime + APIClient::MAX_HEARTBEAT_WAIT)
-                {
-                    // If it's been too long before receiving a message, disconnect (to reconnect).
-                    $this->disconnect();
-                }
-                else if ($time > $this->lastMessageTime + APIClient::HEARTBEAT_CHECK_WAIT)
-                {
-                    // If past the last heartbeat checks, create a new heartbeat request frame.
-                    $request = new RequestFrame();
-                    $request->setHeartbeat(new Heartbeat());
-                    // Send the request to the server.
-                    $this->sendFrame($request);
-                }
-            }
-        }
+        }        
     }
 
 ?>
