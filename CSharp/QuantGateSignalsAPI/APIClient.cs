@@ -569,7 +569,7 @@ namespace QuantGate.API.Signals
                 try
                 {
                     // Get the username from the token.
-                    bytes = Convert.FromBase64String(jwtToken.Split(new char[] { '.' })[1]);
+                    bytes = Convert.FromBase64String(PadBase64String(jwtToken.Split(new char[] { '.' })[1]));
                     username = System.Text.Encoding.UTF8.GetString(bytes);
                     username = username.Split(new string[] { "sub\":\"" }, StringSplitOptions.None)[1].Split(new char[] { '"' })[0];
 
@@ -590,6 +590,14 @@ namespace QuantGate.API.Signals
                 }
             });
         }
+
+        /// <summary>
+        /// Pads a base-64 string, as necessary to decode.
+        /// </summary>
+        /// <param name="base64">The unpadded string.</param>
+        /// <returns>The padded base-64 string.</returns>
+        private string PadBase64String(string base64) =>
+            base64.PadRight(base64.Length + (4 - base64.Length % 4) % 4, '=');
 
         /// <summary>
         /// Disconnects this instance.
