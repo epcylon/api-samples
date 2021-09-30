@@ -27,6 +27,7 @@
     require_once __DIR__ . '/Proto/Stomp/Heartbeat.php';
     require_once __DIR__ . '/Proto/Stomp/MessageResponse.php';
     require_once __DIR__ . '/Proto/Stomp/MessageResponses.php';
+    require_once __DIR__ . '/Proto/Stomp/ServerErrorResponse.php';
     require_once __DIR__ . '/Proto/Stomp/RequestFrame.php';
     require_once __DIR__ . '/Proto/Stomp/ResponseFrame.php';
     require_once __DIR__ . '/Proto/Stomp/ServerErrorResponse.php';    
@@ -76,6 +77,7 @@
     use \Stomp\ConnectRequest;
     use \Stomp\DisconnectRequest;
     use \Stomp\ConnectedResponse;
+    use \Stomp\ServerErrorResponse;
     use \Stomp\Heartbeat;    
     use \Stomp\MessageResponse;
     use \Stomp\MessageResponses;
@@ -91,6 +93,7 @@
      * Available Events:
      *  $client->on('connected', function() {});
      *  $client->on('disconnected', function() {});
+     *  $client->on('error', function (ErrorDetails $details) {});
      *  $client->on('perceptionUpdated', function (PerceptionUpdate $update) {});
      *  $client->on('commitmentUpdated', function (CommitmentUpdate $update) {});
      *  $client->on('equilibriumUpdated', function (EquilibriumUpdate $update) {});
@@ -582,8 +585,6 @@
                     break;
                 
                 case 'heartbeat':
-                    // Log heartbeat (for now).
-                    echo "Received: Heartbeat\n";
                     // Mark as the last time a message was received.
                     $this->lastMessageTime = microtime(true);
                     break;
@@ -600,6 +601,11 @@
                     $this->handleMessageResponses($response->getBatchMessages());
                     // Set last message time to now.
                     $this->lastMessageTime = microtime(true);
+                    break;
+                
+                case 'server_error':
+                    // If a server error message was received, handle it.
+                    $this->handleServerError($response->getServerError());
                     break;
 
                 default:
@@ -634,6 +640,19 @@
             // If the subscription is found, handle the stream message.
             if (isset($subscription))
                 $subscription->handleMessage($message->getBody());
+        }
+
+        /**
+         * Handles a ServerErrorResponse message.
+         * @param   ServerErrorResponse $response   The server error to handle.
+         */
+        function handleServerError(ServerErrorResponse $response)
+        {
+            // Create the error event details.
+            $details = new ErrorDetails($response->getMessage());
+
+            // Send out the error event.
+            $this->emit('error', [$details]);
         }
 
         /**

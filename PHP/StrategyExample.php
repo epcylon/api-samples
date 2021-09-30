@@ -31,6 +31,12 @@
         $loop->cancelTimer($timer);
     });
 
+    // Log any error events.
+    $client->on('error', function(ErrorDetails $details)
+    {
+        echo "Error received: ".$details->getMessage()."\n"; 
+    });
+    
     // Set up the callback to handle strategy updates.
     $client->on('strategyUpdated', function (StrategyUpdate $update)
     {        
