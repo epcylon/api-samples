@@ -45,9 +45,9 @@
 
     // Connect with a JWT token.
     $client->connect("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.".
-                     "eyJzdWIiOiJKb2huSCIsImlhdCI6MTYyODcxMzg2NywiZXhwIjoxNjMyOTYw".
-                     "MDAwLCJhdWQiOiIyV1VqZW9iUlhSVzlwc05ERWN4ZTFNRDl3dGRmZGgxQyJ9.".
-                     "Up48upDkCINp9znyjTkUXc0F2Rb5BWqfzmumF4mUcXA");
+                     "eyJzdWIiOiJUZXN0QXBwIiwiaWF0IjoxNjMzMDEyMTUzLCJleHAiOjE2MzgyMz".
+                     "A0MDAsImF1ZCI6IjJXVWplb2JSWFJXOXBzTkRFY3hlMU1EOXd0ZGZkaDFDIn0.".
+                     "xtykKWHxKwhopUkkyUm6eCa9qfQsGkhHEdAea9hdSz8");
 
     // Go through the symbols and subscribe to each.
     foreach ($symbols as $value)

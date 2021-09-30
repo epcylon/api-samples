@@ -355,8 +355,6 @@
             unset($this->webSocket);
             // No longer connected
             $this->isConnected = false;
-            // Send out the disconnected event.
-            $this->emit('disconnected', []);
 
             if ($this->isDisconnecting)
             {
@@ -367,6 +365,9 @@
                     unset($this->timer);
                 }
             }
+
+            // Send out the disconnected event.
+            $this->emit('disconnected', []);
         }
 
         /**
