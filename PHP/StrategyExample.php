@@ -19,7 +19,7 @@
     // Create the client with the event loop reference, and pointing to the test server.
     $client = new APIClient($loop, "wss://test.stealthtrader.com");
 
-    // Close after 60 seconds (remove this line and the cancellation to keep going indefinitely)
+    // Close after 40 seconds (remove this line and the cancellation to keep going indefinitely)
     $timer = $loop->addTimer(40, function() use ($client) { $client->close(); });
 
     // Add event handler to signal when connected/disconnected.

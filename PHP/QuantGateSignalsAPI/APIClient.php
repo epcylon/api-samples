@@ -10,6 +10,7 @@
     require_once __DIR__ . '/Events/BookPressureUpdate.php';
     require_once __DIR__ . '/Events/HeadroomUpdate.php';
     require_once __DIR__ . '/Events/TriggerUpdate.php';
+    require_once __DIR__ . '/Events/MultiframeUpdate.php';
     require_once __DIR__ . '/Events/StrategyUpdate.php';
     require_once __DIR__ . '/Proto/GPBMetadata/StealthApiV20.php';    
     require_once __DIR__ . '/Proto/GPBMetadata/StompV01.php'; 
@@ -19,6 +20,7 @@
     require_once __DIR__ . '/Proto/Stealth/SentimentSpline.php';
     require_once __DIR__ . '/Proto/Stealth/StrategyUpdate.php';
     require_once __DIR__ . '/Proto/Stealth/TriggerUpdate.php';
+    require_once __DIR__ . '/Proto/Stealth/MultiframeUpdate.php';
     require_once __DIR__ . '/Proto/Stomp/ConnectRequest.php';
     require_once __DIR__ . '/Proto/Stomp/DisconnectRequest.php';
     require_once __DIR__ . '/Proto/Stomp/ConnectedResponse.php';
@@ -40,6 +42,7 @@
     require_once __DIR__ . '/Subscriptions/BookPressureSubscription.php';
     require_once __DIR__ . '/Subscriptions/HeadroomSubscription.php';
     require_once __DIR__ . '/Subscriptions/TriggerSubscription.php';
+    require_once __DIR__ . '/Subscriptions/MultiframeSubscription.php';
     require_once __DIR__ . '/Subscriptions/StrategySubscription.php';
     require_once __DIR__ . '/Utilities.php';
 
@@ -52,6 +55,7 @@
     use \QuantGate\API\Signals\Events\BookPressureUpdate;
     use \QuantGate\API\Signals\Events\HeadroomUpdate;
     use \QuantGate\API\Signals\Events\TriggerUpdate;
+    use \QuantGate\API\Signals\Events\MultiframeUpdate;
     use \QuantGate\API\Signals\Events\StrategyUpdate;
     use \QuantGate\API\Signals\Subscriptions\PerceptionSubscription;
     use \QuantGate\API\Signals\Subscriptions\CommitmentSubscription;
@@ -60,6 +64,7 @@
     use \QuantGate\API\Signals\Subscriptions\BookPressureSubscription;
     use \QuantGate\API\Signals\Subscriptions\HeadroomSubscription;
     use \QuantGate\API\Signals\Subscriptions\TriggerSubscription;
+    use \QuantGate\API\Signals\Subscriptions\MultiframeSubscription;
     use \QuantGate\API\Signals\Subscriptions\StrategySubscription;
     use \QuantGate\API\Signals\Subscriptions\SubscriptionBase;
     use \Ratchet\Client;
@@ -93,6 +98,7 @@
      *  $client->on('bookPressureUpdated', function (BookPressureUpdate $update) {});
      *  $client->on('headroomUpdated', function (HeadroomUpdate $update) {});
      *  $client->on('triggerUpdated', function (TriggerUpdate $update) {});
+     *  $client->on('multiframeUpdated', function (TriggerUpdate $update) {});
      *  $client->on('strategyUpdated', function (StrategyUpdate $update) {});
      */
     class APIClient implements EventEmitterInterface
@@ -1030,6 +1036,56 @@
             {
                 // Create Trigger destination and unsubscribe.
                 $this->unsubscribe(TriggerSubscription::createDestination($symbol, $this->stream));
+            });
+        }
+
+        /**
+         * Subscribes to Multiframe Equilibrium gauge update data stream for a specific symbol.
+         * @param   string  $symbol         Symbol to get the Multiframe Equilibrium gauge update data for.
+         * @param   int     $throttleRate   Rate to throttle messages at (in ms). Enter 0 for no throttling.
+         * @return  void
+         */
+        public function subscribeMultiframe(string $symbol, int $throttleRate = 0)        
+        {
+            // Subscribe within the loop.
+            $this->loop->futureTick(function() use ($symbol, $throttleRate)
+            {
+                // Create a new Multiframe subscription.
+                $subscription = new MultiframeSubscription($this->nextId, $symbol, 
+                                                           $this->stream, $throttleRate, $this);
+                // Subscribe.
+                $this->subscribe($subscription);
+            });
+        }
+
+        /**
+         * Changes the maximum rate at which the back-end sends Multiframe Equilibrium gauge updates for the given symbol.         
+         * @param   string  $symbol         The symbol to change the Multiframe Equilibrium gauge throttle rate for.
+         * @param   int     $throttleRate   The new throttle rate to set to (in ms). Enter 0 for no throttling.
+         * @return  void
+         */
+        public function throttleMultiframe(string $symbol, int $throttleRate = 0)        
+        {
+            // Throttle within the loop.
+            $this->loop->futureTick(function() use ($symbol, $throttleRate)
+            {
+                // Create Multiframe destination and throttle.
+                $this->throttle(MultiframeSubscription::createDestination($symbol, $this->stream), $throttleRate);
+            });
+        }
+
+        /**
+         * Unsubscribes from Multiframe Equilibrium gauge data for the given symbol.
+         * @param   string  $symbol     The symbol to stop getting Multiframe Equilibrium data for.
+         * @return  void
+         */
+        public function unsubscribeMultiframe(string $symbol)
+        {            
+            // Unsubscribe within the loop.
+            $this->loop->futureTick(function() use ($strategyId, $symbol)
+            {
+                // Create Multiframe destination and unsubscribe.
+                $this->unsubscribe(MultiframeSubscription::createDestination($symbol, $this->stream));
             });
         }
 
