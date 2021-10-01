@@ -32,11 +32,6 @@
          * @var string
          */
         private string $compression;
-        /**
-         * Holds a reference to the parent APIClient instance to send updates to.
-         * @var callback
-         */        
-        private APIClient $client;
 
         /** 
          * Creates a new EquilibriumSubscription instance.          
@@ -52,14 +47,13 @@
             // Set the properties.
             $this->symbol = $symbol;
             $this->stream = $stream;
-            $this->client = $client;
             $this->compression = Utilities::cleanCompression($compression);
 
             // Create the target destination.
             $destination = $this->createDestination($symbol, $stream, $compression);
 
             // Initialize values in the parent class.
-            parent::__construct($destination, $id, $throttleRate);
+            parent::__construct($destination, $id, $throttleRate, $client);
         }
 
         /**

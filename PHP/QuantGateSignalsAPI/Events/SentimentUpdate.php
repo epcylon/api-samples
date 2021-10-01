@@ -1,6 +1,6 @@
 <?php
 
-    namespace QuantGate\API\Signals\Events;      
+    namespace QuantGate\API\Signals\Events;
 
     /**
      * Holds Sentiment update information from a Sentiment gauge stream.

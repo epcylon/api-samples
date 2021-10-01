@@ -21,11 +21,6 @@
          * @var string
          */
         private string $stream;
-        /**
-         * Holds a reference to the parent APIClient instance to send updates to.
-         * @var callback
-         */        
-        private APIClient $client;
 
         /** 
          * Creates a new HeadroomSubscription instance.          
@@ -40,13 +35,12 @@
             // Set the properties.
             $this->symbol = $symbol;
             $this->stream = $stream;
-            $this->client = $client;
 
             // Create the target destination.
             $destination = $this->createDestination($symbol, $stream);
 
             // Initialize values in the parent class.
-            parent::__construct($destination, $id, $throttleRate);
+            parent::__construct($destination, $id, $throttleRate, $client);
         }
 
         /**

@@ -12,6 +12,7 @@
     require_once __DIR__ . '/Events/TriggerUpdate.php';
     require_once __DIR__ . '/Events/MultiframeUpdate.php';
     require_once __DIR__ . '/Events/StrategyUpdate.php';
+    require_once __DIR__ . '/Events/SignalType.php';
     require_once __DIR__ . '/Proto/GPBMetadata/StealthApiV20.php';    
     require_once __DIR__ . '/Proto/GPBMetadata/StompV01.php'; 
     require_once __DIR__ . '/Proto/Stealth/SingleValueUpdate.php';

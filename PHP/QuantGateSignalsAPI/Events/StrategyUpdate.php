@@ -8,32 +8,6 @@
     class StrategyUpdate
     {
         /**
-         * Unknown or unset signal type.
-         * @var string
-         */
-        public const SIGNAL_UNKNOWN = "Unknown";
-        /**
-         * Flat signal type (no direction).
-         * @var string
-         */
-        public const SIGNAL_FLAT = "Flat";
-        /**
-         * Long signal type.
-         * @var string
-         */
-        public const SIGNAL_LONG = "Long";
-        /**
-         * Short signal type.
-         * @var string
-         */
-        public const SIGNAL_SHORT = "Short";
-        /**
-         * Dual signal type (either Long or Short).
-         * @var string
-         */
-        public const SIGNAL_DUAL = "Dual";
-
-        /**
          * The time of this update.
          * @var DateTime
          */

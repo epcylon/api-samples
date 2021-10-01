@@ -3,7 +3,8 @@
     namespace QuantGate\API\Signals\Subscriptions;
 
     use \QuantGate\API\Signals\APIClient;
-    use \QuantGate\API\Signals\Events\StrategyUpdate;    
+    use \QuantGate\API\Signals\Events\StrategyUpdate;
+    use \QuantGate\API\Signals\Events\SignalType; 
     use \QuantGate\API\Signals\Utilities;
 
     /**
@@ -26,20 +27,15 @@
          * @var string
          */
         private string $stream;
-        /**
-         * Holds a reference to the parent APIClient instance to send updates to.
-         * @var callback
-         */        
-        private APIClient $client;
 
         /** 
          * Creates a new StrategySubscription instance.          
-         * @param int      $id             The (integer) identifier to associate with this subscription on the server's end.
-         * @param string   $strategyId     The strategy to subscribe to. Example enum values: PPr4.0, BTr4.0, Crb.8.4.
-         * @param string   $symbol         Symbol to get the Strategy update data for.
-         * @param string   $stream         Stream ID associated with the stream the client is connected to (realtime, delay, demo).
-         * @param int      $throttleRate   Rate to throttle messages at (in ms). Enter 0 for no throttling.
-         * @param          $client         Reference to the parent APIClient instance to send updates to.
+         * @param  int        $id            The (integer) identifier to associate with this subscription on the server's end.
+         * @param  string     $strategyId    The strategy to subscribe to. Example enum values: PPr4.0, BTr4.0, Crb.8.4.
+         * @param  string     $symbol        Symbol to get the Strategy update data for.
+         * @param  string     $stream        Stream ID associated with the stream the client is connected to (realtime, delay, demo).
+         * @param  int        $throttleRate  Rate to throttle messages at (in ms). Enter 0 for no throttling.
+         * @param  APIClient  $client        Reference to the parent APIClient instance to send updates to.
          */
         function __construct(int $id, string $strategyId, string $symbol, string $stream, int $throttleRate, APIClient $client)
         {
@@ -47,13 +43,12 @@
             $this->strategyId = $strategyId;
             $this->symbol = $symbol;
             $this->stream = $stream;
-            $this->client = $client;
 
             // Create the target destination.
             $destination = $this->createDestination($strategyId, $symbol, $stream);
 
             // Initialize values in the parent class.
-            parent::__construct($destination, $id, $throttleRate);
+            parent::__construct($destination, $id, $throttleRate, $client);
         }
 
         /**
@@ -75,11 +70,11 @@
             $commitmentLevel = $this->convertGaugeLevel($update->getCommitmentLevel());
             $equilibriumLevel = $this->convertGaugeLevel($update->getEquilibriumLevel());
             $sentimentLevel = $this->convertGaugeLevel($update->getSentimentLevel());
-            $perceptionSignal = $this->convertGaugeSignal($update->getPerceptionSignal());
-            $commitmentSignal = $this->convertGaugeSignal($update->getCommitmentSignal());
-            $equilibriumSignal = $this->convertGaugeSignal($update->getEquilibriumSignal());
-            $sentimentSignal = $this->convertGaugeSignal($update->getSentimentSignal());
-            $signal = $this->convertStrategySignal($update->getSignal());            
+            $perceptionSignal = SignalType::getFromGaugeSignal($update->getPerceptionSignal());
+            $commitmentSignal = SignalType::getFromGaugeSignal($update->getCommitmentSignal());
+            $equilibriumSignal = SignalType::getFromGaugeSignal($update->getEquilibriumSignal());
+            $sentimentSignal = SignalType::getFromGaugeSignal($update->getSentimentSignal());
+            $signal = SignalType::getFromStrategySignal($update->getSignal());            
 
             // Create the update object.
             $result = new StrategyUpdate($updateTime, $this->strategyId, $this->symbol, $this->stream, 
@@ -104,40 +99,6 @@
 
             // Convert non-zero values to a level.
             return ($level - 1001) / 1000.0;
-        }
-
-        /** 
-         * Converts a strategy signal value from an integer to a (readable) constant string value.
-         * @param   int $value  The strategy signal value to convert.
-         * @return  string
-         */
-        private function convertStrategySignal(int $value) : string
-        {
-            switch ($value)
-            {
-                case 0: return StrategyUpdate::SIGNAL_FLAT;
-                case 1: return StrategyUpdate::SIGNAL_LONG;
-                case 2: return StrategyUpdate::SIGNAL_SHORT;
-                default: return StrategyUpdate::SIGNAL_UNKNOWN;                    
-            }
-        }
-
-        /** 
-         * Converts a strategy gauge signal value from an integer to a (readable) constant string value.
-         * @param   string  $value  The strategy gauge signal value to convert.
-         * @return  string
-         */
-        private function convertGaugeSignal(int $value) : string
-        {
-            switch ($value)
-            {
-                case 0: return StrategyUpdate::SIGNAL_UNKNOWN;
-                case 1: return StrategyUpdate::SIGNAL_SHORT;
-                case 2: return StrategyUpdate::SIGNAL_FLAT;
-                case 3: return StrategyUpdate::SIGNAL_LONG;
-                case 4: return StrategyUpdate::SIGNAL_DUAL;
-                default: return StrategyUpdate::SIGNAL_UNKNOWN;                    
-            }
         }
 
         /**

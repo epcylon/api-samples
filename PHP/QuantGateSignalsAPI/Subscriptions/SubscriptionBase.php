@@ -2,6 +2,8 @@
 
     namespace QuantGate\API\Signals\Subscriptions;
 
+    use \QuantGate\API\Signals\APIClient;
+
     /**
      * Abstract base subscription class - includes basic properties and message handler definition.
      */
@@ -22,18 +24,25 @@
          * @var int
          */
         private int $throttleRate;
+        /**
+         * Holds a reference to the parent APIClient instance to send updates to.
+         * @var callback
+         */        
+        protected APIClient $client;
 
         /**
          * Creates a new SubscriptionBase instance.
-         * @param   string  $destination    The destination to subscribe to.
-         * @param   int     $id             The (integer) identifier to associate with this subscription on the server's end.
-         * @param   int     $throttleRate   Rate to throttle messages at (in ms). Enter 0 for no throttling.            
+         * @param   string      $destination    The destination to subscribe to.
+         * @param   int         $id             The (integer) identifier to associate with this subscription on the server's end.
+         * @param   int         $throttleRate   Rate to throttle messages at (in ms). Enter 0 for no throttling.
+         * @param   APIClient   $client         Reference to the parent APIClient instance to send updates to.
          */
-        protected function __construct(string $destination, int $id, int $throttleRate)
+        protected function __construct(string $destination, int $id, int $throttleRate, APIClient $client)
         {
             $this->destination = $destination;
             $this->id = $id;
             $this->throttleRate = $throttleRate;
+            $this->client = $client;
         }
 
         /**
