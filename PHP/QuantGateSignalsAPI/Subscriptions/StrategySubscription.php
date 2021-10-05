@@ -4,7 +4,8 @@
 
     use \QuantGate\API\Signals\APIClient;
     use \QuantGate\API\Signals\Events\StrategyUpdate;
-    use \QuantGate\API\Signals\Events\SignalType; 
+    use \QuantGate\API\Signals\Events\SignalType;
+    use \QuantGate\API\Signals\Events\SubscriptionError;
     use \QuantGate\API\Signals\Utilities;
 
     /**
@@ -74,13 +75,13 @@
             $commitmentSignal = SignalType::getFromGaugeSignal($update->getCommitmentSignal());
             $equilibriumSignal = SignalType::getFromGaugeSignal($update->getEquilibriumSignal());
             $sentimentSignal = SignalType::getFromGaugeSignal($update->getSentimentSignal());
-            $signal = SignalType::getFromStrategySignal($update->getSignal());            
+            $signal = SignalType::getFromStrategySignal($update->getSignal());
 
             // Create the update object.
             $result = new StrategyUpdate($updateTime, $this->strategyId, $this->symbol, $this->stream, 
                                          $entryProgress, $exitProgress, $perceptionSignal, $perceptionLevel, 
                                          $commitmentSignal, $commitmentLevel, $equilibriumSignal,
-                                         $equilibriumLevel, $sentimentSignal, $sentimentLevel, $signal);
+                                         $equilibriumLevel, $sentimentSignal, $sentimentLevel, $signal, null);
 
             // Send the results back to the APIClient class.
             $this->client->emit('strategyUpdated', [$result]);
@@ -99,6 +100,23 @@
 
             // Convert non-zero values to a level.
             return ($level - 1001) / 1000.0;
+        }
+
+        /**
+         * Called to send a subscription error to the subscribers.
+         * @param   $error  The error information to send.
+         * @return  void
+         */
+        public function sendError(SubscriptionError $error)
+        {
+            // Create the update object.
+            $result = new StrategyUpdate(new \DateTime(), $this->strategyId, $this->symbol, $this->stream, 
+                                         0.0, 0.0, SignalType::SIGNAL_UNKNOWN, null,
+                                         SignalType::SIGNAL_UNKNOWN, null, SignalType::SIGNAL_UNKNOWN, null, 
+                                         SignalType::SIGNAL_UNKNOWN, null, SignalType::SIGNAL_UNKNOWN, $error);
+
+            // Send the results back to the APIClient class.
+            $this->client->emit('strategyUpdated', [$result]);
         }
 
         /**

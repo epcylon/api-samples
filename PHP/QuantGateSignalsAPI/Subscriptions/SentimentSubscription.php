@@ -3,7 +3,8 @@
     namespace QuantGate\API\Signals\Subscriptions;
 
     use \QuantGate\API\Signals\APIClient;
-    use \QuantGate\API\Signals\Events\SentimentUpdate;    
+    use \QuantGate\API\Signals\Events\SentimentUpdate;
+    use \QuantGate\API\Signals\Events\SubscriptionError;
     use \QuantGate\API\Signals\Utilities;
 
     /**
@@ -91,7 +92,7 @@
 
             // Create the update object.
             $result = new SentimentUpdate($updateTime, $this->symbol, $this->stream, $this->compression,
-                                          $lengths, $colors, $avgLength, $avgColor, $isDirty);
+                                          $lengths, $colors, $avgLength, $avgColor, $isDirty, null);
 
             // Send the results back to the APIClient class.
             $this->client->emit('sentimentUpdated', [$result]);
@@ -174,6 +175,21 @@
         {
             return $p[1] + 0.5 * $x * ($p[2] - $p[0] +
                 ($x * (2.0 * $p[0] - 5.0 * $p[1] + 4.0 * $p[2] - $p[3] + $x * (3.0 * ($p[1] - $p[2]) + $p[3] - $p[0]))));
+        }
+
+        /**
+         * Called to send a subscription error to the subscribers.
+         * @param   $error  The error information to send.
+         * @return  void
+         */
+        public function sendError(SubscriptionError $error)
+        {
+            // Create the update object.
+            $result = new SentimentUpdate(new \DateTime(), $this->symbol, $this->stream, $this->compression, 
+                                          array(), array(), 0.0, 0.0, true, $error);
+
+            // Send the results back to the APIClient class.
+            $this->client->emit('sentimentUpdated', [$result]);
         }
 
         /**

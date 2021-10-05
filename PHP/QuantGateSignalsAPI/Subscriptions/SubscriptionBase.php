@@ -3,6 +3,7 @@
     namespace QuantGate\API\Signals\Subscriptions;
 
     use \QuantGate\API\Signals\APIClient;
+    use \QuantGate\API\Signals\Events\SubscriptionError;
 
     /**
      * Abstract base subscription class - includes basic properties and message handler definition.
@@ -98,6 +99,13 @@
          * @return  void
          */
         public abstract function handleMessage($body);
+
+        /**
+         * Called to send a subscription error to the subscribers.
+         * @param   $error  The error information to send.
+         * @return  void
+         */
+        public abstract function sendError(SubscriptionError $error);
     }
 
 ?>

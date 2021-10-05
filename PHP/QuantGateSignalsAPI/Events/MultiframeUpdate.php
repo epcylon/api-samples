@@ -72,35 +72,39 @@
          * @var float
          */
         private float $day1;
-
         /**
          * Whether the data used to generate this gauge value is potentially dirty (values are missing) 
          * or stale (not the most recent data).
          * @var bool
          */
         private bool $isDirty;
+        /**
+         * Holds error information, if a subscription error occured.
+         */
+        private ?SubscriptionError $error;
 
         /**
          * Creates a new MultiframeUpdate instance.
-         * @param DateTime  $updateTime The time of this update.
-         * @param string    $symbol     The symbol being subscribed to for this gauge.
-         * @param string    $stream     The stream from which the update is being received (realtime/delay/demo).
-         * @param float     $min5       The 5-minute equilibrium deviations value at the last update.
-         * @param float     $min10      The 10-minute equilibrium deviations value at the last update.
-         * @param float     $min15      The 15-minute equilibrium deviations value at the last update.
-         * @param float     $min30      The 30-minute equilibrium deviations value at the last update.
-         * @param float     $min45      The 45-minute equilibrium deviations value at the last update.
-         * @param float     $min60      The 60-minute equilibrium deviations value at the last update.
-         * @param float     $min120     The 120-minute equilibrium deviations value at the last update.
-         * @param float     $min180     The 180-minute equilibrium deviations value at the last update.
-         * @param float     $min240     The 240-minute equilibrium deviations value at the last update.
-         * @param float     $day1       The 1-day equilibrium deviations value at the last update.
-         * @param bool      $isDirty    Whether the data used to generate this gauge value is potentially dirty 
-         *                              (values are missing) or stale (not the most recent data).
+         * @param  DateTime           $updateTime  The time of this update.
+         * @param  string             $symbol      The symbol being subscribed to for this gauge.
+         * @param  string             $stream      The stream from which the update is being received (realtime/delay/demo).
+         * @param  float              $min5        The 5-minute equilibrium deviations value at the last update.
+         * @param  float              $min10       The 10-minute equilibrium deviations value at the last update.
+         * @param  float              $min15       The 15-minute equilibrium deviations value at the last update.
+         * @param  float              $min30       The 30-minute equilibrium deviations value at the last update.
+         * @param  float              $min45       The 45-minute equilibrium deviations value at the last update.
+         * @param  float              $min60       The 60-minute equilibrium deviations value at the last update.
+         * @param  float              $min120      The 120-minute equilibrium deviations value at the last update.
+         * @param  float              $min180      The 180-minute equilibrium deviations value at the last update.
+         * @param  float              $min240      The 240-minute equilibrium deviations value at the last update.
+         * @param  float              $day1        The 1-day equilibrium deviations value at the last update.
+         * @param  bool               $isDirty     Whether the data used to generate this gauge value is potentially dirty 
+         *                                         (values are missing) or stale (not the most recent data).
+         * @param  SubscriptionError  $error       Holds error information, if a subscription error occured.
          */
         function __construct(\DateTime $updateTime, string $symbol, string $stream, float $min5, float $min10, 
                              float $min15, float $min30, float $min45, float $min60, float $min120, float $min180,
-                             float $min240, float $day1, bool $isDirty)
+                             float $min240, float $day1, bool $isDirty, ?SubscriptionError $error)
         {
             $this->updateTime = $updateTime;
             $this->symbol = $symbol;
@@ -116,6 +120,7 @@
             $this->min240 = $min240;
             $this->day1 = $day1;
             $this->isDirty = $isDirty;
+            $this->error = $error;
         }
 
         /**
@@ -243,6 +248,15 @@
         public function getIsDirty() : bool
         {
             return $this->isDirty;
+        }
+
+        /**
+         * Returns error information, if a subscription error occured.
+         * return null|SubscriptionError
+         */
+        public function getError() : ?SubscriptionError
+        {
+            return $this->error;
         }
     }
 

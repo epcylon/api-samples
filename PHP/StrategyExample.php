@@ -4,14 +4,14 @@
 
     use \QuantGate\API\Signals\APIClient;
     use \QuantGate\API\Signals\Events\StrategyUpdate;
-    use \QuantGate\API\Signals\Events\TriggerUpdate;
+    use \QuantGate\API\Signals\Events\TopSymbolsUpdate;
 
     // Strategy ID constant.
     $strategyId = "Crb7.6";
     // Symbols we will be subscribing to.
     $symbols = array("USD.CAD", "AUD.CAD", "AUD.USD", "CAD.JPY", "CHF.JPY", "EUR.AUD", "EUR.GBP", "EUR.NOK",
                      "EUR.USD", "GBP.CAD", "GBP.JPY", "NZD.USD", "USD.CAD", "USD.JPY", "USD.SEK",
-                     "CCM X1-B3", "DOL V1-B3", "IND V1-B3", "BGI V1-B3", "WDO V1-B3", "WIN V1-B3");
+                     "CCM X1-B3", "DOL X1-B3", "IND V1-B3", "BGI V1-B3", "WDO X1-B3", "WIN V1-B3", "INVALID");
 
     // Create an event loop to run with.
     $loop = \React\EventLoop\Factory::create();
@@ -39,14 +39,30 @@
     
     // Set up the callback to handle strategy updates.
     $client->on('strategyUpdated', function (StrategyUpdate $update)
-    {        
-        echo "Strategy Update: ".$update->getSymbol().", ".($update->getEntryProgress() * 100.0)."%, ".$update->getSignal()."\n";
+    {
+        if (null !== $update->getError())
+        {
+            echo "Strategy Subscription Error: ".$update->getSymbol().", ".$update->getError()->getMessage()."\n";
+        }
+        else
+        {                        
+            echo "Strategy Update: ".$update->getSymbol().", ".
+                 ($update->getEntryProgress() * 100.0)."%, ".$update->getSignal()."\n";
+        }
     });
 
     // Set up the callback to handle trigger updates.
-    $client->on('triggerUpdated', function (TriggerUpdate $update)
-    {        
-        echo "Trigger Update: ".$update->getSymbol().", ".$update->getEquilibriumStd()."\n";
+    $client->on('topSymbolsUpdated', function (TopSymbolsUpdate $update)
+    {
+        if (null !== $update->getError())
+        {
+            echo "Top Symbols Subscription Error: ".$update->getBroker().", ".
+                 $update->getInstrumentType().", ".$update->getError()->getMessage()."\n";
+        }
+        else
+        {  
+            echo "Top Symbols Update: ".$update->getBroker().", ".$update->getInstrumentType()."\n";
+        }
     });
 
     // Connect with a JWT token.
@@ -59,12 +75,12 @@
     foreach ($symbols as $value)
         $client->subscribeStrategy($strategyId, $value, 100);
 
-    // Subscribe to Commitment stream to test.
-    $client->subscribeTrigger("EUR.USD");
+    // Subscribe to Top Symbols stream to test.
+    $client->subscribeTopSymbols("ib");
     // Throttle the "USD.CAD" strategy to 10 seconds.
     $client->throttleStrategy($strategyId, "USD.CAD", 10000);
     // Unsubscribe from "CAD.JPY".
-    $client->unsubscribeStrategy($strategyId, "CAD.JPY");    
+    $client->unsubscribeStrategy($strategyId, "CAD.JPY");
 
     // Continue running until there are no more events to handle.
     $loop->run();

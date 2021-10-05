@@ -3,7 +3,8 @@
     namespace QuantGate\API\Signals\Subscriptions;
 
     use \QuantGate\API\Signals\APIClient;
-    use \QuantGate\API\Signals\Events\BookPressureUpdate;    
+    use \QuantGate\API\Signals\Events\BookPressureUpdate;
+    use \QuantGate\API\Signals\Events\SubscriptionError;    
     use \QuantGate\API\Signals\Utilities;
 
     /**
@@ -60,7 +61,21 @@
             $isDirty = $update->getIsDirty();         
 
             // Create the update object.
-            $result = new BookPressureUpdate($updateTime, $this->symbol, $this->stream, $value, $isDirty);
+            $result = new BookPressureUpdate($updateTime, $this->symbol, $this->stream, $value, $isDirty, null);
+
+            // Send the results back to the APIClient class.
+            $this->client->emit('bookPressureUpdated', [$result]);
+        }
+
+        /**
+         * Called to send a subscription error to the subscribers.
+         * @param   $error  The error information to send.
+         * @return  void
+         */
+        public function sendError(SubscriptionError $error)
+        {
+            // Create the update object.
+            $result = new BookPressureUpdate(new \DateTime, $this->symbol, $this->stream, 0.0, true, $error);
 
             // Send the results back to the APIClient class.
             $this->client->emit('bookPressureUpdated', [$result]);

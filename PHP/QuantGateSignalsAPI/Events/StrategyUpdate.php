@@ -82,29 +82,35 @@
          * @var string
          */
         private string $signal;
+        /**
+         * Holds error information, if a subscription error occured.
+         */
+        private ?SubscriptionError $error;
 
         /**
          * Creates a new StrategyUpdate instance.
-         * @param   DateTime    $updateTime         The time of this update.
-         * @param   string      $strategyId         The strategy subscribed to. Example enum values: PPr4.0, BTr4.0, Crb.8.4.
-         * @param   string      $symbol             The symbol being subscribed to for this Strategy.
-         * @param   string      $stream             The stream from which the update is being received (realtime/delay/demo).
-         * @param   float       $entryProgress      Entry progress value.
-         * @param   float       $exitProgress       Exit progress value.
-         * @param   string      $perceptionSignal   Signal tied to the Perception level. "Unknown" if unset.
-         * @param   null|float  $perceptionLevel    The Perception level. null if unset.
-         * @param   string      $commitmentSignal   Signal tied to the Commitment level. "Unknown" if unset.
-         * @param   null|float  $commitmentLevel    The Commitment level. null if unset.
-         * @param   string      $equilibriumSignal  Signal tied to the Equilibrium level. "Unknown" if unset.
-         * @param   null|float  $equilibriumLevel   The Equilibrium level. null if unset.
-         * @param   string      $sentimentSignal    Signal tied to the Sentiment level. "Unknown" if unset.
-         * @param   null|float  $sentimentLevel     The Sentiment level. null if unset.
-         * @param   string      $signal             Entry signal for the strategy.
+         * @param  DateTime           $updateTime         The time of this update.
+         * @param  string             $strategyId         The strategy subscribed to. Example enum values: PPr4.0, BTr4.0, Crb.8.4.
+         * @param  string             $symbol             The symbol being subscribed to for this Strategy.
+         * @param  string             $stream             The stream from which the update is being received (realtime/delay/demo).
+         * @param  float              $entryProgress      Entry progress value.
+         * @param  float              $exitProgress       Exit progress value.
+         * @param  string             $perceptionSignal   Signal tied to the Perception level. "Unknown" if unset.
+         * @param  null|float         $perceptionLevel    The Perception level. null if unset.
+         * @param  string             $commitmentSignal   Signal tied to the Commitment level. "Unknown" if unset.
+         * @param  null|float         $commitmentLevel    The Commitment level. null if unset.
+         * @param  string             $equilibriumSignal  Signal tied to the Equilibrium level. "Unknown" if unset.
+         * @param  null|float         $equilibriumLevel   The Equilibrium level. null if unset.
+         * @param  string             $sentimentSignal    Signal tied to the Sentiment level. "Unknown" if unset.
+         * @param  null|float         $sentimentLevel     The Sentiment level. null if unset.
+         * @param  string             $signal             Entry signal for the strategy.
+         * @param  SubscriptionError  $error              Holds error information, if a subscription error occured.
          */
         function __construct(\DateTime $updateTime, string $strategyId, string $symbol, string $stream, 
-                             float $entryProgress, float $exitProgress, string $perceptionSignal, ?float $perceptionLevel, 
-                             string $commitmentSignal, ?float $commitmentLevel, string $equilibriumSignal,
-                             ?float $equilibriumLevel, string $sentimentSignal, ?float $sentimentLevel, string $signal)
+                             float $entryProgress, float $exitProgress, string $perceptionSignal, 
+                             ?float $perceptionLevel, string $commitmentSignal, ?float $commitmentLevel, 
+                             string $equilibriumSignal, ?float $equilibriumLevel, string $sentimentSignal, 
+                             ?float $sentimentLevel, string $signal, ?SubscriptionError $error)
         {
             $this->updateTime = $updateTime;
             $this->strategyId = $strategyId;
@@ -121,6 +127,7 @@
             $this->sentimentSignal = $sentimentSignal;
             $this->sentimentLevel = $sentimentLevel;
             $this->signal = $signal;
+            $this->error = $error;
         }
 
         /**
@@ -256,6 +263,15 @@
         public function getSignal() : string
         {
             return $this->signal;
+        }
+
+        /**
+         * Returns error information, if a subscription error occured.
+         * return SubscriptionError
+         */
+        public function getError() : ?SubscriptionError
+        {
+            return $this->error;
         }
     }
 

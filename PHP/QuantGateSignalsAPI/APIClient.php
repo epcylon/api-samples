@@ -12,7 +12,13 @@
     require_once __DIR__ . '/Events/TriggerUpdate.php';
     require_once __DIR__ . '/Events/MultiframeUpdate.php';
     require_once __DIR__ . '/Events/StrategyUpdate.php';
+    require_once __DIR__ . '/Events/TopSymbolsUpdate.php';
+    require_once __DIR__ . '/Events/SymbolItem.php';
+    require_once __DIR__ . '/Events/TopSymbolItem.php';
+    require_once __DIR__ . '/Events/InstrumentType.php';
     require_once __DIR__ . '/Events/SignalType.php';
+    require_once __DIR__ . '/Events/ErrorDetails.php';
+    require_once __DIR__ . '/Events/SubscriptionError.php';
     require_once __DIR__ . '/Proto/GPBMetadata/StealthApiV20.php';    
     require_once __DIR__ . '/Proto/GPBMetadata/StompV01.php'; 
     require_once __DIR__ . '/Proto/Stealth/SingleValueUpdate.php';
@@ -22,6 +28,8 @@
     require_once __DIR__ . '/Proto/Stealth/StrategyUpdate.php';
     require_once __DIR__ . '/Proto/Stealth/TriggerUpdate.php';
     require_once __DIR__ . '/Proto/Stealth/MultiframeUpdate.php';
+    require_once __DIR__ . '/Proto/Stealth/TopSymbolsUpdate.php';
+    require_once __DIR__ . '/Proto/Stealth/TopSymbolItem.php';
     require_once __DIR__ . '/Proto/Stomp/ConnectRequest.php';
     require_once __DIR__ . '/Proto/Stomp/DisconnectRequest.php';
     require_once __DIR__ . '/Proto/Stomp/ConnectedResponse.php';
@@ -31,7 +39,7 @@
     require_once __DIR__ . '/Proto/Stomp/ServerErrorResponse.php';
     require_once __DIR__ . '/Proto/Stomp/RequestFrame.php';
     require_once __DIR__ . '/Proto/Stomp/ResponseFrame.php';
-    require_once __DIR__ . '/Proto/Stomp/ServerErrorResponse.php';    
+    require_once __DIR__ . '/Proto/Stomp/SubscriptionErrorResponse.php';    
     require_once __DIR__ . '/Proto/Stomp/SubscribeRequest.php';
     require_once __DIR__ . '/Proto/Stomp/SubscriptionErrorResponse.php';
     require_once __DIR__ . '/Proto/Stomp/ThrottleRequest.php';
@@ -46,6 +54,7 @@
     require_once __DIR__ . '/Subscriptions/TriggerSubscription.php';
     require_once __DIR__ . '/Subscriptions/MultiframeSubscription.php';
     require_once __DIR__ . '/Subscriptions/StrategySubscription.php';
+    require_once __DIR__ . '/Subscriptions/TopSymbolsSubscription.php';
     require_once __DIR__ . '/Utilities.php';
 
     use \Evenement\EventEmitterInterface;
@@ -59,6 +68,9 @@
     use \QuantGate\API\Signals\Events\TriggerUpdate;
     use \QuantGate\API\Signals\Events\MultiframeUpdate;
     use \QuantGate\API\Signals\Events\StrategyUpdate;
+    use \QuantGate\API\Signals\Events\TopSymbolsUpdate;
+    use \QuantGate\API\Signals\Events\ErrorDetails;
+    use \QuantGate\API\Signals\Events\SubscriptionError;
     use \QuantGate\API\Signals\Subscriptions\PerceptionSubscription;
     use \QuantGate\API\Signals\Subscriptions\CommitmentSubscription;
     use \QuantGate\API\Signals\Subscriptions\EquilibriumSubscription;
@@ -68,6 +80,7 @@
     use \QuantGate\API\Signals\Subscriptions\TriggerSubscription;
     use \QuantGate\API\Signals\Subscriptions\MultiframeSubscription;
     use \QuantGate\API\Signals\Subscriptions\StrategySubscription;
+    use \QuantGate\API\Signals\Subscriptions\TopSymbolsSubscription;
     use \QuantGate\API\Signals\Subscriptions\SubscriptionBase;
     use \Ratchet\Client;
     use \Ratchet\Client\WebSocket;
@@ -79,6 +92,7 @@
     use \Stomp\DisconnectRequest;
     use \Stomp\ConnectedResponse;
     use \Stomp\ServerErrorResponse;
+    use \Stomp\SubscriptionErrorResponse;
     use \Stomp\Heartbeat;    
     use \Stomp\MessageResponse;
     use \Stomp\MessageResponses;
@@ -104,6 +118,7 @@
      *  $client->on('triggerUpdated', function (TriggerUpdate $update) {});
      *  $client->on('multiframeUpdated', function (TriggerUpdate $update) {});
      *  $client->on('strategyUpdated', function (StrategyUpdate $update) {});
+     *  $client->on('topSymbolsUpdated', function (TopSymbolsUpdate $update) {});     
      */
     class APIClient implements EventEmitterInterface
     {
@@ -515,7 +530,7 @@
 
             if (isset($subscription))
             {
-                // If the subscription exists,
+                // If the subscription exists, clear from the subscription lists.
                 unset($this->subscriptionsById[$subscription->getId()]);
                 unset($this->subscriptionsByDest[$subscription->getDestination()]);
 
@@ -609,6 +624,11 @@
                     $this->handleServerError($response->getServerError());
                     break;
 
+                case 'subscription_error':
+                    // If a subscription error message was received, handle it.
+                    $this->handleSubscriptionError($response->getSubscriptionError());
+                    break;
+
                 default:
                     // Log any unknown message types.
                     echo "Received: Unknown ".$response->getResponse()."\n";
@@ -654,6 +674,29 @@
 
             // Send out the error event.
             $this->emit('error', [$details]);
+        }
+
+        /**
+         * Handles a SubscriptionErrorResponse message.
+         * @param   SubscriptionErrorResponse   $response   The subscription error to handle.
+         */
+        function handleSubscriptionError(SubscriptionErrorResponse $response)
+        {
+            // Create the error event details.
+            $details = new SubscriptionError($response->getMessage(), $response->getDetails());
+
+            // Try to get the subscription tied to this message.
+            $subscription = $this->subscriptionsById[$response->getSubscriptionId()];
+
+            if (isset($subscription))
+            {
+                // If the subscription exists, clear from the subscription lists.
+                unset($this->subscriptionsById[$subscription->getId()]);
+                unset($this->subscriptionsByDest[$subscription->getDestination()]);
+
+                // Send the error to the subscribers.
+                $subscription->sendError($details);
+            }            
         }
 
         /**
@@ -1148,9 +1191,9 @@
         }
 
         /**
-         * Unsubscribes from Stategy data for the given strategy and symbol.
-         * @param   string  $strategyID The identifier of the strategy to stop running.
-         * @param   string  $symbol     The symbol to stop getting Strategy data for.
+         * Unsubscribes from Strategy data for the given strategy and symbol.
+         * @param   string  $strategyID  The identifier of the strategy to stop running.
+         * @param   string  $symbol      The symbol to stop getting Strategy data for.
          * @return  void
          */
         public function unsubscribeStrategy(string $strategyId, string $symbol)
@@ -1161,7 +1204,59 @@
                 // Create strategy destination and unsubscribe.
                 $this->unsubscribe(StrategySubscription::createDestination($strategyId, $symbol, $this->stream));
             });
-        }        
+        }
+
+        /**
+         * Subscribes to a Top Symbols data stream for a specific broker and (optional) instrument type.
+         * @param   string  $broker          The broker to get the Top Symbols for. Must match a valid broker type string.
+         * @param   string  $instrumentType  The type of instrument to include in the results.
+         * @param   int     $throttleRate    Rate to throttle messages at (in ms). Enter 0 for no throttling.
+         * @return  void
+         */
+        public function subscribeTopSymbols(string $broker, string $instrumentType = "", int $throttleRate = 0)        
+        {
+            // Subscribe within the loop.
+            $this->loop->futureTick(function() use ($broker, $instrumentType, $throttleRate)
+            {
+                // Create a new top symbols subscription.
+                $subscription = new TopSymbolsSubscription($this->nextId, $broker, $instrumentType, $throttleRate, $this);
+                // Subscribe.
+                $this->subscribe($subscription);
+            });
+        }
+
+        /**
+         * Changes the maximum rate at which the back-end sends TopSymbols updates for the given broker and (optional) instrument type.
+         * @param   string  $broker          The broker to get the Top Symbols for. Must match a valid broker type string.
+         * @param   string  $instrumentType  The type of instrument to include in the results.
+         * @param   int     $throttleRate    The new throttle rate to set to (in ms). Enter 0 for no throttling.
+         * @return  void
+         */
+        public function throttleTopSymbols(string $broker, string $instrumentType = "", int $throttleRate = 0)        
+        {
+            // Throttle within the loop.
+            $this->loop->futureTick(function() use ($broker, $instrumentType, $throttleRate)
+            {
+                // Create top symbols destination and throttle.
+                $this->throttle(TopSymbolsSubscription::createDestination($broker, $instrumentType), $throttleRate);
+            });
+        }
+
+        /**
+         * Unsubscribes from Top Symbols data for the given the given broker and (optional) instrument type.
+         * @param   string  $broker          The broker to get the Top Symbols for. Must match a valid broker type string.
+         * @param   string  $instrumentType  The type of instrument to include in the results.
+         * @return  void
+         */
+        public function unsubscribeTopSymbols(string $broker, string $instrumentType = "")
+        {            
+            // Unsubscribe within the loop.
+            $this->loop->futureTick(function() use ($broker, $instrumentType)
+            {
+                // Create top symbols destination and unsubscribe.
+                $this->unsubscribe(TopSymbolsSubscription::createDestination($broker, $instrumentType));
+            });
+        }   
     }
 
 ?>

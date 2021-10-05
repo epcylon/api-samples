@@ -3,7 +3,8 @@
     namespace QuantGate\API\Signals\Subscriptions;
 
     use \QuantGate\API\Signals\APIClient;
-    use \QuantGate\API\Signals\Events\EquilibriumUpdate;    
+    use \QuantGate\API\Signals\Events\EquilibriumUpdate;
+    use \QuantGate\API\Signals\Events\SubscriptionError;
     use \QuantGate\API\Signals\Utilities;
 
     /**
@@ -81,7 +82,22 @@
             // Create the update object.
             $result = new EquilibriumUpdate($updateTime, $this->symbol, $this->stream, $this->compression, 
                                             $equilibriumPrice, $gapSize, $lastPrice, $high, $low, 
-                                            $projected, $bias, $isDirty);
+                                            $projected, $bias, $isDirty, null);
+
+            // Send the results back to the APIClient class.
+            $this->client->emit('equilibriumUpdated', [$result]);
+        }
+
+        /**
+         * Called to send a subscription error to the subscribers.
+         * @param   $error  The error information to send.
+         * @return  void
+         */
+        public function sendError(SubscriptionError $error)
+        {
+            // Create the update object.
+            $result = new EquilibriumUpdate(new \DateTime(), $this->symbol, $this->stream, $this->compression,
+                                            0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, $error);
 
             // Send the results back to the APIClient class.
             $this->client->emit('equilibriumUpdated', [$result]);

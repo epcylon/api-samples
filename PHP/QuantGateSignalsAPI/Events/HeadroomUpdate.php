@@ -33,23 +33,30 @@
          * @var bool
          */
         private bool $isDirty;
+        /**
+         * Holds error information, if a subscription error occured.
+         */
+        private ?SubscriptionError $error;
 
         /**
          * Creates a new HeadroomUpdate instance.
-         * @param DateTime  $updateTime The time of this update.
-         * @param string    $symbol     The symbol being subscribed to for this gauge.
-         * @param string    $stream     The stream from which the update is being received (realtime/delay/demo).
-         * @param float     $value      The gauge value at the last update.
-         * @param bool      $isDirty    Whether the data used to generate this gauge value is potentially dirty 
-         *                              (values are missing) or stale (not the most recent data).
+         * @param  DateTime           $updateTime  The time of this update.
+         * @param  string             $symbol      The symbol being subscribed to for this gauge.
+         * @param  string             $stream      The stream from which the update is being received (realtime/delay/demo).
+         * @param  float              $value       The gauge value at the last update.
+         * @param  bool               $isDirty     Whether the data used to generate this gauge value is potentially dirty 
+         *                                         (values are missing) or stale (not the most recent data).
+         * @param  SubscriptionError  $error       Holds error information, if a subscription error occured.
          */
-        function __construct(\DateTime $updateTime, string $symbol, string $stream, float $value, bool $isDirty)
+        function __construct(\DateTime $updateTime, string $symbol, string $stream,
+                             float $value, bool $isDirty, ?SubscriptionError $error)
         {
             $this->updateTime = $updateTime;
             $this->symbol = $symbol;
             $this->stream = $stream;
             $this->value = $value;
             $this->isDirty = $isDirty;
+            $this->error = $error;
         }
 
         /**
@@ -96,6 +103,15 @@
         public function getIsDirty() : bool
         {
             return $this->isDirty;
+        }
+
+        /**
+         * Returns error information, if a subscription error occured.
+         * return SubscriptionError
+         */
+        public function getError() : ?SubscriptionError
+        {
+            return $this->error;
         }
     }
 

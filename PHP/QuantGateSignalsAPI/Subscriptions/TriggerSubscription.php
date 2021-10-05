@@ -3,7 +3,8 @@
     namespace QuantGate\API\Signals\Subscriptions;
 
     use \QuantGate\API\Signals\APIClient;
-    use \QuantGate\API\Signals\Events\TriggerUpdate;    
+    use \QuantGate\API\Signals\Events\TriggerUpdate;
+    use \QuantGate\API\Signals\Events\SubscriptionError;
     use \QuantGate\API\Signals\Utilities;
 
     /**
@@ -68,7 +69,22 @@
 
             // Create the update object.
             $result = new TriggerUpdate($updateTime, $this->symbol, $this->stream, $bias, $perception, $commitment,
-                                        $equilibriumPrice, $gapSize, $lastPrice, $sentiment, $isDirty);
+                                        $equilibriumPrice, $gapSize, $lastPrice, $sentiment, $isDirty, null);
+
+            // Send the results back to the APIClient class.
+            $this->client->emit('triggerUpdated', [$result]);
+        }
+
+        /**
+         * Called to send a subscription error to the subscribers.
+         * @param   $error  The error information to send.
+         * @return  void
+         */
+        public function sendError(SubscriptionError $error)
+        {
+            // Create the update object.
+            $result = new TriggerUpdate(new \DateTime(), $this->symbol, $this->stream, 
+                                        0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, $error);
 
             // Send the results back to the APIClient class.
             $this->client->emit('triggerUpdated', [$result]);

@@ -3,7 +3,8 @@
     namespace QuantGate\API\Signals\Subscriptions;
 
     use \QuantGate\API\Signals\APIClient;
-    use \QuantGate\API\Signals\Events\MultiframeUpdate;    
+    use \QuantGate\API\Signals\Events\MultiframeUpdate;
+    use \QuantGate\API\Signals\Events\SubscriptionError;
     use \QuantGate\API\Signals\Utilities;
 
     /**
@@ -69,8 +70,23 @@
             $isDirty = $update->getIsDirty();
 
             // Create the update object.
-            $result = new MultiframeUpdate($updateTime, $this->symbol, $this->stream, $min5, $min10, $min15,
-                                           $min30, $min45, $min60, $min120, $min180, $min240, $day1, $isDirty);
+            $result = new MultiframeUpdate($updateTime, $this->symbol, $this->stream, $min5, $min10, $min15, $min30,
+                                           $min45, $min60, $min120, $min180, $min240, $day1, $isDirty, null);
+
+            // Send the results back to the APIClient class.
+            $this->client->emit('multiframeUpdated', [$result]);
+        }
+
+        /**
+         * Called to send a subscription error to the subscribers.
+         * @param   $error  The error information to send.
+         * @return  void
+         */
+        public function sendError(SubscriptionError $error)
+        {
+            // Create the update object.
+            $result = new MultiframeUpdate(new \DateTime, $this->symbol, $this->stream, 0.0, 0.0, 
+                                           0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, true, $error);
 
             // Send the results back to the APIClient class.
             $this->client->emit('multiframeUpdated', [$result]);

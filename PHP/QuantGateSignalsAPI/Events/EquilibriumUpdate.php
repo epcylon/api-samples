@@ -63,26 +63,31 @@
          * @var bool
          */
         private bool $isDirty;
+        /**
+         * Holds error information, if a subscription error occured.
+         */
+        private ?SubscriptionError $error;
 
         /**
          * Creates a new EquilibriumUpdate instance.
-         * @param DateTime  $updateTime         The time of this update.
-         * @param string    $symbol             The symbol being subscribed to for this gauge.
-         * @param string    $stream             The stream from which the update is being received (realtime/delay/demo).
-         * @param string    $compression        Compression timeframe applied to the gauge.
-         * @param float     $equilibriumPrice   The Equilibrium Price (fair market value at time of calculation).
-         * @param float     $gapSize            Gap size of each equilibrium deviation.
-         * @param float     $lastPrice          Last traded price at the time of calculation.
-         * @param float     $high               Position of the high value.
-         * @param float     $low                Position of the low value.
-         * @param float     $projected          Position of the projected value.
-         * @param float     $bias               Equilibrium bias (as determined by the slope).         
-         * @param bool      $isDirty            Whether the data used to generate this gauge value is potentially dirty 
-         *                                      (values are missing) or stale (not the most recent data).
+         * @param  DateTime           $updateTime        The time of this update.
+         * @param  string             $symbol            The symbol being subscribed to for this gauge.
+         * @param  string             $stream            The stream from which the update is being received (realtime/delay/demo).
+         * @param  string             $compression       Compression timeframe applied to the gauge.
+         * @param  float              $equilibriumPrice  The Equilibrium Price (fair market value at time of calculation).
+         * @param  float              $gapSize           Gap size of each equilibrium deviation.
+         * @param  float              $lastPrice         Last traded price at the time of calculation.
+         * @param  float              $high              Position of the high value.
+         * @param  float              $low               Position of the low value.
+         * @param  float              $projected         Position of the projected value.
+         * @param  float              $bias              Equilibrium bias (as determined by the slope).         
+         * @param  bool               $isDirty           Whether the data used to generate this gauge value is potentially dirty 
+         *                                               (values are missing) or stale (not the most recent data).
+         * @param  SubscriptionError  $error             Holds error information, if a subscription error occured.
          */
         function __construct(\DateTime $updateTime, string $symbol, string $stream, string $compression, 
                              float $equilibriumPrice, float $gapSize, float $lastPrice, float $high,
-                             float $low, float $projected, float $bias, bool $isDirty)
+                             float $low, float $projected, float $bias, bool $isDirty, ?SubscriptionError $error)
         {
             $this->updateTime = $updateTime;
             $this->symbol = $symbol;
@@ -96,6 +101,7 @@
             $this->projected = $projected;
             $this->bias = $bias;
             $this->isDirty = $isDirty;
+            $this->error = $error;
         }
 
         /**
@@ -228,6 +234,15 @@
         public function getIsDirty() : bool
         {
             return $this->isDirty;
+        }
+
+        /**
+         * Returns error information, if a subscription error occured.
+         * return null|SubscriptionError
+         */
+        public function getError() : ?SubscriptionError
+        {
+            return $this->error;
         }
     }
 

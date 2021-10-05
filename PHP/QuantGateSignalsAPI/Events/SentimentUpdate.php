@@ -48,22 +48,28 @@
          * @var bool
          */
         private bool $isDirty;
+        /**
+         * Holds error information, if a subscription error occured.
+         */
+        private ?SubscriptionError $error;
 
         /**
          * Creates a new SentimentUpdate instance.
-         * @param DateTime  $updateTime   The time of this update.
-         * @param string    $symbol       The symbol being subscribed to for this gauge.
-         * @param string    $stream       The stream from which the update is being received (realtime/delay/demo).
-         * @param string    $compression  Compression timeframe applied to the gauge.
-         * @param array     $lengths      Holds the lengths of each bar.
-         * @param array     $colors       Holds the colors of each bar.
-         * @param float     $avgLength    Average bar length.
-         * @param float     $avgColor     Average bar color.
-         * @param bool      $isDirty      Whether the data used to generate this gauge value is potentially dirty 
-         *                                (values are missing) or stale (not the most recent data).
+         * @param  DateTime           $updateTime   The time of this update.
+         * @param  string             $symbol       The symbol being subscribed to for this gauge.
+         * @param  string             $stream       The stream from which the update is being received (realtime/delay/demo).
+         * @param  string             $compression  Compression timeframe applied to the gauge.
+         * @param  array              $lengths      Holds the lengths of each bar.
+         * @param  array              $colors       Holds the colors of each bar.
+         * @param  float              $avgLength    Average bar length.
+         * @param  float              $avgColor     Average bar color.
+         * @param  bool               $isDirty      Whether the data used to generate this gauge value is potentially dirty 
+         *                                          (values are missing) or stale (not the most recent data).
+         * @param  SubscriptionError  $error        Holds error information, if a subscription error occured.
          */
         function __construct(\DateTime $updateTime, string $symbol, string $stream, string $compression, 
-                             array $lengths, array $colors, float $avgLength, float $avgColor, bool $isDirty)
+                             array $lengths, array $colors, float $avgLength, float $avgColor,
+                             bool $isDirty, ?SubscriptionError $error)
         {
             $this->updateTime = $updateTime;
             $this->symbol = $symbol;
@@ -74,6 +80,7 @@
             $this->avgLength = $avgLength;
             $this->avgColor = $avgColor;
             $this->isDirty = $isDirty;
+            $this->error = $error;
         }
 
         /**
@@ -156,6 +163,15 @@
         public function getIsDirty() : bool
         {
             return $this->isDirty;
+        }
+
+        /**
+         * Returns error information, if a subscription error occured.
+         * return null|SubscriptionError
+         */
+        public function getError() : ?SubscriptionError
+        {
+            return $this->error;
         }
     }
 
