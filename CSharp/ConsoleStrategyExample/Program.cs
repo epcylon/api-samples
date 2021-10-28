@@ -31,7 +31,7 @@ namespace QuantGate.Examples.ConsoleStrategy
         /// <summary>
         /// Used to wait for Ctrl-C events.
         /// </summary>
-        private static ManualResetEvent _quitEvent = new ManualResetEvent(false);
+        private static readonly ManualResetEvent _quitEvent = new ManualResetEvent(false);
 
         /// <summary>
         /// The main server instance.
