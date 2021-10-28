@@ -1,0 +1,72 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\QuantGateSignalsAPI\APIClient.cs" Link="APIClient.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Enumerations.cs" Link="Enumerations.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Events\BookPressureEventArgs.cs" Link="Events\BookPressureEventArgs.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Events\CommitmentEventArgs.cs" Link="Events\CommitmentEventArgs.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Events\EquilibriumEventArgs.cs" Link="Events\EquilibriumEventArgs.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Events\ErrorEventArgs.cs" Link="Events\ErrorEventArgs.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Events\GaugeArgsBase.cs" Link="Events\GaugeArgsBase.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Events\HeadroomEventArgs.cs" Link="Events\HeadroomEventArgs.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Events\InstrumentEventArgs.cs" Link="Events\InstrumentEventArgs.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Events\MultiframeEquilibriumEventArgs.cs" Link="Events\MultiframeEquilibriumEventArgs.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Events\PerceptionEventArgs.cs" Link="Events\PerceptionEventArgs.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Events\SearchResult.cs" Link="Events\SearchResult.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Events\SearchResultsEventArgs.cs" Link="Events\SearchResultsEventArgs.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Events\SentimentEventArgs.cs" Link="Events\SentimentEventArgs.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Events\StrategyEventArgs.cs" Link="Events\StrategyEventArgs.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Events\TickRange.cs" Link="Events\TickRange.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Events\TopSymbol.cs" Link="Events\TopSymbol.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Events\TopSymbolsEventArgs.cs" Link="Events\TopSymbolsEventArgs.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Events\TradingSession.cs" Link="Events\TradingSession.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Events\TriggerEventArgs.cs" Link="Events\TriggerEventArgs.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\ProtoStomp\IDGenerator.cs" Link="ProtoStomp\IDGenerator.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\ProtoStomp\IReceiptable.cs" Link="ProtoStomp\IReceiptable.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\ProtoStomp\ProtoStompReceipt.cs" Link="ProtoStomp\ProtoStompReceipt.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\ProtoStomp\ProtoStompSend.cs" Link="ProtoStomp\ProtoStompSend.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\ProtoStomp\ProtoStompSubscription.cs" Link="ProtoStomp\ProtoStompSubscription.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Proto\StealthApiV20.cs" Link="Proto\StealthApiV20.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Proto\StompV01.cs" Link="Proto\StompV01.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Subscriptions\BookPressureSubscription.cs" Link="Subscriptions\BookPressureSubscription.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Subscriptions\CommitmentSubscription.cs" Link="Subscriptions\CommitmentSubscription.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Subscriptions\EquilibriumSubscription.cs" Link="Subscriptions\EquilibriumSubscription.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Subscriptions\GaugeSubscriptionBase.cs" Link="Subscriptions\GaugeSubscriptionBase.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Subscriptions\HeadroomSubscription.cs" Link="Subscriptions\HeadroomSubscription.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Subscriptions\InstrumentSubscription.cs" Link="Subscriptions\InstrumentSubscription.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Subscriptions\ISymbolSubscription.cs" Link="Subscriptions\ISymbolSubscription.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Subscriptions\MultiframeSubscription.cs" Link="Subscriptions\MultiframeSubscription.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Subscriptions\PerceptionSubscription.cs" Link="Subscriptions\PerceptionSubscription.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Subscriptions\SearchSubscription.cs" Link="Subscriptions\SearchSubscription.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Subscriptions\SentimentSubscription.cs" Link="Subscriptions\SentimentSubscription.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Subscriptions\StrategySubscription.cs" Link="Subscriptions\StrategySubscription.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Subscriptions\SubscriptionBase.cs" Link="Subscriptions\SubscriptionBase.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Subscriptions\TopSymbolsSubscription.cs" Link="Subscriptions\TopSymbolsSubscription.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Subscriptions\TriggerSubscription.cs" Link="Subscriptions\TriggerSubscription.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Utilities\ParsedDestination.cs" Link="Utilities\ParsedDestination.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Utilities\ProtoPriceEncoder.cs" Link="Utilities\ProtoPriceEncoder.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Utilities\ProtoTimeEncoder.cs" Link="Utilities\ProtoTimeEncoder.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Utilities\TimeZoneDecoder.cs" Link="Utilities\TimeZoneDecoder.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Events\" />
+    <Folder Include="Utilities\" />
+    <Folder Include="ProtoStomp\" />
+    <Folder Include="Proto\" />
+    <Folder Include="Subscriptions\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.19.0" />
+    <PackageReference Include="WebSocketSharp-netstandard" Version="1.0.1" />
+  </ItemGroup>
+
+</Project>
