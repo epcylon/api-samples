@@ -223,9 +223,12 @@ namespace BridgeRock.CSharpExample.Controls
                 // Storyboards can be used.
                 NameScope.SetNameScope(this, new NameScope());
 
-                LinearGradientBrush rectBrush = new LinearGradientBrush();
-                rectBrush.StartPoint = new Point(-0.25, 0.5);
-                rectBrush.EndPoint = new Point(1.25, 0.5);
+                LinearGradientBrush rectBrush = new LinearGradientBrush
+                {
+                    StartPoint = new Point(-0.25, 0.5),
+                    EndPoint = new Point(1.25, 0.5)
+                };
+
                 stop1 = new GradientStop(Color.FromArgb(0x9F, 0x77, 0x77, 0x77), -1);
                 stop2 = new GradientStop(Color.FromArgb(0x9F, 0xAA, 0xAA, 0xAA), -0.5);
                 stop3 = new GradientStop(Color.FromArgb(0x9F, 0x77, 0x77, 0x77), 0);
@@ -257,8 +260,10 @@ namespace BridgeRock.CSharpExample.Controls
                     Child = vbText
                 };
 
-                _story = new Storyboard();
-                _story.RepeatBehavior = RepeatBehavior.Forever;
+                _story = new Storyboard
+                {
+                    RepeatBehavior = RepeatBehavior.Forever
+                };
                 Timeline.SetDesiredFrameRate(_story, 15);
                 
                 DoubleAnimation animation;
@@ -380,12 +385,14 @@ namespace BridgeRock.CSharpExample.Controls
             try
             {
                 // Create the line for this index.
-                hLine = new Line();
-                hLine.Stroke = _hLineBrush;
-                hLine.StrokeThickness = 1;
-                hLine.X1 = 0;
-                hLine.X2 = ActualWidth;
-                hLine.Y1 = ActualHeight * (index / 20.0);
+                hLine = new Line
+                {
+                    Stroke = _hLineBrush,
+                    StrokeThickness = 1,
+                    X1 = 0,
+                    X2 = ActualWidth,
+                    Y1 = ActualHeight * (index / 20.0)
+                };
                 hLine.Y2 = hLine.Y1;
 
                 // Add to the canvas.
