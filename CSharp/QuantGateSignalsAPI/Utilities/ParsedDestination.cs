@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Text;
 
 namespace QuantGate.API.Signals.Utilities
@@ -117,19 +114,19 @@ namespace QuantGate.API.Signals.Utilities
         /// <summary>
         /// Holds a list of all valid subscription types.
         /// </summary>
-        private static Dictionary<string, SubscriptionType> _subscriptionTypes;
+        private static readonly Dictionary<string, SubscriptionType> _subscriptionTypes;
 
         /// <summary>
         /// Holds a list of all subscription strings by subscription type.
         /// </summary>
-        private static Dictionary<SubscriptionType, string> _subscriptionStringsByType;
+        private static readonly Dictionary<SubscriptionType, string> _subscriptionStringsByType;
 
-        private static Dictionary<string, SubscriptionPath> _subscriptionPaths;
+        private static readonly Dictionary<string, SubscriptionPath> _subscriptionPaths;
 
         /// <summary>
         /// Holds a list of all subscription path strings by subscription path.
         /// </summary>
-        private static Dictionary<SubscriptionPath, string> _subscriptionStringsByPath;
+        private static readonly Dictionary<SubscriptionPath, string> _subscriptionStringsByPath;
 
         /// <summary>
         /// The full destination path that was parsed.
@@ -414,7 +411,7 @@ namespace QuantGate.API.Signals.Utilities
             Destination = builder.ToString();
         }
 
-        public static ParsedDestination CreateGaugeDestination(SubscriptionPath subscriptionPath, string streamID, string symbol, string compression = null)
+        public static ParsedDestination CreateGaugeDestination(SubscriptionPath subscriptionPath, string streamID, string symbol, string? compression = null)
         {
             return new ParsedDestination(SubscriptionType.Gauge, subscriptionPath, streamID, symbol, compression);
         }

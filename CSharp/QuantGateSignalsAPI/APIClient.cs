@@ -73,7 +73,7 @@ namespace QuantGate.API.Signals
         /// <summary>
         /// Search subscription.
         /// </summary>
-        private SearchSubscription _search = null;
+        private SearchSubscription? _search = null;
 
         #endregion
 
@@ -350,7 +350,7 @@ namespace QuantGate.API.Signals
             });
         }
 
-        private void OnError(object o, ErrorEventArgs e)
+        private void OnError(object o, WebSocketSharp.ErrorEventArgs e)
         {
             Enqueue(() =>
             {
@@ -596,7 +596,7 @@ namespace QuantGate.API.Signals
         /// </summary>
         /// <param name="base64">The unpadded string.</param>
         /// <returns>The padded base-64 string.</returns>
-        private string PadBase64String(string base64) =>
+        private static string PadBase64String(string base64) =>
             base64.PadRight(base64.Length + (4 - base64.Length % 4) % 4, '=');
 
         /// <summary>
@@ -842,8 +842,8 @@ namespace QuantGate.API.Signals
         /// </summary>
         private void ClearSubscriptions()
         {
-            List<ProtoStompSubscription> subscriptions = null;
-            List<IReceiptable> receiptables = null;
+            List<ProtoStompSubscription>? subscriptions = null;
+            List<IReceiptable>? receiptables = null;
 
             try
             {
@@ -1303,7 +1303,7 @@ namespace QuantGate.API.Signals
         /// </summary>
         /// <param name="compression">The compression string to clean.</param>
         /// <returns>The clean compression string.</returns>
-        private string CleanCompression(string compression)
+        private static string? CleanCompression(string? compression)
         {
             // If no string, just return null.
             if (string.IsNullOrEmpty(compression))
