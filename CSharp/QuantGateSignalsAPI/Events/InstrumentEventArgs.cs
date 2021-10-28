@@ -124,7 +124,7 @@ namespace QuantGate.API.Signals.Events
             TickRanges = tickRanges;
             TradingSessions = tradingSessions;
             BrokerSymbols = brokerSymbols;
-            ErrorMessage = null;
+            ErrorMessage = string.Empty;
         }
 
         /// <summary>
@@ -135,19 +135,19 @@ namespace QuantGate.API.Signals.Events
         public InstrumentEventArgs(string symbol, string errorMessage)
         {
             Symbol = symbol;
-            Underlying = null;
-            Currency = null;
-            Exchange = null;
+            Underlying = string.Empty;
+            Currency = string.Empty;
+            Exchange = string.Empty;
             InstrumentType = InstrumentType.NoInstrument;
             PutOrCall = PutOrCall.NoPutCall;
             Strike = 0;
             ExpiryDate = default;
             Multiplier = 0;
-            DisplayName = null;
-            TimeZone = null;
-            TickRanges = null;
-            TradingSessions = null;
-            BrokerSymbols = null;
+            DisplayName = string.Empty;
+            TimeZone = TimeZoneInfo.Utc;
+            TickRanges = new List<TickRange>();
+            TradingSessions = new List<TradingSession>();
+            BrokerSymbols = new Dictionary<string, string>();
             ErrorMessage = errorMessage;
         }
     }

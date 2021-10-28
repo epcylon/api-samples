@@ -2,14 +2,16 @@
 using QuantGate.API.Signals.Proto.Stealth;
 using QuantGate.API.Signals.ProtoStomp;
 using QuantGate.API.Signals.Utilities;
+using System;
 using System.Collections.Generic;
 
 namespace QuantGate.API.Signals.Subscriptions
-{
+{    
     internal class SearchSubscription : SubscriptionBase<SymbolSearchUpdate, SearchResultsEventArgs>
     {
-        public SearchSubscription(APIClient client, string streamID, bool receipt = false, uint throttleRate = 0) :
-            base(client, SymbolSearchUpdate.Parser,
+        public SearchSubscription(APIClient client, EventHandler<SearchResultsEventArgs> handler,
+                                  string streamID, bool receipt = false, uint throttleRate = 0) :
+            base(client, SymbolSearchUpdate.Parser, handler,
                  new ParsedDestination(SubscriptionType.Definition, SubscriptionPath.DefnSymbolSearch, streamID).Destination,
                  receipt, throttleRate)
         {
@@ -37,7 +39,7 @@ namespace QuantGate.API.Signals.Subscriptions
 
         protected override SearchResultsEventArgs HandleUpdate(SymbolSearchUpdate update, object processed)
         {
-            return new SearchResultsEventArgs(update.SearchTerm, processed as List<SearchResult>);
+            return new SearchResultsEventArgs(update.SearchTerm, (List<SearchResult>)processed);
         }
     }
 }

@@ -10,18 +10,24 @@ namespace QuantGate.API.Signals.Subscriptions
         where V : EventArgs
     {
         /// <summary>
+        /// Empty object to use (instead of null).
+        /// </summary>
+        private object _emptyObject = new object();
+
+        /// <summary>
         /// Notifies that the object was updated (through the parent).
         /// </summary>
-        public EventHandler<V> ParentUpdatedEvent { get; set; }
+        public EventHandler<V> ParentUpdatedEvent { get; }
 
-        private readonly MessageParser<M> _parser;        
+        private readonly MessageParser<M> _parser;
 
-        public SubscriptionBase(APIClient client, MessageParser<M> parser,
+        public SubscriptionBase(APIClient client, MessageParser<M> parser, EventHandler<V> handler,
                                 string destination, bool receipt = false, uint throttleRate = 0) :
             base(client, destination, receipt, throttleRate)
         {
             _parser = parser;
-            OnNext += HandleOnNext;            
+            ParentUpdatedEvent = handler;
+            OnNext += HandleOnNext;
         }
 
         private void HandleOnNext(ProtoStompSubscription subscription, ByteString values)
@@ -44,7 +50,7 @@ namespace QuantGate.API.Signals.Subscriptions
             }), null);
         }
 
-        protected virtual object Preprocess(M update) => null;
+        protected virtual object Preprocess(M update) => _emptyObject;
         protected abstract V HandleUpdate(M update, object processed);
     }
 }

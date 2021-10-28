@@ -13,9 +13,9 @@ namespace QuantGate.API.Signals.Subscriptions
         /// </summary>
         private const string _moduleID = "SSub";
 
-        public SentimentSubscription(APIClient client, string streamID, string symbol,
-                                     string compression, bool receipt = false, uint throttleRate = 0) :
-               base(client, SentimentUpdate.Parser, SubscriptionPath.GaugeSentiment,
+        public SentimentSubscription(APIClient client, EventHandler<SentimentEventArgs> handler, string streamID, 
+                                     string symbol, string compression, bool receipt = false, uint throttleRate = 0) :
+               base(client, SentimentUpdate.Parser, handler, SubscriptionPath.GaugeSentiment,
                     streamID, symbol, compression, receipt, throttleRate)
         {
         }
@@ -35,8 +35,7 @@ namespace QuantGate.API.Signals.Subscriptions
 
         protected override SentimentEventArgs HandleUpdate(SentimentUpdate update, object processed)
         {
-            if (!(processed is Tuple<double[], double[]> converted))
-                return null;
+            Tuple<double[], double[]> converted = (Tuple<double[], double[]>)processed;
 
             return new SentimentEventArgs(
                 Symbol,

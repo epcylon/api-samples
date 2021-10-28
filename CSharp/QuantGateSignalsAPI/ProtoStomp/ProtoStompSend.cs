@@ -17,7 +17,7 @@ namespace QuantGate.API.Signals.ProtoStomp
         /// </summary>
         internal SendRequest Request { get; private set; }
 
-        public ProtoStompSend(APIClient client, string destination, ByteString body = null, bool receipt = false)
+        public ProtoStompSend(APIClient client, string destination, bool receipt = false)
         {
             Request = new SendRequest();
 
@@ -25,9 +25,6 @@ namespace QuantGate.API.Signals.ProtoStomp
                 Request.Destination = '/' + destination;
             else
                 Request.Destination = destination;
-
-            if (body is object)
-                Request.Body = body;
 
             if (receipt)
                 Request.ReceiptId = client.IDGenerator.NextID;

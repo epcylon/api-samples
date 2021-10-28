@@ -18,11 +18,11 @@ namespace QuantGate.API.Signals.Subscriptions
         /// <summary>
         /// The symbol that was requested.
         /// </summary>
-        private string _symbol;
+        private readonly string _symbol;
 
-        public InstrumentSubscription(APIClient client, string streamID, string symbol,
-                                      bool receipt = false, uint throttleRate = 0) :
-            base(client, InstrumentUpdate.Parser,
+        public InstrumentSubscription(APIClient client, EventHandler<InstrumentEventArgs> handler, 
+                                      string streamID, string symbol, bool receipt = false, uint throttleRate = 0) :
+            base(client, InstrumentUpdate.Parser, handler,
                  new ParsedDestination(SubscriptionType.Definition, SubscriptionPath.DefnInstrument,
                                        ParsedDestination.StreamIDForSymbol(streamID, symbol), symbol).Destination,
                  receipt, throttleRate)
@@ -59,7 +59,7 @@ namespace QuantGate.API.Signals.Subscriptions
                 for (int day = 0; day < update.TradingSessions.Count; day++)
                 {
                     Proto.Stealth.TradingSession session = update.TradingSessions[day];
-                    tradingSessions.Add(new Events.TradingSession((System.DayOfWeek)day, session.Close, session.Length));
+                    tradingSessions.Add(new Events.TradingSession((DayOfWeek)day, session.Close, session.Length));
                 }
 
                 foreach (KeyValuePair<string, string> symbolMapping in update.BrokerSymbols)
