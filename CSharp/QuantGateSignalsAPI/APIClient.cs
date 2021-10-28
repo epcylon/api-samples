@@ -581,7 +581,7 @@ namespace QuantGate.API.Signals
                     _killTicks = DateTime.UtcNow.Ticks + _connectKill;
 
                     // Connect to the websocket.
-                    _transport.ConnectAsync();
+                    _transport.Connect();
                 }
                 catch (Exception ex)
                 {
@@ -652,7 +652,7 @@ namespace QuantGate.API.Signals
         {
             try
             {
-                _transport.SendAsync(frame.ToByteArray(), null);
+                _transport.Send(frame.ToByteArray());
             }
             catch (Exception ex)
             {
