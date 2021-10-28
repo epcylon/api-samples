@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MauiExample", "MauiExample.csproj", "{C13F2493-1376-443D-9E41-057FE5FE50BA}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuantGateSignalsAPI.Net6", "..\QuantGateSignalsAPI.Net6\QuantGateSignalsAPI.Net6.csproj", "{438AB480-B9F0-4ACA-8766-270056C64B07}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +19,10 @@ Global
 		{C13F2493-1376-443D-9E41-057FE5FE50BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C13F2493-1376-443D-9E41-057FE5FE50BA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C13F2493-1376-443D-9E41-057FE5FE50BA}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{438AB480-B9F0-4ACA-8766-270056C64B07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{438AB480-B9F0-4ACA-8766-270056C64B07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{438AB480-B9F0-4ACA-8766-270056C64B07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{438AB480-B9F0-4ACA-8766-270056C64B07}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
