@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace BridgeRock.MauiExample.Controls
 {
-    public partial class SentimentViewer : ContentView
+    public partial class SentimentViewer : Grid
     {
         /// <summary>
         /// Module-level Identifier.

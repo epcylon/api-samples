@@ -1,0 +1,21 @@
+﻿<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BridgeRock.MauiExample.Controls.SentimentBar" >
+    <Grid RowSpacing="0" ColumnSpacing="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="4" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="4" />
+        </Grid.RowDefinitions>
+        <Grid GridLayout.Row="1" GridLayout.RowSpan="3" GridLayout.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition x:Name="topRow" Height="1*" />
+                <RowDefinition x:Name="barRow" Height="0*" />
+                <RowDefinition x:Name="bottomRow" Height="1*" />
+            </Grid.RowDefinitions>
+            <Rectangle GridLayout.Row="1" Fill="Black" />
+        </Grid>
+    </Grid>
+</ContentView>

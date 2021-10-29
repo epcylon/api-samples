@@ -1,12 +1,35 @@
-﻿<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<Grid xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="BridgeRock.MauiExample.Controls.SentimentViewer">
-  <ContentView.Content>
-        <StackLayout>
-            <!--<Image Source="dotnet_bot.svg"
-                   WidthRequest="250"
-                   HeightRequest="310"
-                   HorizontalOptions="Center" />-->
-        </StackLayout>
-  </ContentView.Content>
-</ContentView>
+             xmlns:controls="clr-namespace:BridgeRock.MauiExample.Controls"
+             x:Class="BridgeRock.MauiExample.Controls.SentimentViewer" Background="#D0D0D0"
+            RowDefinitions="100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,
+                            10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*">
+
+    <RoundRectangle GridLayout.Row="1" Fill="#A0A0A0" StrokeThickness="0" />
+    <RoundRectangle GridLayout.Row="3" Fill="#A0A0A0" StrokeThickness="0" />
+    <RoundRectangle GridLayout.Row="5" Fill="#A0A0A0" StrokeThickness="0" />
+    <RoundRectangle GridLayout.Row="7" Fill="#A0A0A0" StrokeThickness="0" />
+    <RoundRectangle GridLayout.Row="9" Fill="#A0A0A0" StrokeThickness="0" />
+    <RoundRectangle GridLayout.Row="11" Fill="#A0A0A0" StrokeThickness="0" />
+    <RoundRectangle GridLayout.Row="13" Fill="#A0A0A0" StrokeThickness="0" />
+    <RoundRectangle GridLayout.Row="15" Fill="#A0A0A0" StrokeThickness="0" />
+    <RoundRectangle GridLayout.Row="17" Fill="#A0A0A0" StrokeThickness="0" />
+    
+    <RoundRectangle GridLayout.Row="19" Fill="#A0A0A0" StrokeThickness="0" />
+    
+    <RoundRectangle GridLayout.Row="21" Fill="#A0A0A0" StrokeThickness="0" />
+    <RoundRectangle GridLayout.Row="23" Fill="#A0A0A0" StrokeThickness="0" />
+    <RoundRectangle GridLayout.Row="25" Fill="#A0A0A0" StrokeThickness="0" />
+    <RoundRectangle GridLayout.Row="27" Fill="#A0A0A0" StrokeThickness="0" />
+    <RoundRectangle GridLayout.Row="29" Fill="#A0A0A0" StrokeThickness="0" />
+    <RoundRectangle GridLayout.Row="31" Fill="#A0A0A0" StrokeThickness="0" />
+    <RoundRectangle GridLayout.Row="33" Fill="#A0A0A0" StrokeThickness="0" />
+    <RoundRectangle GridLayout.Row="35" Fill="#A0A0A0" StrokeThickness="0" />
+    <RoundRectangle GridLayout.Row="37" Fill="#A0A0A0" StrokeThickness="0" />
+
+    <Grid x:Name="sGrid" GridLayout.RowSpan="39" Background="Transparent">
+        <controls:SentimentBar Value="0" />
+    </Grid>
+
+
+</Grid>

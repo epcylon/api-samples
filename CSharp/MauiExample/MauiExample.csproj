@@ -56,12 +56,18 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Controls\SentimentBar.xaml.cs">
+	    <DependentUpon>SentimentBar.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Controls\SimpleGauge.xaml.cs">
 	    <DependentUpon>SimpleGauge.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Controls\SentimentBar.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Controls\SimpleGauge.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
