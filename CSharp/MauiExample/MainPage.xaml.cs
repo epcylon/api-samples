@@ -19,8 +19,9 @@ namespace MauiExample
 		int count = 0;
 
 		//private readonly BallField _field;
-        //private readonly SkiaGraphicsView _view;
+		//private readonly SkiaGraphicsView _view;
 		//private readonly Timer _timer;
+
 
 		public MainPage()
 		{
@@ -62,6 +63,8 @@ namespace MauiExample
 
         private void _client_PerceptionUpdated(object sender, PerceptionEventArgs e)
         {
+			sldPerception.Value = e.Value;
+			sgPerception.Value = e.Value;
 			Trace.TraceInformation("Perception for " + e.Symbol + " = " + e.Value.ToString("0.00"));
         }
 
@@ -87,14 +90,6 @@ namespace MauiExample
 		private void HandleConnected(object client, EventArgs args)
 		{
 			Trace.TraceInformation("Connected!");
-		}
-
-		private void OnCounterClicked(object sender, EventArgs e)
-		{
-			count++;
-			CounterLabel.Text = $"Current count: {count}";
-
-			SemanticScreenReader.Announce(CounterLabel.Text);
 		}
 	}
 }

@@ -59,6 +59,18 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\QuantGateSignalsAPI.Net6\QuantGateSignalsAPI.Net6.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Controls\SimpleGauge.xaml.cs">
+	    <DependentUpon>SimpleGauge.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Controls\SimpleGauge.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>	
 
 	<PropertyGroup Condition="$(TargetFramework.Contains('-windows'))">
