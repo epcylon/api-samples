@@ -121,8 +121,6 @@ namespace BridgeRock.MauiExample
 					});
 
 			colSearch.ItemsSource = searchRows;
-
-			Trace.TraceInformation("Top Symbols Count: " + searchRows.Count);
 		}
 
 		private void HandleSearchUpdate(object sender, SearchResultsEventArgs e)
