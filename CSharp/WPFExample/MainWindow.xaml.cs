@@ -104,11 +104,6 @@ namespace BridgeRock.CSharpExample
             Subscribe(_symbol);
         } 
 
-        private void _client_SentimentUpdated(object sender, SentimentEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
         private void HandleInstrumentUpdate(object sender, InstrumentEventArgs e)
         {
             Console.WriteLine(e.Symbol + " " + e.InstrumentType.ToString() + " " +
