@@ -1,6 +1,6 @@
 ﻿using UIKit;
 
-namespace MauiExample
+namespace BridgeRock.MauiExample
 {
 	public class Program
 	{

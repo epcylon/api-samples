@@ -2,7 +2,7 @@
 using Microsoft.Maui;
 using Microsoft.Maui.Hosting;
 
-namespace MauiExample
+namespace BridgeRock.MauiExample
 {
 	[Register("AppDelegate")]
 	public class AppDelegate : MauiUIApplicationDelegate

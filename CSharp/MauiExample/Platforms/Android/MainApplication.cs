@@ -4,7 +4,7 @@ using Android.Runtime;
 using Microsoft.Maui;
 using Microsoft.Maui.Hosting;
 
-namespace MauiExample
+namespace BridgeRock.MauiExample
 {
 	[Application]
 	public class MainApplication : MauiApplication

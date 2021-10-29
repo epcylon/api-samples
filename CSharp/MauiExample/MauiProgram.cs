@@ -3,7 +3,7 @@ using Microsoft.Maui.Hosting;
 using Microsoft.Maui.Controls.Compatibility;
 using Microsoft.Maui.Controls.Hosting;
 
-namespace MauiExample
+namespace BridgeRock.MauiExample
 {
 	public static class MauiProgram
 	{
