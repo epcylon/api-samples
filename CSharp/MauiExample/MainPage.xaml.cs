@@ -1,27 +1,18 @@
-﻿using System;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Essentials;
-using System.Threading;
-using QuantGate.API.Signals.Events;
-using QuantGate.API.Signals;
+﻿using Microsoft.Maui.Controls;
 using QuantGate.API.Events;
+using QuantGate.API.Signals;
+using QuantGate.API.Signals.Events;
+using System;
 using System.Diagnostics;
 
 namespace MauiExample
 {
-	public partial class MainPage : ContentPage
+    public partial class MainPage : ContentPage
 	{
 		private readonly APIClient _client;
 		private TopSymbolsEventArgs _topSymbols;
-		private string _symbol = "EUR.USD";
+		private string _symbol = "NQ Z1";
 		private readonly string _strategyId = "Crb9.0";
-
-		int count = 0;
-
-		//private readonly BallField _field;
-		//private readonly SkiaGraphicsView _view;
-		//private readonly Timer _timer;
-
 
 		public MainPage()
 		{
@@ -37,45 +28,44 @@ namespace MauiExample
 			_client.Error += HandleError;
 
             _client.InstrumentUpdated += _client_InstrumentUpdated;
-            _client.PerceptionUpdated += _client_PerceptionUpdated;
+			_client.PerceptionUpdated += (s, e) => sgPerception.Value = e.Value;
+			_client.CommitmentUpdated += (s, e) => sgCommitment.Value = e.Value;
+			_client.BookPressureUpdated += (s, e) => sgBookPressure.Value = e.Value;
+			_client.HeadroomUpdated += (s, e) => sgHeadroom.Value = e.Value;			
 
 			_client.Connect("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
 							"eyJzdWIiOiJUZXN0QXBwIiwiaWF0IjoxNjMzMDEyMTUzLCJleHAiOjE2MzgyMz" +
 							"A0MDAsImF1ZCI6IjJXVWplb2JSWFJXOXBzTkRFY3hlMU1EOXd0ZGZkaDFDIn0." +
 							"xtykKWHxKwhopUkkyUm6eCa9qfQsGkhHEdAea9hdSz8");
+			
+			Subscribe(_symbol);
+		}
+
+
+		private void Subscribe(string symbol)
+		{
+			// Unsubscribe from all subscriptions for this symbol.
+			_client.UnsubscribeAll(_symbol);
+			//sViewer.ClearSpectrum();
+
+			_symbol = symbol;
 
 			_client.RequestInstrumentDetails(_symbol);
 			_client.SubscribePerception(_symbol);
-
-			//_field = new BallField(100);
-			//_view = new SkiaGraphicsView(_field);
-
-			//Grid.SetRow(_view, 4);			
-			//gridMain.Children.Add(_view);
-
-			//_timer = new(HandleTimer, null, TimeSpan.FromMilliseconds(10), TimeSpan.FromMilliseconds(10));
+			_client.SubscribeCommitment(_symbol);
+			_client.SubscribeEquilibrium(_symbol, "300s");
+			_client.SubscribeSentiment(_symbol, "50t");
+			_client.SubscribeHeadroom(_symbol);
+			_client.SubscribeBookPressure(_symbol);
+			_client.SubscribeMultiframeEquilibrium(_symbol);
+			_client.SubscribeTrigger(_symbol);
+			_client.SubscribeStrategy(_strategyId, _symbol);
 		}
-
+		
         private void _client_InstrumentUpdated(object sender, InstrumentEventArgs e)
         {
 			Trace.TraceInformation("Got instrument for " + e.Symbol);
         }
-
-        private void _client_PerceptionUpdated(object sender, PerceptionEventArgs e)
-        {
-			sldPerception.Value = e.Value;
-			sgPerception.Value = e.Value;
-			Trace.TraceInformation("Perception for " + e.Symbol + " = " + e.Value.ToString("0.00"));
-        }
-
-        //private void HandleTimer(object state)
-        //      {
-        //	Dispatcher.BeginInvokeOnMainThread(() =>
-        //	{				
-        //		_field.Advance(10, _view.ActualWidth, _view.ActualHeight);
-        //		_view.Invalidate();
-        //	});
-        //}
 
         private void HandleError(object client, ErrorEventArgs args)
 		{

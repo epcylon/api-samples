@@ -2,8 +2,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BridgeRock.MauiExample.Controls.SentimentViewer">
   <ContentView.Content>
-      <StackLayout>
-            <Label Text="Hello Xamarin.Forms!" />
+        <StackLayout>
+            <!--<Image Source="dotnet_bot.svg"
+                   WidthRequest="250"
+                   HeightRequest="310"
+                   HorizontalOptions="Center" />-->
         </StackLayout>
   </ContentView.Content>
 </ContentView>

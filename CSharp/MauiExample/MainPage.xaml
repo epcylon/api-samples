@@ -6,13 +6,15 @@
 
     <Grid x:Name="gridMain" RowSpacing="25" 
           RowDefinitions="1*,12*,1*"
-          ColumnDefinitions="1*,1*,1*,1*,1*,8*,1*,1*"
+          ColumnDefinitions="1*,1*,1*,1*,1*,1*,1*,1*,1*,8*,1*"
           Padding="{OnPlatform iOS='30,60,30,30', Default='30'}">
 
-        <Slider x:Name="sldPerception" Grid.Row="1" Grid.Column="1" Minimum="-1" Maximum ="1" Value="0" 
-                IsEnabled="False" Background="Red" />
+        <controls:SimpleGauge x:Name="sgPerception" GridLayout.Row="1" Grid.Column="1" />
+        <controls:SimpleGauge x:Name="sgCommitment" GridLayout.Row="1" Grid.Column="3" />
+        <controls:SimpleGauge x:Name="sgBookPressure" GridLayout.Row="1" Grid.Column="5" />
+        <controls:SimpleGauge x:Name="sgHeadroom" GridLayout.Row="1" Grid.Column="7" />
 
-        <controls:SentimentViewer Grid.Row="1" Grid.Column="5" Background="Green" />
-        <controls:SimpleGauge x:Name="sgPerception" GridLayout.Row="1" Grid.Column="3" />
+        <!--<controls:SentimentViewer Grid.Row="1" Grid.Column="9" Background="Green" />-->
+        
     </Grid>
 </ContentPage>
