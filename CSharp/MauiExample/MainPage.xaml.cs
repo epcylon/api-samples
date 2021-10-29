@@ -3,7 +3,7 @@ using QuantGate.API.Events;
 using QuantGate.API.Signals;
 using QuantGate.API.Signals.Events;
 using System;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace BridgeRock.MauiExample
@@ -13,17 +13,13 @@ namespace BridgeRock.MauiExample
 		private readonly APIClient _client;
 		private TopSymbolsEventArgs _topSymbols;
 		private string _symbol = "NQ Z1";
-		private readonly string _strategyId = "Crb9.0";
-		private ObservableCollection<SearchRow> _searchRows = new ObservableCollection<SearchRow>();
+		private readonly string _strategyId = "Crb9.0";		
 
 		public MainPage()
 		{
             InitializeComponent();
 
-			BindingContext = this;
-
-			eSearch.TextChanged += HandleSearchInput;
-			colSearch.ItemsSource = _searchRows;
+			BindingContext = this;			
 
 			//_client = new ProtoStompClient("wss://feed.stealthtrader.com");
 			_client = new APIClient("wss://test.stealthtrader.com", stream: DataStream.Realtime);
@@ -95,7 +91,7 @@ namespace BridgeRock.MauiExample
 			Trace.TraceInformation("Connected!");
 		}
 
-        private void HandleSearchInput(object sender, TextChangedEventArgs e)
+        private void HandleSearchInput(object sender, EventArgs e)
         {
 			if (!string.IsNullOrEmpty(eSearch.Text))
 			{
@@ -113,16 +109,20 @@ namespace BridgeRock.MauiExample
 			if (!string.IsNullOrEmpty(eSearch.Text))
 				return;
 
-			_searchRows.Clear();
+			List<SearchRow> searchRows = new List<SearchRow>();
 
 			if (_topSymbols?.Symbols is object)
 				foreach (TopSymbol symbol in _topSymbols.Symbols)
-					_searchRows.Add(new SearchRow
+					searchRows.Add(new SearchRow
 					{
 						Symbol = symbol.Symbol,
 						DisplayName = symbol.DisplayName,
 						EntryProgress = symbol.EntryProgress.ToString("p1")
 					});
+
+			colSearch.ItemsSource = searchRows;
+
+			Trace.TraceInformation("Top Symbols Count: " + searchRows.Count);
 		}
 
 		private void HandleSearchUpdate(object sender, SearchResultsEventArgs e)
@@ -130,10 +130,12 @@ namespace BridgeRock.MauiExample
 			if (string.IsNullOrEmpty(eSearch.Text))
 				return;
 
-			_searchRows.Clear();
+			List<SearchRow> searchRows = new List<SearchRow>();
+
+			searchRows.Clear();
 
 			foreach (SearchResult result in e.Results)
-				_searchRows.Add(new SearchRow
+				searchRows.Add(new SearchRow
 				{
 					Symbol = result.Symbol,
 					DisplayName = result.DisplayName,
