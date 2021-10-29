@@ -3,9 +3,10 @@ using QuantGate.API.Events;
 using QuantGate.API.Signals;
 using QuantGate.API.Signals.Events;
 using System;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 
-namespace MauiExample
+namespace BridgeRock.MauiExample
 {
     public partial class MainPage : ContentPage
 	{
@@ -13,12 +14,16 @@ namespace MauiExample
 		private TopSymbolsEventArgs _topSymbols;
 		private string _symbol = "NQ Z1";
 		private readonly string _strategyId = "Crb9.0";
+		private ObservableCollection<SearchRow> _searchRows = new ObservableCollection<SearchRow>();
 
 		public MainPage()
 		{
             InitializeComponent();
 
 			BindingContext = this;
+
+			eSearch.TextChanged += HandleSearchInput;
+			colSearch.ItemsSource = _searchRows;
 
 			//_client = new ProtoStompClient("wss://feed.stealthtrader.com");
 			_client = new APIClient("wss://test.stealthtrader.com", stream: DataStream.Realtime);
@@ -27,7 +32,9 @@ namespace MauiExample
 			_client.Disconnected += HandleDisconnected;
 			_client.Error += HandleError;
 
-            _client.InstrumentUpdated += _client_InstrumentUpdated;
+			_client.InstrumentUpdated += HandleInstrumentUpdate;
+			_client.SymbolSearchUpdated += HandleSearchUpdate;
+			_client.TopSymbolsUpdated += HandleTopSymbolsUpdate;
 			_client.PerceptionUpdated += (s, e) => sgPerception.Value = e.Value;
 			_client.CommitmentUpdated += (s, e) => sgCommitment.Value = e.Value;
 			_client.BookPressureUpdated += (s, e) => sgBookPressure.Value = e.Value;
@@ -37,10 +44,15 @@ namespace MauiExample
 							"eyJzdWIiOiJUZXN0QXBwIiwiaWF0IjoxNjMzMDEyMTUzLCJleHAiOjE2MzgyMz" +
 							"A0MDAsImF1ZCI6IjJXVWplb2JSWFJXOXBzTkRFY3hlMU1EOXd0ZGZkaDFDIn0." +
 							"xtykKWHxKwhopUkkyUm6eCa9qfQsGkhHEdAea9hdSz8");
-			
+
+			SubscribeSearch();
 			Subscribe(_symbol);
 		}
 
+		private void SubscribeSearch()
+		{
+			_client.SubscribeTopSymbols("ib");
+		}
 
 		private void Subscribe(string symbol)
 		{
@@ -61,11 +73,12 @@ namespace MauiExample
 			_client.SubscribeTrigger(_symbol);
 			_client.SubscribeStrategy(_strategyId, _symbol);
 		}
-		
-        private void _client_InstrumentUpdated(object sender, InstrumentEventArgs e)
-        {
-			Trace.TraceInformation("Got instrument for " + e.Symbol);
-        }
+
+		private void HandleInstrumentUpdate(object sender, InstrumentEventArgs e)
+		{
+			Trace.TraceInformation(e.Symbol + " " + e.InstrumentType.ToString() + " " +
+		 						   e.ExpiryDate.ToString() + " " + e.ErrorMessage);
+		}
 
         private void HandleError(object client, ErrorEventArgs args)
 		{
@@ -80,6 +93,52 @@ namespace MauiExample
 		private void HandleConnected(object client, EventArgs args)
 		{
 			Trace.TraceInformation("Connected!");
+		}
+
+        private void HandleSearchInput(object sender, TextChangedEventArgs e)
+        {
+			if (!string.IsNullOrEmpty(eSearch.Text))
+			{
+				_client.SearchSymbols(eSearch.Text, "paper");
+			}
+			else
+			{
+				HandleTopSymbolsUpdate(this, _topSymbols);
+			}
+		}
+
+		private void HandleTopSymbolsUpdate(object sender, TopSymbolsEventArgs topSymbols)
+		{
+			_topSymbols = topSymbols;
+			if (!string.IsNullOrEmpty(eSearch.Text))
+				return;
+
+			_searchRows.Clear();
+
+			if (_topSymbols?.Symbols is object)
+				foreach (TopSymbol symbol in _topSymbols.Symbols)
+					_searchRows.Add(new SearchRow
+					{
+						Symbol = symbol.Symbol,
+						DisplayName = symbol.DisplayName,
+						EntryProgress = symbol.EntryProgress.ToString("p1")
+					});
+		}
+
+		private void HandleSearchUpdate(object sender, SearchResultsEventArgs e)
+		{
+			if (string.IsNullOrEmpty(eSearch.Text))
+				return;
+
+			_searchRows.Clear();
+
+			foreach (SearchResult result in e.Results)
+				_searchRows.Add(new SearchRow
+				{
+					Symbol = result.Symbol,
+					DisplayName = result.DisplayName,
+					EntryProgress = string.Empty
+				});
 		}
 	}
 }

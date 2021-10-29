@@ -1,20 +1,71 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"      
              xmlns:controls="clr-namespace:BridgeRock.MauiExample.Controls"
-             x:Class="MauiExample.MainPage"             
+             x:Class="BridgeRock.MauiExample.MainPage"             
              BackgroundColor="{DynamicResource SecondaryColor}">
 
-    <Grid x:Name="gridMain" RowSpacing="25" 
+    <Grid x:Name="gridMain"
           RowDefinitions="1*,12*,1*"
-          ColumnDefinitions="1*,1*,1*,1*,1*,1*,1*,1*,1*,8*,1*"
+          ColumnDefinitions="1*,1*,1*,1*,1*,1*,1*,1*,1*,8*,1*,8*,1*"
           Padding="{OnPlatform iOS='30,60,30,30', Default='30'}">
 
-        <controls:SimpleGauge x:Name="sgPerception" GridLayout.Row="1" Grid.Column="1" />
-        <controls:SimpleGauge x:Name="sgCommitment" GridLayout.Row="1" Grid.Column="3" />
-        <controls:SimpleGauge x:Name="sgBookPressure" GridLayout.Row="1" Grid.Column="5" />
-        <controls:SimpleGauge x:Name="sgHeadroom" GridLayout.Row="1" Grid.Column="7" />
+        <controls:SimpleGauge x:Name="sgPerception" GridLayout.Row="1" Grid.Column="1">
+            <controls:SimpleGauge.Shadow>
+                <Shadow Brush="#000000" Offset="5,5" Radius="10" Opacity="0.3"/>
+            </controls:SimpleGauge.Shadow>
+        </controls:SimpleGauge>
+        <controls:SimpleGauge x:Name="sgCommitment" GridLayout.Row="1" Grid.Column="3">
+            <controls:SimpleGauge.Shadow>
+                <Shadow Brush="#000000" Offset="5,5" Radius="10" Opacity="0.3"/>
+            </controls:SimpleGauge.Shadow>
+        </controls:SimpleGauge>
+        <controls:SimpleGauge x:Name="sgBookPressure" GridLayout.Row="1" Grid.Column="5">
+            <controls:SimpleGauge.Shadow>
+                <Shadow Brush="#000000" Offset="5,5" Radius="10" Opacity="0.3"/>
+            </controls:SimpleGauge.Shadow>
+        </controls:SimpleGauge>
+        <controls:SimpleGauge x:Name="sgHeadroom" GridLayout.Row="1" Grid.Column="7">
+            <controls:SimpleGauge.Shadow>
+                <Shadow Brush="#000000" Offset="5,5" Radius="10" Opacity="0.3"/>
+            </controls:SimpleGauge.Shadow>
+        </controls:SimpleGauge>
 
-        <!--<controls:SentimentViewer Grid.Row="1" Grid.Column="9" Background="Green" />-->
-        
+        <controls:SentimentViewer Grid.Row="1" Grid.Column="9" Background="Green">
+            <controls:SentimentViewer.Shadow>
+                <Shadow Brush="#000000" Offset="5,5" Radius="10" Opacity="0.3"/>
+            </controls:SentimentViewer.Shadow>
+        </controls:SentimentViewer>
+
+        <Grid GridLayout.Row="1" GridLayout.Column="11" RowDefinitions="30,8,20,1*"  >
+            <Grid.Shadow>
+                <Shadow Brush="#000000" Offset="5,5" Radius="10" Opacity="0.3"/>
+            </Grid.Shadow>
+            <Entry x:Name="eSearch" Placeholder="Enter your search term" BackgroundColor="White" />
+            <Grid GridLayout.Row="2" ColumnDefinitions="1*,3*,1*" Background="LightGray" >
+                <Border GridLayout.Column="0" Stroke="Black" StrokeThickness="1">
+                    <Label Text="Symbol" />
+                </Border>
+                <Border GridLayout.Column="1" Stroke="Black" StrokeThickness="1">
+                    <Label Text="Name" />
+                </Border>
+                <Border GridLayout.Column="2" Stroke="Black" StrokeThickness="1">
+                    <Label Text="Progress" />
+                </Border>
+            </Grid>
+            <ListView x:Name="colSearch" GridLayout.Row="3" VerticalScrollBarVisibility="Always" Background="GRAY" >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Background="White" ColumnDefinitions="1*,3*,1*">
+                                <Label GridLayout.Column="0" Text="{Binding Symbol}" />
+                                <Label GridLayout.Column="1" Text="{Binding DisplayName}" />
+                                <Label GridLayout.Column="2" Text="{Binding EntryProgress}" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+
     </Grid>
 </ContentPage>
