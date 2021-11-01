@@ -763,19 +763,6 @@ namespace BridgeRock.CSharpExample.Controls
             {
                 Trace.TraceError(_moduleID + ":UdLn - " + ex.Message);
             }
-        }       
-
-        private void HandleSentimentUpdated(object sender, SentimentEventArgs sentiment)
-        {
-            try
-            {
-                // Update the spectrum.              
-                UpdateSpectrum(sentiment);
-            }
-            catch (Exception ex)
-            {
-                Trace.TraceError(_moduleID + ":HSPCh - " + ex.Message);
-            }
         }
 
         #endregion
