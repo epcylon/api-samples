@@ -34,7 +34,8 @@ namespace BridgeRock.MauiExample
 			_client.PerceptionUpdated += (s, e) => sgPerception.Value = e.Value;
 			_client.CommitmentUpdated += (s, e) => sgCommitment.Value = e.Value;
 			_client.BookPressureUpdated += (s, e) => sgBookPressure.Value = e.Value;
-			_client.HeadroomUpdated += (s, e) => sgHeadroom.Value = e.Value;			
+			_client.HeadroomUpdated += (s, e) => sgHeadroom.Value = e.Value;
+			_client.SentimentUpdated += (s, e) => s50t.UpdateSpectrum(e);
 
 			_client.Connect("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
 							"eyJzdWIiOiJUZXN0QXBwIiwiaWF0IjoxNjMzMDEyMTUzLCJleHAiOjE2MzgyMz" +

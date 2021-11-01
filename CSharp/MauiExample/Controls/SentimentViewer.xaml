@@ -27,9 +27,6 @@
     <RoundRectangle GridLayout.Row="35" Fill="#A0A0A0" StrokeThickness="0" />
     <RoundRectangle GridLayout.Row="37" Fill="#A0A0A0" StrokeThickness="0" />
 
-    <Grid x:Name="sGrid" GridLayout.RowSpan="39" Background="Transparent">
-        <controls:SentimentBar Value="0" />
-    </Grid>
-
+    <Grid x:Name="gBars" GridLayout.RowSpan="39" Background="Transparent" />
 
 </Grid>

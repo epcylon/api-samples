@@ -30,7 +30,7 @@
             </controls:SimpleGauge.Shadow>
         </controls:SimpleGauge>
 
-        <controls:SentimentViewer Grid.Row="1" Grid.Column="9" >
+        <controls:SentimentViewer x:Name="s50t" Grid.Row="1" Grid.Column="9" >
             <controls:SentimentViewer.Shadow>
                 <Shadow Brush="#000000" Offset="5,5" Radius="10" Opacity="0.3"/>
             </controls:SentimentViewer.Shadow>

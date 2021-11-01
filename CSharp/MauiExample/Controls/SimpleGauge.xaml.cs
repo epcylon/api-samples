@@ -31,6 +31,5 @@ namespace BridgeRock.MauiExample.Controls
                 }
             }
         }
-
     }
 }
