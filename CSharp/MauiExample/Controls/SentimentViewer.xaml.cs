@@ -172,11 +172,9 @@ namespace BridgeRock.MauiExample.Controls
                 sBars.Children.Clear();
 
                 // Add the column definitions.
-                //gBars.ColumnSpacing = 0;
-                //gBars.ColumnDefinitions.Clear();
                 effectiveBars = (SentimentEventArgs.TotalBars - 1) / SkipBars + 1;
                 for (int index = 0; index < effectiveBars; index++)
-                    sBars.Children.Add(new SentimentBar { WidthRequest = (long)bounds.Width / effectiveBars });
+                    sBars.Children.Add(new SentimentBar { WidthRequest = (long)(bounds.Width / effectiveBars + 0.1) });
 
                 // Add the vertical lines.
                 Array.Clear(_lines, 0, SentimentEventArgs.TotalBars);
