@@ -92,7 +92,7 @@ namespace BridgeRock.MauiExample.Controls
         /// </summary>
         private bool _dataRetrieved = false;
 
-        private bool _isSetup = false;
+        private double _lastWidth = double.NaN;
 
         //private Storyboard _story = default;
         //private Rectangle _rectLoading;
@@ -143,10 +143,10 @@ namespace BridgeRock.MauiExample.Controls
 
         protected override Size ArrangeOverride(Microsoft.Maui.Graphics.Rectangle bounds)
         {
-            if (!_isSetup)
+            if (bounds.Width > 0 && bounds.Width != _lastWidth)
             {
-                SetupSpectrum();
-                _isSetup = true;
+                SetupSpectrum(bounds);
+                _lastWidth = bounds.Width;
             }
             return base.ArrangeOverride(bounds);
         }
@@ -162,22 +162,21 @@ namespace BridgeRock.MauiExample.Controls
         /// <summary>
         /// Set up the spectrum as necessary.
         /// </summary>
-        private void SetupSpectrum()
+        private void SetupSpectrum(Microsoft.Maui.Graphics.Rectangle bounds)
         {
             int effectiveBars;
 
             try
             {
                 // If the bounds changed, rearrange everything.
-                gBars.Children.Clear();
+                sBars.Children.Clear();
 
                 // Add the column definitions.
-                gBars.ColumnSpacing = 0;
-                gBars.ColumnDefinitions.Clear();
+                //gBars.ColumnSpacing = 0;
+                //gBars.ColumnDefinitions.Clear();
                 effectiveBars = (SentimentEventArgs.TotalBars - 1) / SkipBars + 1;
                 for (int index = 0; index < effectiveBars; index++)
-                    gBars.ColumnDefinitions.Add(
-                        new ColumnDefinition() { Width = new GridLength(200, GridUnitType.Star) });
+                    sBars.Children.Add(new SentimentBar { WidthRequest = (long)bounds.Width / effectiveBars });
 
                 // Add the vertical lines.
                 Array.Clear(_lines, 0, SentimentEventArgs.TotalBars);
@@ -279,7 +278,7 @@ namespace BridgeRock.MauiExample.Controls
         private void AddVerticalLine(int index)
         {
             SentimentBar line;
-            double columnIndex;
+            int columnIndex;
             int effectiveBars;
             int center;
 
@@ -295,11 +294,11 @@ namespace BridgeRock.MauiExample.Controls
                 else
                     columnIndex = center - ((index / SkipBars) + 1) / 2;
 
-                line = new SentimentBar();
-                GridLayout.SetColumn(line, (int)columnIndex);
-                gBars.Add(line);
+                line = (SentimentBar)sBars.Children[columnIndex];
+                _lines[index] = line;
 
-                UpdateLine(line, index);                                        // Update the line.
+                // Update the line.
+                UpdateLine(line, index);
             }
             catch (Exception ex)
             {
@@ -574,7 +573,7 @@ namespace BridgeRock.MauiExample.Controls
                 if (_skipBars != value)
                 {
                     _skipBars = value;
-                    SetupSpectrum();
+                    SetupSpectrum(this.Bounds);
                 }
             }
         }

@@ -6,7 +6,7 @@ using mg = Microsoft.Maui.Graphics;
 
 namespace BridgeRock.MauiExample.Controls
 {
-    public partial class SentimentBar : ContentView
+    public partial class SentimentBar : Grid
     {
         /// <summary>
         /// Module-level Identifier.

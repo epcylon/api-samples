@@ -27,6 +27,6 @@
     <RoundRectangle GridLayout.Row="35" Fill="#A0A0A0" StrokeThickness="0" />
     <RoundRectangle GridLayout.Row="37" Fill="#A0A0A0" StrokeThickness="0" />
 
-    <Grid x:Name="gBars" GridLayout.RowSpan="39" Background="Transparent" />
+    <HorizontalStackLayout x:Name="sBars" GridLayout.RowSpan="39" Background="Transparent" HorizontalOptions="Center" />
 
 </Grid>
