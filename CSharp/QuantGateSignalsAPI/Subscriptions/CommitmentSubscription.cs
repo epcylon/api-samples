@@ -22,5 +22,8 @@ namespace QuantGate.API.Signals.Subscriptions
                 update.Value / 1000.0,
                 update.IsDirty);
         }
+
+        protected override CommitmentEventArgs WrapError(SubscriptionError error) =>
+            new CommitmentEventArgs(Symbol, DateTime.UtcNow, 0, true, error);
     }
 }

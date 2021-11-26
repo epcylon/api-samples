@@ -78,11 +78,16 @@ namespace QuantGate.API.Signals.Events
         public GaugeSignal SentimentSignal { get; }
 
         /// <summary>
+        /// Holds error information, if a subscription error occured.
+        /// </summary>
+        public SubscriptionError Error { get; }
+
+        /// <summary>
         /// Creates a new StrategyEventArgs instance.
         /// </summary>
         /// <param name="timeStamp">Timestamp of the latest update.</param>
         /// <param name="symbol">Symbol to get the Strategy update data for.</param>
-        /// <param name="strategyID">Strategy to subscribe to. Example enum values: PPr4.0, BTr4.0,  Crb.8.4.</param>
+        /// <param name="strategyID">Strategy to subscribe to. Example enum values: PPr4.0, BTr4.0, Crb.8.4.</param>
         /// <param name="entryProgress">Entry progress value.</param>
         /// <param name="exitProgress">Exit progress value.</param>
         /// <param name="perceptionLevel">Perception level. null if unset.</param>
@@ -94,11 +99,12 @@ namespace QuantGate.API.Signals.Events
         /// <param name="sentimentLevel">Sentiment level. null if unset.</param>
         /// <param name="sentimentSignal">Signal tied to the 50t sentiment indication.</param>
         /// <param name="signal">Entry signal for the strategy.</param>
+        /// <param name="error">Holds error information, if a subscription error occured.</param>
         internal StrategyEventArgs(DateTime timeStamp, string symbol, string strategyID, double entryProgress,
                                    double exitProgress, double? perceptionLevel, GaugeSignal perceptionSignal,
                                    double? commitmentLevel, GaugeSignal commitmentSignal,
-                                   double? equilibriumLevel, GaugeSignal equilibriumSignal,
-                                   double? sentimentLevel, GaugeSignal sentimentSignal, StrategySignal signal)
+                                   double? equilibriumLevel, GaugeSignal equilibriumSignal, double? sentimentLevel, 
+                                   GaugeSignal sentimentSignal, StrategySignal signal, SubscriptionError error = null)
         {
             TimeStamp = timeStamp;
             Symbol = symbol;
@@ -114,6 +120,7 @@ namespace QuantGate.API.Signals.Events
             SentimentLevel = sentimentLevel;
             SentimentSignal = sentimentSignal;
             Signal = signal;
+            Error = error;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Google.Protobuf;
+using QuantGate.API.Signals.Events;
 using QuantGate.API.Signals.ProtoStomp;
 using System;
 using System.Threading;
@@ -28,6 +29,7 @@ namespace QuantGate.API.Signals.Subscriptions
             _parser = parser;
             ParentUpdatedEvent = handler;
             OnNext += HandleOnNext;
+            OnError += HandleError;
         }
 
         private void HandleOnNext(ProtoStompSubscription subscription, ByteString values)
@@ -42,6 +44,17 @@ namespace QuantGate.API.Signals.Subscriptions
             }), null);
         }
 
+        private void HandleError(ProtoStompSubscription subscription, Exception exception)
+        {
+            // Get the error information.
+            SubscriptionError error = new SubscriptionError(exception.Message,
+                                                            exception.InnerException.Message);
+            // Wrap the error and send to handlers.
+            PostUpdate(WrapError(error));
+            // Unsubscribe this subscription.
+            Unsubscribe();
+        }
+
         protected void PostUpdate(V update)
         {
             Client.Sync.Post(new SendOrPostCallback((o) =>
@@ -52,5 +65,6 @@ namespace QuantGate.API.Signals.Subscriptions
 
         protected virtual object Preprocess(M update) => _emptyObject;
         protected abstract V HandleUpdate(M update, object processed);
+        protected abstract V WrapError(SubscriptionError error);
     }
 }

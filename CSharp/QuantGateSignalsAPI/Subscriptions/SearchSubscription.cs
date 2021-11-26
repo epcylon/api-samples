@@ -37,9 +37,10 @@ namespace QuantGate.API.Signals.Subscriptions
             return results;
         }
 
-        protected override SearchResultsEventArgs HandleUpdate(SymbolSearchUpdate update, object processed)
-        {
-            return new SearchResultsEventArgs(update.SearchTerm, (List<SearchResult>)processed);
-        }
+        protected override SearchResultsEventArgs HandleUpdate(SymbolSearchUpdate update, object processed) =>
+            new SearchResultsEventArgs(update.SearchTerm, (List<SearchResult>)processed);        
+
+        protected override SearchResultsEventArgs WrapError(SubscriptionError error) =>
+            new SearchResultsEventArgs(string.Empty, new List<SearchResult>(), error);
     }
 }

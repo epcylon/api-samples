@@ -524,7 +524,8 @@ namespace QuantGate.API.Signals
                 {
                     // If the subscription was found, handle the error. 
                     (subscription as IObserver<ByteString>).
-                        OnError(new Exception(frame.SubscriptionError.Message));
+                        OnError(new Exception(frame.SubscriptionError.Message,
+                                              new Exception(frame.SubscriptionError.Details)));
                 }
                 else if (!_isDisconnecting && IsConnected)
                 {

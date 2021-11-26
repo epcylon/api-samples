@@ -44,6 +44,10 @@ namespace QuantGate.API.Signals.Subscriptions
             );
         }
 
+        protected override StrategyEventArgs WrapError(SubscriptionError error) =>
+            new StrategyEventArgs(DateTime.UtcNow, _symbol, _strategyID, 0, 0, null, 0, 
+                                  null, 0, null, 0, null, 0, StrategySignal.None, error);
+
         /// <summary>
         /// Converts a level to a nullable double value.
         /// </summary>

@@ -81,9 +81,9 @@ namespace QuantGate.API.Signals.Events
         public IReadOnlyDictionary<string, string> BrokerSymbols { get; }
 
         /// <summary>
-        /// Describes an error if the instrument details request failed.
+        /// Holds error information, if a subscription error occured.
         /// </summary>
-        public string ErrorMessage { get; }
+        public SubscriptionError Error { get; }
 
         /// <summary>
         /// Creates a new InstrumentEventArgs instance.
@@ -105,7 +105,7 @@ namespace QuantGate.API.Signals.Events
         /// </param>
         /// <param name="brokerSymbols">Map of broker symbols according to broker (ib, cqg, dtniq, etc.).</param>
         internal InstrumentEventArgs(string symbol, string underlying, string currency, string exchange,
-                                     InstrumentType instrumentType, PutOrCall putOrCall, double strike, 
+                                     InstrumentType instrumentType, PutOrCall putOrCall, double strike,
                                      DateTime expiryDate, double multiplier, string displayName,
                                      TimeZoneInfo timeZone, List<TickRange> tickRanges,
                                      List<TradingSession> tradingSessions, Dictionary<string, string> brokerSymbols)
@@ -124,15 +124,15 @@ namespace QuantGate.API.Signals.Events
             TickRanges = tickRanges;
             TradingSessions = tradingSessions;
             BrokerSymbols = brokerSymbols;
-            ErrorMessage = string.Empty;
+            Error = null;
         }
 
         /// <summary>
         /// Creates a new instance when an error occurs;
         /// </summary>
         /// <param name="symbol">Symbol as listed by the QuantGate servers.</param>
-        /// <param name="errorMessage">Describes the error if the instrument details request failed.</param>
-        public InstrumentEventArgs(string symbol, string errorMessage)
+        /// <param name="error">Holds error information, if a subscription error occured.</param>
+        public InstrumentEventArgs(string symbol, SubscriptionError error)
         {
             Symbol = symbol;
             Underlying = string.Empty;
@@ -148,7 +148,7 @@ namespace QuantGate.API.Signals.Events
             TickRanges = new List<TickRange>();
             TradingSessions = new List<TradingSession>();
             BrokerSymbols = new Dictionary<string, string>();
-            ErrorMessage = errorMessage;
+            Error = error;
         }
     }
 }

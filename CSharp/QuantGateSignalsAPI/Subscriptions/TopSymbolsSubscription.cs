@@ -58,5 +58,8 @@ namespace QuantGate.API.Signals.Subscriptions
         {
             return new TopSymbolsEventArgs((List<TopSymbol>)processed);
         }
+
+        protected override TopSymbolsEventArgs WrapError(SubscriptionError error) =>
+            new TopSymbolsEventArgs(new List<TopSymbol>(), error);
     }
 }

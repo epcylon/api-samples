@@ -32,5 +32,8 @@ namespace QuantGate.API.Signals.Subscriptions
                 update.IsDirty
             );
         }
+
+        protected override MultiframeEquilibriumEventArgs WrapError(SubscriptionError error) =>
+            new MultiframeEquilibriumEventArgs(Symbol, DateTime.UtcNow, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, true, error);
     }
 }

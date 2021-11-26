@@ -107,7 +107,7 @@ namespace BridgeRock.CSharpExample
         private void HandleInstrumentUpdate(object sender, InstrumentEventArgs e)
         {
             Console.WriteLine(e.Symbol + " " + e.InstrumentType.ToString() + " " +
-                              e.ExpiryDate.ToString() + " " + e.ErrorMessage);
+                              e.ExpiryDate.ToString() + " " + e.Error?.Message);
         }
 
         private void Subscribe(string symbol)

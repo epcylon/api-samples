@@ -53,9 +53,11 @@ namespace QuantGate.API.Signals.Events
         /// Whether the data used to generate this gauge value is potentially dirty 
         /// (values are missing) or stale (not the most recent data).
         /// </param>
-        internal SentimentEventArgs(string symbol, DateTime timestamp, string compression, double[] lengths,
-                                    double[] colors, double avgLength, double avgColor, bool isDirty) :
-            base(symbol, timestamp, isDirty)
+        /// <param name="error">Holds error information, if a subscription error occured.</param>
+        internal SentimentEventArgs(string symbol, DateTime timestamp, string compression,
+                                    double[] lengths, double[] colors, double avgLength, double avgColor,
+                                    bool isDirty, SubscriptionError error = null) :
+            base(symbol, timestamp, isDirty, error)
         {
             Compression = compression;
             Lengths = lengths;

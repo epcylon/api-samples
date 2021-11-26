@@ -80,7 +80,7 @@
          * @param  float              $high              Position of the high value.
          * @param  float              $low               Position of the low value.
          * @param  float              $projected         Position of the projected value.
-         * @param  float              $bias              Equilibrium bias (as determined by the slope).         
+         * @param  float              $bias              Equilibrium bias (as determined by the slope).
          * @param  bool               $isDirty           Whether the data used to generate this gauge value is potentially dirty 
          *                                               (values are missing) or stale (not the most recent data).
          * @param  SubscriptionError  $error             Holds error information, if a subscription error occured.
