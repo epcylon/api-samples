@@ -1,6 +1,7 @@
 ﻿using Google.Protobuf;
 using QuantGate.API.Signals.Utilities;
 using QuantGate.API.Signals.Events;
+using System;
 
 namespace QuantGate.API.Signals.Subscriptions
 {
@@ -11,9 +12,10 @@ namespace QuantGate.API.Signals.Subscriptions
         public string Symbol { get; }
         internal string Compression { get; }
 
-        public GaugeSubscriptionBase(APIClient client, MessageParser<M> parser, SubscriptionPath gaugePath, string streamID,
-                                     string symbol, string compression = null, bool receipt = false, uint throttleRate = 0) :
-            base(client, parser, ParsedDestination.CreateGaugeDestination
+        public GaugeSubscriptionBase(APIClient client, MessageParser<M> parser, EventHandler<V> handler,
+                                     SubscriptionPath gaugePath, string streamID, string symbol, 
+                                     string compression = "", bool receipt = false, uint throttleRate = 0) :
+            base(client, parser, handler, ParsedDestination.CreateGaugeDestination
                     (gaugePath, streamID, symbol, compression).Destination, receipt, throttleRate)
         {
             Symbol = symbol;

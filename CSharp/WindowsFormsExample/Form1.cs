@@ -12,7 +12,7 @@ namespace WindowsFormsExample
         private readonly APIClient _client;
         private TopSymbolsEventArgs _topSymbols;
         private string _symbol = "NQ Z1";
-        private string _strategyId = "Crb9.0";
+        private readonly string _strategyId = "Crb9.0";
 
         public Form1()
         {

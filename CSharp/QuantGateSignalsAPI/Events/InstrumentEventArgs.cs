@@ -81,9 +81,9 @@ namespace QuantGate.API.Signals.Events
         public IReadOnlyDictionary<string, string> BrokerSymbols { get; }
 
         /// <summary>
-        /// Describes an error if the instrument details request failed.
+        /// Holds error information, if a subscription error occured.
         /// </summary>
-        public string ErrorMessage { get; }
+        public SubscriptionError Error { get; }
 
         /// <summary>
         /// Creates a new InstrumentEventArgs instance.
@@ -105,7 +105,7 @@ namespace QuantGate.API.Signals.Events
         /// </param>
         /// <param name="brokerSymbols">Map of broker symbols according to broker (ib, cqg, dtniq, etc.).</param>
         internal InstrumentEventArgs(string symbol, string underlying, string currency, string exchange,
-                                     InstrumentType instrumentType, PutOrCall putOrCall, double strike, 
+                                     InstrumentType instrumentType, PutOrCall putOrCall, double strike,
                                      DateTime expiryDate, double multiplier, string displayName,
                                      TimeZoneInfo timeZone, List<TickRange> tickRanges,
                                      List<TradingSession> tradingSessions, Dictionary<string, string> brokerSymbols)
@@ -124,31 +124,31 @@ namespace QuantGate.API.Signals.Events
             TickRanges = tickRanges;
             TradingSessions = tradingSessions;
             BrokerSymbols = brokerSymbols;
-            ErrorMessage = null;
+            Error = null;
         }
 
         /// <summary>
         /// Creates a new instance when an error occurs;
         /// </summary>
         /// <param name="symbol">Symbol as listed by the QuantGate servers.</param>
-        /// <param name="errorMessage">Describes the error if the instrument details request failed.</param>
-        public InstrumentEventArgs(string symbol, string errorMessage)
+        /// <param name="error">Holds error information, if a subscription error occured.</param>
+        public InstrumentEventArgs(string symbol, SubscriptionError error)
         {
             Symbol = symbol;
-            Underlying = null;
-            Currency = null;
-            Exchange = null;
+            Underlying = string.Empty;
+            Currency = string.Empty;
+            Exchange = string.Empty;
             InstrumentType = InstrumentType.NoInstrument;
             PutOrCall = PutOrCall.NoPutCall;
             Strike = 0;
             ExpiryDate = default;
             Multiplier = 0;
-            DisplayName = null;
-            TimeZone = null;
-            TickRanges = null;
-            TradingSessions = null;
-            BrokerSymbols = null;
-            ErrorMessage = errorMessage;
+            DisplayName = string.Empty;
+            TimeZone = TimeZoneInfo.Utc;
+            TickRanges = new List<TickRange>();
+            TradingSessions = new List<TradingSession>();
+            BrokerSymbols = new Dictionary<string, string>();
+            Error = error;
         }
     }
 }

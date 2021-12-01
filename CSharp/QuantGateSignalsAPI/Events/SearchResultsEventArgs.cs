@@ -13,21 +13,26 @@ namespace QuantGate.API.Signals.Events
         /// Search term the results are for.
         /// </summary>
         public string SearchTerm { get; }
-
         /// <summary>
         /// Search results.
         /// </summary>
         public IReadOnlyList<SearchResult> Results { get; }
+        /// <summary>
+        /// Holds error information, if a subscription error occured.
+        /// </summary>
+        public SubscriptionError Error { get; }
 
         /// <summary>
         /// Creates a new SearchResultsEventArgs instance.
         /// </summary>
         /// <param name="searchTerm">Search term the results are for.</param>
         /// <param name="results">Search results.</param>
-        internal SearchResultsEventArgs(string searchTerm, List<SearchResult> results)
+        /// <param name="error">Holds error information, if a subscription error occured.</param>
+        internal SearchResultsEventArgs(string searchTerm, List<SearchResult> results, SubscriptionError error = null)
         {
             SearchTerm = searchTerm;
             Results = results;
+            Error = error;
         }
     }
 }

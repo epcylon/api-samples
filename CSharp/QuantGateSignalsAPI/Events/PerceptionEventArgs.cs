@@ -23,8 +23,10 @@ namespace QuantGate.API.Signals.Events
         /// Whether the data used to generate this gauge value is potentially dirty 
         /// (values are missing) or stale (not the most recent data).
         /// </param>
-        internal PerceptionEventArgs(string symbol, DateTime timestamp, double value, bool isDirty) :
-            base(symbol, timestamp, isDirty)
+        /// <param name="error">Holds error information, if a subscription error occured.</param>
+        internal PerceptionEventArgs(string symbol, DateTime timestamp, double value, 
+                                     bool isDirty, SubscriptionError error = null) :
+            base(symbol, timestamp, isDirty, error)
         {
             Value = value;
         }

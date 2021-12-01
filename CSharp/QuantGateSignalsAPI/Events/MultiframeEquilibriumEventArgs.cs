@@ -77,10 +77,12 @@ namespace QuantGate.API.Signals.Events
         /// Whether the data used to generate this gauge value is potentially dirty 
         /// (values are missing) or stale (not the most recent data).
         /// </param>
+        /// <param name="error">Holds error information, if a subscription error occured.</param>        
         internal MultiframeEquilibriumEventArgs(string symbol, DateTime timestamp, double min5, double min10,
-                                                double min15, double min30, double min45, double min60, double min120,
-                                                double min180, double min240, double day1, bool isDirty) :
-            base(symbol, timestamp, isDirty)
+                                                double min15, double min30, double min45, double min60,
+                                                double min120, double min180, double min240, double day1,
+                                                bool isDirty, SubscriptionError error = null) :
+            base(symbol, timestamp, isDirty, error)
         {
             Min5 = min5;
             Min10 = min10;

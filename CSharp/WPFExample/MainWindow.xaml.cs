@@ -15,7 +15,7 @@ namespace BridgeRock.CSharpExample
         private readonly APIClient _client;
         private TopSymbolsEventArgs _topSymbols;
         private string _symbol = "NQ Z1";
-        private string _strategyId = "Crb9.0";
+        private readonly string _strategyId = "Crb9.0";
 
         #region Dependency Properties
 
@@ -104,15 +104,10 @@ namespace BridgeRock.CSharpExample
             Subscribe(_symbol);
         } 
 
-        private void _client_SentimentUpdated(object sender, SentimentEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
         private void HandleInstrumentUpdate(object sender, InstrumentEventArgs e)
         {
             Console.WriteLine(e.Symbol + " " + e.InstrumentType.ToString() + " " +
-                              e.ExpiryDate.ToString() + " " + e.ErrorMessage);
+                              e.ExpiryDate.ToString() + " " + e.Error?.Message);
         }
 
         private void Subscribe(string symbol)

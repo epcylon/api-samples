@@ -18,24 +18,20 @@ namespace QuantGate.API.Signals.Subscriptions
         /// <summary>
         /// The symbol that was requested.
         /// </summary>
-        private string _symbol;
+        private readonly string _symbol;
 
-        public InstrumentSubscription(APIClient client, string streamID, string symbol,
-                                      bool receipt = false, uint throttleRate = 0) :
-            base(client, InstrumentUpdate.Parser,
+        public InstrumentSubscription(APIClient client, EventHandler<InstrumentEventArgs> handler,
+                                      string streamID, string symbol, bool receipt = false, uint throttleRate = 0) :
+            base(client, InstrumentUpdate.Parser, handler,
                  new ParsedDestination(SubscriptionType.Definition, SubscriptionPath.DefnInstrument,
                                        ParsedDestination.StreamIDForSymbol(streamID, symbol), symbol).Destination,
                  receipt, throttleRate)
         {
             _symbol = symbol;
-            OnError += HandleError;
         }
 
-        private void HandleError(ProtoStompSubscription subscription, Exception ex)
-        {
-            PostUpdate(new InstrumentEventArgs(_symbol, ex.Message));
-            Unsubscribe();
-        }
+        protected override InstrumentEventArgs WrapError(SubscriptionError error)
+            => new InstrumentEventArgs(_symbol, error);
 
         protected override InstrumentEventArgs HandleUpdate(InstrumentUpdate update, object processed)
         {
@@ -59,7 +55,7 @@ namespace QuantGate.API.Signals.Subscriptions
                 for (int day = 0; day < update.TradingSessions.Count; day++)
                 {
                     Proto.Stealth.TradingSession session = update.TradingSessions[day];
-                    tradingSessions.Add(new Events.TradingSession((System.DayOfWeek)day, session.Close, session.Length));
+                    tradingSessions.Add(new Events.TradingSession((DayOfWeek)day, session.Close, session.Length));
                 }
 
                 foreach (KeyValuePair<string, string> symbolMapping in update.BrokerSymbols)
@@ -84,7 +80,7 @@ namespace QuantGate.API.Signals.Subscriptions
             catch (Exception ex)
             {
                 Trace.TraceError(_moduleID + ":HUd - " + ex.Message);
-                return new InstrumentEventArgs(_symbol, "Internal error handling update.");
+                return new InstrumentEventArgs(_symbol, new SubscriptionError("Internal error handling update.", ex.Message));
             }
             finally
             {

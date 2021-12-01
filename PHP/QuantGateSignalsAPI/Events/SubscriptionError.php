@@ -3,7 +3,7 @@
     namespace QuantGate\API\Signals\Events;      
 
     /**
-     * Holds the details of an Error from the server.
+     * Holds the details of an subscription error from the server.
      */
     class SubscriptionError
     {   

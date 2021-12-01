@@ -1,17 +1,18 @@
-﻿using QuantGate.API.Signals.Proto.Stealth;
+﻿using QuantGate.API.Signals.Events;
+using QuantGate.API.Signals.Proto.Stealth;
 using QuantGate.API.Signals.Utilities;
-using QuantGate.API.Signals.Events;
+using System;
 using System.Collections.Generic;
 
 namespace QuantGate.API.Signals.Subscriptions
 {
     internal class TopSymbolsSubscription : SubscriptionBase<TopSymbolsUpdate, TopSymbolsEventArgs>
     {
-        public TopSymbolsSubscription(APIClient client, string streamID, string broker,
+        public TopSymbolsSubscription(APIClient client, EventHandler<TopSymbolsEventArgs> handler, string broker,
                                       InstrumentType instrumentType = InstrumentType.NoInstrument,
                                       bool receipt = false, uint throttleRate = 0) :
-            base(client, TopSymbolsUpdate.Parser,
-                 new ParsedDestination(SubscriptionType.Definition, SubscriptionPath.DefnTopSymbols, streamID,
+            base(client, TopSymbolsUpdate.Parser, handler,
+                 new ParsedDestination(SubscriptionType.Definition, SubscriptionPath.DefnTopSymbols, string.Empty,
                                        broker: broker, securityType: InstrumentTypeToString(instrumentType)).Destination,
                  receipt, throttleRate)
         {
@@ -26,7 +27,7 @@ namespace QuantGate.API.Signals.Subscriptions
                 case InstrumentType.ForexContract: return "FX";
                 case InstrumentType.CryptoCurrency: return "CRY";
                 case InstrumentType.Index: return "IDX";
-                default: return null;
+                default: return string.Empty;
             }
         }
 
@@ -55,7 +56,10 @@ namespace QuantGate.API.Signals.Subscriptions
 
         protected override TopSymbolsEventArgs HandleUpdate(TopSymbolsUpdate update, object processed)
         {
-            return new TopSymbolsEventArgs(processed as List<TopSymbol>);
+            return new TopSymbolsEventArgs((List<TopSymbol>)processed);
         }
+
+        protected override TopSymbolsEventArgs WrapError(SubscriptionError error) =>
+            new TopSymbolsEventArgs(new List<TopSymbol>(), error);
     }
 }

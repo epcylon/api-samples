@@ -56,19 +56,18 @@ namespace QuantGate.API.Signals
         /// <summary>
         /// Holds a list of all current subscriptions.
         /// </summary>
-        private readonly Dictionary<ulong, ProtoStompSubscription> _subscriptionReferences =
+        private readonly Dictionary<ulong, ProtoStompSubscription> _subscriptionReferences = 
             new Dictionary<ulong, ProtoStompSubscription>();
         /// <summary>
         /// Holds a list of all current subscriptions by destination.
         /// </summary>
-        private readonly Dictionary<string, ProtoStompSubscription> _subscriptionsByDestination =
+        private readonly Dictionary<string, ProtoStompSubscription> _subscriptionsByDestination = 
             new Dictionary<string, ProtoStompSubscription>();
 
         /// <summary>
         /// Holds a list of all requests requiring a receipt.
         /// </summary>
-        private readonly Dictionary<ulong, IReceiptable> _receiptReferences =
-            new Dictionary<ulong, IReceiptable>();
+        private readonly Dictionary<ulong, IReceiptable> _receiptReferences = new Dictionary<ulong, IReceiptable>();
 
         /// <summary>
         /// Search subscription.
@@ -226,7 +225,7 @@ namespace QuantGate.API.Signals
             };
 
             // Create a new timer to handle disconnections/reconnections, etc.
-            _timer = new Timer(HandleTimer, null, 5000, 5000);
+            _timer = new Timer(HandleTimer, new object(), 5000, 5000);
         }
 
         #endregion
@@ -246,11 +245,11 @@ namespace QuantGate.API.Signals
         /// <summary>
         /// The currently connected username (client id).
         /// </summary>
-        public string Username { get; private set; }
+        public string Username { get; private set; } = string.Empty;
         /// <summary>
         /// The password for the current connection (JWT Token).
         /// </summary>
-        public string Password { get; private set; }
+        public string Password { get; private set; } = string.Empty;
 
         /// <summary>
         /// Returns the type of stream that this client is connected to (realtime/delay/demo).
@@ -350,7 +349,7 @@ namespace QuantGate.API.Signals
             });
         }
 
-        private void OnError(object o, ErrorEventArgs e)
+        private void OnError(object o, WebSocketSharp.ErrorEventArgs e)
         {
             Enqueue(() =>
             {
@@ -393,7 +392,7 @@ namespace QuantGate.API.Signals
                     frame = ResponseFrame.Parser.ParseFrom(args.RawData);
 
                     // If parsed properly and the consumer can be found, call the consumer for the message.
-                    if ((frame is object) && _messageConsumers.TryGetValue(frame.ResponseCase, out Action<ResponseFrame> consumer))
+                    if ((frame is object) && _messageConsumers.TryGetValue(frame.ResponseCase, out var consumer))
                         consumer(frame);
                 }
                 catch (Exception ex)
@@ -465,7 +464,7 @@ namespace QuantGate.API.Signals
             try
             {
                 // If the subscription id exists, try to get the subscription.                
-                _subscriptionReferences.TryGetValue(message.SubscriptionId, out ProtoStompSubscription subscription);
+                _subscriptionReferences.TryGetValue(message.SubscriptionId, out var subscription);
 
                 if (subscription is object)
                 {
@@ -490,7 +489,7 @@ namespace QuantGate.API.Signals
             try
             {
                 // Try to get the receiptable and remove if found.
-                if (_receiptReferences.TryGetValue(frame.Receipt.ReceiptId, out IReceiptable receiptable))
+                if (_receiptReferences.TryGetValue(frame.Receipt.ReceiptId, out var receiptable))
                     _receiptReferences.Remove(frame.Receipt.ReceiptId);
 
                 if (receiptable is object)
@@ -519,13 +518,14 @@ namespace QuantGate.API.Signals
             {
                 // If the subscription id exists, try to get the subscription.
                 _subscriptionReferences.TryGetValue(
-                    frame.SubscriptionError.SubscriptionId, out ProtoStompSubscription subscription);
+                    frame.SubscriptionError.SubscriptionId, out var subscription);
 
                 if (subscription is object)
                 {
                     // If the subscription was found, handle the error. 
                     (subscription as IObserver<ByteString>).
-                        OnError(new Exception(frame.SubscriptionError.Message));
+                        OnError(new Exception(frame.SubscriptionError.Message,
+                                              new Exception(frame.SubscriptionError.Details)));
                 }
                 else if (!_isDisconnecting && IsConnected)
                 {
@@ -582,7 +582,7 @@ namespace QuantGate.API.Signals
                     _killTicks = DateTime.UtcNow.Ticks + _connectKill;
 
                     // Connect to the websocket.
-                    _transport.ConnectAsync();
+                    _transport.Connect();
                 }
                 catch (Exception ex)
                 {
@@ -596,7 +596,7 @@ namespace QuantGate.API.Signals
         /// </summary>
         /// <param name="base64">The unpadded string.</param>
         /// <returns>The padded base-64 string.</returns>
-        private string PadBase64String(string base64) =>
+        private static string PadBase64String(string base64) =>
             base64.PadRight(base64.Length + (4 - base64.Length % 4) % 4, '=');
 
         /// <summary>
@@ -653,7 +653,7 @@ namespace QuantGate.API.Signals
         {
             try
             {
-                _transport.SendAsync(frame.ToByteArray(), null);
+                _transport.Send(frame.ToByteArray());
             }
             catch (Exception ex)
             {
@@ -842,8 +842,8 @@ namespace QuantGate.API.Signals
         /// </summary>
         private void ClearSubscriptions()
         {
-            List<ProtoStompSubscription> subscriptions = null;
-            List<IReceiptable> receiptables = null;
+            List<ProtoStompSubscription> subscriptions;
+            List<IReceiptable> receiptables;
 
             try
             {
@@ -869,11 +869,6 @@ namespace QuantGate.API.Signals
             {
                 Trace.TraceError(_moduleID + ":CSs - " + ex.Message);
             }
-            finally
-            {
-                subscriptions?.Clear();
-                receiptables?.Clear();
-            }
         }
 
         #endregion
@@ -886,8 +881,8 @@ namespace QuantGate.API.Signals
         /// <param name="symbol">Symbol to get the Perception data for.</param>
         /// <param name="throttleRate">Rate to throttle messages at (in ms). Enter 0 for no throttling.</param>        
         public void SubscribePerception(string symbol, int throttleRate = 0) =>
-            Subscribe(new PerceptionSubscription(this, _streamID, symbol, 
-                                                 throttleRate: (uint)throttleRate), PerceptionUpdated);
+            EnqueueAndSubscribe(new PerceptionSubscription(this, PerceptionUpdated, _streamID, symbol, 
+                                                 throttleRate: (uint)throttleRate));
 
         /// <summary>
         /// Subscribes to a Commitment gauge data stream for a specific symbol.
@@ -895,8 +890,8 @@ namespace QuantGate.API.Signals
         /// <param name="symbol">Symbol to get the Commitment data for.</param>
         /// <param name="throttleRate">Rate to throttle messages at (in ms). Enter 0 for no throttling.</param>        
         public void SubscribeCommitment(string symbol, int throttleRate = 0) =>
-            Subscribe(new CommitmentSubscription(this, _streamID, symbol,
-                                                 throttleRate: (uint)throttleRate), CommitmentUpdated);
+            EnqueueAndSubscribe(new CommitmentSubscription(this, CommitmentUpdated, _streamID, symbol,
+                                                 throttleRate: (uint)throttleRate));
 
         /// <summary>
         /// Subscribes to a Book Pressure gauge data stream for a specific symbol.
@@ -904,8 +899,8 @@ namespace QuantGate.API.Signals
         /// <param name="symbol">Symbol to get the Book Pressure data for.</param>
         /// <param name="throttleRate">Rate to throttle messages at (in ms). Enter 0 for no throttling.</param>        
         public void SubscribeBookPressure(string symbol, int throttleRate = 0) =>
-            Subscribe(new BookPressureSubscription(this, _streamID, symbol, 
-                                                   throttleRate: (uint)throttleRate), BookPressureUpdated);
+            EnqueueAndSubscribe(new BookPressureSubscription(this, BookPressureUpdated, _streamID, symbol, 
+                                                   throttleRate: (uint)throttleRate));
 
         /// <summary>
         /// Subscribes to a Headroom gauge data stream for a specific symbol.
@@ -913,8 +908,8 @@ namespace QuantGate.API.Signals
         /// <param name="symbol">Symbol to get the Headroom data for.</param>
         /// <param name="throttleRate">Rate to throttle messages at (in ms). Enter 0 for no throttling.</param>        
         public void SubscribeHeadroom(string symbol, int throttleRate = 0) =>
-            Subscribe(new HeadroomSubscription(this, _streamID, symbol, 
-                                               throttleRate: (uint)throttleRate), HeadroomUpdated);
+            EnqueueAndSubscribe(new HeadroomSubscription(this, HeadroomUpdated, _streamID, symbol, 
+                                               throttleRate: (uint)throttleRate));
 
         /// <summary>
         /// Subscribes to a Sentiment gauge data stream for a specific symbol.
@@ -923,8 +918,8 @@ namespace QuantGate.API.Signals
         /// <param name="compression">Compression timeframe to apply to the gauge. Default value is 50t.</param>
         /// <param name="throttleRate">Rate to throttle messages at (in ms). Enter 0 for no throttling.</param>        
         public void SubscribeSentiment(string symbol, string compression = "50t", int throttleRate = 0) =>
-            Subscribe(new SentimentSubscription(this, _streamID, symbol, CleanCompression(compression),
-                                                throttleRate: (uint)throttleRate), SentimentUpdated);
+            EnqueueAndSubscribe(new SentimentSubscription(this, SentimentUpdated, _streamID, symbol, 
+                                                CleanCompression(compression), throttleRate: (uint)throttleRate));
 
         /// <summary>
         /// Subscribes to a Equilibrium gauge data stream for a specific symbol.
@@ -933,8 +928,8 @@ namespace QuantGate.API.Signals
         /// <param name="compression">Compression timeframe to apply to the gauge. Default value is 300s.</param>
         /// <param name="throttleRate">Rate to throttle messages at (in ms). Enter 0 for no throttling.</param>        
         public void SubscribeEquilibrium(string symbol, string compression = "300s", int throttleRate = 0) =>
-            Subscribe(new EquilibriumSubscription(this, _streamID, symbol, CleanCompression(compression),
-                                                  throttleRate: (uint)throttleRate), EquilibriumUpdated);
+            EnqueueAndSubscribe(new EquilibriumSubscription(this, EquilibriumUpdated, _streamID, symbol, 
+                                                  CleanCompression(compression), throttleRate: (uint)throttleRate));
 
         /// <summary>
         /// Subscribes to a Multiframe Equilibrium gauge data stream for a specific symbol.
@@ -942,8 +937,8 @@ namespace QuantGate.API.Signals
         /// <param name="symbol">Symbol to get the Multiframe Equilibrium data for.</param>
         /// <param name="throttleRate">Rate to throttle messages at (in ms). Enter 0 for no throttling.</param>        
         public void SubscribeMultiframeEquilibrium(string symbol, int throttleRate = 0) =>
-            Subscribe(new MultiframeSubscription(this, _streamID, symbol, 
-                                                 throttleRate: (uint)throttleRate), MultiframeEquilibriumUpdated);
+            EnqueueAndSubscribe(new MultiframeSubscription(this, MultiframeEquilibriumUpdated, _streamID, 
+                                                 symbol, throttleRate: (uint)throttleRate));
 
         /// <summary>
         /// Subscribes to a Trigger gauge data stream for a specific symbol.
@@ -951,8 +946,8 @@ namespace QuantGate.API.Signals
         /// <param name="symbol">Symbol to get the Trigger data for.</param>
         /// <param name="throttleRate">Rate to throttle messages at (in ms). Enter 0 for no throttling.</param>        
         public void SubscribeTrigger(string symbol, int throttleRate = 0) =>
-            Subscribe(new TriggerSubscription(this, _streamID, symbol, 
-                                              throttleRate: (uint)throttleRate), TriggerUpdated);
+            EnqueueAndSubscribe(new TriggerSubscription(this, TriggerUpdated, _streamID, symbol, 
+                                              throttleRate: (uint)throttleRate));
 
         /// <summary>
         /// Subscribes to a Strategy update data stream for a specific strategy and symbol.
@@ -961,8 +956,8 @@ namespace QuantGate.API.Signals
         /// <param name="symbol">Symbol to get the Strategy update data for.</param>
         /// <param name="throttleRate">Rate to throttle messages at (in ms). Enter 0 for no throttling.</param>        
         public void SubscribeStrategy(string strategyID, string symbol, int throttleRate = 0) =>
-            Subscribe(new StrategySubscription(this, strategyID, _streamID, symbol,
-                                               throttleRate: (uint)throttleRate), StrategyUpdated);
+            EnqueueAndSubscribe(new StrategySubscription(this, StrategyUpdated, strategyID, _streamID, symbol,
+                                               throttleRate: (uint)throttleRate));
 
         /// <summary>
         /// Subscribes to a stream of Top Symbols according to broker and instrument type.
@@ -973,8 +968,8 @@ namespace QuantGate.API.Signals
         /// <returns>The Top Symbols data object that will receive the updates.</returns>
         public void SubscribeTopSymbols(string broker, InstrumentType instrumentType =
                                         InstrumentType.NoInstrument, int throttleRate = 0) =>
-            Subscribe(new TopSymbolsSubscription(this, null, broker, instrumentType,
-                                                 throttleRate: (uint)throttleRate), TopSymbolsUpdated);
+            EnqueueAndSubscribe(new TopSymbolsSubscription(this, TopSymbolsUpdated, broker, instrumentType,
+                                                 throttleRate: (uint)throttleRate));
 
         /// <summary>
         /// Used to retrieve the specification details of an instrument according to its symbol,
@@ -982,25 +977,21 @@ namespace QuantGate.API.Signals
         /// </summary>        
         /// <param name="symbol">Symbol as listed by the QuantGate servers.</param>
         public void RequestInstrumentDetails(string symbol) =>
-            Subscribe(new InstrumentSubscription(this, _streamID, symbol), InstrumentUpdated);
+            EnqueueAndSubscribe(new InstrumentSubscription(this, InstrumentUpdated, _streamID, symbol));
 
         /// <summary>
-        /// Subscribes to a stream and returns the values from the stream.
+        /// Enqueues and subscribes to a stream.
         /// </summary>
-        /// <param name="subscription">The subscription to subscribe to and return.</param>
-        /// <param name="parentHandler">The parent event handler.</param>
-        private void Subscribe<M, V>(SubscriptionBase<M, V> subscription, EventHandler<V> parentHandler)
+        /// <param name="subscription">The subscription to subscribe to.</param>
+        private void EnqueueAndSubscribe<M, V>(SubscriptionBase<M, V> subscription)
             where M : IMessage<M>
             where V : EventArgs
         {
             Enqueue(() =>
             {
+                // If not yet subscribed, set the parent event handler and subscribe.
                 if (!_subscriptionsByDestination.ContainsKey(subscription.Destination))
-                {
-                    // If not yet subscribed, set the parent event handler and subscribe.
-                    subscription.ParentUpdatedEvent = parentHandler;
                     Subscribe(subscription);
-                }
             });
         }
 
@@ -1015,9 +1006,8 @@ namespace QuantGate.API.Signals
             {
                 if (_search is null)
                 {
-                    _search = new SearchSubscription(this, _streamID);
-                    _search.ParentUpdatedEvent = SymbolSearchUpdated;
-                    Subscribe(_search);
+                    _search = new SearchSubscription(this, SymbolSearchUpdated, _streamID);
+                    EnqueueAndSubscribe(_search);
                 }
 
                 _search.Search(term, broker);
@@ -1125,7 +1115,7 @@ namespace QuantGate.API.Signals
                     destination = '/' + destination;
 
                 // If the destination exists, unsubscribe (otherwise, no need).
-                if (_subscriptionsByDestination.TryGetValue(destination, out ProtoStompSubscription subscription))
+                if (_subscriptionsByDestination.TryGetValue(destination, out var subscription))
                     Unsubscribe(subscription);
             });
         }
@@ -1289,7 +1279,7 @@ namespace QuantGate.API.Signals
                     destination = '/' + destination;
 
                 // If the destination exists, unsubscribe.
-                if (_subscriptionsByDestination.TryGetValue(destination, out ProtoStompSubscription subscription))
+                if (_subscriptionsByDestination.TryGetValue(destination, out var subscription))
                     subscription.ThrottleRate = (uint)throttleRate;
             });
         }
@@ -1303,11 +1293,11 @@ namespace QuantGate.API.Signals
         /// </summary>
         /// <param name="compression">The compression string to clean.</param>
         /// <returns>The clean compression string.</returns>
-        private string CleanCompression(string compression)
+        private static string CleanCompression(string compression)
         {
             // If no string, just return null.
             if (string.IsNullOrEmpty(compression))
-                return null;
+                return string.Empty;
 
             // Put in lower-case and get rid of any whitespace.
             return compression.ToLower().Replace(" ", "");
@@ -1320,7 +1310,7 @@ namespace QuantGate.API.Signals
         /// <param name="symbol">The symbol to get the destination path for.</param>
         /// <param name="compression">The compression to include in the destination path.</param>
         /// <returns>The standard format destination for the gauge.</returns>
-        private string GetGaugeDestination(SubscriptionPath path, string symbol, string compression = null)
+        private string GetGaugeDestination(SubscriptionPath path, string symbol, string compression = "")
         {
             return ParsedDestination.CreateGaugeDestination(
                         path, ParsedDestination.StreamIDForSymbol(_streamID, symbol),
@@ -1398,8 +1388,7 @@ namespace QuantGate.API.Signals
             if (!_isDisposed)
             {
                 // Dispose of and clear the timer reference.
-                _timer?.Dispose();
-                _timer = null;
+                _timer.Dispose();
 
                 // If still connected, disconnect, otherwise stop the thread.
                 if (IsConnected)

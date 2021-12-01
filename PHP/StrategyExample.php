@@ -3,6 +3,7 @@
     require __DIR__ . '/QuantGateSignalsAPI/APIClient.php';
 
     use \QuantGate\API\Signals\APIClient;
+    use \QuantGate\API\Signals\Events\ErrorDetails;
     use \QuantGate\API\Signals\Events\StrategyUpdate;
     use \QuantGate\API\Signals\Events\TopSymbolsUpdate;
 

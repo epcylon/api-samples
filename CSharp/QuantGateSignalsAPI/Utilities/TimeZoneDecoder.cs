@@ -11,7 +11,7 @@ namespace QuantGate.API.Signals.Utilities
         /// <summary>
         /// Conversion mapping of Olsen time zone specifiers to Windows time zone specifiers.
         /// </summary>
-        private static Dictionary<string, string> _olsonWindowsTimes = new Dictionary<string, string>()
+        private static readonly Dictionary<string, string> _olsonWindowsTimes = new Dictionary<string, string>()
         {
             ["Africa/Bangui"] = "W. Central Africa Standard Time",
             ["Africa/Cairo"] = "Egypt Standard Time",
@@ -152,9 +152,9 @@ namespace QuantGate.API.Signals.Utilities
         /// </remarks>
         public static TimeZoneInfo OlsonTimeZoneToTimeZoneInfo(string olsonTimeZoneId)
         {
-            TimeZoneInfo windowsTimeZone = default;
+            TimeZoneInfo windowsTimeZone = TimeZoneInfo.Utc;
 
-            if (_olsonWindowsTimes.TryGetValue(olsonTimeZoneId, out string windowsTimeZoneId))
+            if (_olsonWindowsTimes.TryGetValue(olsonTimeZoneId, out var windowsTimeZoneId))
             {
                 try 
                 {
