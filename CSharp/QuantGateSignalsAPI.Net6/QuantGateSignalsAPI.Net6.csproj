@@ -8,6 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Events\placeholder.txt" />
+    <None Remove="ProtoStomp\placeholder.txt" />
+    <None Remove="Proto\placeholder.txt" />
+    <None Remove="Subscriptions\placeholder.txt" />
+    <None Remove="Utilities\placeholder.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Include="..\QuantGateSignalsAPI\APIClient.cs" Link="APIClient.cs" />
     <Compile Include="..\QuantGateSignalsAPI\Enumerations.cs" Link="Enumerations.cs" />
     <Compile Include="..\QuantGateSignalsAPI\Events\BookPressureEventArgs.cs" Link="Events\BookPressureEventArgs.cs" />
@@ -23,6 +31,7 @@
     <Compile Include="..\QuantGateSignalsAPI\Events\SearchResultsEventArgs.cs" Link="Events\SearchResultsEventArgs.cs" />
     <Compile Include="..\QuantGateSignalsAPI\Events\SentimentEventArgs.cs" Link="Events\SentimentEventArgs.cs" />
     <Compile Include="..\QuantGateSignalsAPI\Events\StrategyEventArgs.cs" Link="Events\StrategyEventArgs.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Events\SubscriptionError.cs" Link="Events\SubscriptionError.cs" />
     <Compile Include="..\QuantGateSignalsAPI\Events\TickRange.cs" Link="Events\TickRange.cs" />
     <Compile Include="..\QuantGateSignalsAPI\Events\TopSymbol.cs" Link="Events\TopSymbol.cs" />
     <Compile Include="..\QuantGateSignalsAPI\Events\TopSymbolsEventArgs.cs" Link="Events\TopSymbolsEventArgs.cs" />

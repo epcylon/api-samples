@@ -74,10 +74,10 @@ namespace BridgeRock.MauiExample
 		private void HandleInstrumentUpdate(object sender, InstrumentEventArgs e)
 		{
 			Trace.TraceInformation(e.Symbol + " " + e.InstrumentType.ToString() + " " +
-		 						   e.ExpiryDate.ToString() + " " + e.ErrorMessage);
+		 						   e.ExpiryDate.ToString() + " " + e.Error.Message);
 		}
 
-        private void HandleError(object client, ErrorEventArgs args)
+        private void HandleError(object client, QuantGate.API.Events.ErrorEventArgs args)
 		{
 			Trace.TraceInformation("Error! " + args.Message);
 		}
