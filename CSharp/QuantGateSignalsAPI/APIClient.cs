@@ -1004,10 +1004,10 @@ namespace QuantGate.API.Signals
         {
             Enqueue(() =>
             {
-                if (_search is SearchSubscription search)
+                if (_search is null)
                 {
                     _search = new SearchSubscription(this, SymbolSearchUpdated, _streamID);
-                    EnqueueAndSubscribe(search);
+                    EnqueueAndSubscribe(_search);
                 }
 
                 _search.Search(term, broker);
