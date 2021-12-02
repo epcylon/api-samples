@@ -68,8 +68,8 @@ namespace QuantGate.API.Signals.Events
         /// <param name="error">Holds error information, if a subscription error occured.</param>
         internal EquilibriumEventArgs(string symbol, DateTime timestamp, string compression, double equilibriumPrice,
                                       double gapSize, double lastPrice, double high, double low, double projected,
-                                      double bias, bool isDirty, SubscriptionError error = null) :
-            base(symbol, timestamp, isDirty, error)
+                                      double bias, bool isDirty, object reference, SubscriptionError error = null) :
+            base(symbol, timestamp, isDirty, reference, error)
         {
             Compression = compression;
             EquilibriumPrice = equilibriumPrice;

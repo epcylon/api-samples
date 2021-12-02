@@ -8,9 +8,11 @@ namespace QuantGate.API.Signals.Subscriptions
     internal class BookPressureSubscription : GaugeSubscriptionBase<SingleValueUpdate, BookPressureEventArgs>
     {
         public BookPressureSubscription(APIClient client, EventHandler<BookPressureEventArgs> handler,
-                                        string streamID, string symbol, bool receipt = false, uint throttleRate = 0) :
+                                        string streamID, string symbol, bool receipt = false, 
+                                        uint throttleRate = 0, object reference = null) :
             base(client, SingleValueUpdate.Parser, handler, SubscriptionPath.GaugeBookPressure, 
-                 ParsedDestination.StreamIDForSymbol(streamID, symbol), symbol, "0q", receipt, throttleRate) { }
+                 ParsedDestination.StreamIDForSymbol(streamID, symbol), symbol, "0q", 
+                 receipt, throttleRate, reference) { }
 
         protected override BookPressureEventArgs HandleUpdate(SingleValueUpdate update, object processed)
         {
@@ -18,10 +20,11 @@ namespace QuantGate.API.Signals.Subscriptions
                 Symbol,
                 ProtoTimeEncoder.TimestampSecondsToDate(update.Timestamp),
                 update.Value / 1000.0,
-                update.IsDirty);
+                update.IsDirty,
+                Reference);
         }
 
         protected override BookPressureEventArgs WrapError(SubscriptionError error) => 
-            new BookPressureEventArgs(Symbol, DateTime.UtcNow, 0, true, error);
+            new BookPressureEventArgs(Symbol, DateTime.UtcNow, 0, true, Reference, error);
     }
 }

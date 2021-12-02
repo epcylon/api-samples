@@ -637,7 +637,7 @@ namespace QuantGate.API.Signals
                 if (_transport is object)
                 {
                     if (_transport.ReadyState != WebSocketState.Closed)
-                        _transport.CloseAsync();
+                        _transport.Close();
                     else
                         OnClose(this, EventArgs.Empty);
                 }
@@ -880,36 +880,36 @@ namespace QuantGate.API.Signals
         /// </summary>
         /// <param name="symbol">Symbol to get the Perception data for.</param>
         /// <param name="throttleRate">Rate to throttle messages at (in ms). Enter 0 for no throttling.</param>        
-        public void SubscribePerception(string symbol, int throttleRate = 0) =>
+        public void SubscribePerception(string symbol, int throttleRate = 0, object reference = null) =>
             EnqueueAndSubscribe(new PerceptionSubscription(this, PerceptionUpdated, _streamID, symbol, 
-                                                 throttleRate: (uint)throttleRate));
+                                                           false, (uint)throttleRate, reference));
 
         /// <summary>
         /// Subscribes to a Commitment gauge data stream for a specific symbol.
         /// </summary>
         /// <param name="symbol">Symbol to get the Commitment data for.</param>
         /// <param name="throttleRate">Rate to throttle messages at (in ms). Enter 0 for no throttling.</param>        
-        public void SubscribeCommitment(string symbol, int throttleRate = 0) =>
-            EnqueueAndSubscribe(new CommitmentSubscription(this, CommitmentUpdated, _streamID, symbol,
-                                                 throttleRate: (uint)throttleRate));
+        public void SubscribeCommitment(string symbol, int throttleRate = 0, object reference = null) =>
+            EnqueueAndSubscribe(new CommitmentSubscription(this, CommitmentUpdated, _streamID, symbol, 
+                                                           false, (uint)throttleRate, reference));
 
         /// <summary>
         /// Subscribes to a Book Pressure gauge data stream for a specific symbol.
         /// </summary>
         /// <param name="symbol">Symbol to get the Book Pressure data for.</param>
         /// <param name="throttleRate">Rate to throttle messages at (in ms). Enter 0 for no throttling.</param>        
-        public void SubscribeBookPressure(string symbol, int throttleRate = 0) =>
-            EnqueueAndSubscribe(new BookPressureSubscription(this, BookPressureUpdated, _streamID, symbol, 
-                                                   throttleRate: (uint)throttleRate));
+        public void SubscribeBookPressure(string symbol, int throttleRate = 0, object reference = null) =>
+            EnqueueAndSubscribe(new BookPressureSubscription(this, BookPressureUpdated, _streamID, 
+                                                             symbol, false, (uint)throttleRate, reference));
 
         /// <summary>
         /// Subscribes to a Headroom gauge data stream for a specific symbol.
         /// </summary>
         /// <param name="symbol">Symbol to get the Headroom data for.</param>
         /// <param name="throttleRate">Rate to throttle messages at (in ms). Enter 0 for no throttling.</param>        
-        public void SubscribeHeadroom(string symbol, int throttleRate = 0) =>
+        public void SubscribeHeadroom(string symbol, int throttleRate = 0, object reference = null) =>
             EnqueueAndSubscribe(new HeadroomSubscription(this, HeadroomUpdated, _streamID, symbol, 
-                                               throttleRate: (uint)throttleRate));
+                                                         false, (uint)throttleRate, reference));
 
         /// <summary>
         /// Subscribes to a Sentiment gauge data stream for a specific symbol.
@@ -917,9 +917,11 @@ namespace QuantGate.API.Signals
         /// <param name="symbol">Symbol to get the Sentiment data for.</param>
         /// <param name="compression">Compression timeframe to apply to the gauge. Default value is 50t.</param>
         /// <param name="throttleRate">Rate to throttle messages at (in ms). Enter 0 for no throttling.</param>        
-        public void SubscribeSentiment(string symbol, string compression = "50t", int throttleRate = 0) =>
-            EnqueueAndSubscribe(new SentimentSubscription(this, SentimentUpdated, _streamID, symbol, 
-                                                CleanCompression(compression), throttleRate: (uint)throttleRate));
+        public void SubscribeSentiment(string symbol, string compression = "50t",
+                                       int throttleRate = 0, object reference = null) =>
+            EnqueueAndSubscribe(new SentimentSubscription(this, SentimentUpdated, _streamID, symbol,
+                                                          CleanCompression(compression), false, 
+                                                          (uint)throttleRate, reference));
 
         /// <summary>
         /// Subscribes to a Equilibrium gauge data stream for a specific symbol.
@@ -927,27 +929,29 @@ namespace QuantGate.API.Signals
         /// <param name="symbol">Symbol to get the Equilibrium data for.</param>
         /// <param name="compression">Compression timeframe to apply to the gauge. Default value is 300s.</param>
         /// <param name="throttleRate">Rate to throttle messages at (in ms). Enter 0 for no throttling.</param>        
-        public void SubscribeEquilibrium(string symbol, string compression = "300s", int throttleRate = 0) =>
+        public void SubscribeEquilibrium(string symbol, string compression = "300s", 
+                                         int throttleRate = 0, object reference = null) =>
             EnqueueAndSubscribe(new EquilibriumSubscription(this, EquilibriumUpdated, _streamID, symbol, 
-                                                  CleanCompression(compression), throttleRate: (uint)throttleRate));
+                                                            CleanCompression(compression), false,
+                                                            (uint)throttleRate, reference));
 
         /// <summary>
         /// Subscribes to a Multiframe Equilibrium gauge data stream for a specific symbol.
         /// </summary>
         /// <param name="symbol">Symbol to get the Multiframe Equilibrium data for.</param>
         /// <param name="throttleRate">Rate to throttle messages at (in ms). Enter 0 for no throttling.</param>        
-        public void SubscribeMultiframeEquilibrium(string symbol, int throttleRate = 0) =>
+        public void SubscribeMultiframeEquilibrium(string symbol, int throttleRate = 0, object reference = null) =>
             EnqueueAndSubscribe(new MultiframeSubscription(this, MultiframeEquilibriumUpdated, _streamID, 
-                                                 symbol, throttleRate: (uint)throttleRate));
+                                                           symbol, false, (uint)throttleRate, reference));
 
         /// <summary>
         /// Subscribes to a Trigger gauge data stream for a specific symbol.
         /// </summary>
         /// <param name="symbol">Symbol to get the Trigger data for.</param>
         /// <param name="throttleRate">Rate to throttle messages at (in ms). Enter 0 for no throttling.</param>        
-        public void SubscribeTrigger(string symbol, int throttleRate = 0) =>
+        public void SubscribeTrigger(string symbol, int throttleRate = 0, object reference = null) =>
             EnqueueAndSubscribe(new TriggerSubscription(this, TriggerUpdated, _streamID, symbol, 
-                                              throttleRate: (uint)throttleRate));
+                                                        false, (uint)throttleRate, reference));
 
         /// <summary>
         /// Subscribes to a Strategy update data stream for a specific strategy and symbol.
@@ -955,9 +959,10 @@ namespace QuantGate.API.Signals
         /// <param name="strategyID">Strategy to subscribe to. Example enum values: PPr4.0, BTr4.0, Crb.8.4.</param>
         /// <param name="symbol">Symbol to get the Strategy update data for.</param>
         /// <param name="throttleRate">Rate to throttle messages at (in ms). Enter 0 for no throttling.</param>        
-        public void SubscribeStrategy(string strategyID, string symbol, int throttleRate = 0) =>
-            EnqueueAndSubscribe(new StrategySubscription(this, StrategyUpdated, strategyID, _streamID, symbol,
-                                               throttleRate: (uint)throttleRate));
+        public void SubscribeStrategy(string strategyID, string symbol,
+                                      int throttleRate = 0, object reference = null) =>
+            EnqueueAndSubscribe(new StrategySubscription(this, StrategyUpdated, strategyID, _streamID, 
+                                                         symbol, false, (uint)throttleRate, reference));
 
         /// <summary>
         /// Subscribes to a stream of Top Symbols according to broker and instrument type.
@@ -967,9 +972,9 @@ namespace QuantGate.API.Signals
         /// <param name="throttleRate">Rate to throttle messages at (in ms). Enter 0 for no throttling.</param>
         /// <returns>The Top Symbols data object that will receive the updates.</returns>
         public void SubscribeTopSymbols(string broker, InstrumentType instrumentType =
-                                        InstrumentType.NoInstrument, int throttleRate = 0) =>
+                                        InstrumentType.NoInstrument, int throttleRate = 0, object reference = null) =>
             EnqueueAndSubscribe(new TopSymbolsSubscription(this, TopSymbolsUpdated, broker, instrumentType,
-                                                 throttleRate: (uint)throttleRate));
+                                                           false, (uint)throttleRate, reference));
 
         /// <summary>
         /// Used to retrieve the specification details of an instrument according to its symbol,

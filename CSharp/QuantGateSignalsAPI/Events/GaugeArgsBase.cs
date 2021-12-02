@@ -24,6 +24,11 @@ namespace QuantGate.API.Signals.Events
         public bool IsDirty { get; }
 
         /// <summary>
+        /// Reference object tied to this subscription.
+        /// </summary>
+        public object Reference { get; }
+
+        /// <summary>
         /// Holds error information, if a subscription error occured.
         /// </summary>
         public SubscriptionError Error { get; }
@@ -33,16 +38,19 @@ namespace QuantGate.API.Signals.Events
         /// </summary>
         /// <param name="symbol">The symbol being subscribed to for this gauge.</param>
         /// <param name="timestamp">Timestamp of the latest update.</param>
+        /// <param name="reference">Reference object tied to this subscription.</param>
         /// <param name="isDirty">
         /// Whether the data used to generate this gauge value is potentially dirty 
         /// (values are missing) or stale (not the most recent data).
         /// </param>
         /// <param name="error">Subscription error information, if an error occured.</param>
-        internal GaugeArgsBase(string symbol, DateTime timestamp, bool isDirty, SubscriptionError error)
+        internal GaugeArgsBase(string symbol, DateTime timestamp, bool isDirty, 
+                               object reference, SubscriptionError error)
         {
             Symbol = symbol;
             TimeStamp = timestamp;
             IsDirty = isDirty;
+            Reference = reference;
             Error = error;
         }
     }

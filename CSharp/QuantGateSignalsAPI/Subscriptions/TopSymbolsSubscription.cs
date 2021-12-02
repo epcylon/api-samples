@@ -8,14 +8,17 @@ namespace QuantGate.API.Signals.Subscriptions
 {
     internal class TopSymbolsSubscription : SubscriptionBase<TopSymbolsUpdate, TopSymbolsEventArgs>
     {
+        public object Reference { get; }
+
         public TopSymbolsSubscription(APIClient client, EventHandler<TopSymbolsEventArgs> handler, string broker,
                                       InstrumentType instrumentType = InstrumentType.NoInstrument,
-                                      bool receipt = false, uint throttleRate = 0) :
+                                      bool receipt = false, uint throttleRate = 0, object reference = null) :
             base(client, TopSymbolsUpdate.Parser, handler,
                  new ParsedDestination(SubscriptionType.Definition, SubscriptionPath.DefnTopSymbols, string.Empty,
                                        broker: broker, securityType: InstrumentTypeToString(instrumentType)).Destination,
                  receipt, throttleRate)
         {
+            Reference = reference;
         }
 
         internal static string InstrumentTypeToString(InstrumentType type)
@@ -56,10 +59,10 @@ namespace QuantGate.API.Signals.Subscriptions
 
         protected override TopSymbolsEventArgs HandleUpdate(TopSymbolsUpdate update, object processed)
         {
-            return new TopSymbolsEventArgs((List<TopSymbol>)processed);
+            return new TopSymbolsEventArgs((List<TopSymbol>)processed, Reference);
         }
 
         protected override TopSymbolsEventArgs WrapError(SubscriptionError error) =>
-            new TopSymbolsEventArgs(new List<TopSymbol>(), error);
+            new TopSymbolsEventArgs(new List<TopSymbol>(), Reference, error);
     }
 }

@@ -62,8 +62,8 @@ namespace QuantGate.API.Signals.Events
         /// <param name="error">Holds error information, if a subscription error occured.</param>
         internal TriggerEventArgs(string symbol, DateTime timestamp, double perception, double commitment,
                                   double sentiment, double equilibriumPrice, double gapSize, double lastPrice,
-                                  double bias, bool isDirty, SubscriptionError error = null) :
-            base(symbol, timestamp, isDirty, error)
+                                  double bias, bool isDirty, object reference = null, SubscriptionError error = null) :
+            base(symbol, timestamp, isDirty, reference, error)
         {
             Perception = perception;
             Commitment = commitment;

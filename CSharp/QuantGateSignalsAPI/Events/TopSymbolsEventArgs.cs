@@ -18,14 +18,18 @@ namespace QuantGate.API.Signals.Events
         /// </summary>
         public SubscriptionError Error { get; }
 
+        public object Reference { get; }
+
         /// <summary>
         /// Creates a new TopSymbolsEventArgs instance.
         /// </summary>
         /// <param name="symbols">Top symbol results.</param>
         /// <param name="error">Holds error information, if a subscription error occured.</param>
-        public TopSymbolsEventArgs(List<TopSymbol> symbols, SubscriptionError error = null)
+        public TopSymbolsEventArgs(List<TopSymbol> symbols, object reference = null, 
+                                   SubscriptionError error = null)
         {
             Symbols = symbols;
+            Reference = reference;
             Error = error;
         }
     }

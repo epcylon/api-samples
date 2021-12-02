@@ -8,9 +8,10 @@ namespace QuantGate.API.Signals.Subscriptions
     internal class EquilibriumSubscription : GaugeSubscriptionBase<EquilibriumUpdate, EquilibriumEventArgs>
     {
         public EquilibriumSubscription(APIClient client, EventHandler<EquilibriumEventArgs> handler, string streamID, 
-                                       string symbol, string compression, bool receipt = false, uint throttleRate = 0) :
+                                       string symbol, string compression, bool receipt = false, 
+                                       uint throttleRate = 0, object reference = null) :
                 base(client, EquilibriumUpdate.Parser, handler, SubscriptionPath.GaugeEquilibrium,
-                     streamID, symbol, compression, receipt, throttleRate)
+                     streamID, symbol, compression, receipt, throttleRate, reference)
         {
         }
 
@@ -27,10 +28,12 @@ namespace QuantGate.API.Signals.Subscriptions
                 update.Low / 1000.0,
                 update.Projected / 1000.0,
                 update.Bias / 1000.0,
-                update.IsDirty);
+                update.IsDirty, 
+                Reference);
         }
 
         protected override EquilibriumEventArgs WrapError(SubscriptionError error)
-            => new EquilibriumEventArgs(Symbol, DateTime.UtcNow, Compression, 0, 0, 0, 0, 0, 0, 0, true, error);
+            => new EquilibriumEventArgs(Symbol, DateTime.UtcNow, Compression, 
+                                        0, 0, 0, 0, 0, 0, 0, true, Reference, error);
     }
 }

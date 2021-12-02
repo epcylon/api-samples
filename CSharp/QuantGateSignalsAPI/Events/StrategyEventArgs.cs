@@ -77,6 +77,8 @@ namespace QuantGate.API.Signals.Events
         /// </summary>
         public GaugeSignal SentimentSignal { get; }
 
+        public object Reference { get; }
+
         /// <summary>
         /// Holds error information, if a subscription error occured.
         /// </summary>
@@ -104,7 +106,8 @@ namespace QuantGate.API.Signals.Events
                                    double exitProgress, double? perceptionLevel, GaugeSignal perceptionSignal,
                                    double? commitmentLevel, GaugeSignal commitmentSignal,
                                    double? equilibriumLevel, GaugeSignal equilibriumSignal, double? sentimentLevel, 
-                                   GaugeSignal sentimentSignal, StrategySignal signal, SubscriptionError error = null)
+                                   GaugeSignal sentimentSignal, StrategySignal signal, 
+                                   object reference = null, SubscriptionError error = null)
         {
             TimeStamp = timeStamp;
             Symbol = symbol;
@@ -120,6 +123,7 @@ namespace QuantGate.API.Signals.Events
             SentimentLevel = sentimentLevel;
             SentimentSignal = sentimentSignal;
             Signal = signal;
+            Reference = reference;
             Error = error;
         }
     }

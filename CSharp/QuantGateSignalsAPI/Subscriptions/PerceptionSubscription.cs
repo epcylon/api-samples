@@ -8,9 +8,11 @@ namespace QuantGate.API.Signals.Subscriptions
     internal class PerceptionSubscription : GaugeSubscriptionBase<SingleValueUpdate, PerceptionEventArgs>
     {
         public PerceptionSubscription(APIClient client, EventHandler<PerceptionEventArgs> handler, 
-                                      string streamID, string symbol, bool receipt = false, uint throttleRate = 0) :
+                                      string streamID, string symbol, bool receipt = false,
+                                      uint throttleRate = 0, object reference = null) :
             base(client, SingleValueUpdate.Parser, handler, SubscriptionPath.GaugePerception, 
-                 ParsedDestination.StreamIDForSymbol(streamID, symbol), symbol, string.Empty, receipt, throttleRate)
+                 ParsedDestination.StreamIDForSymbol(streamID, symbol), symbol, 
+                 string.Empty, receipt, throttleRate, reference)
         {
         }
 
@@ -20,10 +22,11 @@ namespace QuantGate.API.Signals.Subscriptions
                 Symbol,
                 ProtoTimeEncoder.TimestampSecondsToDate(update.Timestamp),
                 update.Value / 1000.0,
-                update.IsDirty);
+                update.IsDirty, 
+                Reference);
         }
 
         protected override PerceptionEventArgs WrapError(SubscriptionError error) =>
-            new PerceptionEventArgs(Symbol, DateTime.UtcNow, 0, true, error);
+            new PerceptionEventArgs(Symbol, DateTime.UtcNow, 0, true, Reference, error);
     }
 }

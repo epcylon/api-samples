@@ -8,9 +8,10 @@ namespace QuantGate.API.Signals.Subscriptions
     internal class MultiframeSubscription : GaugeSubscriptionBase<MultiframeUpdate, MultiframeEquilibriumEventArgs>
     {
         public MultiframeSubscription(APIClient client, EventHandler<MultiframeEquilibriumEventArgs> handler,
-                                      string streamID, string symbol, bool receipt = false, uint throttleRate = 0) :
+                                      string streamID, string symbol, bool receipt = false, 
+                                      uint throttleRate = 0, object reference = null) :
                base(client, MultiframeUpdate.Parser, handler, SubscriptionPath.GaugeMultiframeEquilibrium,
-                    streamID, symbol, string.Empty, receipt, throttleRate)
+                    streamID, symbol, string.Empty, receipt, throttleRate, reference)
         {
         }
 
@@ -29,11 +30,12 @@ namespace QuantGate.API.Signals.Subscriptions
                 update.Min180 / 1000.0,
                 update.Min240 / 1000.0,
                 update.Day1 / 1000.0,
-                update.IsDirty
-            );
+                update.IsDirty,
+                Reference);
         }
 
         protected override MultiframeEquilibriumEventArgs WrapError(SubscriptionError error) =>
-            new MultiframeEquilibriumEventArgs(Symbol, DateTime.UtcNow, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, true, error);
+            new MultiframeEquilibriumEventArgs(Symbol, DateTime.UtcNow, 0, 0, 0, 0, 0, 
+                                               0, 0, 0, 0, 0, true, Reference, error);
     }
 }

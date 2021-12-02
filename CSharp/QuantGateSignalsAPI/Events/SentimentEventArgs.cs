@@ -56,8 +56,8 @@ namespace QuantGate.API.Signals.Events
         /// <param name="error">Holds error information, if a subscription error occured.</param>
         internal SentimentEventArgs(string symbol, DateTime timestamp, string compression,
                                     double[] lengths, double[] colors, double avgLength, double avgColor,
-                                    bool isDirty, SubscriptionError error = null) :
-            base(symbol, timestamp, isDirty, error)
+                                    bool isDirty, object reference = null, SubscriptionError error = null) :
+            base(symbol, timestamp, isDirty, reference, error)
         {
             Compression = compression;
             Lengths = lengths;

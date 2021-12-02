@@ -9,9 +9,11 @@ namespace QuantGate.API.Signals.Subscriptions
     {
         private readonly string _symbol;
         private readonly string _strategyID;
+        public object Reference { get; }
 
-        public StrategySubscription(APIClient client, EventHandler<StrategyEventArgs> handler, string strategyID, 
-                                    string streamID, string symbol, bool receipt = false, uint throttleRate = 0) :
+        public StrategySubscription(APIClient client, EventHandler<StrategyEventArgs> handler,
+                                    string strategyID, string streamID, string symbol, 
+                                    bool receipt = false, uint throttleRate = 0, object reference = null) :
             base(client, StrategyUpdate.Parser, handler,
                  new ParsedDestination(SubscriptionType.Strategy, SubscriptionPath.None,
                                        ParsedDestination.StreamIDForSymbol(streamID, symbol),
@@ -20,6 +22,7 @@ namespace QuantGate.API.Signals.Subscriptions
         {
             _symbol = symbol;
             _strategyID = strategyID;
+            Reference = reference;
         }
 
         string ISymbolSubscription.Symbol => _symbol;
@@ -40,13 +43,13 @@ namespace QuantGate.API.Signals.Subscriptions
                 (GaugeSignal)update.EquilibriumSignal,
                 ConvertLevel(update.SentimentLevel),
                 (GaugeSignal)update.SentimentSignal,
-                (StrategySignal)update.Signal
-            );
+                (StrategySignal)update.Signal,
+                Reference);
         }
 
         protected override StrategyEventArgs WrapError(SubscriptionError error) =>
-            new StrategyEventArgs(DateTime.UtcNow, _symbol, _strategyID, 0, 0, null, 0, 
-                                  null, 0, null, 0, null, 0, StrategySignal.None, error);
+            new StrategyEventArgs(DateTime.UtcNow, _symbol, _strategyID, 0, 0, null, 0, null,
+                                  0, null, 0, null, 0, StrategySignal.None, Reference, error);
 
         /// <summary>
         /// Converts a level to a nullable double value.

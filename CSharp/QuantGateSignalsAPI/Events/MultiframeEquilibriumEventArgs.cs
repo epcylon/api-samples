@@ -81,8 +81,8 @@ namespace QuantGate.API.Signals.Events
         internal MultiframeEquilibriumEventArgs(string symbol, DateTime timestamp, double min5, double min10,
                                                 double min15, double min30, double min45, double min60,
                                                 double min120, double min180, double min240, double day1,
-                                                bool isDirty, SubscriptionError error = null) :
-            base(symbol, timestamp, isDirty, error)
+                                                bool isDirty, object reference = null, SubscriptionError error = null) :
+            base(symbol, timestamp, isDirty, reference, error)
         {
             Min5 = min5;
             Min10 = min10;

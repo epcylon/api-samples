@@ -8,9 +8,9 @@ namespace QuantGate.API.Signals.Subscriptions
     internal class HeadroomSubscription : GaugeSubscriptionBase<SingleValueUpdate, HeadroomEventArgs>
     {
         public HeadroomSubscription(APIClient client, EventHandler<HeadroomEventArgs> handler, string streamID, 
-                                    string symbol, bool receipt = false, uint throttleRate = 0) :
+                                    string symbol, bool receipt = false, uint throttleRate = 0, object reference = null) :
             base(client, SingleValueUpdate.Parser, handler, SubscriptionPath.GaugeHeadroom, 
-                 ParsedDestination.StreamIDForSymbol(streamID, symbol), symbol, "5m", receipt, throttleRate)
+                 ParsedDestination.StreamIDForSymbol(streamID, symbol), symbol, "5m", receipt, throttleRate, reference)
         {
         }
 
@@ -20,10 +20,11 @@ namespace QuantGate.API.Signals.Subscriptions
                 Symbol,
                 ProtoTimeEncoder.TimestampSecondsToDate(update.Timestamp),
                 update.Value / 1000.0,
-                update.IsDirty);
+                update.IsDirty, 
+                Reference);
         }
 
         protected override HeadroomEventArgs WrapError(SubscriptionError error) =>
-            new HeadroomEventArgs(Symbol, DateTime.UtcNow, 0, true, error);
+            new HeadroomEventArgs(Symbol, DateTime.UtcNow, 0, true, Reference, error);
     }
 }

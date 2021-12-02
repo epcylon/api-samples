@@ -8,9 +8,9 @@ namespace QuantGate.API.Signals.Subscriptions
     internal class TriggerSubscription : GaugeSubscriptionBase<TriggerUpdate, TriggerEventArgs>
     {
         public TriggerSubscription(APIClient client, EventHandler<TriggerEventArgs> handler, string streamID, 
-                                   string symbol, bool receipt = false, uint throttleRate = 0) :
+                                   string symbol, bool receipt = false, uint throttleRate = 0, object reference = null) :
             base(client, TriggerUpdate.Parser, handler, SubscriptionPath.GaugeTrigger, 
-                 streamID, symbol, string.Empty, receipt, throttleRate)
+                 streamID, symbol, string.Empty, receipt, throttleRate, reference)
         {
         }
 
@@ -26,11 +26,11 @@ namespace QuantGate.API.Signals.Subscriptions
                 ProtoPriceEncoder.DecodePrice(update.GapSize),
                 ProtoPriceEncoder.DecodePrice(update.LastPrice),
                 update.Bias / 1000.0,
-                update.IsDirty
-            );
+                update.IsDirty,
+                Reference);
         }
 
         protected override TriggerEventArgs WrapError(SubscriptionError error) =>
-            new TriggerEventArgs(Symbol, DateTime.UtcNow, 0, 0, 0, 0, 0, 0, 0, true, error);
+            new TriggerEventArgs(Symbol, DateTime.UtcNow, 0, 0, 0, 0, 0, 0, 0, true, Reference, error);
     }
 }

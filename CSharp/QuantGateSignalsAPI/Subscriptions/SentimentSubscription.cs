@@ -13,10 +13,11 @@ namespace QuantGate.API.Signals.Subscriptions
         /// </summary>
         private const string _moduleID = "SSub";
 
-        public SentimentSubscription(APIClient client, EventHandler<SentimentEventArgs> handler, string streamID, 
-                                     string symbol, string compression, bool receipt = false, uint throttleRate = 0) :
+        public SentimentSubscription(APIClient client, EventHandler<SentimentEventArgs> handler,
+                                     string streamID, string symbol, string compression, 
+                                     bool receipt = false, uint throttleRate = 0, object reference = null) :
                base(client, SentimentUpdate.Parser, handler, SubscriptionPath.GaugeSentiment,
-                    streamID, symbol, compression, receipt, throttleRate)
+                    streamID, symbol, compression, receipt, throttleRate, reference)
         {
         }
 
@@ -45,11 +46,13 @@ namespace QuantGate.API.Signals.Subscriptions
                 converted.Item2,
                 update.Lengths.Average / 1000.0,
                 update.Lengths.Average / 1000.0,
-                update.IsDirty);
+                update.IsDirty, 
+                Reference);
         }
 
         protected override SentimentEventArgs WrapError(SubscriptionError error) =>
-            new SentimentEventArgs(Symbol, DateTime.UtcNow, Compression, null, null, 0, 0, true, error);
+            new SentimentEventArgs(Symbol, DateTime.UtcNow, Compression, 
+                                   null, null, 0, 0, true, Reference, error);
 
         #region Height/Color Interpolation        
 
