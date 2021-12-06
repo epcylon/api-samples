@@ -84,7 +84,7 @@ namespace QuantGate.Examples.ConsoleStrategy
                 Console.WriteLine("Starting up.");
 
                 // Create the API client, and subscribe to the updated event.
-                _api = new APIClient(_host, stream: DataStream.Realtime);
+                _api = new APIClient();
                 _api.StrategyUpdated += _api_StrategyUpdated;
 
                 // Connect to the API using a valid token.

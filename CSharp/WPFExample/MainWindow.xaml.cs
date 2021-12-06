@@ -79,9 +79,9 @@ namespace BridgeRock.CSharpExample
 
             txtSearch.TextChanged += HandleSearchUpdate;
 
-            //_client = new ProtoStompClient("wss://feed.stealthtrader.com");
-            _client = new APIClient("wss://test.stealthtrader.com", stream: DataStream.Realtime);
-            //_client = new ProtoStompClient("ws://localhost", 2432);
+            _client = new APIClient(Environments.Production);
+            //_client = new APIClient();
+            //_client = new APIClient(Environments.Local);
             _client.Connected += HandleConnected;
             _client.Disconnected += HandleDisconnected;
             _client.Error += HandleError;

@@ -1,7 +1,30 @@
 ﻿namespace QuantGate.API.Signals
 {
+    /// <summary>
+    /// Server environments.
+    /// </summary>
+    public enum Environments
+    {
+        /// <summary>
+        /// Staging environment - use this for main development.
+        /// </summary>
+        Staging = 0,
+        /// <summary>
+        /// Production environment - use this in the production environment (not during testing).
+        /// </summary>
+        Production = 1,
+        /// <summary>
+        /// Development environment - used only by internal developers (protocol may not match).
+        /// </summary>
+        Development = 2,
+        /// <summary>
+        /// Connection to a local machine - used by internal developers only.
+        /// </summary>
+        Local = 3,
+    }
+
     /*     
-     *   NOTE: SYNCHRONIZE THESE WITH THE ENUMERATIONS GENERATED FROM THE PROTO FILE.
+     *   NOTE: SYNCHRONIZE THE BELOW ENUMS WITH THE ENUMERATIONS GENERATED FROM THE PROTO FILE.
      */
 
     /// <summary>

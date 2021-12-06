@@ -13,6 +13,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using WebSocketSharp;
 using events = QuantGate.API.Events;
+using System.Net;
+using System.IO;
 
 namespace QuantGate.API.Signals
 {
@@ -79,6 +81,36 @@ namespace QuantGate.API.Signals
         #region Connection Variables
 
         /// <summary>
+        /// The host address of the server to connect to.
+        /// </summary>
+        private readonly string _host;
+        /// <summary>
+        /// The port of the server to connect to.
+        /// </summary>
+        private readonly int _port;
+        /// <summary>
+        /// The host address of the REST API to request from.
+        /// </summary>
+        private readonly string _restHost;
+
+        /// <summary>
+        /// The currently connected username (client id).
+        /// </summary>
+        private string _clientID = string.Empty;
+        /// <summary>
+        /// The password for the current connection (JWT Token).
+        /// </summary>        
+        private string _token = string.Empty;
+        /// <summary>
+        /// The expiry time of the token (when to refresh).
+        /// </summary>
+        private DateTime _tokenExpiry = default(DateTime);
+        /// <summary>
+        /// The token used to refresh the connection.
+        /// </summary>
+        private string _refreshToken = string.Empty;
+
+        /// <summary>
         /// Is the client disconnecting?
         /// </summary>
         private bool _isDisconnecting = false;
@@ -125,6 +157,11 @@ namespace QuantGate.API.Signals
         /// </summary>
         private long _lastMessageTicks = 0;
 
+        /// <summary>
+        /// Epoch time for calculating UNIX time.
+        /// </summary>
+        private readonly DateTime _epoch = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+
         #endregion
 
         #region Private and Internal Variables
@@ -157,7 +194,7 @@ namespace QuantGate.API.Signals
         /// <summary>
         /// The timer reference to use (if specified).
         /// </summary>
-        private Timer _timer;
+        private readonly Timer _timer;
 
         #endregion
 
@@ -166,30 +203,42 @@ namespace QuantGate.API.Signals
         /// <summary>
         /// Initializes a new instance of the <see cref="StompClient" /> class.
         /// </summary>
-        /// <param name="host">The web address to connect to.</param>
-        /// <param name="port">The port to connect to.</param>
+        /// <param name="environment">The server environment to connect to.</param>
         /// <param name="stream">The base datastream to connect to (default = realtime).</param>
-        /// <param name="sync">The synchronization context to return values on (default = SychronizationContext.Current).</param>
-        public APIClient(string host, int port = int.MinValue, DataStream stream = DataStream.Realtime, SynchronizationContext sync = null)
+        /// <param name="sync">
+        /// The synchronization context to return values on (default = SychronizationContext.Current).
+        /// </param>
+        public APIClient(Environments environment = Environments.Staging, 
+                         DataStream stream = DataStream.Realtime, SynchronizationContext sync = null)
         {
-            if (port == int.MinValue)
-            {
-                // If no port was specified, figure out the appropriate port.
-                string[] fields = host.Split(new char[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
-
-                if (fields.Length > 1 && int.TryParse(fields[1], out port))
-                    host = fields[0];
-                else if (host.StartsWith("wss"))
-                    port = 443;
-                else
-                    port = 80;
-            }
-
             // Get a reference to the dispatcher to use.
             Sync = (sync ?? SynchronizationContext.Current) ?? new SynchronizationContext();
 
-            Host = host;
-            Port = port;
+            // Set the environment 
+            Environment = environment;
+            switch (environment)
+            {
+                case Environments.Local:
+                    _restHost = @"http://localhost:59398/";
+                    _host = @"ws://localhost";
+                    _port = 2432;
+                    break;
+                case Environments.Development:
+                    _restHost = @"https://mdev.pilottrading.co/";
+                    _host = @"wss://dev.stealthtrader.com";
+                    _port = 443;
+                    break;
+                case Environments.Staging:
+                    _restHost = @"https://mstage.pilottrading.co/";
+                    _host = @"wss://test.stealthtrader.com";
+                    _port = 443;
+                    break;
+                case Environments.Production:
+                    _restHost = @"https://mercury.pilottrading.co/";
+                    _host = @"wss://feed.stealthtrader.com";
+                    _port = 443;
+                    break;
+            }                        
 
             // Set the stream (and get the proper stream ID).
             Stream = stream;
@@ -204,7 +253,7 @@ namespace QuantGate.API.Signals
             Task.Factory.StartNew(HandleActions, TaskCreationOptions.LongRunning);
 
             // Create the new websocket.
-            _transport = new WebSocket(Host + ':' + Port + "/");
+            _transport = new WebSocket(_host + ':' + _port + "/");
 
             // Set up the event handling.
             _transport.OnOpen += OnOpen;
@@ -233,23 +282,14 @@ namespace QuantGate.API.Signals
         #region Public Properties
 
         /// <summary>
-        /// The host address of the server to connect to.
+        /// The server environment to connect to.
         /// </summary>
-        public string Host { get; }
+        public Environments Environment { get; }
 
         /// <summary>
-        /// The port of the server to connect to.
+        /// The username (email) of the connected user.
         /// </summary>
-        public int Port { get; }
-
-        /// <summary>
-        /// The currently connected username (client id).
-        /// </summary>
-        public string Username { get; private set; } = string.Empty;
-        /// <summary>
-        /// The password for the current connection (JWT Token).
-        /// </summary>
-        public string Password { get; private set; } = string.Empty;
+        public string Username { get; private set; }        
 
         /// <summary>
         /// Returns the type of stream that this client is connected to (realtime/delay/demo).
@@ -296,10 +336,10 @@ namespace QuantGate.API.Signals
                 {
                     connect = new ConnectRequest { AcceptVersion = "1.0" };
 
-                    if (Username is object)
-                        connect.Login = Username;
-                    if (Password is object)
-                        connect.Passcode = Password;
+                    if (_clientID is object)
+                        connect.Login = _clientID;
+                    if (_token is object)
+                        connect.Passcode = _token;
 
                     Send(new RequestFrame { Connect = connect });
                 }
@@ -553,7 +593,90 @@ namespace QuantGate.API.Signals
 
         #endregion        
 
-        #region Connection Handling
+        #region Connection Handling        
+
+        /// <summary>
+        /// Connect using username and password.
+        /// </summary>
+        /// <param name="username">The username of the account to connect to.</param>
+        /// <param name="password">The password associated with the account to connect to.</param>
+        public void Connect(string username, string password)
+        {
+            Enqueue(() =>
+            {
+                string uri;
+
+                try
+                {
+                    // Set the username.
+                    Username = username;
+                    // Form the URI to retrieve the token for.
+                    uri = _restHost + "auth/credentials?UserName=" + username +
+                                      "&Password=" + password + "&format=json";
+                    
+                    // Log in and update the tokens from the result.
+                    UpdateTokens(Get(uri));
+                    // Connect with the token received.
+                    Connect(_token);
+                }
+                catch (Exception ex)
+                {
+                    Trace.TraceError(_moduleID + ":Cn1 - " + ex.Message);
+                }
+            });
+        }
+
+        /// <summary>
+        /// Used to refresh the existing token.
+        /// </summary>
+        private void RefreshToken()
+        {
+            try
+            {
+                // Can't refresh if no username or token.
+                if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(_refreshToken))
+                    return;
+
+                string uri;
+
+                // Form the URI to retrieve the token for.
+                uri = _restHost + "auth/refresh?UserName=" + Username +
+                                  "&RefreshToken=" + _refreshToken + "&format=json";
+                // Refresh the tokens (retrieve and handle tokens).          
+                UpdateTokens(Get(uri));
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError(_moduleID + ":RTkns - " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Updates the JWT bearer and refresh tokens from the JSON response message supplied.
+        /// </summary>
+        /// <param name="jsonResponse">The message to retrieve the tokens from.</param>
+        private void UpdateTokens(string jsonResponse)
+        {
+            try
+            {
+                // Get the token and refresh token from the result.
+                _token = GetJSONField(jsonResponse, "BearerToken");
+                _refreshToken = GetJSONField(jsonResponse, "RefreshToken");
+
+                // Calculate the token expiry.
+                if (long.TryParse(GetJSONField(GetJWTPayload(_token), "exp"), out long expiry))
+                    _tokenExpiry = _epoch.AddSeconds(expiry);
+                else
+                    _tokenExpiry = DateTime.UtcNow.AddHours(12);
+
+                // Move back 10%.
+                _tokenExpiry = _tokenExpiry.AddTicks((long)((DateTime.UtcNow.Ticks - _tokenExpiry.Ticks) * 0.10));
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError(_moduleID + ":UdTkns - " + ex.Message);
+            }
+        }
 
         /// <summary>
         /// Connects to the server on the specified address.
@@ -563,19 +686,12 @@ namespace QuantGate.API.Signals
         {
             Enqueue(() =>
             {
-                byte[] bytes;
-                string username;
-
                 try
-                {
-                    // Get the username from the token.
-                    bytes = Convert.FromBase64String(PadBase64String(jwtToken.Split(new char[] { '.' })[1]));
-                    username = System.Text.Encoding.UTF8.GetString(bytes);
-                    username = username.Split(new string[] { "sub\":\"" }, StringSplitOptions.None)[1].Split(new char[] { '"' })[0];
-
+                {                    
                     // Set the username and password.
-                    Password = jwtToken;
-                    Username = username;
+                    _token = jwtToken;
+                    // Get the username from the token.
+                    _clientID = GetJSONField(GetJWTPayload(jwtToken), "sub");
 
                     _isDisconnecting = false;
                     _reconnectTicks = 0;
@@ -586,18 +702,10 @@ namespace QuantGate.API.Signals
                 }
                 catch (Exception ex)
                 {
-                    Trace.TraceError(_moduleID + ":Cn - " + ex.Message);
+                    Trace.TraceError(_moduleID + ":Cn2 - " + ex.Message);
                 }
             });
-        }
-
-        /// <summary>
-        /// Pads a base-64 string, as necessary to decode.
-        /// </summary>
-        /// <param name="base64">The unpadded string.</param>
-        /// <returns>The padded base-64 string.</returns>
-        private static string PadBase64String(string base64) =>
-            base64.PadRight(base64.Length + (4 - base64.Length % 4) % 4, '=');
+        }        
 
         /// <summary>
         /// Disconnects this instance.
@@ -607,18 +715,24 @@ namespace QuantGate.API.Signals
             Enqueue(() => { Disconnect(true); });
         }
 
-        private void Disconnect(bool disconnecting)
+        /// <summary>
+        /// Disconnect from the websocket server.
+        /// </summary>
+        /// <param name="full">True if this is a full disconnect.</param>
+        private void Disconnect(bool full)
         {
             try
             {
-                if (disconnecting)
+                if (full)
                 {
+                    // If doing a full disconnect, set to disconnecting.
                     _isDisconnecting = true;
+                    // Clear the subscriptions.
                     ClearSubscriptions();
                 }
 
+                // Send disconnect frame and close the connection.
                 Send(new RequestFrame { Disconnect = new DisconnectRequest() });
-
                 Close();
             }
             catch (Exception ex)
@@ -636,6 +750,7 @@ namespace QuantGate.API.Signals
             {
                 if (_transport is object)
                 {
+                    // If there is a transport, close if not closed, otherwise send event.
                     if (_transport.ReadyState != WebSocketState.Closed)
                         _transport.Close();
                     else
@@ -649,6 +764,10 @@ namespace QuantGate.API.Signals
             }
         }
 
+        /// <summary>
+        /// Sends the given request frame to the WebSocket endpoint.
+        /// </summary>
+        /// <param name="frame">The frame to send.</param>
         private void Send(RequestFrame frame)
         {
             try
@@ -1322,6 +1441,84 @@ namespace QuantGate.API.Signals
                         symbol, CleanCompression(compression)).Destination;
         }
 
+        /// <summary>
+        /// Used to retrieve a value from the REST API.
+        /// </summary>
+        /// <param name="uri">The URI to get from (including paramters).</param>
+        /// <param name="headers">The headers to include in the request.</param>
+        /// <returns>The string retrieved from the REST endpoint.</returns>
+        private string Get(string uri, params string[] headers)
+        {
+            HttpWebRequest request;
+
+            try
+            {
+                // Set up the basic request.
+                request = (HttpWebRequest)WebRequest.Create(uri);
+                request.KeepAlive = false;
+                request.ContentType = "application/json";
+                request.ContentLength = 0;
+                request.Method = "GET";
+                request.AllowAutoRedirect = false;
+
+                // Add any headers.
+                foreach (string header in headers)
+                    request.Headers.Add(header);
+
+                // Get the response from the endpoint.
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                using (StreamReader responseStream = new StreamReader(response.GetResponseStream()))
+                    return responseStream.ReadToEnd();
+            }
+            catch (WebException wex)
+            {
+                try
+                {
+                    // If there was a web exception, get the response from the exception.
+                    using (HttpWebResponse response = (HttpWebResponse)wex.Response)
+                    using (StreamReader responseStream = new StreamReader(response.GetResponseStream()))
+                        return responseStream.ReadToEnd();
+                }
+                catch (Exception ex)
+                {
+                    Trace.TraceError(_moduleID + ":Cn - " + ex.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError(_moduleID + ":Cn - " + ex.Message);
+            }
+
+            return string.Empty;
+        }
+
+        /// <summary>
+        /// Retrieves a JSON field from a JSON string.
+        /// </summary>
+        /// <param name="source">The source string to retrieve the field from.</param>
+        /// <param name="field">The name of the field to retrieve.</param>
+        /// <returns>The field value associated with the field name.</returns>
+        private string GetJSONField(string source, string field) =>
+            source.Split(new string[] { "\"" + field + "\":" }, 
+                         StringSplitOptions.None)[1].Replace("\"", "").Split(new char[] { ',' })[0];
+
+        /// <summary>
+        /// Pads a base-64 string, as necessary to decode.
+        /// </summary>
+        /// <param name="base64">The unpadded string.</param>
+        /// <returns>The padded base-64 string.</returns>
+        private static string PadBase64String(string base64) =>
+            base64.PadRight(base64.Length + (4 - base64.Length % 4) % 4, '=');
+
+        /// <summary>
+        /// Gets the JWT payload JSON string from the JWT token supplied.
+        /// </summary>
+        /// <param name="jwtToken">The token to retrieve the payload from.</param>
+        /// <returns>The payload of the JWT string as a JSON string.</returns>
+        private static string GetJWTPayload(string jwtToken) =>
+            System.Text.Encoding.UTF8.GetString(
+                Convert.FromBase64String(PadBase64String(jwtToken.Split(new char[] { '.' })[1])));            
+
         #endregion
 
         #region Timer Handling
@@ -1341,13 +1538,17 @@ namespace QuantGate.API.Signals
                     // Get the current time.
                     utcTicks = DateTime.UtcNow.Ticks;
 
+                    // If past the expiry of the token, refresh the token.
+                    if (utcTicks >= _tokenExpiry.Ticks)
+                        RefreshToken();                    
+
                     if (!IsConnected && !_isDisconnecting)
                     {
                         // If not connected, check if we need to reconnect.
                         if (utcTicks > _reconnectTicks && _reconnectTicks != 0)
                         {
                             // If we need to connect, reconnect.
-                            Connect(Password);
+                            Connect(_token);
                             _reconnectTicks = 0;
                             _killTicks = utcTicks + _connectKill;
                         }
@@ -1371,7 +1572,7 @@ namespace QuantGate.API.Signals
                             // If past the last heartbeat checks, request a heartbeat.
                             Send(new RequestFrame { Heartbeat = new Heartbeat() });
                         }
-                    }
+                    }                    
                 }
                 catch (Exception ex)
                 {
