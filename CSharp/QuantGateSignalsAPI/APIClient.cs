@@ -376,7 +376,7 @@ namespace QuantGate.API.Signals
 
                     // Set the status values.
                     IsConnected = false;
-                    Sync.Post(new SendOrPostCallback((o) => { Disconnected(this, EventArgs.Empty); }), null);
+                    Sync.Post(new SendOrPostCallback(o => { Disconnected(this, EventArgs.Empty); }), null);
 
                     // If disposed, stop the thread.
                     if (_isDisposed)
@@ -464,7 +464,7 @@ namespace QuantGate.API.Signals
                 IDGenerator.Reset();
                 ResubscribeAll();
 
-                Sync.Post(new SendOrPostCallback((o) => { Connected(this, EventArgs.Empty); }), null);
+                Sync.Post(new SendOrPostCallback(o => { Connected(this, EventArgs.Empty); }), null);
             }
             catch (Exception ex)
             {
@@ -549,7 +549,7 @@ namespace QuantGate.API.Signals
 
         private void HandleErrorFrame(ResponseFrame frame)
         {
-            Sync.Post(new SendOrPostCallback((o) => { Error(this, new events.ErrorEventArgs(frame.ServerError.Message)); }), null);
+            Sync.Post(new SendOrPostCallback(o => { Error(this, new events.ErrorEventArgs(frame.ServerError.Message)); }), null);
         }
 
         private void HandleSubscriptionError(ResponseFrame frame)

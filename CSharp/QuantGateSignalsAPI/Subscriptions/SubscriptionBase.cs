@@ -37,7 +37,7 @@ namespace QuantGate.API.Signals.Subscriptions
             M update = _parser.ParseFrom(values);
             object processed = Preprocess(update);
 
-            Client.Sync.Post(new SendOrPostCallback((o) =>
+            Client.Sync.Post(new SendOrPostCallback(o =>
             {
                 V updated = HandleUpdate(update, processed);
                 ParentUpdatedEvent?.Invoke(Client, updated);
@@ -57,7 +57,7 @@ namespace QuantGate.API.Signals.Subscriptions
 
         protected void PostUpdate(V update)
         {
-            Client.Sync.Post(new SendOrPostCallback((o) =>
+            Client.Sync.Post(new SendOrPostCallback(o =>
             {
                 ParentUpdatedEvent?.Invoke(Client, update);
             }), null);
