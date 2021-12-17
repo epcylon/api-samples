@@ -850,7 +850,12 @@ namespace BridgeRock.CSharpExample.Controls
                 return;
 
             if (args.NewValue is SentimentEventArgs newSentiment)
-                viewer.UpdateSpectrum(newSentiment);
+            {
+                if (newSentiment.Error is object)
+                    MessageBox.Show(newSentiment.Error.Message);
+                else
+                    viewer.UpdateSpectrum(newSentiment);
+            }
         }        
 
         /// <summary>
