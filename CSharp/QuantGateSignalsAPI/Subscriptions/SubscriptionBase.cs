@@ -13,7 +13,7 @@ namespace QuantGate.API.Signals.Subscriptions
         /// <summary>
         /// Empty object to use (instead of null).
         /// </summary>
-        private object _emptyObject = new object();
+        private readonly object _emptyObject = new object();
 
         /// <summary>
         /// Notifies that the object was updated (through the parent).
@@ -47,8 +47,8 @@ namespace QuantGate.API.Signals.Subscriptions
         private void HandleError(ProtoStompSubscription subscription, Exception exception)
         {
             // Get the error information.
-            SubscriptionError error = new SubscriptionError(exception.Message,
-                                                            exception.InnerException.Message);
+            SubscriptionError error =
+                new SubscriptionError(exception.Message, exception.InnerException?.Message ?? string.Empty);
             // Wrap the error and send to handlers.
             PostUpdate(WrapError(error));
             // Unsubscribe this subscription.
