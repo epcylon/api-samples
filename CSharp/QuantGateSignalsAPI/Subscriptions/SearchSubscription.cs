@@ -9,17 +9,33 @@ namespace QuantGate.API.Signals.Subscriptions
 {    
     internal class SearchSubscription : SubscriptionBase<SymbolSearchUpdate, SearchResultsEventArgs>
     {
+        private Queue<Tuple<string, string>> _queue = new Queue<Tuple<string, string>>();
+        private bool _connected = false;
+
         public SearchSubscription(APIClient client, EventHandler<SearchResultsEventArgs> handler,
-                                  string streamID, bool receipt = false, uint throttleRate = 0) :
+                                  string streamID, uint throttleRate = 0) :
             base(client, SymbolSearchUpdate.Parser, handler,
                  new ParsedDestination(SubscriptionType.Definition, SubscriptionPath.DefnSymbolSearch, streamID).Destination,
-                 receipt, throttleRate)
+                 true, throttleRate)
         {
-        }
+            OnReceipt += HandleReceipt;
+        }                
 
         public void Search(string term, string broker)
         {
-            Client.Send(new ProtoStompSend(Client, Destination + '/' + term + '/' + broker));
+            // Search or enqueue.
+            if (_connected)
+                Client.Send(new ProtoStompSend(Client, Destination + '/' + term + '/' + broker));
+            else
+                _queue.Enqueue(new Tuple<string, string>(term, broker));
+        }
+
+        private void HandleReceipt(IReceiptable obj)
+        {
+            // On receipt of the subscription, add all searches from the queue.
+            _connected = true;
+            foreach (Tuple<string, string> search in _queue)
+                Search(search.Item1, search.Item2);
         }
 
         protected override object Preprocess(SymbolSearchUpdate update)
