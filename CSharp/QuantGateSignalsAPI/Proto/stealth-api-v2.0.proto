@@ -250,3 +250,9 @@ message TopSymbolsUpdate
 {
     repeated TopSymbolItem symbols = 1;          // The top symbol results;
 }
+
+/* Holds a single security definition or list definition as a string. */
+message SingleDefinitionUpdate
+{
+    string definition = 1;                       // The simple definition.
+}
