@@ -86,17 +86,18 @@ namespace QuantGate.API.Signals.Proto.Stealth {
             "YWx0aC5HYXVnZVNpZ25hbBIuChBzZW50aW1lbnRfc2lnbmFsGAwgASgOMhQu",
             "c3RlYWx0aC5HYXVnZVNpZ25hbBIwChJlcXVpbGlicml1bV9zaWduYWwYDSAB",
             "KA4yFC5zdGVhbHRoLkdhdWdlU2lnbmFsIjsKEFRvcFN5bWJvbHNVcGRhdGUS",
-            "JwoHc3ltYm9scxgBIAMoCzIWLnN0ZWFsdGguVG9wU3ltYm9sSXRlbSrKAQoO",
-            "SW5zdHJ1bWVudFR5cGUSEAoMTm9JbnN0cnVtZW50EAASDwoLQ29tbW9uU3Rv",
-            "Y2sQARIPCgtTdG9ja09wdGlvbhACEgoKBkZ1dHVyZRADEgkKBUluZGV4EAQS",
-            "EQoNRm9yZXhDb250cmFjdBAFEhAKDEZ1dHVyZU9wdGlvbhAGEhQKEEZ1dHVy",
-            "ZUluc3RydW1lbnQQBxIJCgVDb21ibxAIEhMKD0NvbWJvSW5zdHJ1bWVudBAJ",
-            "EhIKDkNyeXB0b0N1cnJlbmN5EAoqLQoJUHV0T3JDYWxsEg0KCU5vUHV0Q2Fs",
-            "bBAAEgcKA1B1dBABEggKBENhbGwQAio7Cg5TdHJhdGVneVNpZ25hbBIICgRO",
-            "b25lEAASDgoKTG9uZ1NpZ25hbBABEg8KC1Nob3J0U2lnbmFsEAIqQwoLR2F1",
-            "Z2VTaWduYWwSCwoHVW5rbm93bhAAEgkKBVNob3J0EAESCAoERmxhdBACEggK",
-            "BExvbmcQAxIICgREdWFsEARCJqoCI1F1YW50R2F0ZS5BUEkuU2lnbmFscy5Q",
-            "cm90by5TdGVhbHRoYgZwcm90bzM="));
+            "JwoHc3ltYm9scxgBIAMoCzIWLnN0ZWFsdGguVG9wU3ltYm9sSXRlbSIsChZT",
+            "aW5nbGVEZWZpbml0aW9uVXBkYXRlEhIKCmRlZmluaXRpb24YASABKAkqygEK",
+            "Dkluc3RydW1lbnRUeXBlEhAKDE5vSW5zdHJ1bWVudBAAEg8KC0NvbW1vblN0",
+            "b2NrEAESDwoLU3RvY2tPcHRpb24QAhIKCgZGdXR1cmUQAxIJCgVJbmRleBAE",
+            "EhEKDUZvcmV4Q29udHJhY3QQBRIQCgxGdXR1cmVPcHRpb24QBhIUChBGdXR1",
+            "cmVJbnN0cnVtZW50EAcSCQoFQ29tYm8QCBITCg9Db21ib0luc3RydW1lbnQQ",
+            "CRISCg5DcnlwdG9DdXJyZW5jeRAKKi0KCVB1dE9yQ2FsbBINCglOb1B1dENh",
+            "bGwQABIHCgNQdXQQARIICgRDYWxsEAIqOwoOU3RyYXRlZ3lTaWduYWwSCAoE",
+            "Tm9uZRAAEg4KCkxvbmdTaWduYWwQARIPCgtTaG9ydFNpZ25hbBACKkMKC0dh",
+            "dWdlU2lnbmFsEgsKB1Vua25vd24QABIJCgVTaG9ydBABEggKBEZsYXQQAhII",
+            "CgRMb25nEAMSCAoERHVhbBAEQiaqAiNRdWFudEdhdGUuQVBJLlNpZ25hbHMu",
+            "UHJvdG8uU3RlYWx0aGIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::QuantGate.API.Signals.Proto.Stealth.InstrumentType), typeof(global::QuantGate.API.Signals.Proto.Stealth.PutOrCall), typeof(global::QuantGate.API.Signals.Proto.Stealth.StrategySignal), typeof(global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal), }, new pbr::GeneratedClrTypeInfo[] {
@@ -114,7 +115,8 @@ namespace QuantGate.API.Signals.Proto.Stealth {
             new pbr::GeneratedClrTypeInfo(typeof(global::QuantGate.API.Signals.Proto.Stealth.SymbolSearchResult), global::QuantGate.API.Signals.Proto.Stealth.SymbolSearchResult.Parser, new[]{ "Symbol", "Underlying", "Currency", "InstrumentType", "Exchange", "DisplayName" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::QuantGate.API.Signals.Proto.Stealth.SymbolSearchUpdate), global::QuantGate.API.Signals.Proto.Stealth.SymbolSearchUpdate.Parser, new[]{ "SearchTerm", "Results" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::QuantGate.API.Signals.Proto.Stealth.TopSymbolItem), global::QuantGate.API.Signals.Proto.Stealth.TopSymbolItem.Parser, new[]{ "Timestamp", "Symbol", "Underlying", "Currency", "InstrumentType", "Exchange", "DisplayName", "EntryProgress", "Signal", "PerceptionSignal", "CommitmentSignal", "SentimentSignal", "EquilibriumSignal" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::QuantGate.API.Signals.Proto.Stealth.TopSymbolsUpdate), global::QuantGate.API.Signals.Proto.Stealth.TopSymbolsUpdate.Parser, new[]{ "Symbols" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::QuantGate.API.Signals.Proto.Stealth.TopSymbolsUpdate), global::QuantGate.API.Signals.Proto.Stealth.TopSymbolsUpdate.Parser, new[]{ "Symbols" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::QuantGate.API.Signals.Proto.Stealth.SingleDefinitionUpdate), global::QuantGate.API.Signals.Proto.Stealth.SingleDefinitionUpdate.Parser, new[]{ "Definition" }, null, null, null)
           }));
     }
     #endregion
@@ -4754,6 +4756,129 @@ namespace QuantGate.API.Signals.Proto.Stealth {
             break;
           case 10: {
             symbols_.AddEntriesFrom(input, _repeated_symbols_codec);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  /// <summary>
+  /// Holds a single security definition or list definition as a string. 
+  /// </summary>
+  internal sealed partial class SingleDefinitionUpdate : pb::IMessage<SingleDefinitionUpdate> {
+    private static readonly pb::MessageParser<SingleDefinitionUpdate> _parser = new pb::MessageParser<SingleDefinitionUpdate>(() => new SingleDefinitionUpdate());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<SingleDefinitionUpdate> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV20Reflection.Descriptor.MessageTypes[15]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public SingleDefinitionUpdate() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public SingleDefinitionUpdate(SingleDefinitionUpdate other) : this() {
+      definition_ = other.definition_;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public SingleDefinitionUpdate Clone() {
+      return new SingleDefinitionUpdate(this);
+    }
+
+    /// <summary>Field number for the "definition" field.</summary>
+    public const int DefinitionFieldNumber = 1;
+    private string definition_ = "";
+    /// <summary>
+    /// The simple definition.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Definition {
+      get { return definition_; }
+      set {
+        definition_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as SingleDefinitionUpdate);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(SingleDefinitionUpdate other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Definition != other.Definition) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Definition.Length != 0) hash ^= Definition.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Definition.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(Definition);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (Definition.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Definition);
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(SingleDefinitionUpdate other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Definition.Length != 0) {
+        Definition = other.Definition;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10: {
+            Definition = input.ReadString();
             break;
           }
         }
