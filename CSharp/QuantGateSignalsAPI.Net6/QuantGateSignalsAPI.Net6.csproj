@@ -22,8 +22,11 @@
     <Compile Include="..\QuantGateSignalsAPI\Events\CommitmentEventArgs.cs" Link="Events\CommitmentEventArgs.cs" />
     <Compile Include="..\QuantGateSignalsAPI\Events\EquilibriumEventArgs.cs" Link="Events\EquilibriumEventArgs.cs" />
     <Compile Include="..\QuantGateSignalsAPI\Events\ErrorEventArgs.cs" Link="Events\ErrorEventArgs.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Events\FuturesListEventArgs.cs" Link="Events\FuturesListEventArgs.cs" />
     <Compile Include="..\QuantGateSignalsAPI\Events\GaugeArgsBase.cs" Link="Events\GaugeArgsBase.cs" />
     <Compile Include="..\QuantGateSignalsAPI\Events\HeadroomEventArgs.cs" Link="Events\HeadroomEventArgs.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Events\Instrument.cs" Link="Events\Instrument.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Events\InstrumentBase.cs" Link="Events\InstrumentBase.cs" />
     <Compile Include="..\QuantGateSignalsAPI\Events\InstrumentEventArgs.cs" Link="Events\InstrumentEventArgs.cs" />
     <Compile Include="..\QuantGateSignalsAPI\Events\MultiframeEquilibriumEventArgs.cs" Link="Events\MultiframeEquilibriumEventArgs.cs" />
     <Compile Include="..\QuantGateSignalsAPI\Events\PerceptionEventArgs.cs" Link="Events\PerceptionEventArgs.cs" />
@@ -47,6 +50,7 @@
     <Compile Include="..\QuantGateSignalsAPI\Subscriptions\BookPressureSubscription.cs" Link="Subscriptions\BookPressureSubscription.cs" />
     <Compile Include="..\QuantGateSignalsAPI\Subscriptions\CommitmentSubscription.cs" Link="Subscriptions\CommitmentSubscription.cs" />
     <Compile Include="..\QuantGateSignalsAPI\Subscriptions\EquilibriumSubscription.cs" Link="Subscriptions\EquilibriumSubscription.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Subscriptions\FuturesListSubscription.cs" Link="Subscriptions\FuturesListSubscription.cs" />
     <Compile Include="..\QuantGateSignalsAPI\Subscriptions\GaugeSubscriptionBase.cs" Link="Subscriptions\GaugeSubscriptionBase.cs" />
     <Compile Include="..\QuantGateSignalsAPI\Subscriptions\HeadroomSubscription.cs" Link="Subscriptions\HeadroomSubscription.cs" />
     <Compile Include="..\QuantGateSignalsAPI\Subscriptions\InstrumentSubscription.cs" Link="Subscriptions\InstrumentSubscription.cs" />
