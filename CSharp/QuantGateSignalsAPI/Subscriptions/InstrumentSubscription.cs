@@ -1,7 +1,6 @@
-﻿using QuantGate.API.Signals.Proto.Stealth;
-using QuantGate.API.Signals.ProtoStomp;
+﻿using QuantGate.API.Signals.Events;
+using QuantGate.API.Signals.Proto.Stealth;
 using QuantGate.API.Signals.Utilities;
-using QuantGate.API.Signals.Events;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -61,21 +60,13 @@ namespace QuantGate.API.Signals.Subscriptions
                 foreach (KeyValuePair<string, string> symbolMapping in update.BrokerSymbols)
                     brokerSymbols.Add(symbolMapping.Key, symbolMapping.Value);
 
-                return new InstrumentEventArgs(
-                    update.Symbol,
-                    update.Underlying,
-                    update.Currency,
-                    update.Exchange,
-                    (InstrumentType)update.InstrumentType,
-                    (PutOrCall)update.PutOrCall,
-                    update.Strike,
-                    new DateTime((long)update.ExpiryDate, DateTimeKind.Utc),
-                    update.Multiplier,
-                    update.DisplayName,
-                    TimeZoneDecoder.OlsonTimeZoneToTimeZoneInfo(update.TimeZone),
-                    tickRanges,
-                    tradingSessions,
-                    brokerSymbols);
+                return new InstrumentEventArgs(_symbol, 
+                    new Instrument(update.Symbol, update.Underlying, update.Currency, update.Exchange,
+                                   (InstrumentType)update.InstrumentType, (PutOrCall)update.PutOrCall, 
+                                   update.Strike, new DateTime((long)update.ExpiryDate, DateTimeKind.Utc),
+                                   update.Multiplier, update.DisplayName,
+                                   TimeZoneDecoder.OlsonTimeZoneToTimeZoneInfo(update.TimeZone),
+                                   tickRanges, tradingSessions, brokerSymbols));
             }
             catch (Exception ex)
             {

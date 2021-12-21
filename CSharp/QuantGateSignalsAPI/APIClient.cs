@@ -46,6 +46,7 @@ namespace QuantGate.API.Signals
         public event EventHandler<TopSymbolsEventArgs> TopSymbolsUpdated = delegate { };
         public event EventHandler<StrategyEventArgs> StrategyUpdated = delegate { };
         public event EventHandler<InstrumentEventArgs> InstrumentUpdated = delegate { };
+        public event EventHandler<FuturesListEventArgs> FuturesListUpdated = delegate { };
 
         #endregion
 
@@ -1102,6 +1103,14 @@ namespace QuantGate.API.Signals
         /// <param name="symbol">Symbol as listed by the QuantGate servers.</param>
         public void RequestInstrumentDetails(string symbol) =>
             EnqueueAndSubscribe(new InstrumentSubscription(this, InstrumentUpdated, _streamID, symbol));
+
+        /// <summary>
+        /// Used to retrieve a list of futures for the given underlying and currency, as listed by the QuantGate servers.
+        /// </summary>
+        /// <param name="underlying">The underlying of the futures to retrieve.</param>
+        /// <param name="currency">The currency of the futures to retrieve.</param>
+        public void RequestFutures(string underlying, string currency) =>
+            EnqueueAndSubscribe(new FuturesListSubscription(this, FuturesListUpdated, _streamID, underlying, currency));
 
         /// <summary>
         /// Enqueues and subscribes to a stream.

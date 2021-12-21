@@ -75,7 +75,15 @@ namespace QuantGate.API.Signals.Utilities
         /// <summary>
         /// Long instrument definition subscription.
         /// </summary>
-        DefnInstrument = 0x0000002000,        
+        DefnInstrument = 0x0000002000,
+        /// <summary>
+        /// Futures definition subscription.
+        /// </summary>
+        DefnFutures = 0x0000003000,
+        /// <summary>
+        /// Options definition subscription.
+        /// </summary>
+        DefnOptions = 0x0000004000,
         /// <summary>
         /// Symbol search subscription.
         /// </summary>
@@ -154,6 +162,10 @@ namespace QuantGate.API.Signals.Utilities
         /// </summary>
         public readonly string Symbol = string.Empty;
         /// <summary>
+        /// The currency of the underlying.
+        /// </summary>
+        public readonly string Currency = string.Empty;
+        /// <summary>
         /// The gauge compression requested.
         /// </summary>
         public readonly string Compression = string.Empty;
@@ -193,6 +205,8 @@ namespace QuantGate.API.Signals.Utilities
                 ["tr"] = SubscriptionPath.GaugeTrigger,
 
                 ["instrument"] = SubscriptionPath.DefnInstrument,
+                ["futures"] = SubscriptionPath.DefnFutures,
+                ["options"] = SubscriptionPath.DefnOptions,
                 ["search"] = SubscriptionPath.DefnSymbolSearch,
                 ["top"] = SubscriptionPath.DefnTopSymbols,
             };
@@ -266,6 +280,15 @@ namespace QuantGate.API.Signals.Utilities
                                 Symbol = fields[3];
                                 break;
 
+                            case SubscriptionPath.DefnOptions:
+                            case SubscriptionPath.DefnFutures:
+                                // Get the fields for definitions.
+                                StreamID = fields[2].ToLower();
+                                SecurityType = fields[3];
+                                Symbol = fields[4];
+                                Currency = fields[5];
+                                break;
+
                             case SubscriptionPath.DefnSymbolSearch:
                                 // If this is a symbol search, try to get the symbol ID.
                                 StreamID = fields[2].ToLower();
@@ -311,7 +334,8 @@ namespace QuantGate.API.Signals.Utilities
         /// <param name="settings">Additional gauge settings requested.</param>
         public ParsedDestination(SubscriptionType subscriptionType, SubscriptionPath subscriptionPath,
                                  string streamID = "", string symbol = "", string compression = "",
-                                 string broker = "", string securityType = "", string term = "", string strategyID = "")
+                                 string broker = "", string securityType = "", string currency = "",
+                                 string term = "", string strategyID = "")
         {
             StringBuilder builder = new StringBuilder(_separator);
 
@@ -323,6 +347,7 @@ namespace QuantGate.API.Signals.Utilities
             Compression = compression;
             Broker = broker;
             SecurityType = securityType;
+            Currency = currency;
             Term = term;
             StrategyID = strategyID;
 
@@ -370,6 +395,18 @@ namespace QuantGate.API.Signals.Utilities
                             builder.Append(StreamID);
                             builder.Append(_separator);
                             builder.Append(Symbol);
+                            break;
+
+                        case SubscriptionPath.DefnFutures:
+                        case SubscriptionPath.DefnOptions:
+                            builder.Append(_separator);
+                            builder.Append(StreamID);
+                            builder.Append(_separator);
+                            builder.Append(SecurityType);
+                            builder.Append(_separator);
+                            builder.Append(Symbol);
+                            builder.Append(_separator);
+                            builder.Append(Currency);
                             break;
 
                         case SubscriptionPath.DefnSymbolSearch:
