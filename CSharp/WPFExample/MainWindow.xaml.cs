@@ -14,7 +14,7 @@ namespace BridgeRock.CSharpExample
     {
         private readonly APIClient _client;
         private TopSymbolsEventArgs _topSymbols;
-        private string _symbol = "NQ Z1";
+        private string _symbol = "NQ H2";
         private readonly string _strategyId = "Crb9.0";
 
         #region Dependency Properties
@@ -87,6 +87,7 @@ namespace BridgeRock.CSharpExample
             _client.Error += HandleError;
 
             _client.InstrumentUpdated += HandleInstrumentUpdate;
+            _client.FuturesListUpdated += HandleFuturesListUpdated;
             _client.SymbolSearchUpdated += HandleSearchUpdate;
             _client.TopSymbolsUpdated += HandleTopSymbolsUpdate;
             _client.PerceptionUpdated += (s, e) => Perception = e.Value;
@@ -102,12 +103,17 @@ namespace BridgeRock.CSharpExample
 
             SubscribeSearch();
             Subscribe(_symbol);
-        } 
+        }
+
+        private void HandleFuturesListUpdated(object sender, FuturesListEventArgs e)
+        {
+            Console.WriteLine("Futures list for " + e.Underlying + "/" + e.Currency + " Count=" + e.Futures.Count);
+        }
 
         private void HandleInstrumentUpdate(object sender, InstrumentEventArgs e)
         {
-            Console.WriteLine(e.Symbol + " " + e.InstrumentType.ToString() + " " +
-                              e.ExpiryDate.ToString() + " " + e.Error?.Message);
+            Console.WriteLine(e.Symbol + " " + e.Details.InstrumentType.ToString() + " " +
+                              e.Details.ExpiryDate.ToString() + " " + e.Error?.Message);
         }
 
         private void Subscribe(string symbol)
@@ -204,7 +210,7 @@ namespace BridgeRock.CSharpExample
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            _client.UnsubscribePerception(_symbol);
+            _client.RequestFutures("WDO", "BRL");
         }
     }
 }
