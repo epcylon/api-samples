@@ -50,6 +50,7 @@
     <Compile Include="..\QuantGateSignalsAPI\Subscriptions\BookPressureSubscription.cs" Link="Subscriptions\BookPressureSubscription.cs" />
     <Compile Include="..\QuantGateSignalsAPI\Subscriptions\CommitmentSubscription.cs" Link="Subscriptions\CommitmentSubscription.cs" />
     <Compile Include="..\QuantGateSignalsAPI\Subscriptions\EquilibriumSubscription.cs" Link="Subscriptions\EquilibriumSubscription.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Subscriptions\FuturesListSubscription.cs" Link="Subscriptions\FuturesListSubscription.cs" />
     <Compile Include="..\QuantGateSignalsAPI\Subscriptions\GaugeSubscriptionBase.cs" Link="Subscriptions\GaugeSubscriptionBase.cs" />
     <Compile Include="..\QuantGateSignalsAPI\Subscriptions\HeadroomSubscription.cs" Link="Subscriptions\HeadroomSubscription.cs" />
     <Compile Include="..\QuantGateSignalsAPI\Subscriptions\InstrumentSubscription.cs" Link="Subscriptions\InstrumentSubscription.cs" />
