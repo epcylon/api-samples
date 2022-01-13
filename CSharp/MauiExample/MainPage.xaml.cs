@@ -22,7 +22,7 @@ namespace BridgeRock.MauiExample
 			BindingContext = this;			
 
 			//_client = new ProtoStompClient("wss://feed.stealthtrader.com");
-			_client = new APIClient("wss://test.stealthtrader.com", stream: DataStream.Realtime);
+			_client = new APIClient(Environments.Development, stream: DataStream.Realtime);
 			//_client = new ProtoStompClient("ws://localhost", 2432);
 			_client.Connected += HandleConnected;
 			_client.Disconnected += HandleDisconnected;
@@ -73,8 +73,8 @@ namespace BridgeRock.MauiExample
 
 		private void HandleInstrumentUpdate(object sender, InstrumentEventArgs e)
 		{
-			Trace.TraceInformation(e.Symbol + " " + e.InstrumentType.ToString() + " " +
-		 						   e.ExpiryDate.ToString() + " " + e.Error.Message);
+			Trace.TraceInformation(e.Symbol + " " + e.Details.InstrumentType.ToString() + " " +
+		 						   e.Details.ExpiryDate.ToString() + " " + e.Error.Message);
 		}
 
         private void HandleError(object client, QuantGate.API.Events.ErrorEventArgs args)
@@ -110,7 +110,7 @@ namespace BridgeRock.MauiExample
 			if (!string.IsNullOrEmpty(eSearch.Text))
 				return;
 
-			List<SearchRow> searchRows = new List<SearchRow>();
+			List<SearchRow> searchRows = new();
 
 			if (_topSymbols?.Symbols is object)
 				foreach (TopSymbol symbol in _topSymbols.Symbols)
@@ -129,7 +129,7 @@ namespace BridgeRock.MauiExample
 			if (string.IsNullOrEmpty(eSearch.Text))
 				return;
 
-			List<SearchRow> searchRows = new List<SearchRow>();
+			List<SearchRow> searchRows = new();
 
 			searchRows.Clear();
 
