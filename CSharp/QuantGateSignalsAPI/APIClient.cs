@@ -1508,8 +1508,8 @@ namespace QuantGate.API.Signals
         /// <param name="field">The name of the field to retrieve.</param>
         /// <returns>The field value associated with the field name.</returns>
         private string GetJSONField(string source, string field) =>
-            source.Split(new string[] { "\"" + field + "\":" }, 
-                         StringSplitOptions.None)[1].Replace("\"", "").Split(new char[] { ',' })[0];
+            source.Substring(0, source.Length - 1).Split(new string[] { "\"" + field + "\":" }, 
+                StringSplitOptions.None)[1].Replace("\"", "").Split(new char[] { ',' })[0];
 
         /// <summary>
         /// Pads a base-64 string, as necessary to decode.
