@@ -9,7 +9,7 @@ namespace QuantGate.API.Signals.Subscriptions
 {    
     internal class SearchSubscription : SubscriptionBase<SymbolSearchUpdate, SearchResultsEventArgs>
     {
-        private Queue<Tuple<string, string>> _queue = new Queue<Tuple<string, string>>();
+        private readonly Queue<Tuple<string, string>> _queue = new Queue<Tuple<string, string>>();
         private bool _connected = false;
 
         public SearchSubscription(APIClient client, EventHandler<SearchResultsEventArgs> handler,

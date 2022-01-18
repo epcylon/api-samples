@@ -66,6 +66,7 @@
     <Compile Include="..\QuantGateSignalsAPI\Utilities\ParsedDestination.cs" Link="Utilities\ParsedDestination.cs" />
     <Compile Include="..\QuantGateSignalsAPI\Utilities\ProtoPriceEncoder.cs" Link="Utilities\ProtoPriceEncoder.cs" />
     <Compile Include="..\QuantGateSignalsAPI\Utilities\ProtoTimeEncoder.cs" Link="Utilities\ProtoTimeEncoder.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Utilities\SentimentColorConverter.cs" Link="Utilities\SentimentColorConverter.cs" />
     <Compile Include="..\QuantGateSignalsAPI\Utilities\TimeZoneDecoder.cs" Link="Utilities\TimeZoneDecoder.cs" />
   </ItemGroup>
 

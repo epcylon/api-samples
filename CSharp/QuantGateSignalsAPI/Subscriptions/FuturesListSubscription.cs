@@ -16,8 +16,8 @@ namespace QuantGate.API.Signals.Subscriptions
         /// </summary>
         private const string _moduleID = "FLSub";
 
-        private string _underlying;
-        private string _currency;
+        private readonly string _underlying;
+        private readonly string _currency;
 
         #region Enumerations
 
@@ -55,7 +55,7 @@ namespace QuantGate.API.Signals.Subscriptions
         /// <summary>
         /// Conversions between raw (futures) exchange codes and MICs.
         /// </summary>
-        private static Dictionary<string, string> _exchangeMics = new Dictionary<string, string>
+        private static readonly Dictionary<string, string> _exchangeMics = new Dictionary<string, string>
         {
             ["BMF"] = "BMVF", ["CFE"] = "XCBF", ["CFECRYPTO"] = "XCBC", ["CME"] = "XCME",
             ["CMECRYPTO"] = "XCMC", ["EEX"] = "XEEE", ["FTA"] = "ALXA", ["ICEEU"] = "IFEU",
@@ -235,10 +235,8 @@ namespace QuantGate.API.Signals.Subscriptions
             string tradingClass;
             string currency = _defaultCurrency;
             string tradeExchange = "GLOBEX";
-            string listExchange = "GLOBEX";
+            string listExchange;
             string companyName;
-            double multiplier;
-            double margin;
 
             try
             {
@@ -270,14 +268,14 @@ namespace QuantGate.API.Signals.Subscriptions
                     tradingClass = fields[(int)BaseFields.TradingClass];
 
                 double.TryParse(fields[(int)BaseFields.Multiplier], NumberStyles.Any,
-                                CultureInfo.InvariantCulture, out multiplier);
+                                CultureInfo.InvariantCulture, out double multiplier);
                 double.TryParse(fields[(int)BaseFields.Margin], NumberStyles.Any,
-                                CultureInfo.InvariantCulture, out margin);
+                                CultureInfo.InvariantCulture, out double margin);
 
                 if (!string.IsNullOrEmpty(fields[(int)BaseFields.TradeExchange]))
                     tradeExchange = fields[(int)BaseFields.TradeExchange];
                 tradeExchange = GetMIC(tradeExchange);
-                
+
                 if (string.IsNullOrEmpty(fields[(int)BaseFields.ListExchange]) ||
                     _exchangeMatchString.Equals(fields[(int)BaseFields.ListExchange]))
                 {
@@ -287,14 +285,14 @@ namespace QuantGate.API.Signals.Subscriptions
                 {
                     listExchange = fields[(int)BaseFields.ListExchange];
                     listExchange = GetMIC(listExchange);
-                }                
+                }
 
                 companyName = fields[(int)BaseFields.CompanyName].
                                 Replace(_baseDelimiterReplacement, _tradingClassDelimiter.ToString());
 
                 baseDefinition = new InstrumentBase(tradingClass, underlying, currency, listExchange,
                                                     InstrumentType.Future, PutOrCall.NoPutCall, 0.0,
-                                                    default(DateTime), multiplier, companyName);                                                
+                                                    default, multiplier, companyName);
             }
             catch (Exception ex)
             {

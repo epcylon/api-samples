@@ -105,7 +105,7 @@ namespace QuantGate.API.Signals
         /// <summary>
         /// The expiry time of the token (when to refresh).
         /// </summary>
-        private DateTime _tokenExpiry = default(DateTime);
+        private DateTime _tokenExpiry = default;
         /// <summary>
         /// The token used to refresh the connection.
         /// </summary>
