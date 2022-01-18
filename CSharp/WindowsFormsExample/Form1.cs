@@ -29,10 +29,10 @@ namespace WindowsFormsExample
             _client.Disconnected += HandleDisconnected;
             _client.Error += HandleError;
 
-            _client.PerceptionUpdated += _client_PerceptionUpdated;
+            _client.PerceptionUpdated += HandlePerceptionUpdated;
             _client.SymbolSearchUpdated += HandleSearchUpdate;
             _client.TopSymbolsUpdated += HandleTopSymbolsUpdate;
-
+            
             _client.Connect("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
                             "eyJzdWIiOiJUZXN0QXBwIiwiaWF0IjoxNjMzMDEyMTUzLCJleHAiOjE2MzgyMz" +
                             "A0MDAsImF1ZCI6IjJXVWplb2JSWFJXOXBzTkRFY3hlMU1EOXd0ZGZkaDFDIn0." +
@@ -61,7 +61,7 @@ namespace WindowsFormsExample
             _client.SubscribeStrategy(_strategyId, _symbol);
         }
 
-        private void _client_PerceptionUpdated(object sender, PerceptionEventArgs e)
+        private void HandlePerceptionUpdated(object sender, PerceptionEventArgs e)
         {
             Debug.Print("Perception updated: " + e.Symbol + "  " + e.Value);
         }
