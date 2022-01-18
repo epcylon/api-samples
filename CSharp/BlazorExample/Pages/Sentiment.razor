@@ -1,11 +1,10 @@
 ﻿@page "/sentiment"
 @using BlazorExample.Signals
-@using QuantGate.API.Signals.Events
-@using QuantGate.API.Signals.Utilities
 @using Blazor.Extensions
 @using Blazor.Extensions.Canvas
 @using Blazor.Extensions.Canvas.Canvas2D
-@inject IJSRuntime jsRuntime
+@using QuantGate.API.Signals.Events
+@using QuantGate.API.Signals.Utilities
 @inject SignalsService SignalsService
 @inject NavigationManager uriHelper
 
@@ -20,81 +19,117 @@
 </div>
 
 @code {
+    /// <summary>
+    /// Reference to the latest 50t Sentiment values.
+    /// </summary>
     SentimentEventArgs? Sentiment50t;
+
+    /// <summary>
+    /// Reference to the canvas that the sentiment will be drawn on.
+    /// </summary>
     Blazor.Extensions.BECanvasComponent? sentimentCanvas;
-    Canvas2DContext? context;
+    /// <summary>
+    /// true if the render loop has been initialized.
+    /// </summary>
     private bool _initialized = false;
 
+    /// <summary>
+    /// Called when the page is initialized.
+    /// </summary>
     protected override async Task OnInitializedAsync()
     {
         Sentiment50t = await SignalsService.GetSentiment();        
     }
 
+    /// <summary>
+    /// Called whenever the page has been rendered.
+    /// </summary>
+    /// <param name="firstRender">Is this the first time that the page has been rendered?</param>
     protected override async void OnAfterRender(bool firstRender)
     {
         if (firstRender && !_initialized)
         {
+            // If first render, and not initialized, draw the current sentiment first.
             await InvokeAsync(DrawSentiment);
 
             while (uriHelper.Uri.Contains("sentiment"))
             {
+                // Loop through until no longer on the sentiment page.
                 _initialized = true;
 
+                // Get the 50t AAPL sentiment from the signal service.
                 SentimentEventArgs? sentiment50t = await SignalsService.GetSentiment();
+
                 if (new SentimentComparer().Compare(Sentiment50t, sentiment50t) != 0)
                 {
+                    // If the sentiment changed, set the new sentiment.
                     Sentiment50t = sentiment50t;
+                    // Redraw the sentiment.
                     await InvokeAsync(DrawSentiment);
                 }
 
+                // Wait 100 ms before next check.
                 Task task = Task.Delay(100);
                 await task;
             }
+
+            // No longer in the loop.
             _initialized = false;
         }
     } 
 
+    /// <summary>
+    /// Draws the 50t AAPL Sentiment on the Sentiment Canvas.
+    /// </summary>
     async void DrawSentiment()
-    {
+    {                 
+        // If no sentiment canvas, can't continue.
         if (sentimentCanvas is null)
             return;
 
-        context = await sentimentCanvas.CreateCanvas2DAsync();
+        // Create a 2D async canvas to work with (quit if failed).
+        Canvas2DContext? context = await sentimentCanvas.CreateCanvas2DAsync();
         if (context is null)
             return;        
 
+        // If no sentiment to draw, skip out for now...
         if (Sentiment50t is null)
             return;
 
-        double x;
-        double y1, y2;
-        double xWidth;
-        double centerY;
-        double rHeight;
-        double rulerHeight;
-        int column;
+        // Variables to use.
+        double x, y1, y2, xWidth, centerY, rHeight, rulerHeight;
 
-        xWidth = sentimentCanvas.Width / 55.0;
-        centerY = sentimentCanvas.Height / 2.0;
+        // Calculate the width of each bar and ruler.
+        xWidth = (double)sentimentCanvas.Width / SentimentEventArgs.TotalBars;
         rHeight = sentimentCanvas.Height / 20.0;
         rulerHeight = rHeight / 10.0;
+        // Calculate the center-point.
+        centerY = sentimentCanvas.Height / 2.0;
 
+        // Batch the updates as one call.
         await context.BeginBatchAsync();
+
+        // Set up the background.
         await context.SetFillStyleAsync("#E8E8E8");
         await context.FillRectAsync(0, 0, sentimentCanvas.Width, sentimentCanvas.Height);
-        await context.SetLineWidthAsync(10f);
 
+        // Set the horizontal ruler lines.
         await context.SetFillStyleAsync("#D0D0D0");
         for (int index = 1; index < 20; index++)
-        {
-            await context.FillRectAsync(0, rHeight * index - rulerHeight / 2.0, sentimentCanvas.Width, rulerHeight);
-        }
+            await context.FillRectAsync(0, rHeight * index - rulerHeight / 2.0, 
+                                        sentimentCanvas.Width, rulerHeight);
 
-        for (int index = 0; index < 55; index++)
+        // Go through each of the bars and draw.
+        for (int index = 0; index < SentimentEventArgs.TotalBars; index++)
         {
-            column = (55 / 2) + (1 - 2 * (index % 2)) * (index + index % 2) / 2;
+            // Calculate the column that the bar will be drawn in (alternates, starting at center).
+            int column = (SentimentEventArgs.TotalBars / 2) + 
+                         (1 - 2 * (index % 2)) * (index + index % 2) / 2;
+
+            // Calculate the horizontal center of where the line is to be drawn for this column.
             x = (column + 0.5) * xWidth;
 
+            // Calculate the y-values (with y1 being the lower value - length is between -1 and 1).
             if (Sentiment50t.Lengths[index] > 0)
             {
                 y1 = centerY * (1.0 - Sentiment50t.Lengths[index]);
@@ -104,29 +139,43 @@
             {
                 y1 = centerY;
                 y2 = centerY * (1.0 - Sentiment50t.Lengths[index]);
-            }            
+            }
 
+            // Get the sentiment color and set the fill to the proper value.
             await context.SetFillStyleAsync(SentimentColorConverter.GetRGBColor(Sentiment50t.Colors[index]));
+            // Draw the line as a round rectangle using 90% of the width, and rounded at the top and bottom.
             await RoundRect(context, x - 0.45 * xWidth, y1, 0.9 * xWidth, y2 - y1, xWidth * 0.45);
         }
 
+        // Draw the base line.
         await context.SetFillStyleAsync("#404000");
         await context.FillRectAsync(0, centerY - xWidth / 4.0, sentimentCanvas.Width, xWidth / 2.0);
 
+        // End batching updates.
         await context.EndBatchAsync();
     }
 
-    private static async Task RoundRect(Canvas2DContext context, double x, double y, double w, double h, double r) 
+    /// <summary>
+    /// Draws a rounded rectangle on the given Canvas2DContext.
+    /// </summary>
+    /// <param name="context">The Canvas2DContext to draw on.</param>
+    /// <param name="x">The x-position of the left corner.</param>
+    /// <param name="y">The y-position of the top corner.</param>
+    /// <param name="width">The width of the rectangle.</param>
+    /// <param name="height">The height of the rectangle.</param>
+    /// <param name="radius">The radius to apply to the corners.</param>
+    /// <returns>An async Task result.</returns>
+    private static async Task RoundRect(Canvas2DContext context, double x, double y, double width, double height, double radius) 
     {
-        if (w < 2 * r) r = w / 2;
-        if (h < 2 * r) r = h / 2;
+        if (width < 2 * radius) radius = width / 2;
+        if (height < 2 * radius) radius = height / 2;
 
         await context.BeginPathAsync();
-        await context.MoveToAsync(x+r, y);
-        await context.ArcToAsync(x+w, y,   x+w, y+h, r);
-        await context.ArcToAsync(x+w, y+h, x,   y+h, r);
-        await context.ArcToAsync(x,   y+h, x,   y,   r);
-        await context.ArcToAsync(x,   y,   x+w, y,   r);
+        await context.MoveToAsync(x + radius, y);
+        await context.ArcToAsync(x + width, y, x + width, y + height, radius);
+        await context.ArcToAsync(x + width, y + height, x, y + height, radius);
+        await context.ArcToAsync(x, y + height, x, y, radius);
+        await context.ArcToAsync(x, y, x + width, y, radius);
         await context.ClosePathAsync();
         await context.FillAsync();
 

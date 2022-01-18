@@ -1,11 +1,10 @@
 ﻿@page "/topten"
-
-<PageTitle>Top 10 Signals</PageTitle>
-
 @using BlazorExample.Signals
 @using QuantGate.API.Signals.Events
 @inject SignalsService SignalsService
 @inject NavigationManager uriHelper
+
+<PageTitle>Top 10 Signals</PageTitle>
 
 <h1>Top 10 Signals</h1>
 
@@ -41,29 +40,49 @@ else
 }
 
 @code {
+    /// <summary>
+    /// Reference to the latest Top 10 Symbols array.
+    /// </summary>
     private TopSymbol[]? Symbols;
+    /// <summary>
+    /// true if the render loop has been initialized.
+    /// </summary>
     private bool _initialized = false;
 
+    /// <summary>
+    /// Called when the page is initialized.
+    /// </summary>
     protected override async Task OnInitializedAsync()
     {
         Symbols = await SignalsService.GetTop10Async();
     }
 
+    /// <summary>
+    /// Called whenever the page has been rendered.
+    /// </summary>
+    /// <param name="firstRender">Is this the first time that the page has been rendered?</param>
     protected override async void OnAfterRender(bool firstRender)
     {
         if (firstRender && !_initialized)
         {            
+            // If first render, and not initialized, start a new rendering loop.
             while (uriHelper.Uri.Contains("topten"))
             {
+                // Loop through until no longer on the topten page.
                 _initialized = true;
+
+                // Get the top 10 symbols from the signal service.
                 TopSymbol[]? symbols = await SignalsService.GetTop10Async();
                 
                 if (new TopSymbolListComparer().Compare(Symbols, symbols) != 0)
                 {
+                    // If the sentiment changed, set the new sentiment.
                     Symbols = symbols;
+                    // The state has changed (update components).
                     await InvokeAsync(StateHasChanged);
                 }
 
+                // Wait 100 ms before next check.
                 Task task = Task.Delay(100);
                 await task;
             }
