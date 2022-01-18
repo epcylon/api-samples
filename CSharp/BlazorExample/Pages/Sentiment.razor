@@ -1,0 +1,135 @@
+﻿@page "/sentiment"
+@using BlazorExample.Signals
+@using QuantGate.API.Signals.Events
+@using QuantGate.API.Signals.Utilities
+@using Blazor.Extensions
+@using Blazor.Extensions.Canvas
+@using Blazor.Extensions.Canvas.Canvas2D
+@inject IJSRuntime jsRuntime
+@inject SignalsService SignalsService
+@inject NavigationManager uriHelper
+
+<PageTitle>Sentiment</PageTitle>
+
+<h1>Sentiment</h1>
+
+<p>Live 50t AAPL sentiment.</p>
+
+<div>
+    <BECanvas @ref="sentimentCanvas" Height="400" Width="400"></BECanvas>
+</div>
+
+@code {
+    SentimentEventArgs? Sentiment50t;
+    Blazor.Extensions.BECanvasComponent? sentimentCanvas;
+    Canvas2DContext? context;
+    private bool _initialized = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Sentiment50t = await SignalsService.GetSentiment();        
+    }
+
+    protected override async void OnAfterRender(bool firstRender)
+    {
+        if (firstRender && !_initialized)
+        {
+            await InvokeAsync(DrawSentiment);
+
+            while (uriHelper.Uri.Contains("sentiment"))
+            {
+                _initialized = true;
+
+                SentimentEventArgs? sentiment50t = await SignalsService.GetSentiment();
+                if (new SentimentComparer().Compare(Sentiment50t, sentiment50t) != 0)
+                {
+                    Sentiment50t = sentiment50t;
+                    await InvokeAsync(DrawSentiment);
+                }
+
+                Task task = Task.Delay(100);
+                await task;
+            }
+            _initialized = false;
+        }
+    } 
+
+    async void DrawSentiment()
+    {
+        if (sentimentCanvas is null)
+            return;
+
+        context = await sentimentCanvas.CreateCanvas2DAsync();
+        if (context is null)
+            return;        
+
+        if (Sentiment50t is null)
+            return;
+
+        double x;
+        double y1, y2;
+        double xWidth;
+        double centerY;
+        double rHeight;
+        double rulerHeight;
+        int column;
+
+        xWidth = sentimentCanvas.Width / 55.0;
+        centerY = sentimentCanvas.Height / 2.0;
+        rHeight = sentimentCanvas.Height / 20.0;
+        rulerHeight = rHeight / 10.0;
+
+        await context.BeginBatchAsync();
+        await context.SetFillStyleAsync("#E8E8E8");
+        await context.FillRectAsync(0, 0, sentimentCanvas.Width, sentimentCanvas.Height);
+        await context.SetLineWidthAsync(10f);
+
+        await context.SetFillStyleAsync("#D0D0D0");
+        for (int index = 1; index < 20; index++)
+        {
+            await context.FillRectAsync(0, rHeight * index - rulerHeight / 2.0, sentimentCanvas.Width, rulerHeight);
+        }
+
+        for (int index = 0; index < 55; index++)
+        {
+            column = (55 / 2) + (1 - 2 * (index % 2)) * (index + index % 2) / 2;
+            x = (column + 0.5) * xWidth;
+
+            if (Sentiment50t.Lengths[index] > 0)
+            {
+                y1 = centerY * (1.0 - Sentiment50t.Lengths[index]);
+                y2 = centerY;
+            }
+            else
+            {
+                y1 = centerY;
+                y2 = centerY * (1.0 - Sentiment50t.Lengths[index]);
+            }            
+
+            await context.SetFillStyleAsync(SentimentColorConverter.GetRGBColor(Sentiment50t.Colors[index]));
+            await RoundRect(context, x - 0.45 * xWidth, y1, 0.9 * xWidth, y2 - y1, xWidth * 0.45);
+        }
+
+        await context.SetFillStyleAsync("#404000");
+        await context.FillRectAsync(0, centerY - xWidth / 4.0, sentimentCanvas.Width, xWidth / 2.0);
+
+        await context.EndBatchAsync();
+    }
+
+    private static async Task RoundRect(Canvas2DContext context, double x, double y, double w, double h, double r) 
+    {
+        if (w < 2 * r) r = w / 2;
+        if (h < 2 * r) r = h / 2;
+
+        await context.BeginPathAsync();
+        await context.MoveToAsync(x+r, y);
+        await context.ArcToAsync(x+w, y,   x+w, y+h, r);
+        await context.ArcToAsync(x+w, y+h, x,   y+h, r);
+        await context.ArcToAsync(x,   y+h, x,   y,   r);
+        await context.ArcToAsync(x,   y,   x+w, y,   r);
+        await context.ClosePathAsync();
+        await context.FillAsync();
+
+        return;
+    }
+}

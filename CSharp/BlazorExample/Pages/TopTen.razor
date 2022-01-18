@@ -1,0 +1,73 @@
+﻿@page "/topten"
+
+<PageTitle>Top 10 Signals</PageTitle>
+
+@using BlazorExample.Signals
+@using QuantGate.API.Signals.Events
+@inject SignalsService SignalsService
+@inject NavigationManager uriHelper
+
+<h1>Top 10 Signals</h1>
+
+<p>Top 10 signals.</p>
+
+@if (Symbols == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Symbol</th>
+                <th>Name</th>
+                <th>Progress</th>
+                <th>Signal</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var symbol in Symbols)
+            {
+                <tr>
+                    <td>@symbol.Symbol</td>
+                    <td>@symbol.DisplayName</td>
+                    <td>@symbol.EntryProgress</td>
+                    <td>@symbol.Signal.ToString().Replace("Signal", "")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private TopSymbol[]? Symbols;
+    private bool _initialized = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Symbols = await SignalsService.GetTop10Async();
+    }
+
+    protected override async void OnAfterRender(bool firstRender)
+    {
+        if (firstRender && !_initialized)
+        {            
+            while (uriHelper.Uri.Contains("topten"))
+            {
+                _initialized = true;
+                TopSymbol[]? symbols = await SignalsService.GetTop10Async();
+                
+                if (new TopSymbolListComparer().Compare(Symbols, symbols) != 0)
+                {
+                    Symbols = symbols;
+                    await InvokeAsync(StateHasChanged);
+                }
+
+                Task task = Task.Delay(100);
+                await task;
+            }
+            _initialized = false;
+        }
+    }    
+}
