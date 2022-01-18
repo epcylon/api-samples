@@ -18,7 +18,7 @@
     $loop = \React\EventLoop\Factory::create();
     
     // Create the client with the event loop reference, and pointing to the test server.
-    $client = new APIClient($loop, "wss://test.stealthtrader.com");
+    $client = new APIClient($loop, "wss://feed.stealthtrader.com");
 
     // Close after 40 seconds (remove this line and the cancellation to keep going indefinitely)
     $timer = $loop->addTimer(40, function() use ($client) { $client->close(); });
@@ -67,10 +67,10 @@
     });
 
     // Connect with a JWT token.
-    $client->connect("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.".
-                     "eyJzdWIiOiJUZXN0QXBwIiwiaWF0IjoxNjMzMDEyMTUzLCJleHAiOjE2MzgyMz".
-                     "A0MDAsImF1ZCI6IjJXVWplb2JSWFJXOXBzTkRFY3hlMU1EOXd0ZGZkaDFDIn0.".
-                     "xtykKWHxKwhopUkkyUm6eCa9qfQsGkhHEdAea9hdSz8");
+    $client->connect("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
+                     "eyJzdWIiOiJUZXN0ZXIiLCJpYXQiOjE2Mzk3NjYzMjQsImV4cCI6MTY0MDk5N"+
+                     "TIwMCwiYXVkIjoiMldVamVvYlJYUlc5cHNOREVjeGUxTUQ5d3RkZmRoMUMifQ." +
+                     "i1UwC0tuCMw7KVxlN0ieCyyUwWNTmzQ4ZjikLZfj0eM");
 
     // Go through the symbols and subscribe to each.
     foreach ($symbols as $value)
