@@ -100,15 +100,15 @@ namespace BridgeRock.MauiExample.Controls
 
                     if (_length > 0)
                     {
-                        topRow.Height = new Microsoft.Maui.GridLength(1000 * (1.0 - _length), Microsoft.Maui.GridUnitType.Star);
-                        barRow.Height = new Microsoft.Maui.GridLength(1000 * _length, Microsoft.Maui.GridUnitType.Star);
-                        bottomRow.Height = new Microsoft.Maui.GridLength(1000, Microsoft.Maui.GridUnitType.Star);
+                        topRow.Height = new GridLength(1000 * (1.0 - _length), GridUnitType.Star);
+                        barRow.Height = new GridLength(1000 * _length, GridUnitType.Star);
+                        bottomRow.Height = new GridLength(1000, GridUnitType.Star);
                     }
                     else
                     {
-                        topRow.Height = new Microsoft.Maui.GridLength(1000, Microsoft.Maui.GridUnitType.Star);
-                        barRow.Height = new Microsoft.Maui.GridLength(1000 * -_length, Microsoft.Maui.GridUnitType.Star);
-                        bottomRow.Height = new Microsoft.Maui.GridLength(1000 * (1.0 + _length), Microsoft.Maui.GridUnitType.Star);
+                        topRow.Height = new GridLength(1000, GridUnitType.Star);
+                        barRow.Height = new GridLength(1000 * -_length, GridUnitType.Star);
+                        bottomRow.Height = new GridLength(1000 * (1.0 + _length), GridUnitType.Star);
                     }
                 }
             }
