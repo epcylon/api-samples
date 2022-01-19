@@ -30,13 +30,13 @@ namespace BridgeRock.MauiExample
 			_client.BookPressureUpdated += (s, e) => sgBookPressure.Value = e.Value;
 			_client.HeadroomUpdated += (s, e) => sgHeadroom.Value = e.Value;
 			_client.SentimentUpdated += (s, e) => s50t.UpdateSpectrum(e);
-			
+
 			_client.Connect("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
 							"eyJzdWIiOiJUZXN0QXBwIiwiaWF0IjoxNjMzMDEyMTUzLCJleHAiOjE2MzgyMz" +
 							"A0MDAsImF1ZCI6IjJXVWplb2JSWFJXOXBzTkRFY3hlMU1EOXd0ZGZkaDFDIn0." +
 							"xtykKWHxKwhopUkkyUm6eCa9qfQsGkhHEdAea9hdSz8");
-
-			SubscribeSearch();
+							
+            SubscribeSearch();
 			Subscribe(_symbol);
 		}
 

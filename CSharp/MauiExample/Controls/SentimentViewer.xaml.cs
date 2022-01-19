@@ -1,4 +1,4 @@
-﻿using QuantGate.API.Signals.Events;
+using QuantGate.API.Signals.Events;
 using System.Diagnostics;
 
 namespace BridgeRock.MauiExample.Controls
