@@ -1,17 +1,7 @@
-﻿using Microsoft.Maui.Controls;
-using Microsoft.Maui.Graphics;
-using System;
-using System.Diagnostics;
-
-namespace BridgeRock.MauiExample.Controls
+﻿namespace BridgeRock.MauiExample.Controls
 {
     public partial class SimpleGauge : ContentView
     {
-        /// <summary>
-        /// Module-level Identifier.
-        /// </summary>
-        private const string _moduleID = "SGg";
-
         public SimpleGauge()
         {
             InitializeComponent();
@@ -26,8 +16,8 @@ namespace BridgeRock.MauiExample.Controls
                 if (_value != value)
                 {
                     _value = value;
-                    topRow.Height = new Microsoft.Maui.GridLength(1000*(1.0 - _value), Microsoft.Maui.GridUnitType.Star);
-                    bottomRow.Height = new Microsoft.Maui.GridLength(1000*(1.0 + _value), Microsoft.Maui.GridUnitType.Star);
+                    topRow.Height = new GridLength(1000*(1.0 - _value), GridUnitType.Star);
+                    bottomRow.Height = new GridLength(1000*(1.0 + _value), GridUnitType.Star);
                 }
             }
         }

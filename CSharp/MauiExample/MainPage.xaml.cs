@@ -1,9 +1,5 @@
-﻿using Microsoft.Maui.Controls;
-using QuantGate.API.Events;
 using QuantGate.API.Signals;
 using QuantGate.API.Signals.Events;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace BridgeRock.MauiExample
@@ -17,7 +13,7 @@ namespace BridgeRock.MauiExample
 
 		public MainPage()
 		{
-            InitializeComponent();
+			InitializeComponent();
 
 			BindingContext = this;			
 

@@ -1,32 +1,50 @@
 ﻿<Grid xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:BridgeRock.MauiExample.Controls"
-             x:Class="BridgeRock.MauiExample.Controls.SentimentViewer" Background="#D0D0D0"
-            RowDefinitions="100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,
-                            10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*">
+             x:Class="BridgeRock.MauiExample.Controls.SentimentViewer" Background="#FFD0D0D0"
+            RowDefinitions="100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,95*,
+                            20*,95*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*">
 
-    <RoundRectangle GridLayout.Row="1" Fill="#A0A0A0" StrokeThickness="0" />
-    <RoundRectangle GridLayout.Row="3" Fill="#A0A0A0" StrokeThickness="0" />
-    <RoundRectangle GridLayout.Row="5" Fill="#A0A0A0" StrokeThickness="0" />
-    <RoundRectangle GridLayout.Row="7" Fill="#A0A0A0" StrokeThickness="0" />
-    <RoundRectangle GridLayout.Row="9" Fill="#A0A0A0" StrokeThickness="0" />
-    <RoundRectangle GridLayout.Row="11" Fill="#A0A0A0" StrokeThickness="0" />
-    <RoundRectangle GridLayout.Row="13" Fill="#A0A0A0" StrokeThickness="0" />
-    <RoundRectangle GridLayout.Row="15" Fill="#A0A0A0" StrokeThickness="0" />
-    <RoundRectangle GridLayout.Row="17" Fill="#A0A0A0" StrokeThickness="0" />
-    
-    <RoundRectangle GridLayout.Row="19" Fill="#A0A0A0" StrokeThickness="0" />
-    
-    <RoundRectangle GridLayout.Row="21" Fill="#A0A0A0" StrokeThickness="0" />
-    <RoundRectangle GridLayout.Row="23" Fill="#A0A0A0" StrokeThickness="0" />
-    <RoundRectangle GridLayout.Row="25" Fill="#A0A0A0" StrokeThickness="0" />
-    <RoundRectangle GridLayout.Row="27" Fill="#A0A0A0" StrokeThickness="0" />
-    <RoundRectangle GridLayout.Row="29" Fill="#A0A0A0" StrokeThickness="0" />
-    <RoundRectangle GridLayout.Row="31" Fill="#A0A0A0" StrokeThickness="0" />
-    <RoundRectangle GridLayout.Row="33" Fill="#A0A0A0" StrokeThickness="0" />
-    <RoundRectangle GridLayout.Row="35" Fill="#A0A0A0" StrokeThickness="0" />
-    <RoundRectangle GridLayout.Row="37" Fill="#A0A0A0" StrokeThickness="0" />
+    <RoundRectangle GridLayout.Row="1" Fill="#FFA0A0A0" StrokeThickness="0" />
+    <RoundRectangle GridLayout.Row="3" Fill="#FFA0A0A0" StrokeThickness="0" />
+    <RoundRectangle GridLayout.Row="5" Fill="#FFA0A0A0" StrokeThickness="0" />
+    <RoundRectangle GridLayout.Row="7" Fill="#FFA0A0A0" StrokeThickness="0" />
+    <RoundRectangle GridLayout.Row="9" Fill="#FFA0A0A0" StrokeThickness="0" />
+    <RoundRectangle GridLayout.Row="11" Fill="#FFA0A0A0" StrokeThickness="0" />
+    <RoundRectangle GridLayout.Row="13" Fill="#FFA0A0A0" StrokeThickness="0" />
+    <RoundRectangle GridLayout.Row="15" Fill="#FFA0A0A0" StrokeThickness="0" />
+    <RoundRectangle GridLayout.Row="17" Fill="#FFA0A0A0" StrokeThickness="0" />
 
-    <HorizontalStackLayout x:Name="sBars" GridLayout.RowSpan="39" Background="Transparent" HorizontalOptions="Center" />
+    <RoundRectangle GridLayout.Row="21" Fill="#FFA0A0A0" StrokeThickness="0" />
+    <RoundRectangle GridLayout.Row="23" Fill="#FFA0A0A0" StrokeThickness="0" />
+    <RoundRectangle GridLayout.Row="25" Fill="#FFA0A0A0" StrokeThickness="0" />
+    <RoundRectangle GridLayout.Row="27" Fill="#FFA0A0A0" StrokeThickness="0" />
+    <RoundRectangle GridLayout.Row="29" Fill="#FFA0A0A0" StrokeThickness="0" />
+    <RoundRectangle GridLayout.Row="31" Fill="#FFA0A0A0" StrokeThickness="0" />
+    <RoundRectangle GridLayout.Row="33" Fill="#FFA0A0A0" StrokeThickness="0" />
+    <RoundRectangle GridLayout.Row="35" Fill="#FFA0A0A0" StrokeThickness="0" />
+    <RoundRectangle GridLayout.Row="37" Fill="#FFA0A0A0" StrokeThickness="0" />
 
+    <HorizontalStackLayout x:Name="sBars" GridLayout.RowSpan="39" 
+                           Background="Transparent" HorizontalOptions="Center" />
+
+    <RoundRectangle GridLayout.Row="19" Fill="#FF404000" StrokeThickness="0" />
+
+    <Grid GridLayout.RowSpan="39">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="31*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="15*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="15*" />
+        </Grid.ColumnDefinitions>
+        
+        <Ellipse x:Name="peakTop" GridLayout.Row="0" GridLayout.Column="1" 
+                 Fill="Red" Stroke="#FF1A1A1A" IsVisible="false" />
+        <Ellipse x:Name="peakBottom" GridLayout.Row="2" GridLayout.Column="1" 
+                 Fill="Blue" Stroke="#FF1A1A1A" IsVisible="false" />
+    </Grid>
 </Grid>

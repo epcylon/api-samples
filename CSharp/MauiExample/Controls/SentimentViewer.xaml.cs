@@ -1,9 +1,5 @@
-﻿using Microsoft.Maui;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.Shapes;
-using Microsoft.Maui.Graphics;
+﻿using Microsoft.Maui.Controls.Shapes;
 using QuantGate.API.Signals.Events;
-using System;
 using System.Diagnostics;
 
 namespace BridgeRock.MauiExample.Controls
@@ -50,9 +46,7 @@ namespace BridgeRock.MauiExample.Controls
         {
             _hLineBrush = new SolidColorBrush(Color.FromRgb(0xA0, 0xA0, 0xA0));
             _baselineFill = new SolidColorBrush(Color.FromRgb(0x40, 0x40, 0x00));
-            _peakStroke = new SolidColorBrush(Color.FromRgb(0x1A, 0x1A, 0x1A));
-            _topPeakFill = new SolidColorBrush(Colors.Red);
-            _bottomPeakFill = new SolidColorBrush(Colors.Blue);
+            _peakStroke = new SolidColorBrush(Color.FromRgb(0x1A, 0x1A, 0x1A));            
         }
 
         #endregion
@@ -77,31 +71,13 @@ namespace BridgeRock.MauiExample.Controls
         /// Is the data dirty?
         /// </summary>
         private bool _isDirty = false;
-
-        /// <summary>
-        /// The top peak to display.
-        /// </summary>
-        private readonly Ellipse _topPeak;
-        /// <summary>
-        /// The bottom peak to display.
-        /// </summary>
-        private readonly Ellipse _bottomPeak;
-
+  
         /// <summary>
         /// Has the data been retrieved?
         /// </summary>
         private bool _dataRetrieved = false;
 
-        private double _lastWidth = double.NaN;
-
-        //private Storyboard _story = default;
-        //private Rectangle _rectLoading;
-        //private Viewbox _vbLoading;
-
-        /// <summary>
-        /// Is the (loading) storyboard currently running?
-        /// </summary>
-       //private bool _storyboardRunning = false;
+        private double _lastWidth = double.NaN;       
 
         #endregion
 
@@ -126,15 +102,6 @@ namespace BridgeRock.MauiExample.Controls
 
         #region Object Setup
 
-        ///// <summary>
-        ///// Handles visibility changes.
-        ///// </summary>
-        //private void Spectrum_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        //{
-        //    // If the spectrum is now visible, refresh it.
-        //    Refresh(true);
-        //}
-
         protected override void OnClear()
         {
             Refresh(true);
@@ -150,14 +117,6 @@ namespace BridgeRock.MauiExample.Controls
             }
             return base.ArrangeOverride(bounds);
         }
-
-        ///// <summary>
-        ///// Handles spectrum size changes.
-        ///// </summary>
-        //private void HandleSpectrumSizeChange(object sender, RoutedEventArgs e)
-        //{
-        //    SetupSpectrum();
-        //}
 
         /// <summary>
         /// Set up the spectrum as necessary.
@@ -180,95 +139,16 @@ namespace BridgeRock.MauiExample.Controls
                 Array.Clear(_lines, 0, SentimentEventArgs.TotalBars);
                 for (int i = 0; i < SentimentEventArgs.TotalBars; i += SkipBars)
                     AddVerticalLine(i);
-
-                // Add the center line.
-                AddCenterLine();
-
-                // Add and update the peaks.
-                //_topPeak = CreatePeak(_topPeakFill);
-                //cvMain.Children.Add(_topPeak);
-
-                //_bottomPeak = CreatePeak(_bottomPeakFill);
-                //Canvas.SetTop(_bottomPeak, ActualHeight - _topPeak.Height);
-                //cvMain.Children.Add(_bottomPeak);
-
-                //UpdatePeaks();
-
-                // Arrange the storyboards.
-                //ArrangeStoryBoards();
+                
+                // Update the peaks.
+                UpdatePeaks();                
             }
             catch (Exception ex)
             {
                 Trace.TraceError(_moduleID + ":SuS - " + ex.Message);
             }
         }
-
-        /// <summary>
-        /// Adds a horizontal line at the index supplied.
-        /// </summary>
-        /// <param name="index">The index to add at.</param>
-        private void AddHorizontalLine(int index)
-        {
-            //Line hLine;
-
-            try
-            {
-                //    // Create the line for this index.
-                //    hLine = new Line
-                //    {
-                //        Stroke = _hLineBrush,
-                //        StrokeThickness = 1,
-                //        X1 = 0,
-                //        X2 = ActualWidth,
-                //        Y1 = ActualHeight * (index / 20.0)
-                //    };
-                //    hLine.Y2 = hLine.Y1;
-
-                //    // Add to the canvas.
-                //    cvMain.Children.Add(hLine);
-            }
-            catch (Exception ex)
-            {
-                Trace.TraceError(_moduleID + ":AHL - " + ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// Creates the center line.
-        /// </summary>
-        private void AddCenterLine()
-        {
-            //Rectangle centerLine;
-            //double height;
-
-            //try
-            //{
-            //    height = Math.Max(Math.Min(ActualHeight / 40.0, 3), 1);
-
-            //    // Create the center line object.
-            //    centerLine = new Rectangle()
-            //    {
-            //        Stroke = Brushes.Transparent,
-            //        StrokeThickness = 0,
-            //        StrokeLineJoin = PenLineJoin.Round,
-            //        Height = height,
-            //        RadiusY = height / 2,
-            //        RadiusX = height / 2,
-            //        Fill = _baselineFill,
-            //        Width = ActualWidth
-            //    };
-
-            //    // Set the location on the canvas and add to it.
-            //    Canvas.SetTop(centerLine, (ActualHeight - centerLine.Height) / 2);
-            //    cvMain.Children.Add(centerLine);
-            //}
-            //catch (Exception ex)
-            //{
-            //    Trace.TraceError(_moduleID + ":ACL - " + ex.Message);
-            //}
-
-        }
-
+        
         /// <summary>
         /// Adds a new vertical line for the column supplied.
         /// </summary>
@@ -303,67 +183,6 @@ namespace BridgeRock.MauiExample.Controls
                 Trace.TraceError(_moduleID + ":AVL - " + ex.Message);
             }
         }
-
-        /// <summary>
-        /// Creates a new peak with the brush supplied.
-        /// </summary>
-        /// <param name="brush">The brush to create the peak for.</param>
-        /// <returns>The new peak.</returns>
-        private Ellipse CreatePeak(SolidColorBrush brush)
-        {
-            Ellipse peak;
-
-            try
-            {
-                // Create the peak with the given brush.
-                peak = new Ellipse()
-                {
-                    Fill = brush,
-                    IsVisible = false,
-                    Stroke = _peakStroke,
-                    StrokeThickness = 1
-                };
-
-                // Return the peak.
-                return peak;
-            }
-            catch (Exception ex)
-            {
-                Trace.TraceError(_moduleID + ":CP - " + ex.Message);
-                return null;
-            }
-        }
-
-        ///// <summary>
-        ///// Arranges the storyboards within the Spectrum.
-        ///// </summary>
-        //private void ArrangeStoryBoards()
-        //{
-        //    try
-        //    {
-        //        // Arrange the loading rectangle.
-        //        _rectLoading.Height = ActualHeight * 0.15;
-        //        _rectLoading.Width = ActualWidth * 0.75;
-        //        _rectLoading.RadiusX = ActualWidth * 0.03;
-        //        _rectLoading.RadiusY = ActualWidth * 0.03;
-        //        Canvas.SetLeft(_rectLoading, (ActualWidth - _rectLoading.Width) / 2.0);
-        //        Canvas.SetTop(_rectLoading, (ActualHeight - _rectLoading.Height) / 2.0);
-
-        //        // Arrange the loading text.
-        //        _vbLoading.Height = ActualHeight * 0.08;
-        //        _vbLoading.Width = ActualWidth * 0.30;
-        //        Canvas.SetLeft(_vbLoading, (ActualWidth - _vbLoading.Width) / 2.0);
-        //        Canvas.SetTop(_vbLoading, (ActualHeight - _vbLoading.Height) / 2.0);
-
-        //        // Add to the canvas.
-        //        cvMain.Children.Add(_rectLoading);
-        //        cvMain.Children.Add(_vbLoading);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Trace.TraceError(_moduleID + ":ASBs - " + ex.Message);
-        //    }
-        //}
 
         #endregion
 
@@ -499,26 +318,22 @@ namespace BridgeRock.MauiExample.Controls
         {
             try
             {
-                // If no peaks, just return.
-                if (_topPeak is null)
-                    return;
-
                 switch (Peaking)
                 {
                     case 1:
                         //If top peaking, show top peak.
-                        _topPeak.IsVisible = true;
-                        _bottomPeak.IsVisible = false;
+                        peakTop.IsVisible = true;
+                        peakBottom.IsVisible = false;
                         break;
                     case -1:
                         //If bottom peaking, show bottom peak.
-                        _topPeak.IsVisible = false;
-                        _bottomPeak.IsVisible = true;
+                        peakTop.IsVisible = false;
+                        peakBottom.IsVisible = true;
                         break;
                     default:
                         //If not peaking, hide peaks.
-                        _topPeak.IsVisible = false;
-                        _bottomPeak.IsVisible = false;
+                        peakTop.IsVisible = false;
+                        peakBottom.IsVisible = false;
                         break;
                 }
             }
@@ -596,37 +411,11 @@ namespace BridgeRock.MauiExample.Controls
             {
                 try
                 {
-                    if (_dataRetrieved != value)                                // If it's a new value.
+                    if (_dataRetrieved != value)
                     {
-                        _dataRetrieved = value;                                 // Set the new value.                        
-
-                        //if (_story is object)
-                        //{
-                        //    if (_dataRetrieved)                                 // If data not loading...
-                        //    {
-                        //        if (_storyboardRunning)                         // If we have storyboard.
-                        //        {
-                        //            _story.Stop(this);                          // Stop storyboard.                                    
-                        //            _storyboardRunning = false;                 // No longer running.
-                        //        }
-
-                        //        _vbLoading.Visibility = Visibility.Hidden;      // Hide Loading label.
-                        //        _rectLoading.Visibility = Visibility.Hidden;    // Hide rectangle.
-                        //    }
-                        //    else
-                        //    {
-                        //        _vbLoading.Visibility = Visibility.Visible;     // Show Loading label.
-                        //        _rectLoading.Visibility = Visibility.Visible;   // Show rectangle.
-
-                        //        if (!_storyboardRunning)                        // If we have storyboard.
-                        //        {
-                        //            _storyboardRunning = true;                  // Storyboard is running.                                    
-                        //            _story.Begin(this, true);                   // Begin storyboard.
-                        //        }
-                        //    }
-                        //}
-
-                        Refresh();                                              // Update the display.
+                        // If it's a new value, set and refresh.
+                        _dataRetrieved = value;
+                        Refresh();
                     }
                 }
                 catch (Exception ex)
