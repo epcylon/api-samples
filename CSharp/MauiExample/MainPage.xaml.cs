@@ -12,7 +12,7 @@ namespace BridgeRock.MauiExample
 	{
 		private readonly APIClient _client;
 		private TopSymbolsEventArgs _topSymbols;
-		private string _symbol = "NQ Z1";
+		private string _symbol = "NQ H2";
 		private readonly string _strategyId = "Crb9.0";		
 
 		public MainPage()
@@ -36,7 +36,7 @@ namespace BridgeRock.MauiExample
 			_client.BookPressureUpdated += (s, e) => sgBookPressure.Value = e.Value;
 			_client.HeadroomUpdated += (s, e) => sgHeadroom.Value = e.Value;
 			_client.SentimentUpdated += (s, e) => s50t.UpdateSpectrum(e);
-
+			
 			_client.Connect("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
 							"eyJzdWIiOiJUZXN0QXBwIiwiaWF0IjoxNjMzMDEyMTUzLCJleHAiOjE2MzgyMz" +
 							"A0MDAsImF1ZCI6IjJXVWplb2JSWFJXOXBzTkRFY3hlMU1EOXd0ZGZkaDFDIn0." +
@@ -73,8 +73,9 @@ namespace BridgeRock.MauiExample
 
 		private void HandleInstrumentUpdate(object sender, InstrumentEventArgs e)
 		{
-			Trace.TraceInformation(e.Symbol + " " + e.Details.InstrumentType.ToString() + " " +
-		 						   e.Details.ExpiryDate.ToString() + " " + e.Error.Message);
+			Trace.TraceInformation(e.Symbol + " " + (e.Details?.InstrumentType.ToString() ?? "None") + 
+								   " " + (e.Details?.ExpiryDate.ToString() ?? string.Empty) + 
+								   " " + e.Error?.Message ?? string.Empty);
 		}
 
         private void HandleError(object client, QuantGate.API.Events.ErrorEventArgs args)

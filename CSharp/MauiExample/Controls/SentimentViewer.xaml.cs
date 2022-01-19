@@ -81,11 +81,11 @@ namespace BridgeRock.MauiExample.Controls
         /// <summary>
         /// The top peak to display.
         /// </summary>
-        private Ellipse _topPeak;
+        private readonly Ellipse _topPeak;
         /// <summary>
         /// The bottom peak to display.
         /// </summary>
-        private Ellipse _bottomPeak;
+        private readonly Ellipse _bottomPeak;
 
         /// <summary>
         /// Has the data been retrieved?
