@@ -1,7 +1,4 @@
-﻿using Microsoft.Maui.Controls;
-using Microsoft.Maui.Graphics;
-using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using mg = Microsoft.Maui.Graphics;
 
 namespace BridgeRock.MauiExample.Controls

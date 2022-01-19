@@ -1,5 +1,4 @@
-﻿using Microsoft.Maui.Controls.Shapes;
-using QuantGate.API.Signals.Events;
+﻿using QuantGate.API.Signals.Events;
 using System.Diagnostics;
 
 namespace BridgeRock.MauiExample.Controls
@@ -10,46 +9,6 @@ namespace BridgeRock.MauiExample.Controls
         /// Module-level Identifier.
         /// </summary>
         private const string _moduleID = "SVwr";
-
-        #region Spectrum Constants
-
-        /// <summary>
-        /// The basic horizontal line brush to use.
-        /// </summary>
-        public static readonly SolidColorBrush _hLineBrush;
-        /// <summary>
-        /// The base line brush to use for the fill.
-        /// </summary>
-        public static readonly SolidColorBrush _baselineFill;
-
-        /// <summary>
-        /// The outline stroke for any of the peaks.
-        /// </summary>
-        public static readonly SolidColorBrush _peakStroke;
-        /// <summary>
-        /// The fill for top peak.
-        /// </summary>
-        public static readonly SolidColorBrush _topPeakFill;
-        /// <summary>
-        /// The fill for bottom peak.
-        /// </summary>
-        public static readonly SolidColorBrush _bottomPeakFill;
-
-        #endregion
-
-        #region Static Brush Setup
-
-        /// <summary>
-        /// Creates the static brushes when the first item is created.
-        /// </summary>
-        static SentimentViewer()
-        {
-            _hLineBrush = new SolidColorBrush(Color.FromRgb(0xA0, 0xA0, 0xA0));
-            _baselineFill = new SolidColorBrush(Color.FromRgb(0x40, 0x40, 0x00));
-            _peakStroke = new SolidColorBrush(Color.FromRgb(0x1A, 0x1A, 0x1A));            
-        }
-
-        #endregion
 
         #region Spectrum Variables
 
@@ -89,13 +48,6 @@ namespace BridgeRock.MauiExample.Controls
         public SentimentViewer()
         {
             InitializeComponent();
-
-            // Set up event handlers.
-            //Loaded += HandleSpectrumSizeChange;
-            //IsVisibleChanged += Spectrum_IsVisibleChanged;
-
-            // Create the storyboards.
-            //CreateStoryBoards();
         }
 
         #endregion
@@ -108,7 +60,7 @@ namespace BridgeRock.MauiExample.Controls
             base.OnClear();
         }
 
-        protected override Size ArrangeOverride(Microsoft.Maui.Graphics.Rectangle bounds)
+        protected override Size ArrangeOverride(Rectangle bounds)
         {
             if (bounds.Width > 0 && bounds.Width != _lastWidth)
             {
@@ -121,7 +73,7 @@ namespace BridgeRock.MauiExample.Controls
         /// <summary>
         /// Set up the spectrum as necessary.
         /// </summary>
-        private void SetupSpectrum(Microsoft.Maui.Graphics.Rectangle bounds)
+        private void SetupSpectrum(Rectangle bounds)
         {
             int effectiveBars;
 
