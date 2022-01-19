@@ -7,7 +7,6 @@ namespace BridgeRock.MauiExample
 		public App()
 		{
 			InitializeComponent();
-
 			MainPage = new MainPage();
 		}
 	}

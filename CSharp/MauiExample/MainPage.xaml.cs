@@ -16,10 +16,8 @@ namespace BridgeRock.MauiExample
 			InitializeComponent();
 
 			BindingContext = this;			
-
-			//_client = new ProtoStompClient("wss://feed.stealthtrader.com");
-			_client = new APIClient(Environments.Development, stream: DataStream.Realtime);
-			//_client = new ProtoStompClient("ws://localhost", 2432);
+			
+			_client = new APIClient(Environments.Development, stream: DataStream.Realtime);			
 			_client.Connected += HandleConnected;
 			_client.Disconnected += HandleDisconnected;
 			_client.Error += HandleError;
@@ -50,8 +48,7 @@ namespace BridgeRock.MauiExample
 		private void Subscribe(string symbol)
 		{
 			// Unsubscribe from all subscriptions for this symbol.
-			_client.UnsubscribeAll(_symbol);
-			//sViewer.ClearSpectrum();
+			_client.UnsubscribeAll(_symbol);			
 
 			_symbol = symbol;
 
@@ -128,8 +125,6 @@ namespace BridgeRock.MauiExample
 
 			List<SearchRow> searchRows = new();
 
-			searchRows.Clear();
-
 			foreach (SearchResult result in e.Results)
 				searchRows.Add(new SearchRow
 				{
@@ -137,6 +132,7 @@ namespace BridgeRock.MauiExample
 					DisplayName = result.DisplayName,
 					EntryProgress = string.Empty
 				});
+			colSearch.ItemsSource = searchRows;
 		}
 	}
 }
