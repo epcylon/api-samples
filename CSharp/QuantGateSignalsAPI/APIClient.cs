@@ -254,7 +254,7 @@ namespace QuantGate.API.Signals
             Task.Factory.StartNew(HandleActions, TaskCreationOptions.LongRunning);
 
             // Create the new websocket.
-            _transport = new WebSocket(_host + ':' + _port + "/");
+            _transport = new WebSocket($"{_host}:{_port}/");
 
             // Set up the event handling.
             _transport.OnOpen += OnOpen;
@@ -346,7 +346,7 @@ namespace QuantGate.API.Signals
                 }
                 catch (Exception ex)
                 {
-                    Trace.TraceError(_moduleID + ":OO - " + ex.Message);
+                    Trace.TraceError($"{_moduleID}:OO - {ex.Message}");
                 }
             });
         }
@@ -385,7 +385,7 @@ namespace QuantGate.API.Signals
                 }
                 catch (Exception ex)
                 {
-                    Trace.TraceError(_moduleID + ":OCl - " + ex.Message);
+                    Trace.TraceError($"{_moduleID}:OCl - {ex.Message}");
                 }
             });
         }
@@ -409,7 +409,7 @@ namespace QuantGate.API.Signals
                 }
                 catch (Exception ex)
                 {
-                    Trace.TraceError(_moduleID + ":OCl - " + ex.Message);
+                    Trace.TraceError($"{_moduleID}:OErr - {ex.Message}");
                 }
             });
         }
@@ -438,7 +438,7 @@ namespace QuantGate.API.Signals
                 }
                 catch (Exception ex)
                 {
-                    Trace.TraceError(_moduleID + ":HMsg - " + ex.Message);
+                    Trace.TraceError($"{_moduleID}:HMsg - {ex.Message}");
                 }
             });
         }
