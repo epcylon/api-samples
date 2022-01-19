@@ -30,14 +30,6 @@ namespace BridgeRock.MauiExample
 			_client.BookPressureUpdated += (s, e) => sgBookPressure.Value = e.Value;
 			_client.HeadroomUpdated += (s, e) => sgHeadroom.Value = e.Value;
 			_client.SentimentUpdated += (s, e) => s50t.UpdateSpectrum(e);
-
-			_client.Connect("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
-							"eyJzdWIiOiJUZXN0QXBwIiwiaWF0IjoxNjMzMDEyMTUzLCJleHAiOjE2MzgyMz" +
-							"A0MDAsImF1ZCI6IjJXVWplb2JSWFJXOXBzTkRFY3hlMU1EOXd0ZGZkaDFDIn0." +
-							"xtykKWHxKwhopUkkyUm6eCa9qfQsGkhHEdAea9hdSz8");
-							
-            SubscribeSearch();
-			Subscribe(_symbol);
 		}
 
 		private void SubscribeSearch()
@@ -86,7 +78,20 @@ namespace BridgeRock.MauiExample
 			Trace.TraceInformation("Connected!");
 		}
 
-        private void HandleSearchInput(object sender, EventArgs e)
+		private void HandleConnectClicked(object client, EventArgs args)
+        {
+			_client.Connect(eUsername.Text, ePassword.Text);
+
+			SubscribeSearch();
+			Subscribe(_symbol);
+		}
+
+		private void HandleDisconnectClicked(object client, EventArgs args)
+		{
+			_client.Disconnect();
+		}
+
+		private void HandleSearchInput(object sender, EventArgs e)
         {
 			if (!string.IsNullOrEmpty(eSearch.Text))
 			{
