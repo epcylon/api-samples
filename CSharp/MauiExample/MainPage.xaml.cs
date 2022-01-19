@@ -132,6 +132,7 @@ namespace BridgeRock.MauiExample
 					DisplayName = result.DisplayName,
 					EntryProgress = string.Empty
 				});
+
 			colSearch.ItemsSource = searchRows;
 		}
 	}
