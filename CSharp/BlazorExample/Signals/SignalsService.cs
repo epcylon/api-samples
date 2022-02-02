@@ -83,10 +83,10 @@ namespace BlazorExample.Signals
         /// Creates a new SignalsService instance.
         /// </summary>
         public SignalsService()
-        { 
+        {
             // Create the API client, and wire up the handlers.
             _client = new APIClient(
-                new ConnectionToken(Environments.Production, 
+                new ConnectionToken(Environments.Production,
                                     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
                                     "eyJzdWIiOiJUZXN0QXBwIiwiaWF0IjoxNjMzMDEyMTUzLCJleHAiOjE2MzgyMz" +
                                     "A0MDAsImF1ZCI6IjJXVWplb2JSWFJXOXBzTkRFY3hlMU1EOXd0ZGZkaDFDIn0." +
@@ -99,8 +99,8 @@ namespace BlazorExample.Signals
             _client.Connect();
 
             // Subscribe to top symbols and to the 50t AAPL sentiment feed.
-            _client.SubscribeTopSymbols("ib", reference: "ib");
-            _client.SubscribeTopSymbols("tradestation", reference: "tradestation");
+            _client.SubscribeTopSymbols("ib");
+            _client.SubscribeTopSymbols("tradestation");
             _client.SubscribeSentiment("AAPL");
         }        
 
@@ -111,7 +111,7 @@ namespace BlazorExample.Signals
         /// <param name="e">The TopSymbols update event arguments.</param>
         private void HandleTopSymbolsUpdated(object? sender, TopSymbolsEventArgs e)
         {
-            SetTopSymbols((string)e.Reference, e.Symbols.ToArray());
+            SetTopSymbols(e.Broker, e.Symbols.ToArray());
         }
 
         /// <summary>
