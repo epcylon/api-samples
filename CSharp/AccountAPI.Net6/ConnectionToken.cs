@@ -1,11 +1,14 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using System.Net.Http;
+using System.Threading;
 
 namespace Epcylon.Net.APIs.Account
 {
     /// <summary>
     /// Holds the token information for a connection and keeps the token up to date.
     /// </summary>
-    internal class ConnectionToken : IDisposable
+    public class ConnectionToken : IDisposable
     {
         #region Constants
 
@@ -17,7 +20,7 @@ namespace Epcylon.Net.APIs.Account
         /// <summary>
         /// Epoch time for calculating UNIX time.
         /// </summary>
-        private static readonly DateTime _epoch = new(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+        private static readonly DateTime _epoch = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
 
         #endregion
 
@@ -26,7 +29,7 @@ namespace Epcylon.Net.APIs.Account
         /// <summary>
         /// Lock object for public fields.
         /// </summary>
-        private readonly object _lock = new();
+        private readonly object _lock = new object();
 
         /// <summary>
         /// The host address of the REST API to request from.
@@ -209,7 +212,7 @@ namespace Epcylon.Net.APIs.Account
         /// Timer event handler - will refresh the token, if possible.
         /// </summary>
         /// <param name="state">Timer state object (not used).</param>
-        private void HandleTimer(object? state)
+        private void HandleTimer(object state)
         {
             long utcTicks;
 
@@ -263,13 +266,13 @@ namespace Epcylon.Net.APIs.Account
         /// <returns>The REST host address for the given environment.</returns>
         private static string GetRestHost(Environments environment)
         {
-            return environment switch
+            switch (environment)
             {
-                Environments.Local => @"http://localhost:59398/",
-                Environments.Development => @"https://mdev.pilottrading.co/",
-                Environments.Production => @"https://mercury.pilottrading.co/",
-                _ => @"https://mstage.pilottrading.co/",
-            };
+                case Environments.Local: return @"http://localhost:59398/";
+                case Environments.Development: return @"https://mdev.pilottrading.co/";
+                case Environments.Production: return @"https://mercury.pilottrading.co/";
+                default: return @"https://mstage.pilottrading.co/";
+            }
         }
 
         /// <summary>
@@ -281,9 +284,11 @@ namespace Epcylon.Net.APIs.Account
         {            
             try
             {
-                using HttpClient client = new();
-                HttpResponseMessage? result = client.GetAsync(uri).Result;                
-                return result.Content.ReadAsStringAsync().Result;              
+                using (HttpClient client = new HttpClient())
+                {
+                    HttpResponseMessage result = client.GetAsync(uri).Result;
+                    return result.Content.ReadAsStringAsync().Result;
+                }
             }
             catch (Exception ex)
             {

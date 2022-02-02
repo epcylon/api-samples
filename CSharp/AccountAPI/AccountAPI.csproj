@@ -1,10 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-	<RootNamespace>Epcylon.Net.APIs.Account</RootNamespace>
+    <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\AccountAPI.Net6\ConnectionToken.cs" Link="ConnectionToken.cs" />
+    <Compile Include="..\AccountAPI.Net6\Enumerations.cs" Link="Enumerations.cs" />
+  </ItemGroup>
 
 </Project>
