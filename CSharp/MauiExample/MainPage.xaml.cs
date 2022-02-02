@@ -1,3 +1,4 @@
+using Epcylon.Net.APIs.Account;
 using QuantGate.API.Signals;
 using QuantGate.API.Signals.Events;
 using System.Diagnostics;
@@ -6,54 +7,81 @@ namespace BridgeRock.MauiExample
 {
     public partial class MainPage : ContentPage
 	{
-		private readonly APIClient _client;
+		private APIClient _client;
 		private TopSymbolsEventArgs _topSymbols;
 		private string _symbol = "NQ H2";
 		private readonly string _strategyId = "Crb9.0";		
 
-		public MainPage()
+		private APIClient Client
+        {
+			get { return _client; }
+			set
+            {
+				if (_client is not null)
+                {
+					_client.Connected -= HandleConnected;
+					_client.Disconnected -= HandleDisconnected;
+					_client.Error -= HandleError;
+					_client.InstrumentUpdated -= HandleInstrumentUpdate;
+					_client.SymbolSearchUpdated -= HandleSearchUpdate;
+					_client.TopSymbolsUpdated -= HandleTopSymbolsUpdate;
+					_client.PerceptionUpdated += HandlePerceptionUpdate;
+					_client.CommitmentUpdated +=HandleCommitmentUpdate;
+					_client.BookPressureUpdated += HandleBookPressureUpdate;
+					_client.HeadroomUpdated += HandleHeadroomUpdate;
+					_client.SentimentUpdated += HandleSentimentUpdate;
+				}
+
+				_client = value;
+
+				if (_client is not null)
+                {
+					_client.Connected += HandleConnected;
+					_client.Disconnected += HandleDisconnected;
+					_client.Error += HandleError;
+					_client.InstrumentUpdated += HandleInstrumentUpdate;
+					_client.SymbolSearchUpdated += HandleSearchUpdate;
+					_client.TopSymbolsUpdated += HandleTopSymbolsUpdate;
+					_client.PerceptionUpdated += HandlePerceptionUpdate;
+					_client.CommitmentUpdated += HandleCommitmentUpdate;
+					_client.BookPressureUpdated += HandleBookPressureUpdate;
+					_client.HeadroomUpdated += HandleHeadroomUpdate;
+					_client.SentimentUpdated += HandleSentimentUpdate;
+				}
+            }
+        }
+
+        public MainPage()
 		{
 			InitializeComponent();
-
-			BindingContext = this;			
-			
-			_client = new APIClient(Environments.Development, stream: DataStream.Realtime);			
-			_client.Connected += HandleConnected;
-			_client.Disconnected += HandleDisconnected;
-			_client.Error += HandleError;
-
-			_client.InstrumentUpdated += HandleInstrumentUpdate;
-			_client.SymbolSearchUpdated += HandleSearchUpdate;
-			_client.TopSymbolsUpdated += HandleTopSymbolsUpdate;
-			_client.PerceptionUpdated += (s, e) => sgPerception.Value = e.Value;
-			_client.CommitmentUpdated += (s, e) => sgCommitment.Value = e.Value;
-			_client.BookPressureUpdated += (s, e) => sgBookPressure.Value = e.Value;
-			_client.HeadroomUpdated += (s, e) => sgHeadroom.Value = e.Value;
-			_client.SentimentUpdated += (s, e) => s50t.UpdateSpectrum(e);
+			BindingContext = this;
 		}
 
 		private void SubscribeSearch()
 		{
-			_client.SubscribeTopSymbols("ib");
+			Client?.SubscribeTopSymbols("ib");
 		}
 
 		private void Subscribe(string symbol)
 		{
+			if (Client is null)
+				return;
+
 			// Unsubscribe from all subscriptions for this symbol.
-			_client.UnsubscribeAll(_symbol);			
+			Client.UnsubscribeAll(_symbol);			
 
 			_symbol = symbol;
 
-			_client.RequestInstrumentDetails(_symbol);
-			_client.SubscribePerception(_symbol);
-			_client.SubscribeCommitment(_symbol);
-			_client.SubscribeEquilibrium(_symbol, "300s");
-			_client.SubscribeSentiment(_symbol, "50t");
-			_client.SubscribeHeadroom(_symbol);
-			_client.SubscribeBookPressure(_symbol);
-			_client.SubscribeMultiframeEquilibrium(_symbol);
-			_client.SubscribeTrigger(_symbol);
-			_client.SubscribeStrategy(_strategyId, _symbol);
+			Client.RequestInstrumentDetails(_symbol);
+			Client.SubscribePerception(_symbol);
+			Client.SubscribeCommitment(_symbol);
+			Client.SubscribeEquilibrium(_symbol, "300s");
+			Client.SubscribeSentiment(_symbol, "50t");
+			Client.SubscribeHeadroom(_symbol);
+			Client.SubscribeBookPressure(_symbol);
+			Client.SubscribeMultiframeEquilibrium(_symbol);
+			Client.SubscribeTrigger(_symbol);
+			Client.SubscribeStrategy(_strategyId, _symbol);
 		}
 
 		private void HandleInstrumentUpdate(object sender, InstrumentEventArgs e)
@@ -80,7 +108,11 @@ namespace BridgeRock.MauiExample
 
 		private void HandleConnectClicked(object client, EventArgs args)
         {
-			_client.Connect(eUsername.Text, ePassword.Text);
+			Client = new APIClient(new ConnectionToken(Environments.Development,
+													   eUsername.Text, ePassword.Text), 
+								   stream: DataStream.Realtime);
+			
+			Client.Connect();
 
 			SubscribeSearch();
 			Subscribe(_symbol);
@@ -88,14 +120,14 @@ namespace BridgeRock.MauiExample
 
 		private void HandleDisconnectClicked(object client, EventArgs args)
 		{
-			_client.Disconnect();
+			Client?.Disconnect();
 		}
 
 		private void HandleSearchInput(object sender, EventArgs e)
         {
 			if (!string.IsNullOrEmpty(eSearch.Text))
 			{
-				_client.SearchSymbols(eSearch.Text, "paper");
+				Client?.SearchSymbols(eSearch.Text, "paper");
 			}
 			else
 			{
@@ -139,6 +171,31 @@ namespace BridgeRock.MauiExample
 				});
 
 			colSearch.ItemsSource = searchRows;
+		}
+
+		private void HandleSentimentUpdate(object sender, SentimentEventArgs e)
+		{
+			s50t.UpdateSpectrum(e);
+		}
+
+		private void HandleHeadroomUpdate(object sender, HeadroomEventArgs e)
+		{
+			sgHeadroom.Value = e.Value;
+		}
+
+		private void HandleBookPressureUpdate(object sender, BookPressureEventArgs e)
+		{
+			sgBookPressure.Value = e.Value;
+		}
+
+		private void HandleCommitmentUpdate(object sender, CommitmentEventArgs e)
+		{
+			sgCommitment.Value = e.Value;
+		}
+
+		private void HandlePerceptionUpdate(object sender, PerceptionEventArgs e)
+		{
+			sgPerception.Value = e.Value;
 		}
 	}
 }

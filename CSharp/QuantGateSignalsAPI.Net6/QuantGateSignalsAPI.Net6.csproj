@@ -83,4 +83,8 @@
     <PackageReference Include="WebSocketSharp-netstandard" Version="1.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AccountAPI.Net6\AccountAPI.csproj" />
+  </ItemGroup>
+
 </Project>
