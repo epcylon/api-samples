@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AccountAPI.Net6\AccountAPI.csproj" />
     <ProjectReference Include="..\QuantGateSignalsAPI.Net6\QuantGateSignalsAPI.Net6.csproj" />
   </ItemGroup>
 

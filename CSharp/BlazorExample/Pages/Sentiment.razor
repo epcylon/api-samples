@@ -82,77 +82,81 @@
     /// Draws the 50t AAPL Sentiment on the Sentiment Canvas.
     /// </summary>
     async void DrawSentiment()
-    {                 
-        // If no sentiment canvas, can't continue.
-        if (sentimentCanvas is null)
-            return;
-
-        // Create a 2D async canvas to work with (quit if failed).
-        Canvas2DContext? context = await sentimentCanvas.CreateCanvas2DAsync();
-        if (context is null)
-            return;        
-
-        // If no sentiment to draw, skip out for now...
-        if (Sentiment50t is null)
-            return;
-
-        // Variables to use.
-        double x, y1, y2, xWidth, centerY, rHeight, rulerHeight;
-
-        // Calculate the width of each bar and ruler.
-        xWidth = (double)sentimentCanvas.Width / SentimentEventArgs.TotalBars;
-        rHeight = sentimentCanvas.Height / 20.0;
-        rulerHeight = rHeight / 10.0;
-        // Calculate the center-point.
-        centerY = sentimentCanvas.Height / 2.0;
-
-        // Batch the updates as one call.
-        await context.BeginBatchAsync();
-
-        // Set up the background.
-        await context.SetFillStyleAsync("#E8E8E8");
-        await context.FillRectAsync(0, 0, sentimentCanvas.Width, sentimentCanvas.Height);
-
-        // Set the horizontal ruler lines.
-        await context.SetFillStyleAsync("#D0D0D0");
-        for (int index = 1; index < 20; index++)
-            await context.FillRectAsync(0, rHeight * index - rulerHeight / 2.0, 
-                                        sentimentCanvas.Width, rulerHeight);
-
-        // Go through each of the bars and draw.
-        for (int index = 0; index < SentimentEventArgs.TotalBars; index++)
+    {
+        try
         {
-            // Calculate the column that the bar will be drawn in (alternates, starting at center).
-            int column = (SentimentEventArgs.TotalBars / 2) + 
-                         (1 - 2 * (index % 2)) * (index + index % 2) / 2;
+            // If no sentiment canvas, can't continue.
+            if (sentimentCanvas is null)
+                return;
 
-            // Calculate the horizontal center of where the line is to be drawn for this column.
-            x = (column + 0.5) * xWidth;
+            // Create a 2D async canvas to work with (quit if failed).
+            Canvas2DContext? context = await sentimentCanvas.CreateCanvas2DAsync();
+            if (context is null)
+                return;
 
-            // Calculate the y-values (with y1 being the lower value - length is between -1 and 1).
-            if (Sentiment50t.Lengths[index] > 0)
+            // If no sentiment to draw, skip out for now...
+            if (Sentiment50t is null)
+                return;
+
+            // Variables to use.
+            double x, y1, y2, xWidth, centerY, rHeight, rulerHeight;
+
+            // Calculate the width of each bar and ruler.
+            xWidth = (double)sentimentCanvas.Width / SentimentEventArgs.TotalBars;
+            rHeight = sentimentCanvas.Height / 20.0;
+            rulerHeight = rHeight / 10.0;
+            // Calculate the center-point.
+            centerY = sentimentCanvas.Height / 2.0;
+
+            // Batch the updates as one call.
+            await context.BeginBatchAsync();
+
+            // Set up the background.
+            await context.SetFillStyleAsync("#E8E8E8");
+            await context.FillRectAsync(0, 0, sentimentCanvas.Width, sentimentCanvas.Height);
+
+            // Set the horizontal ruler lines.
+            await context.SetFillStyleAsync("#D0D0D0");
+            for (int index = 1; index < 20; index++)
+                await context.FillRectAsync(0, rHeight * index - rulerHeight / 2.0,
+                                            sentimentCanvas.Width, rulerHeight);
+
+            // Go through each of the bars and draw.
+            for (int index = 0; index < SentimentEventArgs.TotalBars; index++)
             {
-                y1 = centerY * (1.0 - Sentiment50t.Lengths[index]);
-                y2 = centerY;
-            }
-            else
-            {
-                y1 = centerY;
-                y2 = centerY * (1.0 - Sentiment50t.Lengths[index]);
+                // Calculate the column that the bar will be drawn in (alternates, starting at center).
+                int column = (SentimentEventArgs.TotalBars / 2) +
+                             (1 - 2 * (index % 2)) * (index + index % 2) / 2;
+
+                // Calculate the horizontal center of where the line is to be drawn for this column.
+                x = (column + 0.5) * xWidth;
+
+                // Calculate the y-values (with y1 being the lower value - length is between -1 and 1).
+                if (Sentiment50t.Lengths[index] > 0)
+                {
+                    y1 = centerY * (1.0 - Sentiment50t.Lengths[index]);
+                    y2 = centerY;
+                }
+                else
+                {
+                    y1 = centerY;
+                    y2 = centerY * (1.0 - Sentiment50t.Lengths[index]);
+                }
+
+                // Get the sentiment color and set the fill to the proper value.
+                await context.SetFillStyleAsync(SentimentColorConverter.GetRGBColor(Sentiment50t.Colors[index]));
+                // Draw the line as a round rectangle using 90% of the width, and rounded at the top and bottom.
+                await RoundRect(context, x - 0.45 * xWidth, y1, 0.9 * xWidth, y2 - y1, xWidth * 0.45);
             }
 
-            // Get the sentiment color and set the fill to the proper value.
-            await context.SetFillStyleAsync(SentimentColorConverter.GetRGBColor(Sentiment50t.Colors[index]));
-            // Draw the line as a round rectangle using 90% of the width, and rounded at the top and bottom.
-            await RoundRect(context, x - 0.45 * xWidth, y1, 0.9 * xWidth, y2 - y1, xWidth * 0.45);
+            // Draw the base line.
+            await context.SetFillStyleAsync("#404000");
+            await context.FillRectAsync(0, centerY - xWidth / 4.0, sentimentCanvas.Width, xWidth / 2.0);
+
+            // End batching updates.
+            await context.EndBatchAsync();
         }
-
-        // Draw the base line.
-        await context.SetFillStyleAsync("#404000");
-        await context.FillRectAsync(0, centerY - xWidth / 4.0, sentimentCanvas.Width, xWidth / 2.0);
-
-        // End batching updates.
-        await context.EndBatchAsync();
+        catch (Exception) {}
     }
 
     /// <summary>

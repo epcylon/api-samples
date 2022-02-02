@@ -54,7 +54,7 @@ else
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
-        Symbols = await SignalsService.GetTop10Async();
+        Symbols = await SignalsService.GetTop10Async("ib");
     }
 
     /// <summary>
@@ -72,7 +72,7 @@ else
                 _initialized = true;
 
                 // Get the top 10 symbols from the signal service.
-                TopSymbol[]? symbols = await SignalsService.GetTop10Async();
+                TopSymbol[]? symbols = await SignalsService.GetTop10Async("ib");
                 
                 if (new TopSymbolListComparer().Compare(Symbols, symbols) != 0)
                 {

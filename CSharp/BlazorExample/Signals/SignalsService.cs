@@ -1,5 +1,7 @@
-﻿using QuantGate.API.Signals;
+﻿using Epcylon.Net.APIs.Account;
+using QuantGate.API.Signals;
 using QuantGate.API.Signals.Events;
+using Environments = Epcylon.Net.APIs.Account.Environments;
 
 namespace BlazorExample.Signals
 {
@@ -17,10 +19,12 @@ namespace BlazorExample.Signals
         /// Lock object to access top symbols with.
         /// </summary>
         private readonly object _topSymbolsLock = new();
-        /// <summary>
-        /// Holds the current list of top symbols recieved from the server.
-        /// </summary>
-        private TopSymbol[] _topSymbols = Array.Empty<TopSymbol>();
+
+        private readonly Dictionary<string, TopSymbol[]> _topSymbols = new() 
+        { 
+            ["ib"] = Array.Empty<TopSymbol>(),
+            ["tradestation"] = Array.Empty<TopSymbol>() 
+        };
 
         /// <summary>
         /// Lock object to access sentiment values with.
@@ -32,23 +36,27 @@ namespace BlazorExample.Signals
         private SentimentEventArgs? _sentiment = null;
 
         /// <summary>
-        /// Sets or returns the current list of top symbols.
+        /// Sets the current list of top symbols.
         /// </summary>
         /// <remarks>
         /// This will handle the lock on the list. Note that TopSymbol items are immutable.
         /// </remarks>
-        private TopSymbol[] TopSymbols
+        private void SetTopSymbols(string broker, TopSymbol[] value)            
         {
-            get 
-            { 
-                lock (_topSymbolsLock)
-                    return _topSymbols;
-            }
-            set 
-            {
-                lock (_topSymbolsLock)
-                    _topSymbols = value;
-            }
+            lock (_topSymbolsLock)
+                _topSymbols[broker] = value;
+        }
+
+        /// <summary>
+        /// Returns the current list of top symbols.
+        /// </summary>
+        /// <remarks>
+        /// This will handle the lock on the list. Note that TopSymbol items are immutable.
+        /// </remarks>
+        private TopSymbol[] GetTopSymbols(string broker)
+        {
+            lock (_topSymbolsLock)
+                return _topSymbols[broker];
         }
 
         /// <summary>
@@ -77,18 +85,22 @@ namespace BlazorExample.Signals
         public SignalsService()
         { 
             // Create the API client, and wire up the handlers.
-            _client = new APIClient();
+            _client = new APIClient(
+                new ConnectionToken(Environments.Production, 
+                                    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
+                                    "eyJzdWIiOiJUZXN0QXBwIiwiaWF0IjoxNjMzMDEyMTUzLCJleHAiOjE2MzgyMz" +
+                                    "A0MDAsImF1ZCI6IjJXVWplb2JSWFJXOXBzTkRFY3hlMU1EOXd0ZGZkaDFDIn0." +
+                                    "xtykKWHxKwhopUkkyUm6eCa9qfQsGkhHEdAea9hdSz8"));
+
             _client.TopSymbolsUpdated += HandleTopSymbolsUpdated;
             _client.SentimentUpdated += HandleSentimentUpdated;
 
             // Connect to the API client.           
-            _client.Connect("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
-                            "eyJzdWIiOiJUZXN0QXBwIiwiaWF0IjoxNjMzMDEyMTUzLCJleHAiOjE2MzgyMz" +
-                            "A0MDAsImF1ZCI6IjJXVWplb2JSWFJXOXBzTkRFY3hlMU1EOXd0ZGZkaDFDIn0." +
-                            "xtykKWHxKwhopUkkyUm6eCa9qfQsGkhHEdAea9hdSz8");
+            _client.Connect();
 
             // Subscribe to top symbols and to the 50t AAPL sentiment feed.
-            _client.SubscribeTopSymbols("ib");
+            _client.SubscribeTopSymbols("ib", reference: "ib");
+            _client.SubscribeTopSymbols("tradestation", reference: "tradestation");
             _client.SubscribeSentiment("AAPL");
         }        
 
@@ -99,7 +111,7 @@ namespace BlazorExample.Signals
         /// <param name="e">The TopSymbols update event arguments.</param>
         private void HandleTopSymbolsUpdated(object? sender, TopSymbolsEventArgs e)
         {
-            TopSymbols = e.Symbols.ToArray();
+            SetTopSymbols((string)e.Reference, e.Symbols.ToArray());
         }
 
         /// <summary>
@@ -115,7 +127,7 @@ namespace BlazorExample.Signals
         /// <summary>
         /// Returns the current Top10 Symbols list asynchronously.
         /// </summary>
-        public Task<TopSymbol[]> GetTop10Async() => Task.FromResult((TopSymbol[])TopSymbols.Clone());        
+        public Task<TopSymbol[]> GetTop10Async(string broker) => Task.FromResult((TopSymbol[])GetTopSymbols(broker).Clone());        
 
         /// <summary>
         /// Returns the current 50t Sentiment value asynchronously.
