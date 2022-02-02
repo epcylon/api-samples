@@ -1,4 +1,5 @@
-﻿using QuantGate.API.Events;
+﻿using Epcylon.Net.APIs.Account;
+using QuantGate.API.Events;
 using QuantGate.API.Signals;
 using QuantGate.API.Signals.Events;
 using System;
@@ -79,9 +80,13 @@ namespace BridgeRock.CSharpExample
 
             txtSearch.TextChanged += HandleSearchUpdate;
 
-            _client = new APIClient(Environments.Production);
-            //_client = new APIClient();
-            //_client = new APIClient(Environments.Local);
+            _client = new APIClient(
+                new ConnectionToken(Environments.Production,
+                                    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
+                                    "eyJzdWIiOiJUZXN0QXBwIiwiaWF0IjoxNjMzMDEyMTUzLCJleHAiOjE2MzgyMz" +
+                                    "A0MDAsImF1ZCI6IjJXVWplb2JSWFJXOXBzTkRFY3hlMU1EOXd0ZGZkaDFDIn0." +
+                                    "xtykKWHxKwhopUkkyUm6eCa9qfQsGkhHEdAea9hdSz8"));
+            
             _client.Connected += HandleConnected;
             _client.Disconnected += HandleDisconnected;
             _client.Error += HandleError;
@@ -96,10 +101,7 @@ namespace BridgeRock.CSharpExample
             _client.HeadroomUpdated += (s, e) => Headroom = e.Value;
             _client.SentimentUpdated += (s, e) => Sentiment = e;
 
-            _client.Connect("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
-                            "eyJzdWIiOiJUZXN0QXBwIiwiaWF0IjoxNjMzMDEyMTUzLCJleHAiOjE2MzgyMz" +
-                            "A0MDAsImF1ZCI6IjJXVWplb2JSWFJXOXBzTkRFY3hlMU1EOXd0ZGZkaDFDIn0." +
-                            "xtykKWHxKwhopUkkyUm6eCa9qfQsGkhHEdAea9hdSz8");
+            _client.Connect();
 
             SubscribeSearch();
             Subscribe(_symbol);

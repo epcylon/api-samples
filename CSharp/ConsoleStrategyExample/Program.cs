@@ -1,4 +1,5 @@
-﻿using QuantGate.API.Signals;
+﻿using Epcylon.Net.APIs.Account;
+using QuantGate.API.Signals;
 using QuantGate.API.Signals.Events;
 using System;
 using System.Threading;
@@ -84,11 +85,11 @@ namespace QuantGate.Examples.ConsoleStrategy
                 Console.WriteLine("Starting up.");
 
                 // Create the API client, and subscribe to the updated event.
-                _api = new APIClient();
+                _api = new APIClient(new ConnectionToken(Environments.Staging, _token));
                 _api.StrategyUpdated += _api_StrategyUpdated;
 
                 // Connect to the API using a valid token.
-                _api.Connect(_token);
+                _api.Connect();
 
                 // Subscribe to the strategy for each symbol.
                 foreach (string symbol in symbols)

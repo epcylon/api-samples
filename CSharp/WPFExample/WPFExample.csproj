@@ -124,6 +124,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AccountAPI\AccountAPI.csproj">
+      <Project>{9b61ea83-d32d-48ab-91a4-931ca3451195}</Project>
+      <Name>AccountAPI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\QuantGateSignalsAPI\QuantGateSignalsAPI.csproj">
       <Project>{6e993efa-26b3-48c3-b4c8-3c5d7e7c79a4}</Project>
       <Name>QuantGateSignalsAPI</Name>
