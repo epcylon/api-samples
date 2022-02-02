@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MauiExample", "MauiExample.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuantGateSignalsAPI.Net6", "..\QuantGateSignalsAPI.Net6\QuantGateSignalsAPI.Net6.csproj", "{438AB480-B9F0-4ACA-8766-270056C64B07}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccountAPI", "..\AccountAPI\AccountAPI.csproj", "{F0ED973F-598F-4D11-8104-2B3E4B64224D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccountAPI", "..\AccountAPI.Net6\AccountAPI.csproj", "{47F93D82-8993-4E1B-AE8E-9374906CBF9D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,10 +25,10 @@ Global
 		{438AB480-B9F0-4ACA-8766-270056C64B07}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{438AB480-B9F0-4ACA-8766-270056C64B07}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{438AB480-B9F0-4ACA-8766-270056C64B07}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F0ED973F-598F-4D11-8104-2B3E4B64224D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F0ED973F-598F-4D11-8104-2B3E4B64224D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F0ED973F-598F-4D11-8104-2B3E4B64224D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F0ED973F-598F-4D11-8104-2B3E4B64224D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47F93D82-8993-4E1B-AE8E-9374906CBF9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47F93D82-8993-4E1B-AE8E-9374906CBF9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47F93D82-8993-4E1B-AE8E-9374906CBF9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47F93D82-8993-4E1B-AE8E-9374906CBF9D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

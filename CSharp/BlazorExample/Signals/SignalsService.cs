@@ -99,8 +99,8 @@ namespace BlazorExample.Signals
             _client.Connect();
 
             // Subscribe to top symbols and to the 50t AAPL sentiment feed.
-            _client.SubscribeTopSymbols("ib");
-            _client.SubscribeTopSymbols("tradestation");
+            _client.SubscribeTopSymbols("ib", InstrumentType.Future);
+            _client.SubscribeTopSymbols("tradestation", InstrumentType.CommonStock);
             _client.SubscribeSentiment("AAPL");
         }        
 

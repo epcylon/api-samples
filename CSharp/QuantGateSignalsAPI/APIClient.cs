@@ -144,11 +144,6 @@ namespace QuantGate.API.Signals
         /// </summary>
         private long _lastMessageTicks = 0;
 
-        /// <summary>
-        /// Epoch time for calculating UNIX time.
-        /// </summary>
-        private readonly DateTime _epoch = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-
         #endregion
 
         #region Private and Internal Variables
