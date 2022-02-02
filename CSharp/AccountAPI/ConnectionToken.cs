@@ -2,32 +2,36 @@
 
 namespace Epcylon.Net.APIs.Account
 {
+    /// <summary>
+    /// Holds the token information for a connection and keeps the token up to date.
+    /// </summary>
     internal class ConnectionToken : IDisposable
     {
+        #region Constants
+
         /// <summary>
         /// Module-level Identifier.
         /// </summary>
-        private const string _moduleID = "CnTkn";  
-
-        private readonly Timer _timer;
-
-        private bool _isDisposed;
+        private const string _moduleID = "CnTkn";
 
         /// <summary>
-        /// The host address of the REST API to request from.
+        /// Epoch time for calculating UNIX time.
         /// </summary>
-        private readonly string _restHost; 
+        private static readonly DateTime _epoch = new(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+
+        #endregion
+
+        #region Private Member Variables
 
         /// <summary>
         /// Lock object for public fields.
         /// </summary>
-        private object _lock = new object();
-        private string _username;
-        public Environments Environment { get; }
+        private readonly object _lock = new();
+
         /// <summary>
-        /// The currently connected client id.
+        /// The host address of the REST API to request from.
         /// </summary>
-        public string ClientID { get; }
+        private readonly string _restHost;
         /// <summary>
         /// The password for the current connection (JWT Token).
         /// </summary>
@@ -39,49 +43,77 @@ namespace Epcylon.Net.APIs.Account
         /// <summary>
         /// The token used to refresh the connection.
         /// </summary>
-        private string _refreshToken;
+        private string _refreshToken;        
 
         /// <summary>
-        /// Epoch time for calculating UNIX time.
+        /// Refresh timer.
         /// </summary>
-        private readonly DateTime _epoch = new(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+        private readonly Timer _timer;
 
-        public string Token 
+        /// <summary>
+        /// True if the object has been disposed.
+        /// </summary>
+        private bool _isDisposed;
+
+        #endregion
+
+        #region Initialization / Finalization
+
+        /// <summary>
+        /// Creates a new ConnectionToken object. Token will automatically refresh.
+        /// </summary>
+        /// <param name="environment">The environment to connect to.</param>
+        /// <param name="username">The username to connect with.</param>
+        /// <param name="password">The password to connect with.</param>
+        public ConnectionToken(Environments environment, string username, string password)
         {
-            get
-            {
-                lock (_lock)
-                    return _token;
-            }
-            set
-            {
-                lock (_lock)
-                    _token = value;                
-            }
-        }
-
-        public static ConnectionToken Login(Environments environment, string username, string password)
-        {
-            string restHost = GetRestHost(environment);
-
-            // Form the URI to retrieve the token for.
-            string uri = restHost + "auth/credentials?UserName=" + username +
-                                    "&Password=" + password + "&format=json";
-
-            UpdateTokens(Get(uri), out string token, out string refreshToken);
-            return new ConnectionToken(environment, username, token, refreshToken);
-        }
-
-        public static ConnectionToken LoginByToken(Environments environment, string token)
-        {
-            return new ConnectionToken(environment, string.Empty, token, string.Empty);
-        }        
-
-        private ConnectionToken(Environments environment, string username, string token, string refreshToken)
-        {
+            // Set the environment and REST host address.
             Environment = environment;
             _restHost = GetRestHost(environment);
-            _username = username;
+
+            // Set the username.
+            Username = username;
+
+            // Form the URI to retrieve the token for.
+            string uri = _restHost + "auth/credentials?UserName=" + username +
+                                     "&Password=" + password + "&format=json";
+
+            // Get the tokens for the user.
+            GetTokens(Get(uri), out string token, out string refreshToken, out DateTime tokenExpiry);
+            _token = token;
+            _refreshToken = refreshToken;
+            _tokenExpiry = tokenExpiry;
+
+            // Get the username from the token.
+            ClientID = GetJSONField(GetJWTPayload(_token), "sub");
+
+            // Create the refresh timer.
+            _timer = new Timer(HandleTimer, null, TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(1));
+        }
+
+        /// <summary>
+        /// Creates a new ConnectionToken object. Token will not refresh.
+        /// </summary>
+        /// <param name="environment">The environment to connect to.</param>
+        /// <param name="token">The token to connect with.</param>
+        public ConnectionToken(Environments environment, string token) : 
+            this(environment, string.Empty, token, string.Empty) { }
+
+        /// <summary>
+        /// Creates a new ConnectionToken object. Token will automatically refresh if username and refresh token are included.
+        /// </summary>
+        /// <param name="environment">The environment to connect to.</param>
+        /// <param name="username">The username to connect with.</param>
+        /// <param name="token">The token to connect with.</param>
+        /// <param name="refreshToken">The token used to refresh the connection.</param>
+        public ConnectionToken(Environments environment, string username, string token, string refreshToken)
+        {
+            // Set the environment and REST host address.
+            Environment = environment;
+            _restHost = GetRestHost(environment);
+
+            // Set the username.
+            Username = username;
             _token = token;
             _refreshToken = refreshToken;
             _tokenExpiry = GetExpiry(token);
@@ -89,9 +121,146 @@ namespace Epcylon.Net.APIs.Account
             // Get the username from the token.
             ClientID = GetJSONField(GetJWTPayload(token), "sub");
 
-            _timer = new Timer(HandleTimer, null, TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(1));            
+            // Create the refresh timer.
+            _timer = new Timer(HandleTimer, null, TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(1));
         }
 
+        /// <summary>
+        /// Disposes the object and clears the timer.
+        /// </summary>
+        /// <param name="disposing">Called from the Dispose method?</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_isDisposed)
+            {
+                // If not yet disposed, dispose of the timer.
+                _timer.Dispose();
+                _isDisposed = true;
+            }
+        }
+
+        /// <summary>
+        /// Disposes of the token when the object is no longer in use (stop timer).
+        /// </summary>
+        ~ConnectionToken()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: false);
+        }
+
+        /// <summary>
+        /// Disposes the object.
+        /// </summary>
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
+
+        #endregion
+
+        #region Public Properties
+
+        /// <summary>
+        /// The environment to connect to.
+        /// </summary>
+        public Environments Environment { get; }
+
+        /// <summary>
+        /// The username of the user that created the connection (usually email).
+        /// </summary>
+        private string Username { get; }
+
+        /// <summary>
+        /// The currently connected client id.
+        /// </summary>
+        public string ClientID { get; }
+
+        /// <summary>
+        /// Returns the current active JWT token.
+        /// </summary>
+        public string Token
+        {
+            get
+            {
+                lock (_lock)
+                    return _token;
+            }
+        }
+
+        /// <summary>
+        /// Returns the expiry date of the current active JWT token.
+        /// </summary>
+        public DateTime TokenExpiry
+        {
+            get
+            {
+                lock (_lock)
+                    return _tokenExpiry;
+            }
+        }
+
+        #endregion
+
+        #region Refresh Timer Handling
+
+        /// <summary>
+        /// Timer event handler - will refresh the token, if possible.
+        /// </summary>
+        /// <param name="state">Timer state object (not used).</param>
+        private void HandleTimer(object? state)
+        {
+            long utcTicks;
+
+            try
+            {
+                // Can't refresh if no username or token.
+                if (_isDisposed || string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(_refreshToken))
+                    return;
+
+                // Get the current time.
+                utcTicks = DateTime.UtcNow.Ticks;
+
+                if (utcTicks + TimeSpan.TicksPerHour >= TokenExpiry.Ticks)
+                {                    
+                    // If within one hour of the expiry of the token, refresh the token.
+                    string uri;
+
+                    lock (_lock)
+                    {
+                        // Form the URI to retrieve the token for.
+                        uri = _restHost + "auth/refresh?UserName=" + Username +
+                                          "&RefreshToken=" + _refreshToken + "&format=json";
+                    }
+                    
+                    // Refresh the tokens (retrieve and handle tokens).
+                    GetTokens(Get(uri), out string token, out string refreshToken, out DateTime tokenExpiry);
+
+                    // Set the tokens and expiry.
+                    lock (_lock)
+                    {
+                        _token = token;
+                        _refreshToken = refreshToken;
+                        _tokenExpiry = tokenExpiry;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError(_moduleID + ":Tmr - " + ex.Message);
+            }
+        }
+
+        #endregion
+
+        #region Utility Functions
+
+        /// <summary>
+        /// Returns the correct REST host address for the given environment.
+        /// </summary>
+        /// <param name="environment">The environment to get the REST host address for.</param>
+        /// <returns>The REST host address for the given environment.</returns>
         private static string GetRestHost(Environments environment)
         {
             return environment switch
@@ -101,46 +270,6 @@ namespace Epcylon.Net.APIs.Account
                 Environments.Production => @"https://mercury.pilottrading.co/",
                 _ => @"https://mstage.pilottrading.co/",
             };
-        }
-
-        private void HandleTimer(object? state)
-        {
-            long utcTicks;
-
-            try
-            {
-                // Can't refresh if no username or token.
-                if (_isDisposed || string.IsNullOrEmpty(_username) || string.IsNullOrEmpty(_refreshToken))
-                    return;
-
-                // Get the current time.
-                utcTicks = DateTime.UtcNow.Ticks;
-
-                if (utcTicks >= _tokenExpiry.Ticks)
-                {                    
-                    // If past the expiry of the token, refresh the token.
-                    string uri;
-
-                    // Form the URI to retrieve the token for.
-                    uri = _restHost + "auth/refresh?UserName=" + _username +
-                                      "&RefreshToken=" + _refreshToken + "&format=json";
-                    
-                    // Refresh the tokens (retrieve and handle tokens).
-                    UpdateTokens(Get(uri), out string token, out string refreshToken);
-
-                    // Set the tokens and expiry.
-                    lock (_lock)
-                    {
-                        _token = token;
-                        _refreshToken = refreshToken;
-                        _tokenExpiry = GetExpiry(token);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Trace.TraceError(_moduleID + ":Tmr - " + ex.Message);
-            }
         }
 
         /// <summary>
@@ -165,42 +294,44 @@ namespace Epcylon.Net.APIs.Account
         }
 
         /// <summary>
-        /// Updates the JWT bearer and refresh tokens from the JSON response message supplied.
+        /// Gets the JWT bearer and refresh tokens from the JSON response message supplied.
         /// </summary>
         /// <param name="jsonResponse">The message to retrieve the tokens from.</param>
-        private static void UpdateTokens(string jsonResponse, out string token, out string refreshToken)
+        private static void GetTokens(string jsonResponse, out string token, out string refreshToken, out DateTime tokenExpiry)
         {
             try
             {
                 // Get the token and refresh token from the result.
                 token = GetJSONField(jsonResponse, "BearerToken");
                 refreshToken = GetJSONField(jsonResponse, "RefreshToken");
+                tokenExpiry = GetExpiry(token);
             }
             catch (Exception ex)
             {
                 token = string.Empty;
                 refreshToken = string.Empty;
+                tokenExpiry = default;
                 Trace.TraceError(_moduleID + ":UdTkns - " + ex.Message);
             }
         }
 
-        private DateTime GetExpiry(string token)
+        /// <summary>
+        /// Gets the expiry date from the given token.
+        /// </summary>
+        /// <param name="token">The token to get the expiry date for.</param>
+        /// <returns>The expiry date for the given token.</returns>
+        private static DateTime GetExpiry(string token)
         {
-            DateTime tokenExpiry;
-
             try
-            {                
+            {
                 // Calculate the token expiry.
                 if (long.TryParse(GetJSONField(GetJWTPayload(token), "exp"), out long expiry))
-                    tokenExpiry = _epoch.AddSeconds(expiry);
+                    return _epoch.AddSeconds(expiry);
                 else
-                    tokenExpiry = DateTime.UtcNow.AddHours(12);
-
-                // Move back 10%.
-                return tokenExpiry.AddTicks((long)((DateTime.UtcNow.Ticks - tokenExpiry.Ticks) * 0.10));
+                    return DateTime.UtcNow.AddHours(12); 
             }
             catch (Exception ex)
-            {                
+            {
                 Trace.TraceError(_moduleID + ":GExp - " + ex.Message);
                 return default;
             }
@@ -232,35 +363,6 @@ namespace Epcylon.Net.APIs.Account
         private static string GetJWTPayload(string jwtToken) =>
             System.Text.Encoding.UTF8.GetString(
                 Convert.FromBase64String(PadBase64String(jwtToken.Split(new char[] { '.' })[1])));
-
-        #region IDisposable Support
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!_isDisposed)
-            {
-                if (disposing)
-                {
-                    _timer.Dispose();
-                }
-                
-                _isDisposed = true;
-            }
-        }
-
-        // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
-        ~ConnectionToken()
-        {
-            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-            Dispose(disposing: false);
-        }
-
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
 
         #endregion
     }
