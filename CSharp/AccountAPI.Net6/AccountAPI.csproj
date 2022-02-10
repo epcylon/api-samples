@@ -4,13 +4,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
-	<RootNamespace>Epcylon.Net.APIs.Account</RootNamespace>
-
-	<VersionSuffix>3.0.0.$([System.DateTime]::UtcNow.ToString(mmff))</VersionSuffix>
-	<AssemblyVersion Condition=" '$(VersionSuffix)' == '' ">0.0.0.1</AssemblyVersion>
-	<AssemblyVersion Condition=" '$(VersionSuffix)' != '' ">$(VersionSuffix)</AssemblyVersion>
-	<Version Condition=" '$(VersionSuffix)' == '' ">0.0.1.0</Version>
-	<Version Condition=" '$(VersionSuffix)' != '' ">$(VersionSuffix)</Version>
+    <RootNamespace>Epcylon.Net.APIs.Account</RootNamespace>
+    <Version>3.0.1</Version>
   </PropertyGroup>
 
 </Project>
