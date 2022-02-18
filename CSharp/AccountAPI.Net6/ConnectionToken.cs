@@ -1,7 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.Net.Http;
-using System.Threading;
+﻿using System.Diagnostics;
 
 namespace Epcylon.Net.APIs.Account
 {
@@ -20,7 +17,7 @@ namespace Epcylon.Net.APIs.Account
         /// <summary>
         /// Epoch time for calculating UNIX time.
         /// </summary>
-        private static readonly DateTime _epoch = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+        private static readonly DateTime _epoch = new(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
 
         #endregion
 
@@ -29,7 +26,7 @@ namespace Epcylon.Net.APIs.Account
         /// <summary>
         /// Lock object for public fields.
         /// </summary>
-        private readonly object _lock = new object();
+        private readonly object _lock = new();
 
         /// <summary>
         /// The host address of the REST API to request from.
@@ -52,6 +49,11 @@ namespace Epcylon.Net.APIs.Account
         /// Refresh timer.
         /// </summary>
         private readonly Timer _timer;
+
+        /// <summary>
+        /// The HTTP client object to use for requests.
+        /// </summary>
+        private readonly HttpClient _httpClient = new HttpClient();
 
         /// <summary>
         /// True if the object has been disposed.
@@ -138,6 +140,7 @@ namespace Epcylon.Net.APIs.Account
             {
                 // If not yet disposed, dispose of the timer.
                 _timer.Dispose();
+                _httpClient.Dispose();
                 _isDisposed = true;
             }
         }
@@ -280,15 +283,11 @@ namespace Epcylon.Net.APIs.Account
         /// </summary>
         /// <param name="uri">The URI to get from (including paramters).</param>
         /// <returns>The string retrieved from the REST endpoint.</returns>
-        private static string Get(string uri)
+        private string Get(string uri)
         {            
             try
-            {
-                using (HttpClient client = new HttpClient())
-                {
-                    HttpResponseMessage result = client.GetAsync(uri).Result;
-                    return result.Content.ReadAsStringAsync().Result;
-                }
+            {                
+                return _httpClient.GetStringAsync(uri).Result;
             }
             catch (Exception ex)
             {
