@@ -22,4 +22,39 @@
         /// </summary>
         Local = 3,
     }
+
+    /// <summary>
+    /// Product types.
+    /// </summary>
+    public enum Products : int
+    {
+        /// <summary>
+        /// No product type, or unknown.
+        /// </summary>
+        None = 0x0000,
+        /// <summary>
+        /// Pilot app.
+        /// </summary>
+        Pilot = 0x0001,
+        /// <summary>
+        /// Co-pilot app.
+        /// </summary>
+        CoPilot = 0x0002,
+        /// <summary>
+        /// Stealth client.
+        /// </summary>
+        Stealth = 0x0100,
+        /// <summary>
+        /// StealthPro client.
+        /// </summary>
+        StealthPro = 0x0101,
+        /// <summary>
+        /// Hydra client.
+        /// </summary>
+        Hydra = 0x0102,
+        /// <summary>
+        /// InvestGuide client.
+        /// </summary>
+        InvestGuide = 0x0103,
+    }
 }

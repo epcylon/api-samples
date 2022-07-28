@@ -1,4 +1,9 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Net.Http;
+using System.Threading;
 
 namespace Epcylon.Net.APIs.Account
 {
@@ -17,7 +22,102 @@ namespace Epcylon.Net.APIs.Account
         /// <summary>
         /// Epoch time for calculating UNIX time.
         /// </summary>
-        private static readonly DateTime _epoch = new(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+        private static readonly DateTime _epoch = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+
+        #endregion
+
+        #region Static Product Conversion
+
+        /// <summary>
+        /// Dictionary of product id strings by enumeration.
+        /// </summary>
+        private static readonly Dictionary<Products, string> _products = new Dictionary<Products, string>()
+        {
+            [Products.Pilot] = "pilot",
+            [Products.CoPilot] = "copilot",
+            [Products.Stealth] = "stealth",
+            [Products.StealthPro] = "stealthpro",
+            [Products.Hydra] = "hydra",
+            [Products.InvestGuide] = "investguide",
+        };
+
+        /// <summary>
+        /// Dictionary of products by product id string.
+        /// </summary>
+        private static readonly Dictionary<string, Products> _productsReverse =
+            _products.ToDictionary(p => p.Value, p => p.Key);
+
+        /// <summary>
+        /// Dictionary of environment strings by enumeration.
+        /// </summary>
+        private static readonly Dictionary<Environments, string> _environments = new Dictionary<Environments, string>()
+        {
+            [Environments.Production] = "Production",
+            [Environments.Staging] = "Staging",
+            [Environments.Development] = "Development",
+            [Environments.Local] = "Local",
+        };
+
+        /// <summary>
+        /// Dictionary of environments by environment strings.
+        /// </summary>
+        private static readonly Dictionary<string, Environments> _environmentsReverse =
+            _environments.ToDictionary(p => p.Value, p => p.Key);
+
+        /// <summary>
+        /// Returns the product id string from the product.
+        /// </summary>
+        /// <param name="product">The product to get the id for.</param>
+        /// <returns>The product id string from the product</returns>
+        public static string ProductIDByProduct(Products product)
+        {
+            if (_products.TryGetValue(product, out string id))
+                return id;
+
+            return "none";
+        }
+
+        /// <summary>
+        /// Returns the product type for the product id string.
+        /// </summary>
+        /// <param name="id">The product id to get the product for.</param>
+        /// <returns>The product type for the product id string.</returns>
+        public static Products ProductByProductID(string id)
+        {
+            if (_productsReverse.TryGetValue(id.Trim().ToLower(), out Products product))
+                return product;
+
+            return Products.None;
+        }
+
+        /// <summary>
+        /// Returns the environment id string from the environment.
+        /// </summary>
+        /// <param name="environment">The environment to get the id for.</param>
+        /// <returns>The environment id string from the environment</returns>
+        public static string ConvertEnvironment(Environments environment)
+        {
+            if (_environments.TryGetValue(environment, out string enumValue))
+                return enumValue;
+
+            return "Production";
+        }
+
+        /// <summary>
+        /// Returns the environment type for the environment id string.
+        /// </summary>
+        /// <param name="environment">The environment id to get the environment for.</param>
+        /// <returns>The environment type for the environment id string.</returns>
+        public static Environments ConvertEnvironment(string environment)
+        {
+            environment = environment.Trim().ToLower();
+            environment = char.ToUpper(environment[0]) + environment.Substring(1);
+
+            if (_environmentsReverse.TryGetValue(environment, out Environments enumValue))
+                return enumValue;
+
+            return Environments.Production;
+        }
 
         #endregion
 
@@ -26,12 +126,8 @@ namespace Epcylon.Net.APIs.Account
         /// <summary>
         /// Lock object for public fields.
         /// </summary>
-        private readonly object _lock = new();
+        private readonly object _lock = new object();
 
-        /// <summary>
-        /// The host address of the REST API to request from.
-        /// </summary>
-        private readonly string _restHost;
         /// <summary>
         /// The password for the current connection (JWT Token).
         /// </summary>
@@ -43,7 +139,15 @@ namespace Epcylon.Net.APIs.Account
         /// <summary>
         /// The token used to refresh the connection.
         /// </summary>
-        private string _refreshToken;        
+        private string _refreshToken;
+        /// <summary>
+        /// Whether the login is for trial purposes only.
+        /// </summary>
+        private bool _trial = false;
+        /// <summary>
+        /// Error message, if an error occured during login.
+        /// </summary>
+        private string _loginMessage = string.Empty;
 
         /// <summary>
         /// Refresh timer.
@@ -70,27 +174,44 @@ namespace Epcylon.Net.APIs.Account
         /// <param name="environment">The environment to connect to.</param>
         /// <param name="username">The username to connect with.</param>
         /// <param name="password">The password to connect with.</param>
-        public ConnectionToken(Environments environment, string username, string password)
+        /// <param name="product">The type of product we are connecting to.</param>
+        public ConnectionToken(Environments environment, string username,
+                               string password, Products product = Products.Pilot)
         {
+            string uri, productId;
+
             // Set the environment and REST host address.
             Environment = environment;
-            _restHost = GetRestHost(environment);
+            Product = product;
+            RestHost = GetRestHost(environment);
 
             // Set the username.
             Username = username;
 
+            // Get the product ID for the product - default is pilot.
+            productId = ProductIDByProduct(product);
+
             // Form the URI to retrieve the token for.
-            string uri = _restHost + "auth/credentials?UserName=" + username +
-                                     "&Password=" + password + "&format=json";
+            if ((product & Products.Stealth) == Products.Stealth)
+                uri = $"{RestHost}stealth/auth/login?email={username}&password={password}&product={productId}&format=json";
+            else
+                uri = $"{RestHost}auth/credentials?UserName={username}&Password={password}&format=json";
 
             // Get the tokens for the user.
-            GetTokens(Get(uri), out string token, out string refreshToken, out DateTime tokenExpiry);
+            GetTokens(Get(uri), out string token, out string refreshToken,
+                      out DateTime tokenExpiry, out bool trial, out string message);
+
             _token = token;
             _refreshToken = refreshToken;
             _tokenExpiry = tokenExpiry;
+            _trial = trial;
+            _loginMessage = message;
 
             // Get the username from the token.
-            ClientID = GetJSONField(GetJWTPayload(_token), "sub");
+            if (!string.IsNullOrEmpty(_token))
+                ClientID = GetJSONField(GetJWTPayload(_token), "sub");
+            else
+                ClientID = string.Empty;
 
             // Create the refresh timer.
             _timer = new Timer(HandleTimer, null, TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(1));
@@ -101,8 +222,10 @@ namespace Epcylon.Net.APIs.Account
         /// </summary>
         /// <param name="environment">The environment to connect to.</param>
         /// <param name="token">The token to connect with.</param>
-        public ConnectionToken(Environments environment, string token) : 
-            this(environment, string.Empty, token, string.Empty) { }
+        /// <param name="product">The type of product we are connecting to.</param>
+        public ConnectionToken(Environments environment, string token, Products product = Products.Pilot) :
+            this(environment, string.Empty, token, string.Empty, product)
+        { }
 
         /// <summary>
         /// Creates a new ConnectionToken object. Token will automatically refresh if username and refresh token are included.
@@ -111,11 +234,14 @@ namespace Epcylon.Net.APIs.Account
         /// <param name="username">The username to connect with.</param>
         /// <param name="token">The token to connect with.</param>
         /// <param name="refreshToken">The token used to refresh the connection.</param>
-        public ConnectionToken(Environments environment, string username, string token, string refreshToken)
+        /// <param name="product">The type of product we are connecting to.</param>
+        public ConnectionToken(Environments environment, string username, string token,
+                               string refreshToken, Products product = Products.Pilot)
         {
             // Set the environment and REST host address.
             Environment = environment;
-            _restHost = GetRestHost(environment);
+            Product = product;
+            RestHost = GetRestHost(environment);
 
             // Set the username.
             Username = username;
@@ -174,6 +300,16 @@ namespace Epcylon.Net.APIs.Account
         public Environments Environment { get; }
 
         /// <summary>
+        /// The product that the token is for.
+        /// </summary>
+        public Products Product { get; }
+
+        /// <summary>
+        /// The host address of the REST API to request from.
+        /// </summary>
+        public string RestHost { get; }
+
+        /// <summary>
         /// The username of the user that created the connection (usually email).
         /// </summary>
         private string Username { get; }
@@ -196,6 +332,18 @@ namespace Epcylon.Net.APIs.Account
         }
 
         /// <summary>
+        /// Returns the current active refresh JWT token.
+        /// </summary>
+        public string RefreshToken
+        {
+            get
+            {
+                lock (_lock)
+                    return _refreshToken;
+            }
+        }
+
+        /// <summary>
         /// Returns the expiry date of the current active JWT token.
         /// </summary>
         public DateTime TokenExpiry
@@ -204,6 +352,30 @@ namespace Epcylon.Net.APIs.Account
             {
                 lock (_lock)
                     return _tokenExpiry;
+            }
+        }
+
+        /// <summary>
+        /// Whether the login is for trial purposes only.
+        /// </summary>
+        public bool Trial
+        {
+            get
+            {
+                lock (_lock)
+                    return _trial;
+            }
+        }
+
+        /// <summary>
+        /// Login message - success or error message as a result of the last login attempt.
+        /// </summary>
+        public string LoginMessage
+        {
+            get
+            {
+                lock (_lock)
+                    return _loginMessage;
             }
         }
 
@@ -229,19 +401,20 @@ namespace Epcylon.Net.APIs.Account
                 utcTicks = DateTime.UtcNow.Ticks;
 
                 if (utcTicks + TimeSpan.TicksPerHour >= TokenExpiry.Ticks)
-                {                    
+                {
                     // If within one hour of the expiry of the token, refresh the token.
                     string uri;
 
                     lock (_lock)
                     {
                         // Form the URI to retrieve the token for.
-                        uri = _restHost + "auth/refresh?UserName=" + Username +
-                                          "&RefreshToken=" + _refreshToken + "&format=json";
+                        uri = RestHost + "auth/refresh?UserName=" + Username +
+                                         "&RefreshToken=" + _refreshToken + "&format=json";
                     }
-                    
+
                     // Refresh the tokens (retrieve and handle tokens).
-                    GetTokens(Get(uri), out string token, out string refreshToken, out DateTime tokenExpiry);
+                    GetTokens(Get(uri), out string token, out string refreshToken,
+                              out DateTime tokenExpiry, out bool trial, out string errorMessage);
 
                     // Set the tokens and expiry.
                     lock (_lock)
@@ -249,12 +422,16 @@ namespace Epcylon.Net.APIs.Account
                         _token = token;
                         _refreshToken = refreshToken;
                         _tokenExpiry = tokenExpiry;
+                        _trial = trial;
+                        _loginMessage = errorMessage;
                     }
                 }
             }
             catch (Exception ex)
             {
                 Trace.TraceError(_moduleID + ":Tmr - " + ex.Message);
+                lock (_lock)
+                    _loginMessage = ex.Message;
             }
         }
 
@@ -284,10 +461,11 @@ namespace Epcylon.Net.APIs.Account
         /// <param name="uri">The URI to get from (including paramters).</param>
         /// <returns>The string retrieved from the REST endpoint.</returns>
         private string Get(string uri)
-        {            
+        {
             try
-            {                
-                return _httpClient.GetStringAsync(uri).Result;
+            {
+                HttpResponseMessage response = _httpClient.GetAsync(uri).Result;
+                return response.Content.ReadAsStringAsync().Result;
             }
             catch (Exception ex)
             {
@@ -301,20 +479,44 @@ namespace Epcylon.Net.APIs.Account
         /// Gets the JWT bearer and refresh tokens from the JSON response message supplied.
         /// </summary>
         /// <param name="jsonResponse">The message to retrieve the tokens from.</param>
-        private static void GetTokens(string jsonResponse, out string token, out string refreshToken, out DateTime tokenExpiry)
+        private static void GetTokens(string jsonResponse, out string token, out string refreshToken,
+                                      out DateTime tokenExpiry, out bool trial, out string message)
         {
+            token = string.Empty;
+            refreshToken = string.Empty;
+            tokenExpiry = default;
+            trial = false;
+
             try
             {
                 // Get the token and refresh token from the result.
-                token = GetJSONField(jsonResponse, "BearerToken");
-                refreshToken = GetJSONField(jsonResponse, "RefreshToken");
-                tokenExpiry = GetExpiry(token);
+                if (jsonResponse.Contains("BearerToken"))
+                {
+                    token = GetJSONField(jsonResponse, "BearerToken");
+                    refreshToken = GetJSONField(jsonResponse, "RefreshToken");
+                    message = GetJSONField(jsonResponse, "Message");
+                    tokenExpiry = GetExpiry(token);
+                }
+                else if (jsonResponse.Contains("jwt"))
+                {
+                    token = GetJSONField(jsonResponse, "jwt");
+                    refreshToken = GetJSONField(jsonResponse, "jwtr");
+                    tokenExpiry = GetExpiry(token);
+                    bool.TryParse(GetJSONField(jsonResponse, "trial"), out trial);
+                    message = GetJSONField(jsonResponse, "message");
+                }
+                else if (jsonResponse.Contains("Message"))
+                {
+                    message = GetJSONField(jsonResponse, "Message");
+                }
+                else
+                {
+                    message = "Error during login.";
+                }
             }
             catch (Exception ex)
             {
-                token = string.Empty;
-                refreshToken = string.Empty;
-                tokenExpiry = default;
+                message = ex.Message;
                 Trace.TraceError(_moduleID + ":UdTkns - " + ex.Message);
             }
         }
@@ -328,11 +530,15 @@ namespace Epcylon.Net.APIs.Account
         {
             try
             {
+                // If no token, just return default.
+                if (string.IsNullOrEmpty(token))
+                    return default;
+
                 // Calculate the token expiry.
                 if (long.TryParse(GetJSONField(GetJWTPayload(token), "exp"), out long expiry))
                     return _epoch.AddSeconds(expiry);
                 else
-                    return DateTime.UtcNow.AddHours(12); 
+                    return DateTime.UtcNow.AddHours(12);
             }
             catch (Exception ex)
             {
@@ -347,9 +553,23 @@ namespace Epcylon.Net.APIs.Account
         /// <param name="source">The source string to retrieve the field from.</param>
         /// <param name="field">The name of the field to retrieve.</param>
         /// <returns>The field value associated with the field name.</returns>
-        private static string GetJSONField(string source, string field) =>
-            source.Substring(0, source.Length - 1).Split(new string[] { "\"" + field + "\":" },
+        private static string GetJSONField(string source, string field)
+        {
+            string key = "\"" + field + "\":";
+            string result;
+
+            if (!source.Contains(key))
+                return string.Empty;
+
+            result = source.Substring(0, source.Length - 1).Split(new string[] { key },
                 StringSplitOptions.None)[1].Replace("\"", "").Split(new char[] { ',' })[0];
+
+            if (result == "null")
+                return string.Empty;
+
+            return result;
+        }
+
 
         /// <summary>
         /// Pads a base-64 string, as necessary to decode.
@@ -364,9 +584,19 @@ namespace Epcylon.Net.APIs.Account
         /// </summary>
         /// <param name="jwtToken">The token to retrieve the payload from.</param>
         /// <returns>The payload of the JWT string as a JSON string.</returns>
-        private static string GetJWTPayload(string jwtToken) =>
-            System.Text.Encoding.UTF8.GetString(
-                Convert.FromBase64String(PadBase64String(jwtToken.Split(new char[] { '.' })[1])));
+        private static string GetJWTPayload(string jwtToken)
+        {
+            try
+            {
+                return System.Text.Encoding.UTF8.GetString(
+                    Convert.FromBase64String(PadBase64String(jwtToken.Split(new char[] { '.' })[1])));
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError(_moduleID + ":GJWTP - " + ex.Message);
+                return string.Empty;
+            }
+        }
 
         #endregion
     }
