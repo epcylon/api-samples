@@ -10,17 +10,21 @@
     public enum DataStream : int
     {
         /// <summary>
+        /// Invalid data stream (will use default).
+        /// </summary>
+        Invalid = -1,
+        /// <summary>
         /// Data received is realtime data.
         /// </summary>
-        Realtime,
+        Realtime = 0,
         /// <summary>
         /// Data received is delayed data (generally 10 or 15 min).
         /// </summary>
-        Delayed,
+        Delayed = 1,
         /// <summary>
         /// Data received is simulated demo data (24/7).
         /// </summary>
-        Demo,
+        Demo = 2,
     }
 
     /// <summary>
