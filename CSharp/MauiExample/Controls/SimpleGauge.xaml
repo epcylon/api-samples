@@ -11,13 +11,13 @@
         </Grid.RowDefinitions>
         <Rectangle Grid.Row="1" Grid.Column="1" Fill="White" />
         <Rectangle Grid.Row="3" Grid.Column="1" Fill="White" />
-        <Grid GridLayout.Row="1" GridLayout.RowSpan="3" GridLayout.Column="1">
+        <Grid Grid.Row="1" Grid.RowSpan="3" Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition x:Name="topRow" Height="1*" />
                 <RowDefinition Height="8" />
                 <RowDefinition x:Name="bottomRow" Height="1*" />
             </Grid.RowDefinitions>
-            <Rectangle GridLayout.Row="1" Fill="Black" />
+            <Rectangle Grid.Row="1" Fill="Black" />
         </Grid>
     </Grid>
 </ContentView>

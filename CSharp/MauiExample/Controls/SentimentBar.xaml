@@ -12,6 +12,6 @@
         <RowDefinition x:Name="barRow" Height="0*" />
         <RowDefinition x:Name="bottomRow" Height="1*" />
     </Grid.RowDefinitions>
-    <RoundRectangle x:Name="rBar" GridLayout.Row="1" GridLayout.Column="1" StrokeThickness="0"
+    <RoundRectangle x:Name="rBar" Grid.Row="1" Grid.Column="1" StrokeThickness="0"
                     CornerRadius="{Binding Path=Width, Source={RelativeSource Self}}" Fill="Purple" />
 </Grid>

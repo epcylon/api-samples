@@ -9,7 +9,7 @@ namespace BridgeRock.MauiExample
 	{
 		private APIClient _client;
 		private TopSymbolsEventArgs _topSymbols;
-		private string _symbol = "NQ H2";
+		private string _symbol = "NQ U2";
 		private readonly string _strategyId = "Crb9.0";		
 
 		private APIClient Client

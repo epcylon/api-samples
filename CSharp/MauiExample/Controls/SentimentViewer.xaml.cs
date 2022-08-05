@@ -60,7 +60,7 @@ namespace BridgeRock.MauiExample.Controls
             base.OnClear();
         }
 
-        protected override Size ArrangeOverride(Rectangle bounds)
+        protected override Size ArrangeOverride(Rect bounds)
         {
             if (bounds.Width > 0 && bounds.Width != _lastWidth)
             {
@@ -73,7 +73,7 @@ namespace BridgeRock.MauiExample.Controls
         /// <summary>
         /// Set up the spectrum as necessary.
         /// </summary>
-        private void SetupSpectrum(Rectangle bounds)
+        private void SetupSpectrum(Rect bounds)
         {
             int effectiveBars;
 
@@ -151,7 +151,7 @@ namespace BridgeRock.MauiExample.Controls
 
             try
             {
-                if (sentiment is null)
+                if (sentiment?.Lengths is null)
                 {
                     // If no sentiment values, clear the spectrum and return.
                     ClearSpectrum();

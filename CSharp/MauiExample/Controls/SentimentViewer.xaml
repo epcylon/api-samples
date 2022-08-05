@@ -5,32 +5,32 @@
             RowDefinitions="100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,95*,
                             20*,95*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*">
 
-    <RoundRectangle GridLayout.Row="1" Fill="#FFA0A0A0" StrokeThickness="0" />
-    <RoundRectangle GridLayout.Row="3" Fill="#FFA0A0A0" StrokeThickness="0" />
-    <RoundRectangle GridLayout.Row="5" Fill="#FFA0A0A0" StrokeThickness="0" />
-    <RoundRectangle GridLayout.Row="7" Fill="#FFA0A0A0" StrokeThickness="0" />
-    <RoundRectangle GridLayout.Row="9" Fill="#FFA0A0A0" StrokeThickness="0" />
-    <RoundRectangle GridLayout.Row="11" Fill="#FFA0A0A0" StrokeThickness="0" />
-    <RoundRectangle GridLayout.Row="13" Fill="#FFA0A0A0" StrokeThickness="0" />
-    <RoundRectangle GridLayout.Row="15" Fill="#FFA0A0A0" StrokeThickness="0" />
-    <RoundRectangle GridLayout.Row="17" Fill="#FFA0A0A0" StrokeThickness="0" />
+    <RoundRectangle Grid.Row="1" Fill="#FFA0A0A0" StrokeThickness="0" />
+    <RoundRectangle Grid.Row="3" Fill="#FFA0A0A0" StrokeThickness="0" />
+    <RoundRectangle Grid.Row="5" Fill="#FFA0A0A0" StrokeThickness="0" />
+    <RoundRectangle Grid.Row="7" Fill="#FFA0A0A0" StrokeThickness="0" />
+    <RoundRectangle Grid.Row="9" Fill="#FFA0A0A0" StrokeThickness="0" />
+    <RoundRectangle Grid.Row="11" Fill="#FFA0A0A0" StrokeThickness="0" />
+    <RoundRectangle Grid.Row="13" Fill="#FFA0A0A0" StrokeThickness="0" />
+    <RoundRectangle Grid.Row="15" Fill="#FFA0A0A0" StrokeThickness="0" />
+    <RoundRectangle Grid.Row="17" Fill="#FFA0A0A0" StrokeThickness="0" />
 
-    <RoundRectangle GridLayout.Row="21" Fill="#FFA0A0A0" StrokeThickness="0" />
-    <RoundRectangle GridLayout.Row="23" Fill="#FFA0A0A0" StrokeThickness="0" />
-    <RoundRectangle GridLayout.Row="25" Fill="#FFA0A0A0" StrokeThickness="0" />
-    <RoundRectangle GridLayout.Row="27" Fill="#FFA0A0A0" StrokeThickness="0" />
-    <RoundRectangle GridLayout.Row="29" Fill="#FFA0A0A0" StrokeThickness="0" />
-    <RoundRectangle GridLayout.Row="31" Fill="#FFA0A0A0" StrokeThickness="0" />
-    <RoundRectangle GridLayout.Row="33" Fill="#FFA0A0A0" StrokeThickness="0" />
-    <RoundRectangle GridLayout.Row="35" Fill="#FFA0A0A0" StrokeThickness="0" />
-    <RoundRectangle GridLayout.Row="37" Fill="#FFA0A0A0" StrokeThickness="0" />
+    <RoundRectangle Grid.Row="21" Fill="#FFA0A0A0" StrokeThickness="0" />
+    <RoundRectangle Grid.Row="23" Fill="#FFA0A0A0" StrokeThickness="0" />
+    <RoundRectangle Grid.Row="25" Fill="#FFA0A0A0" StrokeThickness="0" />
+    <RoundRectangle Grid.Row="27" Fill="#FFA0A0A0" StrokeThickness="0" />
+    <RoundRectangle Grid.Row="29" Fill="#FFA0A0A0" StrokeThickness="0" />
+    <RoundRectangle Grid.Row="31" Fill="#FFA0A0A0" StrokeThickness="0" />
+    <RoundRectangle Grid.Row="33" Fill="#FFA0A0A0" StrokeThickness="0" />
+    <RoundRectangle Grid.Row="35" Fill="#FFA0A0A0" StrokeThickness="0" />
+    <RoundRectangle Grid.Row="37" Fill="#FFA0A0A0" StrokeThickness="0" />
 
-    <HorizontalStackLayout x:Name="sBars" GridLayout.RowSpan="39" 
+    <HorizontalStackLayout x:Name="sBars" Grid.RowSpan="39" 
                            Background="Transparent" HorizontalOptions="Center" />
 
-    <RoundRectangle GridLayout.Row="19" Fill="#FF404000" StrokeThickness="0" />
+    <RoundRectangle Grid.Row="19" Fill="#FF404000" StrokeThickness="0" />
 
-    <Grid GridLayout.RowSpan="39">
+    <Grid Grid.RowSpan="39">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" />
             <RowDefinition Height="31*" />
@@ -42,9 +42,9 @@
             <ColumnDefinition Width="15*" />
         </Grid.ColumnDefinitions>
         
-        <Ellipse x:Name="peakTop" GridLayout.Row="0" GridLayout.Column="1" 
+        <Ellipse x:Name="peakTop" Grid.Row="0" Grid.Column="1" 
                  Fill="Red" Stroke="#FF1A1A1A" IsVisible="false" />
-        <Ellipse x:Name="peakBottom" GridLayout.Row="2" GridLayout.Column="1" 
+        <Ellipse x:Name="peakBottom" Grid.Row="2" Grid.Column="1" 
                  Fill="Blue" Stroke="#FF1A1A1A" IsVisible="false" />
     </Grid>
 </Grid>
