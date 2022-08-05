@@ -18,7 +18,7 @@ namespace QuantGate.API.Signals.Subscriptions
         protected override EquilibriumEventArgs HandleUpdate(EquilibriumUpdate update, object processed)
         {
             return new EquilibriumEventArgs(
-                Symbol,
+                Symbol, Stream,
                 ProtoTimeEncoder.TimestampSecondsToDate(update.Timestamp), 
                 Compression,
                 ProtoPriceEncoder.DecodePrice(update.EquilibriumPrice),
@@ -28,12 +28,11 @@ namespace QuantGate.API.Signals.Subscriptions
                 update.Low / 1000.0,
                 update.Projected / 1000.0,
                 update.Bias / 1000.0,
-                update.IsDirty, 
-                Reference);
+                update.IsDirty);
         }
 
         protected override EquilibriumEventArgs WrapError(SubscriptionError error)
-            => new EquilibriumEventArgs(Symbol, DateTime.UtcNow, Compression, 
-                                        0, 0, 0, 0, 0, 0, 0, true, Reference, error);
+            => new EquilibriumEventArgs(Symbol, Stream, DateTime.UtcNow, Compression, 
+                                        0, 0, 0, 0, 0, 0, 0, true, error);
     }
 }

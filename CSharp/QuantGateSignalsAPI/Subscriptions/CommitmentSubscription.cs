@@ -19,14 +19,13 @@ namespace QuantGate.API.Signals.Subscriptions
         protected override CommitmentEventArgs HandleUpdate(SingleValueUpdate update, object processed)
         {
             return new CommitmentEventArgs(
-                Symbol,
+                Symbol, Stream,
                 ProtoTimeEncoder.TimestampSecondsToDate(update.Timestamp),
                 update.Value / 1000.0,
-                update.IsDirty,
-                Reference);
+                update.IsDirty);
         }
 
         protected override CommitmentEventArgs WrapError(SubscriptionError error) =>
-            new CommitmentEventArgs(Symbol, DateTime.UtcNow, 0, true, Reference, error);
+            new CommitmentEventArgs(Symbol, Stream, DateTime.UtcNow, 0, true, error);
     }
 }

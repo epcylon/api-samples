@@ -24,6 +24,10 @@ namespace QuantGate.API.Signals.Utilities
         /// </summary>
         Definition = 0x000000F000,
         /// <summary>
+        /// Requesting a quote stream.
+        /// </summary>
+        Quote = 0x000F000000,
+        /// <summary>
         /// Requesting a strategy stream.
         /// </summary>
         Strategy = 0xF000000000,
@@ -184,6 +188,7 @@ namespace QuantGate.API.Signals.Utilities
                 ["none"] = SubscriptionType.None,
                 ["gauge"] = SubscriptionType.Gauge,
                 ["defn"] = SubscriptionType.Definition,
+                ["quote"] = SubscriptionType.Quote,
                 ["strategy"] = SubscriptionType.Strategy,
             };
 
@@ -239,7 +244,8 @@ namespace QuantGate.API.Signals.Utilities
                 if (!_subscriptionTypes.TryGetValue(fields[0], out SubscriptionType))
                     SubscriptionType = SubscriptionType.None;
 
-                if ((fields.Length >= 2) && (SubscriptionType != SubscriptionType.Strategy))
+                if ((fields.Length >= 2) && (SubscriptionType != SubscriptionType.Quote) &&
+                    (SubscriptionType != SubscriptionType.Strategy))
                 {
                     // If there is a path, 
                     if (!_subscriptionPaths.TryGetValue(fields[1], out SubscriptionPath))
@@ -261,6 +267,12 @@ namespace QuantGate.API.Signals.Utilities
                         if (fields.Length > 4)
                             Compression = fields[4];
 
+                        break;
+
+                    case SubscriptionType.Quote:
+                        // For a quote subscription, get the stream and symbol info.
+                        StreamID = fields[1].ToLower();
+                        Symbol = fields[2];
                         break;
 
                     case SubscriptionType.Strategy:
@@ -371,6 +383,15 @@ namespace QuantGate.API.Signals.Utilities
                     }
                     break;
 
+                case SubscriptionType.Quote:
+                    // IF this is a quote, set up the values.
+                    builder.Append(_subscriptionStringsByType[SubscriptionType]);
+                    builder.Append(_separator);
+                    builder.Append(StreamID);
+                    builder.Append(_separator);
+                    builder.Append(Symbol);
+                    break;
+
                 case SubscriptionType.Strategy:
                     // If this is a strategy, set up the values.
                     builder.Append(_subscriptionStringsByType[SubscriptionType]);
@@ -451,24 +472,33 @@ namespace QuantGate.API.Signals.Utilities
             Destination = builder.ToString();
         }
 
-        public static ParsedDestination CreateGaugeDestination(SubscriptionPath subscriptionPath, string streamID, string symbol, string compression = "")
+        public static ParsedDestination CreatePricesDestination(string streamID, string symbol)
+        {
+            return new ParsedDestination(SubscriptionType.Quote, SubscriptionPath.None, streamID, symbol);
+        }
+
+        public static ParsedDestination CreateGaugeDestination(SubscriptionPath subscriptionPath, string streamID, 
+                                                               string symbol, string compression = "")
         {
             return new ParsedDestination(SubscriptionType.Gauge, subscriptionPath, streamID, symbol, compression);
         }
 
         public static ParsedDestination CreateStrategyDestination(string strategyID, string streamID, string symbol)
         {
-            return new ParsedDestination(SubscriptionType.Strategy, SubscriptionPath.None, streamID, symbol, strategyID: strategyID);
+            return new ParsedDestination(SubscriptionType.Strategy, SubscriptionPath.None, 
+                                         streamID, symbol, strategyID: strategyID);
         }
 
         public static ParsedDestination CreateSearchDestination(string streamID, string term = "", string broker = "")
         {
-            return new ParsedDestination(SubscriptionType.Definition, SubscriptionPath.DefnSymbolSearch, streamID, term: term, broker: broker);
+            return new ParsedDestination(SubscriptionType.Definition, SubscriptionPath.DefnSymbolSearch,
+                                         streamID, term: term, broker: broker);
         }
 
         public static ParsedDestination CreateTopSymbolsDestination(string broker, string securityType = "")
         {
-            return new ParsedDestination(SubscriptionType.Definition, SubscriptionPath.DefnTopSymbols, broker: broker, securityType: securityType);
+            return new ParsedDestination(SubscriptionType.Definition, SubscriptionPath.DefnTopSymbols, 
+                                         broker: broker, securityType: securityType);
         }
 
         public static ParsedDestination CreateInstrumentDestination(string streamID, string symbol)

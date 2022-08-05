@@ -17,16 +17,15 @@ namespace QuantGate.API.Signals.Subscriptions
         }
 
         protected override PerceptionEventArgs HandleUpdate(SingleValueUpdate update, object processed)
-        {
+        {            
             return new PerceptionEventArgs(
-                Symbol,
+                Symbol, Stream,
                 ProtoTimeEncoder.TimestampSecondsToDate(update.Timestamp),
                 update.Value / 1000.0,
-                update.IsDirty, 
-                Reference);
+                update.IsDirty);
         }
 
         protected override PerceptionEventArgs WrapError(SubscriptionError error) =>
-            new PerceptionEventArgs(Symbol, DateTime.UtcNow, 0, true, Reference, error);
+            new PerceptionEventArgs(Symbol, Stream, DateTime.UtcNow, 0, true, error);
     }
 }

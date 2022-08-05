@@ -18,6 +18,7 @@ namespace QuantGate.API.Signals.Subscriptions
 
         private readonly string _underlying;
         private readonly string _currency;
+        private readonly DataStream _stream;
 
         #region Enumerations
 
@@ -111,26 +112,27 @@ namespace QuantGate.API.Signals.Subscriptions
 
         public FuturesListSubscription(APIClient client, EventHandler<FuturesListEventArgs> handler,
                                        string streamID, string underlying, string currency,
-                                       bool receipt = false, uint throttleRate = 0) :
+                                       bool receipt = false, uint throttleRate = 0, object reference = null) :
            base(client, SingleDefinitionUpdate.Parser, handler,
                 new ParsedDestination(SubscriptionType.Definition, SubscriptionPath.DefnFutures,
                                       streamID, underlying, securityType: "FUT", currency: currency).Destination,
-                receipt, throttleRate)
+                receipt, throttleRate, reference)
         {
             _underlying = underlying;
             _currency = currency;
+            _stream = APIClient.ToStream(streamID);
         }
 
         protected override FuturesListEventArgs HandleUpdate(SingleDefinitionUpdate update, object processed)
         {
             try
             {
-                return new FuturesListEventArgs(_underlying, _currency, Decode(update.Definition));
+                return new FuturesListEventArgs(_underlying, _currency, _stream, Decode(update.Definition));
             }
             catch (Exception ex)
             {
                 Trace.TraceError(_moduleID + ":HUd - " + ex.Message);
-                return new FuturesListEventArgs(_underlying, _currency,
+                return new FuturesListEventArgs(_underlying, _currency, _stream,
                             new SubscriptionError("Internal error handling update.", ex.Message));
             }
             finally
@@ -312,6 +314,6 @@ namespace QuantGate.API.Signals.Subscriptions
             => (_exchangeMics.TryGetValue(exchange, out string mic)) ? mic : exchange;
 
         protected override FuturesListEventArgs WrapError(SubscriptionError error)
-            => new FuturesListEventArgs(_underlying, _currency, error);
+            => new FuturesListEventArgs(_underlying, _currency, _stream, error);
     }
 }

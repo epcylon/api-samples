@@ -18,15 +18,18 @@ namespace QuantGate.API.Signals.Subscriptions
         /// The symbol that was requested.
         /// </summary>
         private readonly string _symbol;
+        private readonly DataStream _stream;
 
         public InstrumentSubscription(APIClient client, EventHandler<InstrumentEventArgs> handler,
-                                      string streamID, string symbol, bool receipt = false, uint throttleRate = 0) :
+                                      string streamID, string symbol, bool receipt = false,
+                                      uint throttleRate = 0, object reference = null) :
             base(client, InstrumentUpdate.Parser, handler,
                  new ParsedDestination(SubscriptionType.Definition, SubscriptionPath.DefnInstrument,
                                        ParsedDestination.StreamIDForSymbol(streamID, symbol), symbol).Destination,
-                 receipt, throttleRate)
+                 receipt, throttleRate, reference)
         {
             _symbol = symbol;
+            _stream = APIClient.ToStream(streamID);
         }
 
         protected override InstrumentEventArgs WrapError(SubscriptionError error)

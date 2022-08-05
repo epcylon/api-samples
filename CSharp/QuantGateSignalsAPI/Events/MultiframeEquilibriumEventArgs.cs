@@ -6,7 +6,7 @@ namespace QuantGate.API.Signals.Events
     /// Holds Multiframe Equilibrium values. Will be updated by the stream with change notifications.
     /// Supply this object to the Unsubscribe method of the APIClient to stop the subscription.
     /// </summary>
-    public class MultiframeEquilibriumEventArgs : GaugeArgsBase
+    public class MultiframeEquilibriumEventArgs : GaugeEventArgs
     {
         /// <summary>
         /// 5 minute value.
@@ -78,11 +78,11 @@ namespace QuantGate.API.Signals.Events
         /// (values are missing) or stale (not the most recent data).
         /// </param>
         /// <param name="error">Holds error information, if a subscription error occured.</param>        
-        internal MultiframeEquilibriumEventArgs(string symbol, DateTime timestamp, double min5, double min10,
+        internal MultiframeEquilibriumEventArgs(string symbol, DataStream stream, DateTime timestamp, double min5, double min10,
                                                 double min15, double min30, double min45, double min60,
                                                 double min120, double min180, double min240, double day1,
-                                                bool isDirty, object reference = null, SubscriptionError error = null) :
-            base(symbol, timestamp, isDirty, reference, error)
+                                                bool isDirty, SubscriptionError error = null) :
+            base(symbol, stream, timestamp, isDirty, error)
         {
             Min5 = min5;
             Min10 = min10;

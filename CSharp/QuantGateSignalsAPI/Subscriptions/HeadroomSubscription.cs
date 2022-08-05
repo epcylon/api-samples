@@ -17,14 +17,13 @@ namespace QuantGate.API.Signals.Subscriptions
         protected override HeadroomEventArgs HandleUpdate(SingleValueUpdate update, object processed)
         {
             return new HeadroomEventArgs(
-                Symbol,
+                Symbol, Stream,
                 ProtoTimeEncoder.TimestampSecondsToDate(update.Timestamp),
                 update.Value / 1000.0,
-                update.IsDirty, 
-                Reference);
+                update.IsDirty);
         }
 
         protected override HeadroomEventArgs WrapError(SubscriptionError error) =>
-            new HeadroomEventArgs(Symbol, DateTime.UtcNow, 0, true, Reference, error);
+            new HeadroomEventArgs(Symbol, Stream, DateTime.UtcNow, 0, true, error);
     }
 }

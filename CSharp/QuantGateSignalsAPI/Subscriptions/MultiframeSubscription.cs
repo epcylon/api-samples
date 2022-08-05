@@ -18,7 +18,7 @@ namespace QuantGate.API.Signals.Subscriptions
         protected override MultiframeEquilibriumEventArgs HandleUpdate(MultiframeUpdate update, object processed)
         {
             return new MultiframeEquilibriumEventArgs(
-                Symbol,
+                Symbol, Stream,
                 ProtoTimeEncoder.TimestampSecondsToDate(update.Timestamp),
                 update.Min5 / 1000.0,
                 update.Min10 / 1000.0,
@@ -30,12 +30,10 @@ namespace QuantGate.API.Signals.Subscriptions
                 update.Min180 / 1000.0,
                 update.Min240 / 1000.0,
                 update.Day1 / 1000.0,
-                update.IsDirty,
-                Reference);
+                update.IsDirty);
         }
 
         protected override MultiframeEquilibriumEventArgs WrapError(SubscriptionError error) =>
-            new MultiframeEquilibriumEventArgs(Symbol, DateTime.UtcNow, 0, 0, 0, 0, 0, 
-                                               0, 0, 0, 0, 0, true, Reference, error);
+            new MultiframeEquilibriumEventArgs(Symbol, Stream, DateTime.UtcNow, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, true, error);
     }
 }

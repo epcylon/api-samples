@@ -13,10 +13,10 @@ namespace QuantGate.API.Signals.Subscriptions
         private bool _connected = false;
 
         public SearchSubscription(APIClient client, EventHandler<SearchResultsEventArgs> handler,
-                                  string streamID, uint throttleRate = 0) :
+                                  string streamID, uint throttleRate = 0, object reference = null) :
             base(client, SymbolSearchUpdate.Parser, handler,
                  new ParsedDestination(SubscriptionType.Definition, SubscriptionPath.DefnSymbolSearch, streamID).Destination,
-                 true, throttleRate)
+                 true, throttleRate, reference)
         {
             OnReceipt += HandleReceipt;
         }                

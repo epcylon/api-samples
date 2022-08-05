@@ -14,7 +14,7 @@ namespace QuantGate.API.Signals.Subscriptions
         private const string _moduleID = "SSub";
 
         public SentimentSubscription(APIClient client, EventHandler<SentimentEventArgs> handler,
-                                     string streamID, string symbol, string compression, 
+                                     string streamID, string symbol, string compression,
                                      bool receipt = false, uint throttleRate = 0, object reference = null) :
                base(client, SentimentUpdate.Parser, handler, SubscriptionPath.GaugeSentiment,
                     streamID, symbol, compression, receipt, throttleRate, reference)
@@ -26,11 +26,11 @@ namespace QuantGate.API.Signals.Subscriptions
             double[] lengths;
             double[] colors;
 
-            lengths = InterpolateTo55((int) update.Lengths.I, (int) update.Lengths.J, update.Lengths.X / 1000.0,
+            lengths = InterpolateTo55((int)update.Lengths.I, (int)update.Lengths.J, update.Lengths.X / 1000.0,
                                            update.Lengths.Y / 1000.0, update.Lengths.Z / 1000.0);
-            colors = InterpolateTo55((int) update.Colors.I, (int) update.Colors.J, update.Colors.X / 1000.0,
+            colors = InterpolateTo55((int)update.Colors.I, (int)update.Colors.J, update.Colors.X / 1000.0,
                                       update.Colors.Y / 1000.0, update.Colors.Z / 1000.0);
-            
+
             return Tuple.Create(lengths, colors);
         }
 
@@ -39,20 +39,23 @@ namespace QuantGate.API.Signals.Subscriptions
             Tuple<double[], double[]> converted = (Tuple<double[], double[]>)processed;
 
             return new SentimentEventArgs(
-                Symbol,
+                Symbol, Stream,
                 ProtoTimeEncoder.TimestampSecondsToDate(update.Timestamp),
                 Compression,
+                update.Lengths.Average / 1000.0,
+                (int)update.Lengths.I,
+                (int)update.Lengths.J,
                 converted.Item1,
+                update.Colors.Average / 1000.0,
+                (int)update.Colors.I,
+                (int)update.Colors.J,
                 converted.Item2,
-                update.Lengths.Average / 1000.0,
-                update.Lengths.Average / 1000.0,
-                update.IsDirty, 
-                Reference);
+                update.IsDirty);
         }
 
         protected override SentimentEventArgs WrapError(SubscriptionError error) =>
-            new SentimentEventArgs(Symbol, DateTime.UtcNow, Compression, 
-                                   null, null, 0, 0, true, Reference, error);
+            new SentimentEventArgs(Symbol, Stream, DateTime.UtcNow, Compression, 0, 0, 0,
+                                   null, 0, 0, 0, null, true, error);
 
         #region Height/Color Interpolation        
 

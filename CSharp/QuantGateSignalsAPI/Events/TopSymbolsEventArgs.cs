@@ -7,17 +7,12 @@ namespace QuantGate.API.Signals.Events
     /// Holds Top Symbol values. Will be updated by the stream with change notifications.
     /// Supply this object to the Unsubscribe method of the APIClient to stop the subscription.
     /// </summary>
-    public class TopSymbolsEventArgs : EventArgs
+    public class TopSymbolsEventArgs : SubscriptionEventArgs
     {
         /// <summary>
         /// Top symbol results.
         /// </summary>
         public IReadOnlyList<TopSymbol> Symbols { get; }
-        /// <summary>
-        /// Holds error information, if a subscription error occured.
-        /// </summary>
-        public SubscriptionError Error { get; }
-
         /// <summary>
         /// The broker to get the Top Symbols for. Must match a valid broker type string.
         /// </summary>
@@ -25,11 +20,7 @@ namespace QuantGate.API.Signals.Events
         /// <summary>
         /// The type of instrument to include in the results.
         /// </summary>
-        public InstrumentType InstrumentType { get; }
-        /// <summary>
-        /// Reference object tied to the initial request.
-        /// </summary>
-        public object Reference { get; }
+        public InstrumentType InstrumentType { get; }     
 
         /// <summary>
         /// Creates a new TopSymbolsEventArgs instance.
@@ -40,13 +31,11 @@ namespace QuantGate.API.Signals.Events
         /// <param name="symbols">Top symbol results.</param>
         /// <param name="error">Holds error information, if a subscription error occured.</param>
         public TopSymbolsEventArgs(string broker, InstrumentType instrumentType, List<TopSymbol> symbols, 
-                                   object reference = null, SubscriptionError error = null)
+                                   SubscriptionError error = null) : base(error)
         {
             Broker = broker;
             InstrumentType = instrumentType;
             Symbols = symbols;
-            Reference = reference;
-            Error = error;
         }
     }
 }

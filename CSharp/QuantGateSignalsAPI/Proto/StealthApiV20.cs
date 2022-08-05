@@ -22,85 +22,104 @@ namespace QuantGate.API.Signals.Proto.Stealth {
     static StealthApiV20Reflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChZzdGVhbHRoLWFwaS12Mi4wLnByb3RvEgdzdGVhbHRoIlkKD1NlbnRpbWVu",
-            "dFNwbGluZRIPCgdhdmVyYWdlGAEgASgREgkKAWkYAiABKA0SCQoBahgDIAEo",
-            "DRIJCgF4GAQgASgREgkKAXkYBSABKBESCQoBehgGIAEoESKLAQoPU2VudGlt",
-            "ZW50VXBkYXRlEhEKCXRpbWVzdGFtcBgBIAEoBBIpCgdsZW5ndGhzGAIgASgL",
-            "Mhguc3RlYWx0aC5TZW50aW1lbnRTcGxpbmUSKAoGY29sb3JzGAMgASgLMhgu",
-            "c3RlYWx0aC5TZW50aW1lbnRTcGxpbmUSEAoIaXNfZGlydHkYBCABKAgitQEK",
-            "EUVxdWlsaWJyaXVtVXBkYXRlEhEKCXRpbWVzdGFtcBgBIAEoBBIZChFlcXVp",
-            "bGlicml1bV9wcmljZRgCIAEoBBIQCghnYXBfc2l6ZRgDIAEoBBIMCgRoaWdo",
-            "GAQgASgREgsKA2xvdxgFIAEoERIRCglwcm9qZWN0ZWQYBiABKBESDAoEYmlh",
-            "cxgHIAEoERISCgpsYXN0X3ByaWNlGAggASgEEhAKCGlzX2RpcnR5GAkgASgI",
-            "ItgBChBNdWx0aWZyYW1lVXBkYXRlEhEKCXRpbWVzdGFtcBgBIAEoBBINCgVt",
-            "aW5fNRgCIAEoERIOCgZtaW5fMTAYAyABKBESDgoGbWluXzE1GAQgASgREg4K",
-            "Bm1pbl8zMBgFIAEoERIOCgZtaW5fNDUYBiABKBESDgoGbWluXzYwGAcgASgR",
-            "Eg8KB21pbl8xMjAYCCABKBESDwoHbWluXzE4MBgJIAEoERIPCgdtaW5fMjQw",
-            "GAogASgREg0KBWRheV8xGAsgASgREhAKCGlzX2RpcnR5GAwgASgIIr4BCg1U",
-            "cmlnZ2VyVXBkYXRlEhEKCXRpbWVzdGFtcBgBIAEoBBIMCgRiaWFzGAIgASgR",
-            "EhIKCnBlcmNlcHRpb24YAyABKBESEQoJc2VudGltZW50GAQgASgREhIKCmNv",
-            "bW1pdG1lbnQYBSABKBESGQoRZXF1aWxpYnJpdW1fcHJpY2UYBiABKAQSEAoI",
-            "Z2FwX3NpemUYByABKAQSEgoKbGFzdF9wcmljZRgIIAEoBBIQCghpc19kaXJ0",
-            "eRgJIAEoCCJHChFTaW5nbGVWYWx1ZVVwZGF0ZRIRCgl0aW1lc3RhbXAYASAB",
-            "KAQSDQoFdmFsdWUYAiABKBESEAoIaXNfZGlydHkYAyABKAgipwMKDlN0cmF0",
-            "ZWd5VXBkYXRlEhEKCXRpbWVzdGFtcBgBIAEoBBIWCg5lbnRyeV9wcm9ncmVz",
-            "cxgCIAEoERIVCg1leGl0X3Byb2dyZXNzGAMgASgREicKBnNpZ25hbBgEIAEo",
-            "DjIXLnN0ZWFsdGguU3RyYXRlZ3lTaWduYWwSGAoQcGVyY2VwdGlvbl9sZXZl",
-            "bBgFIAEoDRIvChFwZXJjZXB0aW9uX3NpZ25hbBgGIAEoDjIULnN0ZWFsdGgu",
-            "R2F1Z2VTaWduYWwSGAoQY29tbWl0bWVudF9sZXZlbBgHIAEoDRIvChFjb21t",
-            "aXRtZW50X3NpZ25hbBgIIAEoDjIULnN0ZWFsdGguR2F1Z2VTaWduYWwSLgoQ",
-            "c2VudGltZW50X3NpZ25hbBgJIAEoDjIULnN0ZWFsdGguR2F1Z2VTaWduYWwS",
-            "MAoSZXF1aWxpYnJpdW1fc2lnbmFsGAogASgOMhQuc3RlYWx0aC5HYXVnZVNp",
-            "Z25hbBIXCg9zZW50aW1lbnRfbGV2ZWwYCyABKA0SGQoRZXF1aWxpYnJpdW1f",
-            "bGV2ZWwYDCABKA0iRwoRU2luZ2xlUHJpY2VVcGRhdGUSEQoJdGltZXN0YW1w",
-            "GAEgASgEEg0KBXZhbHVlGAIgASgEEhAKCGlzX2RpcnR5GAMgASgIIrEBCglU",
-            "aWNrVmFsdWUSDQoFc3RhcnQYASABKAESDAoEdGljaxgCIAEoARITCgtkZW5v",
-            "bWluYXRvchgDIAEoDRIQCghkZWNpbWFscxgEIAEoERItCgZmb3JtYXQYBSAB",
-            "KA4yHS5zdGVhbHRoLlRpY2tWYWx1ZS5UaWNrRm9ybWF0IjEKClRpY2tGb3Jt",
-            "YXQSCwoHRGVjaW1hbBAAEgwKCEZyYWN0aW9uEAESCAoEVGljaxACIi8KDlRy",
-            "YWRpbmdTZXNzaW9uEg0KBWNsb3NlGAEgASgREg4KBmxlbmd0aBgCIAEoESLv",
-            "AwoQSW5zdHJ1bWVudFVwZGF0ZRIOCgZzeW1ib2wYASABKAkSEgoKdW5kZXJs",
-            "eWluZxgCIAEoCRIQCghjdXJyZW5jeRgDIAEoCRIQCghleGNoYW5nZRgEIAEo",
-            "CRIwCg9pbnN0cnVtZW50X3R5cGUYBSABKA4yFy5zdGVhbHRoLkluc3RydW1l",
-            "bnRUeXBlEicKC3B1dF9vcl9jYWxsGAYgASgOMhIuc3RlYWx0aC5QdXRPckNh",
-            "bGwSDgoGc3RyaWtlGAcgASgBEhMKC2V4cGlyeV9kYXRlGAggASgEEhIKCm11",
-            "bHRpcGxpZXIYCSABKAESFAoMZGlzcGxheV9uYW1lGAogASgJEhEKCXRpbWVf",
-            "em9uZRgLIAEoCRInCgt0aWNrX3ZhbHVlcxgMIAMoCzISLnN0ZWFsdGguVGlj",
-            "a1ZhbHVlEjEKEHRyYWRpbmdfc2Vzc2lvbnMYDSADKAsyFy5zdGVhbHRoLlRy",
-            "YWRpbmdTZXNzaW9uEkQKDmJyb2tlcl9zeW1ib2xzGA4gAygLMiwuc3RlYWx0",
-            "aC5JbnN0cnVtZW50VXBkYXRlLkJyb2tlclN5bWJvbHNFbnRyeRo0ChJCcm9r",
-            "ZXJTeW1ib2xzRW50cnkSCwoDa2V5GAEgASgJEg0KBXZhbHVlGAIgASgJOgI4",
-            "ASKkAQoSU3ltYm9sU2VhcmNoUmVzdWx0Eg4KBnN5bWJvbBgBIAEoCRISCgp1",
-            "bmRlcmx5aW5nGAIgASgJEhAKCGN1cnJlbmN5GAMgASgJEjAKD2luc3RydW1l",
-            "bnRfdHlwZRgEIAEoDjIXLnN0ZWFsdGguSW5zdHJ1bWVudFR5cGUSEAoIZXhj",
-            "aGFuZ2UYBSABKAkSFAoMZGlzcGxheV9uYW1lGAYgASgJIlcKElN5bWJvbFNl",
-            "YXJjaFVwZGF0ZRITCgtzZWFyY2hfdGVybRgBIAEoCRIsCgdyZXN1bHRzGAIg",
-            "AygLMhsuc3RlYWx0aC5TeW1ib2xTZWFyY2hSZXN1bHQitwMKDVRvcFN5bWJv",
-            "bEl0ZW0SEQoJdGltZXN0YW1wGAEgASgEEg4KBnN5bWJvbBgCIAEoCRISCgp1",
-            "bmRlcmx5aW5nGAMgASgJEhAKCGN1cnJlbmN5GAQgASgJEjAKD2luc3RydW1l",
-            "bnRfdHlwZRgFIAEoDjIXLnN0ZWFsdGguSW5zdHJ1bWVudFR5cGUSEAoIZXhj",
-            "aGFuZ2UYBiABKAkSFAoMZGlzcGxheV9uYW1lGAcgASgJEhYKDmVudHJ5X3By",
-            "b2dyZXNzGAggASgREicKBnNpZ25hbBgJIAEoDjIXLnN0ZWFsdGguU3RyYXRl",
-            "Z3lTaWduYWwSLwoRcGVyY2VwdGlvbl9zaWduYWwYCiABKA4yFC5zdGVhbHRo",
-            "LkdhdWdlU2lnbmFsEi8KEWNvbW1pdG1lbnRfc2lnbmFsGAsgASgOMhQuc3Rl",
-            "YWx0aC5HYXVnZVNpZ25hbBIuChBzZW50aW1lbnRfc2lnbmFsGAwgASgOMhQu",
-            "c3RlYWx0aC5HYXVnZVNpZ25hbBIwChJlcXVpbGlicml1bV9zaWduYWwYDSAB",
-            "KA4yFC5zdGVhbHRoLkdhdWdlU2lnbmFsIjsKEFRvcFN5bWJvbHNVcGRhdGUS",
-            "JwoHc3ltYm9scxgBIAMoCzIWLnN0ZWFsdGguVG9wU3ltYm9sSXRlbSIsChZT",
-            "aW5nbGVEZWZpbml0aW9uVXBkYXRlEhIKCmRlZmluaXRpb24YASABKAkqygEK",
-            "Dkluc3RydW1lbnRUeXBlEhAKDE5vSW5zdHJ1bWVudBAAEg8KC0NvbW1vblN0",
-            "b2NrEAESDwoLU3RvY2tPcHRpb24QAhIKCgZGdXR1cmUQAxIJCgVJbmRleBAE",
-            "EhEKDUZvcmV4Q29udHJhY3QQBRIQCgxGdXR1cmVPcHRpb24QBhIUChBGdXR1",
-            "cmVJbnN0cnVtZW50EAcSCQoFQ29tYm8QCBITCg9Db21ib0luc3RydW1lbnQQ",
-            "CRISCg5DcnlwdG9DdXJyZW5jeRAKKi0KCVB1dE9yQ2FsbBINCglOb1B1dENh",
-            "bGwQABIHCgNQdXQQARIICgRDYWxsEAIqOwoOU3RyYXRlZ3lTaWduYWwSCAoE",
-            "Tm9uZRAAEg4KCkxvbmdTaWduYWwQARIPCgtTaG9ydFNpZ25hbBACKkMKC0dh",
-            "dWdlU2lnbmFsEgsKB1Vua25vd24QABIJCgVTaG9ydBABEggKBEZsYXQQAhII",
-            "CgRMb25nEAMSCAoERHVhbBAEQiaqAiNRdWFudEdhdGUuQVBJLlNpZ25hbHMu",
-            "UHJvdG8uU3RlYWx0aGIGcHJvdG8z"));
+            "ChZzdGVhbHRoLWFwaS12Mi4wLnByb3RvEgdzdGVhbHRoIoEBCg5SZWFsdGlt",
+            "ZVVwZGF0ZRIRCglhc2tfcHJpY2UYASABKAQSEAoIYXNrX3NpemUYAiABKAQS",
+            "EQoJYmlkX3ByaWNlGAMgASgEEhAKCGJpZF9zaXplGAQgASgEEhIKCmxhc3Rf",
+            "cHJpY2UYBSABKAQSEQoJbGFzdF9zaXplGAYgASgEIrMBCg5TbmFwc2hvdFVw",
+            "ZGF0ZRISCgpvcGVuX3ByaWNlGAEgASgEEhIKCmhpZ2hfcHJpY2UYAiABKAQS",
+            "EQoJbG93X3ByaWNlGAMgASgEEhMKC2Nsb3NlX3ByaWNlGAQgASgEEhYKDnBy",
+            "ZXZpb3VzX2Nsb3NlGAUgASgEEg4KBnZvbHVtZRgGIAEoBBIUCgxoaWdoNTJf",
+            "cHJpY2UYByABKAQSEwoLbG93NTJfcHJpY2UYCCABKAQilgEKEFN0YXRpc3Rp",
+            "Y3NVcGRhdGUSDAoEYmV0YRgBIAEoAhILCgNlcHMYAiABKAISEAoIcGVfcmF0",
+            "aW8YAyABKAISGgoSc2hhcmVzX291dHN0YW5kaW5nGAQgASgEEh0KFWhpc3Rv",
+            "cmljYWxfdm9sYXRpbGl0eRgFIAEoAhIaChJpbXBsaWVkX3ZvbGF0aWxpdHkY",
+            "BiABKAIipQEKC1F1b3RlVXBkYXRlEhEKCXRpbWVzdGFtcBgBIAEoBBIpCghy",
+            "ZWFsdGltZRgCIAEoCzIXLnN0ZWFsdGguUmVhbHRpbWVVcGRhdGUSKQoIc25h",
+            "cHNob3QYAyABKAsyFy5zdGVhbHRoLlNuYXBzaG90VXBkYXRlEi0KCnN0YXRp",
+            "c3RpY3MYBCABKAsyGS5zdGVhbHRoLlN0YXRpc3RpY3NVcGRhdGUiWQoPU2Vu",
+            "dGltZW50U3BsaW5lEg8KB2F2ZXJhZ2UYASABKBESCQoBaRgCIAEoDRIJCgFq",
+            "GAMgASgNEgkKAXgYBCABKBESCQoBeRgFIAEoERIJCgF6GAYgASgRIosBCg9T",
+            "ZW50aW1lbnRVcGRhdGUSEQoJdGltZXN0YW1wGAEgASgEEikKB2xlbmd0aHMY",
+            "AiABKAsyGC5zdGVhbHRoLlNlbnRpbWVudFNwbGluZRIoCgZjb2xvcnMYAyAB",
+            "KAsyGC5zdGVhbHRoLlNlbnRpbWVudFNwbGluZRIQCghpc19kaXJ0eRgEIAEo",
+            "CCK1AQoRRXF1aWxpYnJpdW1VcGRhdGUSEQoJdGltZXN0YW1wGAEgASgEEhkK",
+            "EWVxdWlsaWJyaXVtX3ByaWNlGAIgASgEEhAKCGdhcF9zaXplGAMgASgEEgwK",
+            "BGhpZ2gYBCABKBESCwoDbG93GAUgASgREhEKCXByb2plY3RlZBgGIAEoERIM",
+            "CgRiaWFzGAcgASgREhIKCmxhc3RfcHJpY2UYCCABKAQSEAoIaXNfZGlydHkY",
+            "CSABKAgi2AEKEE11bHRpZnJhbWVVcGRhdGUSEQoJdGltZXN0YW1wGAEgASgE",
+            "Eg0KBW1pbl81GAIgASgREg4KBm1pbl8xMBgDIAEoERIOCgZtaW5fMTUYBCAB",
+            "KBESDgoGbWluXzMwGAUgASgREg4KBm1pbl80NRgGIAEoERIOCgZtaW5fNjAY",
+            "ByABKBESDwoHbWluXzEyMBgIIAEoERIPCgdtaW5fMTgwGAkgASgREg8KB21p",
+            "bl8yNDAYCiABKBESDQoFZGF5XzEYCyABKBESEAoIaXNfZGlydHkYDCABKAgi",
+            "vgEKDVRyaWdnZXJVcGRhdGUSEQoJdGltZXN0YW1wGAEgASgEEgwKBGJpYXMY",
+            "AiABKBESEgoKcGVyY2VwdGlvbhgDIAEoERIRCglzZW50aW1lbnQYBCABKBES",
+            "EgoKY29tbWl0bWVudBgFIAEoERIZChFlcXVpbGlicml1bV9wcmljZRgGIAEo",
+            "BBIQCghnYXBfc2l6ZRgHIAEoBBISCgpsYXN0X3ByaWNlGAggASgEEhAKCGlz",
+            "X2RpcnR5GAkgASgIIkcKEVNpbmdsZVZhbHVlVXBkYXRlEhEKCXRpbWVzdGFt",
+            "cBgBIAEoBBINCgV2YWx1ZRgCIAEoERIQCghpc19kaXJ0eRgDIAEoCCKnAwoO",
+            "U3RyYXRlZ3lVcGRhdGUSEQoJdGltZXN0YW1wGAEgASgEEhYKDmVudHJ5X3By",
+            "b2dyZXNzGAIgASgREhUKDWV4aXRfcHJvZ3Jlc3MYAyABKBESJwoGc2lnbmFs",
+            "GAQgASgOMhcuc3RlYWx0aC5TdHJhdGVneVNpZ25hbBIYChBwZXJjZXB0aW9u",
+            "X2xldmVsGAUgASgNEi8KEXBlcmNlcHRpb25fc2lnbmFsGAYgASgOMhQuc3Rl",
+            "YWx0aC5HYXVnZVNpZ25hbBIYChBjb21taXRtZW50X2xldmVsGAcgASgNEi8K",
+            "EWNvbW1pdG1lbnRfc2lnbmFsGAggASgOMhQuc3RlYWx0aC5HYXVnZVNpZ25h",
+            "bBIuChBzZW50aW1lbnRfc2lnbmFsGAkgASgOMhQuc3RlYWx0aC5HYXVnZVNp",
+            "Z25hbBIwChJlcXVpbGlicml1bV9zaWduYWwYCiABKA4yFC5zdGVhbHRoLkdh",
+            "dWdlU2lnbmFsEhcKD3NlbnRpbWVudF9sZXZlbBgLIAEoDRIZChFlcXVpbGli",
+            "cml1bV9sZXZlbBgMIAEoDSJHChFTaW5nbGVQcmljZVVwZGF0ZRIRCgl0aW1l",
+            "c3RhbXAYASABKAQSDQoFdmFsdWUYAiABKAQSEAoIaXNfZGlydHkYAyABKAgi",
+            "sQEKCVRpY2tWYWx1ZRINCgVzdGFydBgBIAEoARIMCgR0aWNrGAIgASgBEhMK",
+            "C2Rlbm9taW5hdG9yGAMgASgNEhAKCGRlY2ltYWxzGAQgASgREi0KBmZvcm1h",
+            "dBgFIAEoDjIdLnN0ZWFsdGguVGlja1ZhbHVlLlRpY2tGb3JtYXQiMQoKVGlj",
+            "a0Zvcm1hdBILCgdEZWNpbWFsEAASDAoIRnJhY3Rpb24QARIICgRUaWNrEAIi",
+            "LwoOVHJhZGluZ1Nlc3Npb24SDQoFY2xvc2UYASABKBESDgoGbGVuZ3RoGAIg",
+            "ASgRIu8DChBJbnN0cnVtZW50VXBkYXRlEg4KBnN5bWJvbBgBIAEoCRISCgp1",
+            "bmRlcmx5aW5nGAIgASgJEhAKCGN1cnJlbmN5GAMgASgJEhAKCGV4Y2hhbmdl",
+            "GAQgASgJEjAKD2luc3RydW1lbnRfdHlwZRgFIAEoDjIXLnN0ZWFsdGguSW5z",
+            "dHJ1bWVudFR5cGUSJwoLcHV0X29yX2NhbGwYBiABKA4yEi5zdGVhbHRoLlB1",
+            "dE9yQ2FsbBIOCgZzdHJpa2UYByABKAESEwoLZXhwaXJ5X2RhdGUYCCABKAQS",
+            "EgoKbXVsdGlwbGllchgJIAEoARIUCgxkaXNwbGF5X25hbWUYCiABKAkSEQoJ",
+            "dGltZV96b25lGAsgASgJEicKC3RpY2tfdmFsdWVzGAwgAygLMhIuc3RlYWx0",
+            "aC5UaWNrVmFsdWUSMQoQdHJhZGluZ19zZXNzaW9ucxgNIAMoCzIXLnN0ZWFs",
+            "dGguVHJhZGluZ1Nlc3Npb24SRAoOYnJva2VyX3N5bWJvbHMYDiADKAsyLC5z",
+            "dGVhbHRoLkluc3RydW1lbnRVcGRhdGUuQnJva2VyU3ltYm9sc0VudHJ5GjQK",
+            "EkJyb2tlclN5bWJvbHNFbnRyeRILCgNrZXkYASABKAkSDQoFdmFsdWUYAiAB",
+            "KAk6AjgBIqQBChJTeW1ib2xTZWFyY2hSZXN1bHQSDgoGc3ltYm9sGAEgASgJ",
+            "EhIKCnVuZGVybHlpbmcYAiABKAkSEAoIY3VycmVuY3kYAyABKAkSMAoPaW5z",
+            "dHJ1bWVudF90eXBlGAQgASgOMhcuc3RlYWx0aC5JbnN0cnVtZW50VHlwZRIQ",
+            "CghleGNoYW5nZRgFIAEoCRIUCgxkaXNwbGF5X25hbWUYBiABKAkiVwoSU3lt",
+            "Ym9sU2VhcmNoVXBkYXRlEhMKC3NlYXJjaF90ZXJtGAEgASgJEiwKB3Jlc3Vs",
+            "dHMYAiADKAsyGy5zdGVhbHRoLlN5bWJvbFNlYXJjaFJlc3VsdCK3AwoNVG9w",
+            "U3ltYm9sSXRlbRIRCgl0aW1lc3RhbXAYASABKAQSDgoGc3ltYm9sGAIgASgJ",
+            "EhIKCnVuZGVybHlpbmcYAyABKAkSEAoIY3VycmVuY3kYBCABKAkSMAoPaW5z",
+            "dHJ1bWVudF90eXBlGAUgASgOMhcuc3RlYWx0aC5JbnN0cnVtZW50VHlwZRIQ",
+            "CghleGNoYW5nZRgGIAEoCRIUCgxkaXNwbGF5X25hbWUYByABKAkSFgoOZW50",
+            "cnlfcHJvZ3Jlc3MYCCABKBESJwoGc2lnbmFsGAkgASgOMhcuc3RlYWx0aC5T",
+            "dHJhdGVneVNpZ25hbBIvChFwZXJjZXB0aW9uX3NpZ25hbBgKIAEoDjIULnN0",
+            "ZWFsdGguR2F1Z2VTaWduYWwSLwoRY29tbWl0bWVudF9zaWduYWwYCyABKA4y",
+            "FC5zdGVhbHRoLkdhdWdlU2lnbmFsEi4KEHNlbnRpbWVudF9zaWduYWwYDCAB",
+            "KA4yFC5zdGVhbHRoLkdhdWdlU2lnbmFsEjAKEmVxdWlsaWJyaXVtX3NpZ25h",
+            "bBgNIAEoDjIULnN0ZWFsdGguR2F1Z2VTaWduYWwiOwoQVG9wU3ltYm9sc1Vw",
+            "ZGF0ZRInCgdzeW1ib2xzGAEgAygLMhYuc3RlYWx0aC5Ub3BTeW1ib2xJdGVt",
+            "IiwKFlNpbmdsZURlZmluaXRpb25VcGRhdGUSEgoKZGVmaW5pdGlvbhgBIAEo",
+            "CSrfAQoOSW5zdHJ1bWVudFR5cGUSEAoMTm9JbnN0cnVtZW50EAASDwoLQ29t",
+            "bW9uU3RvY2sQARIPCgtTdG9ja09wdGlvbhACEgoKBkZ1dHVyZRADEgkKBUlu",
+            "ZGV4EAQSEQoNRm9yZXhDb250cmFjdBAFEhAKDEZ1dHVyZU9wdGlvbhAGEhQK",
+            "EEZ1dHVyZUluc3RydW1lbnQQBxIJCgVDb21ibxAIEhMKD0NvbWJvSW5zdHJ1",
+            "bWVudBAJEhIKDkNyeXB0b0N1cnJlbmN5EAoSEwoPUGVycGV0dWFsQ3J5cHRv",
+            "EAsqLQoJUHV0T3JDYWxsEg0KCU5vUHV0Q2FsbBAAEgcKA1B1dBABEggKBENh",
+            "bGwQAio7Cg5TdHJhdGVneVNpZ25hbBIICgROb25lEAASDgoKTG9uZ1NpZ25h",
+            "bBABEg8KC1Nob3J0U2lnbmFsEAIqQwoLR2F1Z2VTaWduYWwSCwoHVW5rbm93",
+            "bhAAEgkKBVNob3J0EAESCAoERmxhdBACEggKBExvbmcQAxIICgREdWFsEARC",
+            "JqoCI1F1YW50R2F0ZS5BUEkuU2lnbmFscy5Qcm90by5TdGVhbHRoYgZwcm90",
+            "bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::QuantGate.API.Signals.Proto.Stealth.InstrumentType), typeof(global::QuantGate.API.Signals.Proto.Stealth.PutOrCall), typeof(global::QuantGate.API.Signals.Proto.Stealth.StrategySignal), typeof(global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal), }, new pbr::GeneratedClrTypeInfo[] {
+            new pbr::GeneratedClrTypeInfo(typeof(global::QuantGate.API.Signals.Proto.Stealth.RealtimeUpdate), global::QuantGate.API.Signals.Proto.Stealth.RealtimeUpdate.Parser, new[]{ "AskPrice", "AskSize", "BidPrice", "BidSize", "LastPrice", "LastSize" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::QuantGate.API.Signals.Proto.Stealth.SnapshotUpdate), global::QuantGate.API.Signals.Proto.Stealth.SnapshotUpdate.Parser, new[]{ "OpenPrice", "HighPrice", "LowPrice", "ClosePrice", "PreviousClose", "Volume", "High52Price", "Low52Price" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::QuantGate.API.Signals.Proto.Stealth.StatisticsUpdate), global::QuantGate.API.Signals.Proto.Stealth.StatisticsUpdate.Parser, new[]{ "Beta", "Eps", "PeRatio", "SharesOutstanding", "HistoricalVolatility", "ImpliedVolatility" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::QuantGate.API.Signals.Proto.Stealth.QuoteUpdate), global::QuantGate.API.Signals.Proto.Stealth.QuoteUpdate.Parser, new[]{ "Timestamp", "Realtime", "Snapshot", "Statistics" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::QuantGate.API.Signals.Proto.Stealth.SentimentSpline), global::QuantGate.API.Signals.Proto.Stealth.SentimentSpline.Parser, new[]{ "Average", "I", "J", "X", "Y", "Z" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::QuantGate.API.Signals.Proto.Stealth.SentimentUpdate), global::QuantGate.API.Signals.Proto.Stealth.SentimentUpdate.Parser, new[]{ "Timestamp", "Lengths", "Colors", "IsDirty" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::QuantGate.API.Signals.Proto.Stealth.EquilibriumUpdate), global::QuantGate.API.Signals.Proto.Stealth.EquilibriumUpdate.Parser, new[]{ "Timestamp", "EquilibriumPrice", "GapSize", "High", "Low", "Projected", "Bias", "LastPrice", "IsDirty" }, null, null, null),
@@ -171,6 +190,10 @@ namespace QuantGate.API.Signals.Proto.Stealth {
     /// Crypto Currency (Bitcoin, etc.)
     /// </summary>
     [pbr::OriginalName("CryptoCurrency")] CryptoCurrency = 10,
+    /// <summary>
+    /// Perpetual Crypto Currency.
+    /// </summary>
+    [pbr::OriginalName("PerpetualCrypto")] PerpetualCrypto = 11,
   }
 
   /// <summary>
@@ -239,6 +262,1137 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
   #region Messages
   /// <summary>
+  /// RealtimeUpdate represents an update of real-time quote updates (bid/ask/last). 
+  /// </summary>
+  internal sealed partial class RealtimeUpdate : pb::IMessage<RealtimeUpdate> {
+    private static readonly pb::MessageParser<RealtimeUpdate> _parser = new pb::MessageParser<RealtimeUpdate>(() => new RealtimeUpdate());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<RealtimeUpdate> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV20Reflection.Descriptor.MessageTypes[0]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public RealtimeUpdate() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public RealtimeUpdate(RealtimeUpdate other) : this() {
+      askPrice_ = other.askPrice_;
+      askSize_ = other.askSize_;
+      bidPrice_ = other.bidPrice_;
+      bidSize_ = other.bidSize_;
+      lastPrice_ = other.lastPrice_;
+      lastSize_ = other.lastSize_;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public RealtimeUpdate Clone() {
+      return new RealtimeUpdate(this);
+    }
+
+    /// <summary>Field number for the "ask_price" field.</summary>
+    public const int AskPriceFieldNumber = 1;
+    private ulong askPrice_;
+    /// <summary>
+    /// Current inside ask price for this instrument.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ulong AskPrice {
+      get { return askPrice_; }
+      set {
+        askPrice_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "ask_size" field.</summary>
+    public const int AskSizeFieldNumber = 2;
+    private ulong askSize_;
+    /// <summary>
+    /// Current inside ask size for this instrument.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ulong AskSize {
+      get { return askSize_; }
+      set {
+        askSize_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "bid_price" field.</summary>
+    public const int BidPriceFieldNumber = 3;
+    private ulong bidPrice_;
+    /// <summary>
+    /// Current inside bid price for this instrument.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ulong BidPrice {
+      get { return bidPrice_; }
+      set {
+        bidPrice_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "bid_size" field.</summary>
+    public const int BidSizeFieldNumber = 4;
+    private ulong bidSize_;
+    /// <summary>
+    /// Current inside bid size for this instrument.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ulong BidSize {
+      get { return bidSize_; }
+      set {
+        bidSize_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "last_price" field.</summary>
+    public const int LastPriceFieldNumber = 5;
+    private ulong lastPrice_;
+    /// <summary>
+    /// The last trade price for this instrument.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ulong LastPrice {
+      get { return lastPrice_; }
+      set {
+        lastPrice_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "last_size" field.</summary>
+    public const int LastSizeFieldNumber = 6;
+    private ulong lastSize_;
+    /// <summary>
+    /// Size of the last trade of this instrument.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ulong LastSize {
+      get { return lastSize_; }
+      set {
+        lastSize_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as RealtimeUpdate);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(RealtimeUpdate other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (AskPrice != other.AskPrice) return false;
+      if (AskSize != other.AskSize) return false;
+      if (BidPrice != other.BidPrice) return false;
+      if (BidSize != other.BidSize) return false;
+      if (LastPrice != other.LastPrice) return false;
+      if (LastSize != other.LastSize) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (AskPrice != 0UL) hash ^= AskPrice.GetHashCode();
+      if (AskSize != 0UL) hash ^= AskSize.GetHashCode();
+      if (BidPrice != 0UL) hash ^= BidPrice.GetHashCode();
+      if (BidSize != 0UL) hash ^= BidSize.GetHashCode();
+      if (LastPrice != 0UL) hash ^= LastPrice.GetHashCode();
+      if (LastSize != 0UL) hash ^= LastSize.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (AskPrice != 0UL) {
+        output.WriteRawTag(8);
+        output.WriteUInt64(AskPrice);
+      }
+      if (AskSize != 0UL) {
+        output.WriteRawTag(16);
+        output.WriteUInt64(AskSize);
+      }
+      if (BidPrice != 0UL) {
+        output.WriteRawTag(24);
+        output.WriteUInt64(BidPrice);
+      }
+      if (BidSize != 0UL) {
+        output.WriteRawTag(32);
+        output.WriteUInt64(BidSize);
+      }
+      if (LastPrice != 0UL) {
+        output.WriteRawTag(40);
+        output.WriteUInt64(LastPrice);
+      }
+      if (LastSize != 0UL) {
+        output.WriteRawTag(48);
+        output.WriteUInt64(LastSize);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (AskPrice != 0UL) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(AskPrice);
+      }
+      if (AskSize != 0UL) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(AskSize);
+      }
+      if (BidPrice != 0UL) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(BidPrice);
+      }
+      if (BidSize != 0UL) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(BidSize);
+      }
+      if (LastPrice != 0UL) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(LastPrice);
+      }
+      if (LastSize != 0UL) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(LastSize);
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(RealtimeUpdate other) {
+      if (other == null) {
+        return;
+      }
+      if (other.AskPrice != 0UL) {
+        AskPrice = other.AskPrice;
+      }
+      if (other.AskSize != 0UL) {
+        AskSize = other.AskSize;
+      }
+      if (other.BidPrice != 0UL) {
+        BidPrice = other.BidPrice;
+      }
+      if (other.BidSize != 0UL) {
+        BidSize = other.BidSize;
+      }
+      if (other.LastPrice != 0UL) {
+        LastPrice = other.LastPrice;
+      }
+      if (other.LastSize != 0UL) {
+        LastSize = other.LastSize;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 8: {
+            AskPrice = input.ReadUInt64();
+            break;
+          }
+          case 16: {
+            AskSize = input.ReadUInt64();
+            break;
+          }
+          case 24: {
+            BidPrice = input.ReadUInt64();
+            break;
+          }
+          case 32: {
+            BidSize = input.ReadUInt64();
+            break;
+          }
+          case 40: {
+            LastPrice = input.ReadUInt64();
+            break;
+          }
+          case 48: {
+            LastSize = input.ReadUInt64();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  /// <summary>
+  /// SnapshotUpdate represents an update of snapshot information (trading session and yearly) 
+  /// </summary>
+  internal sealed partial class SnapshotUpdate : pb::IMessage<SnapshotUpdate> {
+    private static readonly pb::MessageParser<SnapshotUpdate> _parser = new pb::MessageParser<SnapshotUpdate>(() => new SnapshotUpdate());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<SnapshotUpdate> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV20Reflection.Descriptor.MessageTypes[1]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public SnapshotUpdate() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public SnapshotUpdate(SnapshotUpdate other) : this() {
+      openPrice_ = other.openPrice_;
+      highPrice_ = other.highPrice_;
+      lowPrice_ = other.lowPrice_;
+      closePrice_ = other.closePrice_;
+      previousClose_ = other.previousClose_;
+      volume_ = other.volume_;
+      high52Price_ = other.high52Price_;
+      low52Price_ = other.low52Price_;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public SnapshotUpdate Clone() {
+      return new SnapshotUpdate(this);
+    }
+
+    /// <summary>Field number for the "open_price" field.</summary>
+    public const int OpenPriceFieldNumber = 1;
+    private ulong openPrice_;
+    /// <summary>
+    /// The open value of the current trading day.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ulong OpenPrice {
+      get { return openPrice_; }
+      set {
+        openPrice_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "high_price" field.</summary>
+    public const int HighPriceFieldNumber = 2;
+    private ulong highPrice_;
+    /// <summary>
+    /// The high value of the current trading day.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ulong HighPrice {
+      get { return highPrice_; }
+      set {
+        highPrice_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "low_price" field.</summary>
+    public const int LowPriceFieldNumber = 3;
+    private ulong lowPrice_;
+    /// <summary>
+    /// The low value of the current trading day.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ulong LowPrice {
+      get { return lowPrice_; }
+      set {
+        lowPrice_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "close_price" field.</summary>
+    public const int ClosePriceFieldNumber = 4;
+    private ulong closePrice_;
+    /// <summary>
+    /// The close value of the current trading day.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ulong ClosePrice {
+      get { return closePrice_; }
+      set {
+        closePrice_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "previous_close" field.</summary>
+    public const int PreviousCloseFieldNumber = 5;
+    private ulong previousClose_;
+    /// <summary>
+    /// Previous close value of current trading day.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ulong PreviousClose {
+      get { return previousClose_; }
+      set {
+        previousClose_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "volume" field.</summary>
+    public const int VolumeFieldNumber = 6;
+    private ulong volume_;
+    /// <summary>
+    /// The daily trading volume for this instrument.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ulong Volume {
+      get { return volume_; }
+      set {
+        volume_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "high52_price" field.</summary>
+    public const int High52PriceFieldNumber = 7;
+    private ulong high52Price_;
+    /// <summary>
+    /// The 52-week high value for this instrument.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ulong High52Price {
+      get { return high52Price_; }
+      set {
+        high52Price_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "low52_price" field.</summary>
+    public const int Low52PriceFieldNumber = 8;
+    private ulong low52Price_;
+    /// <summary>
+    /// The 52-week low value for this instrument.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ulong Low52Price {
+      get { return low52Price_; }
+      set {
+        low52Price_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as SnapshotUpdate);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(SnapshotUpdate other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (OpenPrice != other.OpenPrice) return false;
+      if (HighPrice != other.HighPrice) return false;
+      if (LowPrice != other.LowPrice) return false;
+      if (ClosePrice != other.ClosePrice) return false;
+      if (PreviousClose != other.PreviousClose) return false;
+      if (Volume != other.Volume) return false;
+      if (High52Price != other.High52Price) return false;
+      if (Low52Price != other.Low52Price) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (OpenPrice != 0UL) hash ^= OpenPrice.GetHashCode();
+      if (HighPrice != 0UL) hash ^= HighPrice.GetHashCode();
+      if (LowPrice != 0UL) hash ^= LowPrice.GetHashCode();
+      if (ClosePrice != 0UL) hash ^= ClosePrice.GetHashCode();
+      if (PreviousClose != 0UL) hash ^= PreviousClose.GetHashCode();
+      if (Volume != 0UL) hash ^= Volume.GetHashCode();
+      if (High52Price != 0UL) hash ^= High52Price.GetHashCode();
+      if (Low52Price != 0UL) hash ^= Low52Price.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (OpenPrice != 0UL) {
+        output.WriteRawTag(8);
+        output.WriteUInt64(OpenPrice);
+      }
+      if (HighPrice != 0UL) {
+        output.WriteRawTag(16);
+        output.WriteUInt64(HighPrice);
+      }
+      if (LowPrice != 0UL) {
+        output.WriteRawTag(24);
+        output.WriteUInt64(LowPrice);
+      }
+      if (ClosePrice != 0UL) {
+        output.WriteRawTag(32);
+        output.WriteUInt64(ClosePrice);
+      }
+      if (PreviousClose != 0UL) {
+        output.WriteRawTag(40);
+        output.WriteUInt64(PreviousClose);
+      }
+      if (Volume != 0UL) {
+        output.WriteRawTag(48);
+        output.WriteUInt64(Volume);
+      }
+      if (High52Price != 0UL) {
+        output.WriteRawTag(56);
+        output.WriteUInt64(High52Price);
+      }
+      if (Low52Price != 0UL) {
+        output.WriteRawTag(64);
+        output.WriteUInt64(Low52Price);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (OpenPrice != 0UL) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(OpenPrice);
+      }
+      if (HighPrice != 0UL) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(HighPrice);
+      }
+      if (LowPrice != 0UL) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(LowPrice);
+      }
+      if (ClosePrice != 0UL) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(ClosePrice);
+      }
+      if (PreviousClose != 0UL) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(PreviousClose);
+      }
+      if (Volume != 0UL) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Volume);
+      }
+      if (High52Price != 0UL) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(High52Price);
+      }
+      if (Low52Price != 0UL) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Low52Price);
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(SnapshotUpdate other) {
+      if (other == null) {
+        return;
+      }
+      if (other.OpenPrice != 0UL) {
+        OpenPrice = other.OpenPrice;
+      }
+      if (other.HighPrice != 0UL) {
+        HighPrice = other.HighPrice;
+      }
+      if (other.LowPrice != 0UL) {
+        LowPrice = other.LowPrice;
+      }
+      if (other.ClosePrice != 0UL) {
+        ClosePrice = other.ClosePrice;
+      }
+      if (other.PreviousClose != 0UL) {
+        PreviousClose = other.PreviousClose;
+      }
+      if (other.Volume != 0UL) {
+        Volume = other.Volume;
+      }
+      if (other.High52Price != 0UL) {
+        High52Price = other.High52Price;
+      }
+      if (other.Low52Price != 0UL) {
+        Low52Price = other.Low52Price;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 8: {
+            OpenPrice = input.ReadUInt64();
+            break;
+          }
+          case 16: {
+            HighPrice = input.ReadUInt64();
+            break;
+          }
+          case 24: {
+            LowPrice = input.ReadUInt64();
+            break;
+          }
+          case 32: {
+            ClosePrice = input.ReadUInt64();
+            break;
+          }
+          case 40: {
+            PreviousClose = input.ReadUInt64();
+            break;
+          }
+          case 48: {
+            Volume = input.ReadUInt64();
+            break;
+          }
+          case 56: {
+            High52Price = input.ReadUInt64();
+            break;
+          }
+          case 64: {
+            Low52Price = input.ReadUInt64();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  /// <summary>
+  /// StatisticsUpdate represents an update of statistics related to the underlying instrument. 
+  /// </summary>
+  internal sealed partial class StatisticsUpdate : pb::IMessage<StatisticsUpdate> {
+    private static readonly pb::MessageParser<StatisticsUpdate> _parser = new pb::MessageParser<StatisticsUpdate>(() => new StatisticsUpdate());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<StatisticsUpdate> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV20Reflection.Descriptor.MessageTypes[2]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public StatisticsUpdate() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public StatisticsUpdate(StatisticsUpdate other) : this() {
+      beta_ = other.beta_;
+      eps_ = other.eps_;
+      peRatio_ = other.peRatio_;
+      sharesOutstanding_ = other.sharesOutstanding_;
+      historicalVolatility_ = other.historicalVolatility_;
+      impliedVolatility_ = other.impliedVolatility_;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public StatisticsUpdate Clone() {
+      return new StatisticsUpdate(this);
+    }
+
+    /// <summary>Field number for the "beta" field.</summary>
+    public const int BetaFieldNumber = 1;
+    private float beta_;
+    /// <summary>
+    /// The beta value for this instrument.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public float Beta {
+      get { return beta_; }
+      set {
+        beta_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "eps" field.</summary>
+    public const int EpsFieldNumber = 2;
+    private float eps_;
+    /// <summary>
+    /// The earnings per share for this instrument.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public float Eps {
+      get { return eps_; }
+      set {
+        eps_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "pe_ratio" field.</summary>
+    public const int PeRatioFieldNumber = 3;
+    private float peRatio_;
+    /// <summary>
+    /// Profit/earnings ratio for this instrument.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public float PeRatio {
+      get { return peRatio_; }
+      set {
+        peRatio_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "shares_outstanding" field.</summary>
+    public const int SharesOutstandingFieldNumber = 4;
+    private ulong sharesOutstanding_;
+    /// <summary>
+    /// The shares outstanding for this instrument.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ulong SharesOutstanding {
+      get { return sharesOutstanding_; }
+      set {
+        sharesOutstanding_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "historical_volatility" field.</summary>
+    public const int HistoricalVolatilityFieldNumber = 5;
+    private float historicalVolatility_;
+    /// <summary>
+    /// The historical volatility for this instrument.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public float HistoricalVolatility {
+      get { return historicalVolatility_; }
+      set {
+        historicalVolatility_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "implied_volatility" field.</summary>
+    public const int ImpliedVolatilityFieldNumber = 6;
+    private float impliedVolatility_;
+    /// <summary>
+    /// The implied volatility for this instrument.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public float ImpliedVolatility {
+      get { return impliedVolatility_; }
+      set {
+        impliedVolatility_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as StatisticsUpdate);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(StatisticsUpdate other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Beta != other.Beta) return false;
+      if (Eps != other.Eps) return false;
+      if (PeRatio != other.PeRatio) return false;
+      if (SharesOutstanding != other.SharesOutstanding) return false;
+      if (HistoricalVolatility != other.HistoricalVolatility) return false;
+      if (ImpliedVolatility != other.ImpliedVolatility) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Beta != 0F) hash ^= Beta.GetHashCode();
+      if (Eps != 0F) hash ^= Eps.GetHashCode();
+      if (PeRatio != 0F) hash ^= PeRatio.GetHashCode();
+      if (SharesOutstanding != 0UL) hash ^= SharesOutstanding.GetHashCode();
+      if (HistoricalVolatility != 0F) hash ^= HistoricalVolatility.GetHashCode();
+      if (ImpliedVolatility != 0F) hash ^= ImpliedVolatility.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Beta != 0F) {
+        output.WriteRawTag(13);
+        output.WriteFloat(Beta);
+      }
+      if (Eps != 0F) {
+        output.WriteRawTag(21);
+        output.WriteFloat(Eps);
+      }
+      if (PeRatio != 0F) {
+        output.WriteRawTag(29);
+        output.WriteFloat(PeRatio);
+      }
+      if (SharesOutstanding != 0UL) {
+        output.WriteRawTag(32);
+        output.WriteUInt64(SharesOutstanding);
+      }
+      if (HistoricalVolatility != 0F) {
+        output.WriteRawTag(45);
+        output.WriteFloat(HistoricalVolatility);
+      }
+      if (ImpliedVolatility != 0F) {
+        output.WriteRawTag(53);
+        output.WriteFloat(ImpliedVolatility);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (Beta != 0F) {
+        size += 1 + 4;
+      }
+      if (Eps != 0F) {
+        size += 1 + 4;
+      }
+      if (PeRatio != 0F) {
+        size += 1 + 4;
+      }
+      if (SharesOutstanding != 0UL) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(SharesOutstanding);
+      }
+      if (HistoricalVolatility != 0F) {
+        size += 1 + 4;
+      }
+      if (ImpliedVolatility != 0F) {
+        size += 1 + 4;
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(StatisticsUpdate other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Beta != 0F) {
+        Beta = other.Beta;
+      }
+      if (other.Eps != 0F) {
+        Eps = other.Eps;
+      }
+      if (other.PeRatio != 0F) {
+        PeRatio = other.PeRatio;
+      }
+      if (other.SharesOutstanding != 0UL) {
+        SharesOutstanding = other.SharesOutstanding;
+      }
+      if (other.HistoricalVolatility != 0F) {
+        HistoricalVolatility = other.HistoricalVolatility;
+      }
+      if (other.ImpliedVolatility != 0F) {
+        ImpliedVolatility = other.ImpliedVolatility;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 13: {
+            Beta = input.ReadFloat();
+            break;
+          }
+          case 21: {
+            Eps = input.ReadFloat();
+            break;
+          }
+          case 29: {
+            PeRatio = input.ReadFloat();
+            break;
+          }
+          case 32: {
+            SharesOutstanding = input.ReadUInt64();
+            break;
+          }
+          case 45: {
+            HistoricalVolatility = input.ReadFloat();
+            break;
+          }
+          case 53: {
+            ImpliedVolatility = input.ReadFloat();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  /// <summary>
+  /// QuoteUpdate represents a new real-time market data quote update.
+  /// All prices are converted to long values. 
+  /// </summary>
+  internal sealed partial class QuoteUpdate : pb::IMessage<QuoteUpdate> {
+    private static readonly pb::MessageParser<QuoteUpdate> _parser = new pb::MessageParser<QuoteUpdate>(() => new QuoteUpdate());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<QuoteUpdate> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV20Reflection.Descriptor.MessageTypes[3]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public QuoteUpdate() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public QuoteUpdate(QuoteUpdate other) : this() {
+      timestamp_ = other.timestamp_;
+      Realtime = other.realtime_ != null ? other.Realtime.Clone() : null;
+      Snapshot = other.snapshot_ != null ? other.Snapshot.Clone() : null;
+      Statistics = other.statistics_ != null ? other.Statistics.Clone() : null;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public QuoteUpdate Clone() {
+      return new QuoteUpdate(this);
+    }
+
+    /// <summary>Field number for the "timestamp" field.</summary>
+    public const int TimestampFieldNumber = 1;
+    private ulong timestamp_;
+    /// <summary>
+    /// The timestamp of the latest update.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ulong Timestamp {
+      get { return timestamp_; }
+      set {
+        timestamp_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "realtime" field.</summary>
+    public const int RealtimeFieldNumber = 2;
+    private global::QuantGate.API.Signals.Proto.Stealth.RealtimeUpdate realtime_;
+    /// <summary>
+    /// Real-time quote updates (bid/ask/last).
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::QuantGate.API.Signals.Proto.Stealth.RealtimeUpdate Realtime {
+      get { return realtime_; }
+      set {
+        realtime_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "snapshot" field.</summary>
+    public const int SnapshotFieldNumber = 3;
+    private global::QuantGate.API.Signals.Proto.Stealth.SnapshotUpdate snapshot_;
+    /// <summary>
+    /// Trading session and yearly statistics snapshot.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::QuantGate.API.Signals.Proto.Stealth.SnapshotUpdate Snapshot {
+      get { return snapshot_; }
+      set {
+        snapshot_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "statistics" field.</summary>
+    public const int StatisticsFieldNumber = 4;
+    private global::QuantGate.API.Signals.Proto.Stealth.StatisticsUpdate statistics_;
+    /// <summary>
+    /// Statistics related to the underlying instrument.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::QuantGate.API.Signals.Proto.Stealth.StatisticsUpdate Statistics {
+      get { return statistics_; }
+      set {
+        statistics_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as QuoteUpdate);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(QuoteUpdate other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Timestamp != other.Timestamp) return false;
+      if (!object.Equals(Realtime, other.Realtime)) return false;
+      if (!object.Equals(Snapshot, other.Snapshot)) return false;
+      if (!object.Equals(Statistics, other.Statistics)) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Timestamp != 0UL) hash ^= Timestamp.GetHashCode();
+      if (realtime_ != null) hash ^= Realtime.GetHashCode();
+      if (snapshot_ != null) hash ^= Snapshot.GetHashCode();
+      if (statistics_ != null) hash ^= Statistics.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Timestamp != 0UL) {
+        output.WriteRawTag(8);
+        output.WriteUInt64(Timestamp);
+      }
+      if (realtime_ != null) {
+        output.WriteRawTag(18);
+        output.WriteMessage(Realtime);
+      }
+      if (snapshot_ != null) {
+        output.WriteRawTag(26);
+        output.WriteMessage(Snapshot);
+      }
+      if (statistics_ != null) {
+        output.WriteRawTag(34);
+        output.WriteMessage(Statistics);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (Timestamp != 0UL) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Timestamp);
+      }
+      if (realtime_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Realtime);
+      }
+      if (snapshot_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Snapshot);
+      }
+      if (statistics_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Statistics);
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(QuoteUpdate other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Timestamp != 0UL) {
+        Timestamp = other.Timestamp;
+      }
+      if (other.realtime_ != null) {
+        if (realtime_ == null) {
+          realtime_ = new global::QuantGate.API.Signals.Proto.Stealth.RealtimeUpdate();
+        }
+        Realtime.MergeFrom(other.Realtime);
+      }
+      if (other.snapshot_ != null) {
+        if (snapshot_ == null) {
+          snapshot_ = new global::QuantGate.API.Signals.Proto.Stealth.SnapshotUpdate();
+        }
+        Snapshot.MergeFrom(other.Snapshot);
+      }
+      if (other.statistics_ != null) {
+        if (statistics_ == null) {
+          statistics_ = new global::QuantGate.API.Signals.Proto.Stealth.StatisticsUpdate();
+        }
+        Statistics.MergeFrom(other.Statistics);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 8: {
+            Timestamp = input.ReadUInt64();
+            break;
+          }
+          case 18: {
+            if (realtime_ == null) {
+              realtime_ = new global::QuantGate.API.Signals.Proto.Stealth.RealtimeUpdate();
+            }
+            input.ReadMessage(realtime_);
+            break;
+          }
+          case 26: {
+            if (snapshot_ == null) {
+              snapshot_ = new global::QuantGate.API.Signals.Proto.Stealth.SnapshotUpdate();
+            }
+            input.ReadMessage(snapshot_);
+            break;
+          }
+          case 34: {
+            if (statistics_ == null) {
+              statistics_ = new global::QuantGate.API.Signals.Proto.Stealth.StatisticsUpdate();
+            }
+            input.ReadMessage(statistics_);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  /// <summary>
   /// Holds the spline information for a sentiment length or color spline.
   /// Values should be converted to between -1 and 1 by dividing by 1000. 
   /// </summary>
@@ -249,7 +1403,7 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV20Reflection.Descriptor.MessageTypes[0]; }
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV20Reflection.Descriptor.MessageTypes[4]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -527,7 +1681,7 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV20Reflection.Descriptor.MessageTypes[1]; }
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV20Reflection.Descriptor.MessageTypes[5]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -757,7 +1911,7 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV20Reflection.Descriptor.MessageTypes[2]; }
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV20Reflection.Descriptor.MessageTypes[6]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1129,7 +2283,7 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV20Reflection.Descriptor.MessageTypes[3]; }
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV20Reflection.Descriptor.MessageTypes[7]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1595,7 +2749,7 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV20Reflection.Descriptor.MessageTypes[4]; }
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV20Reflection.Descriptor.MessageTypes[8]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1968,7 +3122,7 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV20Reflection.Descriptor.MessageTypes[5]; }
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV20Reflection.Descriptor.MessageTypes[9]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2153,7 +3307,7 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV20Reflection.Descriptor.MessageTypes[6]; }
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV20Reflection.Descriptor.MessageTypes[10]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2619,7 +3773,7 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV20Reflection.Descriptor.MessageTypes[7]; }
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV20Reflection.Descriptor.MessageTypes[11]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2804,7 +3958,7 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV20Reflection.Descriptor.MessageTypes[8]; }
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV20Reflection.Descriptor.MessageTypes[12]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3082,7 +4236,7 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV20Reflection.Descriptor.MessageTypes[9]; }
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV20Reflection.Descriptor.MessageTypes[13]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3236,7 +4390,7 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV20Reflection.Descriptor.MessageTypes[10]; }
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV20Reflection.Descriptor.MessageTypes[14]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3738,7 +4892,7 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV20Reflection.Descriptor.MessageTypes[11]; }
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV20Reflection.Descriptor.MessageTypes[15]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4018,7 +5172,7 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV20Reflection.Descriptor.MessageTypes[12]; }
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV20Reflection.Descriptor.MessageTypes[16]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4164,7 +5318,7 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV20Reflection.Descriptor.MessageTypes[13]; }
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV20Reflection.Descriptor.MessageTypes[17]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4659,7 +5813,7 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV20Reflection.Descriptor.MessageTypes[14]; }
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV20Reflection.Descriptor.MessageTypes[18]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4774,7 +5928,7 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV20Reflection.Descriptor.MessageTypes[15]; }
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV20Reflection.Descriptor.MessageTypes[19]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

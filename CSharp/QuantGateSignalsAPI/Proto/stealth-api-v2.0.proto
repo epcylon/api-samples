@@ -16,6 +16,7 @@ enum InstrumentType
     Combo = 8;                                   // Combo pairing.
     ComboInstrument = 9;                         // Combo underlying.
     CryptoCurrency = 10;                         // Crypto Currency (Bitcoin, etc.)
+    PerpetualCrypto = 11;                        // Perpetual Crypto Currency.
 }
 
 /* The Put/Call side ("right") of an option. */
@@ -42,6 +43,51 @@ enum GaugeSignal
     Flat = 2;                                    // No current signal.
     Long = 3;                                    // Signal to enter a long position.
     Dual = 4;                                    // Dual signal (long or short - no specific direction).
+}
+
+/* RealtimeUpdate represents an update of real-time quote updates (bid/ask/last). */
+message RealtimeUpdate
+{
+    uint64 ask_price = 1;                        // Current inside ask price for this instrument.
+    uint64 ask_size = 2;                         // Current inside ask size for this instrument.
+    uint64 bid_price = 3;                        // Current inside bid price for this instrument.
+    uint64 bid_size = 4;                         // Current inside bid size for this instrument.
+    uint64 last_price = 5;                       // The last trade price for this instrument.
+    uint64 last_size = 6;                        // Size of the last trade of this instrument.
+}
+
+/* SnapshotUpdate represents an update of snapshot information (trading session and yearly) */
+message SnapshotUpdate
+{
+    uint64 open_price = 1;                       // The open value of the current trading day.
+    uint64 high_price = 2;                       // The high value of the current trading day.
+    uint64 low_price = 3;                        // The low value of the current trading day.
+    uint64 close_price = 4;                      // The close value of the current trading day.
+    uint64 previous_close = 5;                   // Previous close value of current trading day.
+    uint64 volume = 6;                           // The daily trading volume for this instrument.
+    uint64 high52_price = 7;                     // The 52-week high value for this instrument.
+    uint64 low52_price = 8;                      // The 52-week low value for this instrument.
+}
+
+/* StatisticsUpdate represents an update of statistics related to the underlying instrument. */
+message StatisticsUpdate
+{
+    float beta = 1;                              // The beta value for this instrument.
+    float eps = 2;                               // The earnings per share for this instrument.
+    float pe_ratio = 3;                          // Profit/earnings ratio for this instrument.
+    uint64 shares_outstanding = 4;               // The shares outstanding for this instrument.
+    float historical_volatility = 5;             // The historical volatility for this instrument.
+    float implied_volatility = 6;                // The implied volatility for this instrument.
+}
+
+/* QuoteUpdate represents a new real-time market data quote update.
+ * All prices are converted to long values. */
+message QuoteUpdate
+{
+    uint64 timestamp = 1;                        // The timestamp of the latest update.
+    RealtimeUpdate realtime = 2;                 // Real-time quote updates (bid/ask/last).
+    SnapshotUpdate snapshot = 3;                 // Trading session and yearly statistics snapshot.
+    StatisticsUpdate statistics = 4;             // Statistics related to the underlying instrument.
 }
 
 /* Holds the spline information for a sentiment length or color spline.

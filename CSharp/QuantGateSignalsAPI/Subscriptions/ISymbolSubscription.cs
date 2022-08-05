@@ -9,5 +9,6 @@
         /// The symbol the subscription is tied to.
         /// </summary>
         string Symbol { get; }
+        DataStream Stream { get; }
     }
 }

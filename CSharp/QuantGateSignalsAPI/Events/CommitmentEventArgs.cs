@@ -6,7 +6,7 @@ namespace QuantGate.API.Signals.Events
     /// Holds Commitment values. Will be updated by the stream with change notifications.
     /// Supply this object to the Unsubscribe method of the APIClient to stop the subscription.
     /// </summary>
-    public class CommitmentEventArgs : GaugeArgsBase
+    public class CommitmentEventArgs : GaugeEventArgs
     {
         /// <summary>
         /// The gauge value at the last update.
@@ -24,9 +24,9 @@ namespace QuantGate.API.Signals.Events
         /// (values are missing) or stale (not the most recent data).
         /// </param>
         /// <param name="error">Holds error information, if a subscription error occured.</param>
-        internal CommitmentEventArgs(string symbol, DateTime timestamp, double value, bool isDirty, 
-                                     object reference = null, SubscriptionError error = null) :
-            base(symbol, timestamp, isDirty, reference, error)
+        internal CommitmentEventArgs(string symbol, DataStream stream, DateTime timestamp, double value, 
+                                     bool isDirty, SubscriptionError error = null) :
+            base(symbol, stream, timestamp, isDirty, error)
         {
             Value = value;
         }

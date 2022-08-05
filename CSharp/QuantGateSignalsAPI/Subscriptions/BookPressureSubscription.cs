@@ -17,14 +17,13 @@ namespace QuantGate.API.Signals.Subscriptions
         protected override BookPressureEventArgs HandleUpdate(SingleValueUpdate update, object processed)
         {
             return new BookPressureEventArgs(
-                Symbol,
+                Symbol, Stream,
                 ProtoTimeEncoder.TimestampSecondsToDate(update.Timestamp),
                 update.Value / 1000.0,
-                update.IsDirty,
-                Reference);
+                update.IsDirty);
         }
 
         protected override BookPressureEventArgs WrapError(SubscriptionError error) => 
-            new BookPressureEventArgs(Symbol, DateTime.UtcNow, 0, true, Reference, error);
+            new BookPressureEventArgs(Symbol, Stream, DateTime.UtcNow, 0, true, error);
     }
 }

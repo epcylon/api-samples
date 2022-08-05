@@ -2,13 +2,29 @@
 using QuantGate.API.Signals.Events;
 using QuantGate.API.Signals.ProtoStomp;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace QuantGate.API.Signals.Subscriptions
 {
-    internal abstract class SubscriptionBase<M, V> : ProtoStompSubscription
+    internal abstract class SubscriptionBase : ProtoStompSubscription
+    {
+        public HashSet<object> References { get; }
+
+        public SubscriptionBase(APIClient client, string destination, bool receipt = false, 
+                                uint throttleRate = 0, object reference = null) :
+            base(client, destination, receipt, throttleRate)
+        {
+            if (reference is object)
+                References = new HashSet<object> { reference };
+            else
+                References = new HashSet<object>();
+        }
+    }
+
+    internal abstract class SubscriptionBase<M, V> : SubscriptionBase
         where M : IMessage<M>
-        where V : EventArgs
+        where V : SubscriptionEventArgs
     {
         /// <summary>
         /// Empty object to use (instead of null).
@@ -23,13 +39,13 @@ namespace QuantGate.API.Signals.Subscriptions
         private readonly MessageParser<M> _parser;
 
         public SubscriptionBase(APIClient client, MessageParser<M> parser, EventHandler<V> handler,
-                                string destination, bool receipt = false, uint throttleRate = 0) :
-            base(client, destination, receipt, throttleRate)
+                                string destination, bool receipt = false, uint throttleRate = 0, object reference = null) :
+            base(client, destination, receipt, throttleRate, reference)
         {
             _parser = parser;
             ParentUpdatedEvent = handler;
             OnNext += HandleOnNext;
-            OnError += HandleError;
+            OnError += HandleError;            
         }
 
         private void HandleOnNext(ProtoStompSubscription subscription, ByteString values)
@@ -40,8 +56,9 @@ namespace QuantGate.API.Signals.Subscriptions
             Client.Sync.Post(new SendOrPostCallback(o =>
             {
                 V updated = HandleUpdate(update, processed);
-                ParentUpdatedEvent?.Invoke(Client, updated);
-            }), null);
+                SendUpdateToAll(updated);
+            }),
+            null);
         }
 
         private void HandleError(ProtoStompSubscription subscription, Exception exception)
@@ -59,8 +76,26 @@ namespace QuantGate.API.Signals.Subscriptions
         {
             Client.Sync.Post(new SendOrPostCallback(o =>
             {
-                ParentUpdatedEvent?.Invoke(Client, update);
+                SendUpdateToAll(update);                
             }), null);
+        }
+
+        private void SendUpdateToAll(V update)
+        {
+            if (References.Count == 0)
+            {
+                update.Reference = null;
+                ParentUpdatedEvent?.Invoke(Client, update);
+            }
+            else
+            {
+                foreach (var reference in References)
+                {
+                    update = (V)update.Clone();
+                    update.Reference = reference;
+                    ParentUpdatedEvent?.Invoke(Client, update);
+                }
+            }
         }
 
         protected virtual object Preprocess(M update) => _emptyObject;

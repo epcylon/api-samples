@@ -17,7 +17,7 @@ namespace QuantGate.API.Signals.Subscriptions
         protected override TriggerEventArgs HandleUpdate(TriggerUpdate update, object processed)
         {
             return new TriggerEventArgs(
-                Symbol,
+                Symbol, Stream,
                 ProtoTimeEncoder.TimestampSecondsToDate(update.Timestamp),
                 update.Perception / 1000.0,
                 update.Commitment / 1000.0,
@@ -26,11 +26,10 @@ namespace QuantGate.API.Signals.Subscriptions
                 ProtoPriceEncoder.DecodePrice(update.GapSize),
                 ProtoPriceEncoder.DecodePrice(update.LastPrice),
                 update.Bias / 1000.0,
-                update.IsDirty,
-                Reference);
+                update.IsDirty);
         }
 
         protected override TriggerEventArgs WrapError(SubscriptionError error) =>
-            new TriggerEventArgs(Symbol, DateTime.UtcNow, 0, 0, 0, 0, 0, 0, 0, true, Reference, error);
+            new TriggerEventArgs(Symbol, Stream, DateTime.UtcNow, 0, 0, 0, 0, 0, 0, 0, true, error);
     }
 }

@@ -6,7 +6,7 @@ namespace QuantGate.API.Signals.Events
     /// Holds Equilibrium values. Will be updated by the stream with change notifications.
     /// Supply this object to the Unsubscribe method of the APIClient to stop the subscription.
     /// </summary>
-    public class EquilibriumEventArgs : GaugeArgsBase
+    public class EquilibriumEventArgs : GaugeEventArgs
     {
         /// <summary>
         /// Compression timeframe to apply to the gauge. Default value is 300s.
@@ -39,14 +39,19 @@ namespace QuantGate.API.Signals.Events
         public double Low { get; }
 
         /// <summary>
-        /// Position of the projected value.
+        /// Bias (as determined by the slope).
+        /// </summary>
+        public double Bias { get; }
+
+        /// <summary>
+        /// The projected equilibrium price.
         /// </summary>
         public double Projected { get; }
 
         /// <summary>
-        /// Bias (as determined by the slope).
+        /// The current projected equilibrium level in standard deviations from the equilibrium price.
         /// </summary>
-        public double Bias { get; }
+        public double ProjectedSTD { get; }       
 
         /// <summary>
         /// Creates a new EquilibriumEventArgs instance.
@@ -59,17 +64,17 @@ namespace QuantGate.API.Signals.Events
         /// <param name="lastPrice">Last traded price at the time of calculation.</param>
         /// <param name="high">Position of the high value.</param>
         /// <param name="low">Position of the low value.</param>
-        /// <param name="projected">Position of the projected value.</param>
+        /// <param name="projectedPosition">Position of the projected value.</param>
         /// <param name="bias">Bias (as determined by the slope).</param>
         /// <param name="isDirty">
         /// Whether the data used to generate this gauge value is potentially dirty 
         /// (values are missing) or stale (not the most recent data).
         /// </param>
         /// <param name="error">Holds error information, if a subscription error occured.</param>
-        internal EquilibriumEventArgs(string symbol, DateTime timestamp, string compression, double equilibriumPrice,
-                                      double gapSize, double lastPrice, double high, double low, double projected,
-                                      double bias, bool isDirty, object reference, SubscriptionError error = null) :
-            base(symbol, timestamp, isDirty, reference, error)
+        internal EquilibriumEventArgs(string symbol, DataStream stream, DateTime timestamp, string compression, 
+                                      double equilibriumPrice, double gapSize, double lastPrice, double high, double low,
+                                      double projectedPosition, double bias, bool isDirty, SubscriptionError error = null) :
+            base(symbol, stream, timestamp, isDirty, error)
         {
             Compression = compression;
             EquilibriumPrice = equilibriumPrice;
@@ -77,7 +82,8 @@ namespace QuantGate.API.Signals.Events
             LastPrice = lastPrice;
             High = high;
             Low = low;
-            Projected = projected;
+            ProjectedSTD = projectedPosition / 200.0;
+            Projected = equilibriumPrice + ProjectedSTD * gapSize;
             Bias = bias;
         }
 
@@ -93,7 +99,7 @@ namespace QuantGate.API.Signals.Events
 
                 return (LastPrice - EquilibriumPrice) / GapSize;
             }
-        }
+        }        
 
         /// <summary>
         /// Returns the equilibrium band price at the given level of standard deviations.

@@ -5,7 +5,7 @@ namespace QuantGate.API.Signals.Events
     /// <summary>
     /// Holds Instrument details.
     /// </summary>
-    public class InstrumentEventArgs : EventArgs
+    public class InstrumentEventArgs : SubscriptionEventArgs
     {
         /// <summary>
         /// Symbol as listed by the QuantGate servers.
@@ -18,20 +18,14 @@ namespace QuantGate.API.Signals.Events
         public Instrument Details { get; }
 
         /// <summary>
-        /// Holds error information, if a subscription error occured.
-        /// </summary>
-        public SubscriptionError Error { get; }
-
-        /// <summary>
         /// Creates a new InstrumentEventArgs instance.
         /// </summary>
         /// <param name="symbol">Symbol as listed by the QuantGate servers.</param>
         /// <param name="details">The details of the instrument.</param>
-        internal InstrumentEventArgs(string symbol, Instrument details)
+        internal InstrumentEventArgs(string symbol, Instrument details) : base(null)
         {
             Symbol = symbol;
             Details = details;
-            Error = null;
         }
 
         /// <summary>
@@ -39,11 +33,10 @@ namespace QuantGate.API.Signals.Events
         /// </summary>
         /// <param name="symbol">Symbol as listed by the QuantGate servers.</param>
         /// <param name="error">Holds error information, if a subscription error occured.</param>
-        public InstrumentEventArgs(string symbol, SubscriptionError error)
+        public InstrumentEventArgs(string symbol, SubscriptionError error) : base(error)
         {
             Symbol = symbol;
             Details = null;
-            Error = error;
         }
     }
 }

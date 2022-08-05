@@ -6,7 +6,7 @@ namespace QuantGate.API.Signals.Events
     /// Holds Trigger values. Will be updated by the stream with change notifications.
     /// Supply this object to the Unsubscribe method of the APIClient to stop the subscription.
     /// </summary>
-    public class TriggerEventArgs : GaugeArgsBase
+    public class TriggerEventArgs : GaugeEventArgs
     {
         /// <summary>
         /// Bias value.
@@ -60,10 +60,10 @@ namespace QuantGate.API.Signals.Events
         /// (values are missing) or stale (not the most recent data).
         /// </param>
         /// <param name="error">Holds error information, if a subscription error occured.</param>
-        internal TriggerEventArgs(string symbol, DateTime timestamp, double perception, double commitment,
-                                  double sentiment, double equilibriumPrice, double gapSize, double lastPrice,
-                                  double bias, bool isDirty, object reference = null, SubscriptionError error = null) :
-            base(symbol, timestamp, isDirty, reference, error)
+        internal TriggerEventArgs(string symbol, DataStream stream, DateTime timestamp, double perception, 
+                                  double commitment, double sentiment, double equilibriumPrice, double gapSize, 
+                                  double lastPrice, double bias, bool isDirty, SubscriptionError error = null) :
+            base(symbol, stream, timestamp, isDirty, error)
         {
             Perception = perception;
             Commitment = commitment;
