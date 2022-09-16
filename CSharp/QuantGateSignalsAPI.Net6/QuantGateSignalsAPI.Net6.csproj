@@ -53,7 +53,7 @@
     <Compile Include="..\QuantGateSignalsAPI\ProtoStomp\ProtoStompReceipt.cs" Link="ProtoStomp\ProtoStompReceipt.cs" />
     <Compile Include="..\QuantGateSignalsAPI\ProtoStomp\ProtoStompSend.cs" Link="ProtoStomp\ProtoStompSend.cs" />
     <Compile Include="..\QuantGateSignalsAPI\ProtoStomp\ProtoStompSubscription.cs" Link="ProtoStomp\ProtoStompSubscription.cs" />
-    <Compile Include="..\QuantGateSignalsAPI\Proto\StealthApiV20.cs" Link="Proto\StealthApiV20.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Proto\StealthApiV21.cs" Link="Proto\StealthApiV21.cs" />
     <Compile Include="..\QuantGateSignalsAPI\Proto\StompV01.cs" Link="Proto\StompV01.cs" />
     <Compile Include="..\QuantGateSignalsAPI\Subscriptions\BookPressureSubscription.cs" Link="Subscriptions\BookPressureSubscription.cs" />
     <Compile Include="..\QuantGateSignalsAPI\Subscriptions\CommitmentSubscription.cs" Link="Subscriptions\CommitmentSubscription.cs" />

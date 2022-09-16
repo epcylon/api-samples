@@ -171,6 +171,29 @@ message SingleValueUpdate
     bool is_dirty = 3;                           // Is the data that generated this potentially dirty (or stale)?
 }
 
+/* MACDUpdate represents a new subscription update for a gauge that returns 
+ * MACD values. All (price) values are converted to long values. */
+message MACDUpdate
+{
+    uint64 timestamp = 1;                        // The timestamp of the latest update.
+    uint64 macd = 2;                             // The MACD value (price).
+    uint64 signal = 3;                           // The MACD signal value (price).
+    uint64 histogram = 4;                        // The MACD histogram value (price, difference between MACD and signal).    
+    bool is_dirty = 5;                           // Is the data that generated this potentially dirty (or stale)?
+}
+
+/* BollingerBandsUpdate represents a new subscription update for a gauge that returns
+ * Bollinger band values (upper, middle, and lower bands). All band (price) values are
+ * converted to long values. */
+message BollingerBandsUpdate
+{
+    uint64 timestamp = 1;                        // The timestamp of the latest update.
+    uint64 upper_band = 2;                       // The upper Bollinger Band price.
+    uint64 middle_band = 3;                      // The middle Bollinger Band price.
+    uint64 lower_band = 4;                       // The lower Bollinger Band price.
+    bool is_dirty = 5;                           // Is the data that generated this potentially dirty (or stale)?
+}
+
 /* StrategyUpdate represents a new subscription update for a subscribed strategy. */
 message StrategyUpdate
 {

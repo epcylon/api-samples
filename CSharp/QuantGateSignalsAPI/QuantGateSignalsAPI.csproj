@@ -12,6 +12,7 @@
     <Copyright>2021 QuantGate Systems Inc.</Copyright>
     <PackageProjectUrl>https://quantgatesystems.com/saas.html</PackageProjectUrl>
     <PackageReleaseNotes>Initial release for alpha testing.</PackageReleaseNotes>
+	<LangVersion>8.0</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>

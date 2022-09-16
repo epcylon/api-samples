@@ -81,12 +81,12 @@ namespace BridgeRock.CSharpExample
             txtSearch.TextChanged += HandleSearchUpdate;
 
             _client = new APIClient(
-                new ConnectionToken(Environments.Production, "john_hollander@hotmail.com", "Cfrimf8462!"));
-                                    //"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
-                                    //"eyJzdWIiOiJUZXN0QXBwIiwiaWF0IjoxNjMzMDEyMTUzLCJleHAiOjE2MzgyMz" +
-                                    //"A0MDAsImF1ZCI6IjJXVWplb2JSWFJXOXBzTkRFY3hlMU1EOXd0ZGZkaDFDIn0." +
-                                    //"xtykKWHxKwhopUkkyUm6eCa9qfQsGkhHEdAea9hdSz8");
-            
+                new ConnectionToken(Environments.Local,
+                                    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
+                                    "eyJzdWIiOiJUZXN0QXBwIiwiaWF0IjoxNjMzMDEyMTUzLCJleHAiOjE2MzgyMz" +
+                                    "A0MDAsImF1ZCI6IjJXVWplb2JSWFJXOXBzTkRFY3hlMU1EOXd0ZGZkaDFDIn0." +
+                                    "xtykKWHxKwhopUkkyUm6eCa9qfQsGkhHEdAea9hdSz8"));
+
             _client.Connected += HandleConnected;
             _client.Disconnected += HandleDisconnected;
             _client.Error += HandleError;
@@ -127,9 +127,9 @@ namespace BridgeRock.CSharpExample
             _symbol = symbol;
 
             _client.RequestInstrumentDetails(_symbol);
-            _client.SubscribePerception(_symbol);
-            _client.SubscribeCommitment(_symbol);
-            _client.SubscribeEquilibrium(_symbol, "300s");
+            _client.SubscribePerception(_symbol, 100);
+            _client.SubscribeCommitment(_symbol, 100);
+            _client.SubscribeEquilibrium(_symbol, "300s", 100);
             _client.SubscribeSentiment(_symbol, "50t");
             _client.SubscribeHeadroom(_symbol);
             _client.SubscribeBookPressure(_symbol);
@@ -208,11 +208,6 @@ namespace BridgeRock.CSharpExample
         {
             if (lvSearch.SelectedItem is SearchRow row)            
                 Subscribe(row.Symbol);
-        }
-
-        private void button_Click(object sender, RoutedEventArgs e)
-        {
-            _client.RequestFutures("WDO", "BRL");
         }
     }
 }
