@@ -171,14 +171,13 @@ message SingleValueUpdate
     bool is_dirty = 3;                           // Is the data that generated this potentially dirty (or stale)?
 }
 
-/* MACDUpdate represents a new subscription update for a gauge that returns 
- * MACD values. All (price) values are converted to long values. */
+/* MACDUpdate represents a new subscription update for a gauge that returns MACD values. */
 message MACDUpdate
 {
     uint64 timestamp = 1;                        // The timestamp of the latest update.
-    uint64 macd = 2;                             // The MACD value (price).
-    uint64 signal = 3;                           // The MACD signal value (price).
-    uint64 histogram = 4;                        // The MACD histogram value (price, difference between MACD and signal).    
+    float macd = 2;                              // The MACD value (float).
+    float signal = 3;                            // The MACD signal value (float).
+    float histogram = 4;                         // The MACD histogram value (float, difference between MACD and signal).    
     bool is_dirty = 5;                           // Is the data that generated this potentially dirty (or stale)?
 }
 

@@ -59,8 +59,8 @@ namespace QuantGate.API.Signals.Proto.Stealth {
             "BBIQCghnYXBfc2l6ZRgHIAEoBBISCgpsYXN0X3ByaWNlGAggASgEEhAKCGlz",
             "X2RpcnR5GAkgASgIIkcKEVNpbmdsZVZhbHVlVXBkYXRlEhEKCXRpbWVzdGFt",
             "cBgBIAEoBBINCgV2YWx1ZRgCIAEoERIQCghpc19kaXJ0eRgDIAEoCCJiCgpN",
-            "QUNEVXBkYXRlEhEKCXRpbWVzdGFtcBgBIAEoBBIMCgRtYWNkGAIgASgEEg4K",
-            "BnNpZ25hbBgDIAEoBBIRCgloaXN0b2dyYW0YBCABKAQSEAoIaXNfZGlydHkY",
+            "QUNEVXBkYXRlEhEKCXRpbWVzdGFtcBgBIAEoBBIMCgRtYWNkGAIgASgCEg4K",
+            "BnNpZ25hbBgDIAEoAhIRCgloaXN0b2dyYW0YBCABKAISEAoIaXNfZGlydHkY",
             "BSABKAgieAoUQm9sbGluZ2VyQmFuZHNVcGRhdGUSEQoJdGltZXN0YW1wGAEg",
             "ASgEEhIKCnVwcGVyX2JhbmQYAiABKAQSEwoLbWlkZGxlX2JhbmQYAyABKAQS",
             "EgoKbG93ZXJfYmFuZBgEIAEoBBIQCghpc19kaXJ0eRgFIAEoCCKnAwoOU3Ry",
@@ -3306,8 +3306,7 @@ namespace QuantGate.API.Signals.Proto.Stealth {
   }
 
   /// <summary>
-  /// MACDUpdate represents a new subscription update for a gauge that returns 
-  /// MACD values. All (price) values are converted to long values. 
+  /// MACDUpdate represents a new subscription update for a gauge that returns MACD values. 
   /// </summary>
   internal sealed partial class MACDUpdate : pb::IMessage<MACDUpdate> {
     private static readonly pb::MessageParser<MACDUpdate> _parser = new pb::MessageParser<MACDUpdate>(() => new MACDUpdate());
@@ -3361,12 +3360,12 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     /// <summary>Field number for the "macd" field.</summary>
     public const int MacdFieldNumber = 2;
-    private ulong macd_;
+    private float macd_;
     /// <summary>
-    /// The MACD value (price).
+    /// The MACD value (float).
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong Macd {
+    public float Macd {
       get { return macd_; }
       set {
         macd_ = value;
@@ -3375,12 +3374,12 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     /// <summary>Field number for the "signal" field.</summary>
     public const int SignalFieldNumber = 3;
-    private ulong signal_;
+    private float signal_;
     /// <summary>
-    /// The MACD signal value (price).
+    /// The MACD signal value (float).
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong Signal {
+    public float Signal {
       get { return signal_; }
       set {
         signal_ = value;
@@ -3389,12 +3388,12 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     /// <summary>Field number for the "histogram" field.</summary>
     public const int HistogramFieldNumber = 4;
-    private ulong histogram_;
+    private float histogram_;
     /// <summary>
-    /// The MACD histogram value (price, difference between MACD and signal).    
+    /// The MACD histogram value (float, difference between MACD and signal).    
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong Histogram {
+    public float Histogram {
       get { return histogram_; }
       set {
         histogram_ = value;
@@ -3440,9 +3439,9 @@ namespace QuantGate.API.Signals.Proto.Stealth {
     public override int GetHashCode() {
       int hash = 1;
       if (Timestamp != 0UL) hash ^= Timestamp.GetHashCode();
-      if (Macd != 0UL) hash ^= Macd.GetHashCode();
-      if (Signal != 0UL) hash ^= Signal.GetHashCode();
-      if (Histogram != 0UL) hash ^= Histogram.GetHashCode();
+      if (Macd != 0F) hash ^= Macd.GetHashCode();
+      if (Signal != 0F) hash ^= Signal.GetHashCode();
+      if (Histogram != 0F) hash ^= Histogram.GetHashCode();
       if (IsDirty != false) hash ^= IsDirty.GetHashCode();
       return hash;
     }
@@ -3458,17 +3457,17 @@ namespace QuantGate.API.Signals.Proto.Stealth {
         output.WriteRawTag(8);
         output.WriteUInt64(Timestamp);
       }
-      if (Macd != 0UL) {
-        output.WriteRawTag(16);
-        output.WriteUInt64(Macd);
+      if (Macd != 0F) {
+        output.WriteRawTag(21);
+        output.WriteFloat(Macd);
       }
-      if (Signal != 0UL) {
-        output.WriteRawTag(24);
-        output.WriteUInt64(Signal);
+      if (Signal != 0F) {
+        output.WriteRawTag(29);
+        output.WriteFloat(Signal);
       }
-      if (Histogram != 0UL) {
-        output.WriteRawTag(32);
-        output.WriteUInt64(Histogram);
+      if (Histogram != 0F) {
+        output.WriteRawTag(37);
+        output.WriteFloat(Histogram);
       }
       if (IsDirty != false) {
         output.WriteRawTag(40);
@@ -3482,14 +3481,14 @@ namespace QuantGate.API.Signals.Proto.Stealth {
       if (Timestamp != 0UL) {
         size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Timestamp);
       }
-      if (Macd != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Macd);
+      if (Macd != 0F) {
+        size += 1 + 4;
       }
-      if (Signal != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Signal);
+      if (Signal != 0F) {
+        size += 1 + 4;
       }
-      if (Histogram != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Histogram);
+      if (Histogram != 0F) {
+        size += 1 + 4;
       }
       if (IsDirty != false) {
         size += 1 + 1;
@@ -3505,13 +3504,13 @@ namespace QuantGate.API.Signals.Proto.Stealth {
       if (other.Timestamp != 0UL) {
         Timestamp = other.Timestamp;
       }
-      if (other.Macd != 0UL) {
+      if (other.Macd != 0F) {
         Macd = other.Macd;
       }
-      if (other.Signal != 0UL) {
+      if (other.Signal != 0F) {
         Signal = other.Signal;
       }
-      if (other.Histogram != 0UL) {
+      if (other.Histogram != 0F) {
         Histogram = other.Histogram;
       }
       if (other.IsDirty != false) {
@@ -3531,16 +3530,16 @@ namespace QuantGate.API.Signals.Proto.Stealth {
             Timestamp = input.ReadUInt64();
             break;
           }
-          case 16: {
-            Macd = input.ReadUInt64();
+          case 21: {
+            Macd = input.ReadFloat();
             break;
           }
-          case 24: {
-            Signal = input.ReadUInt64();
+          case 29: {
+            Signal = input.ReadFloat();
             break;
           }
-          case 32: {
-            Histogram = input.ReadUInt64();
+          case 37: {
+            Histogram = input.ReadFloat();
             break;
           }
           case 40: {
