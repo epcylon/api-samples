@@ -221,6 +221,17 @@ message SinglePriceUpdate
     bool is_dirty = 3;                           // Is the data that generated this potentially dirty (or stale)?
 }
 
+/* PriceArrayUpdate represents a new subscription update for a gauge that returns multiple
+ * price results (such as SMA/EMA) that are keyed to a list of periods that are originally 
+ * sent when the subscription is set up.
+ * All prices are converted to long values, empty values will be decoded as NaN. */
+message PriceArrayUpdate
+{
+    uint64 timestamp = 1;                       // The timestamp of the latest update.
+    repeated uint64 values = 2;                 // Array of price updates by period index.
+    bool is_dirty = 3;                          // Is the data that generated this potentially dirty (or stale)?
+}
+
 /* Holds a single tick range for an Instrument definition. */
 message TickValue
 {
