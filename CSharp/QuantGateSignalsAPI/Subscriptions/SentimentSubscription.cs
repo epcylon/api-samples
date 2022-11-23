@@ -77,6 +77,10 @@ namespace QuantGate.API.Signals.Subscriptions
 
             try
             {
+                // If invalid values, set as empty.
+                if (i == 0 || (j - i == 0))
+                    return result;
+
                 // Calculate length between j and end.
                 remaining = SentimentEventArgs.TotalBars - 1 - j;
 

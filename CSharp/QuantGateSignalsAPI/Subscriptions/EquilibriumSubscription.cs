@@ -1,7 +1,6 @@
-﻿using QuantGate.API.Signals.Proto.Stealth;
+﻿using QuantGate.API.Signals.Events;
+using QuantGate.API.Signals.Proto.Stealth;
 using QuantGate.API.Signals.Utilities;
-using QuantGate.API.Signals.Events;
-using System;
 
 namespace QuantGate.API.Signals.Subscriptions
 {
