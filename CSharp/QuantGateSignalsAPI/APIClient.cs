@@ -1,9 +1,10 @@
 ﻿using Epcylon.Common.Net.ProtoStomp.Proto;
+using Epcylon.Net.APIs.Account;
 using Google.Protobuf;
+using QuantGate.API.Signals.Events;
 using QuantGate.API.Signals.ProtoStomp;
 using QuantGate.API.Signals.Subscriptions;
 using QuantGate.API.Signals.Utilities;
-using QuantGate.API.Signals.Events;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -11,11 +12,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using WebSocketSharp;
 using events = QuantGate.API.Events;
-using System.Net;
-using System.IO;
-using Epcylon.Net.APIs.Account;
 
 namespace QuantGate.API.Signals
 {
@@ -165,7 +162,7 @@ namespace QuantGate.API.Signals
         /// <summary>
         /// Transport layer interface instance.
         /// </summary>
-        private readonly WebSocket _transport;
+        private readonly WebSocketClient _transport;
 
         /// <summary>
         /// Used to generate ids in messages, etc.
@@ -237,13 +234,12 @@ namespace QuantGate.API.Signals
             Task.Factory.StartNew(HandleActions, TaskCreationOptions.LongRunning);
 
             // Create the new websocket.
-            _transport = new WebSocket($"{_host}:{_port}/");
+            _transport = new WebSocketClient(new Uri($"{_host}:{_port}/"));
 
             // Set up the event handling.
             _transport.OnOpen += OnOpen;
             _transport.OnClose += OnClose;
             _transport.OnMessage += HandleMessage;
-            _transport.OnError += OnError;
 
             // Set up the message consumers (dictionary of handlers for each response message type).
             _messageConsumers = new Dictionary<ResponseFrame.ResponseOneofCase, Action<ResponseFrame>>
@@ -388,36 +384,12 @@ namespace QuantGate.API.Signals
                 }
             });
         }
-
-        private void OnError(object o, WebSocketSharp.ErrorEventArgs e)
-        {
-            Enqueue(() =>
-            {
-                try
-                {
-                    string message;
-
-                    message = e.Message + (e.Exception?.Message ?? string.Empty);
-
-                    // Handle the error message.
-                    Trace.TraceError(_moduleID + ":HE - Stomp transport error: " + message);
-
-                    // Make sure it closes properly.                        
-                    if ((_transport is object) && (_transport.ReadyState == WebSocketState.Closed))
-                        Close();
-                }
-                catch (Exception ex)
-                {
-                    Trace.TraceError($"{_moduleID}:OErr - {ex.Message}");
-                }
-            });
-        }
-
+         
         /// <summary>
         /// Dispatches the given message to a registered message consumer.
         /// </summary>
-        /// <param name="msg">The message to handle.</param>
-        private void HandleMessage(object source, MessageEventArgs args)
+        /// <param name="message">The message to handle.</param>
+        private void HandleMessage(object source, byte[] message)
         {
             Enqueue(() =>
             {
@@ -429,7 +401,7 @@ namespace QuantGate.API.Signals
                     _lastMessageTicks = DateTime.UtcNow.Ticks;
 
                     // Parse the next message frame.
-                    frame = ResponseFrame.Parser.ParseFrom(args.RawData);
+                    frame = ResponseFrame.Parser.ParseFrom(message);
 
                     // If parsed properly and the consumer can be found, call the consumer for the message.
                     if ((frame is object) && _messageConsumers.TryGetValue(frame.ResponseCase, out var consumer))
@@ -644,7 +616,8 @@ namespace QuantGate.API.Signals
                 }
 
                 // Send disconnect frame, if the transport is alive.
-                if (_transport?.IsAlive ?? false)
+                if (_transport is object && 
+                    _transport.State == System.Net.WebSockets.WebSocketState.Open)
                     Send(new RequestFrame { Disconnect = new DisconnectRequest() });
 
                 // Close the connection.
@@ -666,7 +639,7 @@ namespace QuantGate.API.Signals
                 if (_transport is object)
                 {
                     // If there is a transport, close if not closed, otherwise send event.
-                    if (_transport.ReadyState != WebSocketState.Closed)
+                    if (_transport.State != System.Net.WebSockets.WebSocketState.Closed)
                         _transport.Close();
                     else
                         OnClose(this, EventArgs.Empty);
@@ -1646,12 +1619,12 @@ namespace QuantGate.API.Signals
         /// <returns>The stream ID for the data stream.</returns>
         public static string ToString(DataStream stream)
         {
-            switch (stream)
-            {                
-                case DataStream.Realtime: return ParsedDestination.RealtimeStreamID;
-                case DataStream.Demo: return ParsedDestination.DemoStreamID;
-                default: return ParsedDestination.DelayStreamID;
-            }
+            return stream switch
+            {
+                DataStream.Realtime => ParsedDestination.RealtimeStreamID,
+                DataStream.Demo => ParsedDestination.DemoStreamID,
+                _ => ParsedDestination.DelayStreamID,
+            };
         }
 
         /// <summary>
@@ -1710,9 +1683,8 @@ namespace QuantGate.API.Signals
                 }
                 catch (Exception ex)
                 {
-                    Trace.TraceError(_moduleID + ":PSt - " + ex.Message);                    
+                    Trace.TraceError(_moduleID + ":PSt - " + ex.Message);
                 }
-
             });
         }
 

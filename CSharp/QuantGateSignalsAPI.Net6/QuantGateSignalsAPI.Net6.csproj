@@ -77,6 +77,7 @@
     <Compile Include="..\QuantGateSignalsAPI\Utilities\ProtoTimeEncoder.cs" Link="Utilities\ProtoTimeEncoder.cs" />
     <Compile Include="..\QuantGateSignalsAPI\Utilities\SentimentColorConverter.cs" Link="Utilities\SentimentColorConverter.cs" />
     <Compile Include="..\QuantGateSignalsAPI\Utilities\TimeZoneDecoder.cs" Link="Utilities\TimeZoneDecoder.cs" />
+    <Compile Include="..\QuantGateSignalsAPI\Utilities\WebSocketClient.cs" Link="Utilities\WebSocketClient.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -89,7 +90,6 @@
 
   <ItemGroup>
     <PackageReference Include="Google.Protobuf" Version="3.19.0" />
-    <PackageReference Include="WebSocketSharp-netstandard" Version="1.0.1" />
   </ItemGroup>
 
   <ItemGroup>
