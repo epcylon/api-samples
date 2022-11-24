@@ -8,7 +8,7 @@ namespace QuantGate.API.Signals.Subscriptions
     internal class PricesSubscription : SubscriptionBase<QuoteUpdate, PricesEventArgs>
     {
         private readonly PricesEventArgs _current;
-        private bool _isCrypto;
+        private readonly bool _isCrypto;
 
         public PricesSubscription(APIClient client, EventHandler<PricesEventArgs> handler, string streamID,
                                   string symbol, bool receipt = false, uint throttleRate = 0, object reference = null) :
