@@ -147,7 +147,7 @@ namespace BridgeRock.CSharpExample
         {
             if (!string.IsNullOrEmpty(txtSearch.Text))
             {
-                _client.SearchSymbols(txtSearch.Text, "alt5");
+                _client.SearchSymbols(txtSearch.Text, "paper");
             }
             else
             {
