@@ -15,7 +15,7 @@ namespace BridgeRock.CSharpExample
     {
         private readonly APIClient _client;
         private TopSymbolsEventArgs _topSymbols;
-        private string _symbol = "NQ U2";
+        private string _symbol = "NQ H3";
         private readonly string _strategyId = "Crb9.0";
 
         #region Dependency Properties
@@ -81,11 +81,11 @@ namespace BridgeRock.CSharpExample
             txtSearch.TextChanged += HandleSearchUpdate;
 
             _client = new APIClient(
-                new ConnectionToken(Environments.Local,
-                                    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
-                                    "eyJzdWIiOiJUZXN0QXBwIiwiaWF0IjoxNjMzMDEyMTUzLCJleHAiOjE2MzgyMz" +
-                                    "A0MDAsImF1ZCI6IjJXVWplb2JSWFJXOXBzTkRFY3hlMU1EOXd0ZGZkaDFDIn0." +
-                                    "xtykKWHxKwhopUkkyUm6eCa9qfQsGkhHEdAea9hdSz8"));
+                new ConnectionToken(Environments.Development, "john_hollander@hotmail.com", "Cfrimf8462!"));
+                                    //"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
+                                    //"eyJzdWIiOiJUZXN0QXBwIiwiaWF0IjoxNjMzMDEyMTUzLCJleHAiOjE2MzgyMz" +
+                                    //"A0MDAsImF1ZCI6IjJXVWplb2JSWFJXOXBzTkRFY3hlMU1EOXd0ZGZkaDFDIn0." +
+                                    //"xtykKWHxKwhopUkkyUm6eCa9qfQsGkhHEdAea9hdSz8");
 
             _client.Connected += HandleConnected;
             _client.Disconnected += HandleDisconnected;
@@ -140,7 +140,7 @@ namespace BridgeRock.CSharpExample
 
         private void SubscribeSearch()
         {
-            _client.SubscribeTopSymbols("demo"); // "ib");
+            _client.SubscribeTopSymbols("paper"); // "ib");
         }
 
         private void HandleSearchUpdate(object sender, TextChangedEventArgs e)
