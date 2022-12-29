@@ -17,7 +17,7 @@ namespace QuantGate.API.Signals.Subscriptions
                      ParsedDestination.StreamIDForSymbol(streamID, symbol), symbol).Destination, receipt, throttleRate, reference)
         {            
             _current = new PricesEventArgs(symbol, APIClient.ToStream(streamID));
-            _isCrypto = symbol.Contains(":");
+            _isCrypto = symbol.Contains(':');
         }        
 
         protected override PricesEventArgs HandleUpdate(QuoteUpdate update, object processed)

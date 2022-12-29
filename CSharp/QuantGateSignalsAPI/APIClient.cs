@@ -755,7 +755,7 @@ namespace QuantGate.API.Signals
             try
             {
                 // Nothing to do if no subscription.
-                if (!(subscription is SubscriptionBase converted))
+                if (subscription is not SubscriptionBase converted)
                     return;
 
                 // Remove appropriate references.
