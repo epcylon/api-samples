@@ -31,20 +31,20 @@ namespace QuantGate.API.Signals.Subscriptions
 
         internal static string InstrumentTypeToString(InstrumentType type)
         {
-            switch (type)
+            return type switch
             {
-                case InstrumentType.CommonStock: return "CS";
-                case InstrumentType.Future: return "FUT";
-                case InstrumentType.ForexContract: return "FX";
-                case InstrumentType.CryptoCurrency: return "CRY";
-                case InstrumentType.Index: return "IDX";
-                default: return string.Empty;
-            }
+                InstrumentType.CommonStock => "CS",
+                InstrumentType.Future => "FUT",
+                InstrumentType.ForexContract => "FX",
+                InstrumentType.CryptoCurrency => "CRY",
+                InstrumentType.Index => "IDX",
+                _ => string.Empty,
+            };
         }
 
         protected override object Preprocess(TopSymbolsUpdate update)
         {
-            List<TopSymbol> results = new List<TopSymbol>();
+            List<TopSymbol> results = new();
 
             foreach (TopSymbolItem result in update.Symbols)
                 results.Add(new TopSymbol(
@@ -71,6 +71,6 @@ namespace QuantGate.API.Signals.Subscriptions
         }
 
         protected override TopSymbolsEventArgs WrapError(SubscriptionError error) =>
-            new TopSymbolsEventArgs(Broker, InstrumentType, new List<TopSymbol>(), error);
+            new(Broker, InstrumentType, new List<TopSymbol>(), error);
     }
 }

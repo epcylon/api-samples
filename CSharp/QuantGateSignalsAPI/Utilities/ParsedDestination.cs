@@ -349,7 +349,7 @@ namespace QuantGate.API.Signals.Utilities
                                  string broker = "", string securityType = "", string currency = "",
                                  string term = "", string strategyID = "")
         {
-            StringBuilder builder = new StringBuilder(_separator);
+            StringBuilder builder = new(_separator);
 
             // Set the values.
             SubscriptionType = subscriptionType;

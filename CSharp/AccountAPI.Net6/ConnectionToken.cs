@@ -22,7 +22,7 @@ namespace Epcylon.Net.APIs.Account
         /// <summary>
         /// Epoch time for calculating UNIX time.
         /// </summary>
-        private static readonly DateTime _epoch = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+        private static readonly DateTime _epoch = new(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
 
         #endregion
 
@@ -31,7 +31,7 @@ namespace Epcylon.Net.APIs.Account
         /// <summary>
         /// Dictionary of product id strings by enumeration.
         /// </summary>
-        private static readonly Dictionary<Products, string> _products = new Dictionary<Products, string>()
+        private static readonly Dictionary<Products, string> _products = new()
         {
             [Products.Pilot] = "pilot",
             [Products.CoPilot] = "copilot",
@@ -50,7 +50,7 @@ namespace Epcylon.Net.APIs.Account
         /// <summary>
         /// Dictionary of environment strings by enumeration.
         /// </summary>
-        private static readonly Dictionary<Environments, string> _environments = new Dictionary<Environments, string>()
+        private static readonly Dictionary<Environments, string> _environments = new()
         {
             [Environments.Production] = "Production",
             [Environments.Staging] = "Staging",
@@ -111,7 +111,7 @@ namespace Epcylon.Net.APIs.Account
         public static Environments ConvertEnvironment(string environment)
         {
             environment = environment.Trim().ToLower();
-            environment = char.ToUpper(environment[0]) + environment.Substring(1);
+            environment = char.ToUpper(environment[0]) + environment[1..];
 
             if (_environmentsReverse.TryGetValue(environment, out Environments enumValue))
                 return enumValue;
@@ -126,7 +126,7 @@ namespace Epcylon.Net.APIs.Account
         /// <summary>
         /// Lock object for public fields.
         /// </summary>
-        private readonly object _lock = new object();
+        private readonly object _lock = new();
 
         /// <summary>
         /// The password for the current connection (JWT Token).
@@ -157,7 +157,7 @@ namespace Epcylon.Net.APIs.Account
         /// <summary>
         /// The HTTP client object to use for requests.
         /// </summary>
-        private readonly HttpClient _httpClient = new HttpClient();
+        private readonly HttpClient _httpClient = new();
 
         /// <summary>
         /// True if the object has been disposed.
@@ -446,13 +446,13 @@ namespace Epcylon.Net.APIs.Account
         /// <returns>The REST host address for the given environment.</returns>
         private static string GetRestHost(Environments environment)
         {
-            switch (environment)
+            return environment switch
             {
-                case Environments.Local: return @"http://localhost:59398/";
-                case Environments.Development: return @"https://mdev.pilottrading.co/";
-                case Environments.Production: return @"https://mercury.pilottrading.co/";
-                default: return @"https://mstage.pilottrading.co/";
-            }
+                Environments.Local => @"http://localhost:59398/",
+                Environments.Development => @"https://mdev.pilottrading.co/",
+                Environments.Production => @"https://mercury.pilottrading.co/",
+                _ => @"https://mstage.pilottrading.co/",
+            };
         }
 
         /// <summary>
@@ -561,7 +561,7 @@ namespace Epcylon.Net.APIs.Account
             if (!source.Contains(key))
                 return string.Empty;
 
-            result = source.Substring(0, source.Length - 1).Split(new string[] { key },
+            result = source[..^1].Split(new string[] { key },
                 StringSplitOptions.None)[1].Replace("\"", "").Split(new char[] { ',' })[0];
 
             if (result == "null")

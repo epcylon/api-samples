@@ -32,14 +32,13 @@ namespace QuantGate.API.Signals.Subscriptions
             _stream = APIClient.ToStream(streamID);
         }
 
-        protected override InstrumentEventArgs WrapError(SubscriptionError error)
-            => new InstrumentEventArgs(_symbol, error);
+        protected override InstrumentEventArgs WrapError(SubscriptionError error) => new(_symbol, error);
 
         protected override InstrumentEventArgs HandleUpdate(InstrumentUpdate update, object processed)
         {
-            List<TickRange> tickRanges = new List<TickRange>();
-            List<Events.TradingSession> tradingSessions = new List<Events.TradingSession>();
-            Dictionary<string, string> brokerSymbols = new Dictionary<string, string>();
+            List<TickRange> tickRanges = new();
+            List<Events.TradingSession> tradingSessions = new();
+            Dictionary<string, string> brokerSymbols = new();
 
             try
             {

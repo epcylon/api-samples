@@ -56,7 +56,7 @@ namespace QuantGate.API.Signals.Subscriptions
         /// <summary>
         /// Conversions between raw (futures) exchange codes and MICs.
         /// </summary>
-        private static readonly Dictionary<string, string> _exchangeMics = new Dictionary<string, string>
+        private static readonly Dictionary<string, string> _exchangeMics = new()
         {
             ["BMF"] = "BMVF", ["CFE"] = "XCBF", ["CFECRYPTO"] = "XCBC", ["CME"] = "XCME",
             ["CMECRYPTO"] = "XCMC", ["EEX"] = "XEEE", ["FTA"] = "ALXA", ["ICEEU"] = "IFEU",
@@ -106,7 +106,7 @@ namespace QuantGate.API.Signals.Subscriptions
         /// <summary>
         /// Base date/time for expiries encoding.
         /// </summary>
-        private static readonly DateTime _1800 = new DateTime(1800, 1, 1);
+        private static readonly DateTime _1800 = new(1800, 1, 1);
 
         #endregion
 
@@ -148,7 +148,7 @@ namespace QuantGate.API.Signals.Subscriptions
         /// <returns>The decoded futures security details.</returns>
         public static List<InstrumentBase> Decode(string toDecode)
         {
-            List<InstrumentBase> toReturn = new List<InstrumentBase>();
+            List<InstrumentBase> toReturn = new();
             string[] fields;
             string baseString, detailString, codedExpiry;
             DateTime fullExpiry = _1800;
@@ -311,9 +311,9 @@ namespace QuantGate.API.Signals.Subscriptions
         /// <param name="exchange">The exchange to get the MIC for.</param>
         /// <returns>The MIC for the given exchange.</returns>
         private static string GetMIC(string exchange) 
-            => (_exchangeMics.TryGetValue(exchange, out string mic)) ? mic : exchange;
+            => _exchangeMics.TryGetValue(exchange, out string mic) ? mic : exchange;
 
         protected override FuturesListEventArgs WrapError(SubscriptionError error)
-            => new FuturesListEventArgs(_underlying, _currency, _stream, error);
+            => new(_underlying, _currency, _stream, error);
     }
 }

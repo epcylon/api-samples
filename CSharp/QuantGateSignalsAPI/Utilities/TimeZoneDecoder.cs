@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace QuantGate.API.Signals.Utilities
+﻿namespace QuantGate.API.Signals.Utilities
 {
     /// <summary>
     /// Used to decode time zones.
@@ -11,7 +8,7 @@ namespace QuantGate.API.Signals.Utilities
         /// <summary>
         /// Conversion mapping of Olsen time zone specifiers to Windows time zone specifiers.
         /// </summary>
-        private static readonly Dictionary<string, string> _olsonWindowsTimes = new Dictionary<string, string>()
+        private static readonly Dictionary<string, string> _olsonWindowsTimes = new()
         {
             ["Africa/Bangui"] = "W. Central Africa Standard Time",
             ["Africa/Cairo"] = "Egypt Standard Time",

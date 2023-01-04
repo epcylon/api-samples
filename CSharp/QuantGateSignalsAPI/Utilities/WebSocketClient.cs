@@ -79,7 +79,7 @@ namespace QuantGate.API.Signals.Utilities
         /// <summary>
         /// Lock object used for access to socket.
         /// </summary>
-        private readonly object _lock = new object();
+        private readonly object _lock = new();
 
         #endregion
 
@@ -134,7 +134,7 @@ namespace QuantGate.API.Signals.Utilities
             lock (_lock)
             {
                 // Only allow connection once.
-                if (_socket is object)
+                if (_socket is not null)
                     throw new InvalidOperationException("Cannot connect WebSocket twice.");
 
                 // Set connection flag.
@@ -262,10 +262,10 @@ namespace QuantGate.API.Signals.Utilities
         /// </summary>
         private async Task HandleMessages()
         {
-            ArraySegment<byte> buffer = new ArraySegment<byte>(new byte[1024]);
+            ArraySegment<byte> buffer = new(new byte[1024]);
             WebSocketReceiveResult receiveResult;
             CancellationToken token = _receiveLoopTokenSource.Token;
-            MemoryStream stream = new MemoryStream();
+            MemoryStream stream = new();
 
             try
             {
@@ -371,7 +371,7 @@ namespace QuantGate.API.Signals.Utilities
                         byte[] message = _messageQueue.Take(token);
 
                         // Send if this is a message, otherwise close if it is a closure request.
-                        if (message is object)
+                        if (message is not null)
                             await SendMessageAsync(message).ConfigureAwait(false);
                         else
                             await CloseAsync(WebSocketCloseStatus.NormalClosure,

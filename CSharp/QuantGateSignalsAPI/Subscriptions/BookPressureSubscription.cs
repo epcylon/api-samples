@@ -24,6 +24,6 @@ namespace QuantGate.API.Signals.Subscriptions
         }
 
         protected override BookPressureEventArgs WrapError(SubscriptionError error) => 
-            new BookPressureEventArgs(Symbol, Stream, DateTime.UtcNow, 0, true, error);
+            new(Symbol, Stream, DateTime.UtcNow, 0, true, error);
     }
 }

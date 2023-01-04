@@ -26,6 +26,6 @@ namespace QuantGate.API.Signals.Subscriptions
         }
 
         protected override PerceptionEventArgs WrapError(SubscriptionError error) =>
-            new PerceptionEventArgs(Symbol, Stream, DateTime.UtcNow, 0, true, error);
+            new(Symbol, Stream, DateTime.UtcNow, 0, true, error);
     }
 }
