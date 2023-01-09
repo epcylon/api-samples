@@ -12,7 +12,11 @@ namespace QuantGate.API.Signals.Utilities
         /// The number of ticks since January 1, 1800
         /// </summary>
         private static readonly long _ticks1800 = _date1800.Ticks;
-        
+        /// <summary>
+        /// The maximum timetamp possible.
+        /// </summary>
+        private static readonly ulong _maxTimestamp = (ulong)((long.MaxValue - _ticks1800) / TimeSpan.TicksPerSecond);
+
         public static ulong DateToTimestampSeconds(DateTime date)
         {
             return (ulong)(date.Ticks - _ticks1800) / TimeSpan.TicksPerSecond;
@@ -20,7 +24,17 @@ namespace QuantGate.API.Signals.Utilities
 
         public static DateTime TimestampSecondsToDate(ulong timestamp)
         {
-            return new DateTime(_ticks1800 + (long)(timestamp * TimeSpan.TicksPerSecond), DateTimeKind.Utc);
+            try
+            {
+                if (timestamp > _maxTimestamp)
+                    return DateTime.UtcNow;
+
+                return new DateTime(_ticks1800 + (long)(timestamp * TimeSpan.TicksPerSecond), DateTimeKind.Utc);
+            }
+            catch 
+            {
+                return DateTime.UtcNow;
+            }
         }
 
         public static DateTime DaysToDate(ulong days)
