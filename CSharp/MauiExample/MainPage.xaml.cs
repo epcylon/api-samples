@@ -7,12 +7,12 @@ namespace BridgeRock.MauiExample
 {
     public partial class MainPage : ContentPage
 	{
-		private APIClient _client;
-		private TopSymbolsEventArgs _topSymbols;
-		private string _symbol = "NQ U2";
-		private readonly string _strategyId = "Crb9.0";		
+		private APIClient? _client;
+		private TopSymbolsEventArgs? _topSymbols;
+		private string _symbol = "NQ H3";
+		private readonly string _strategyId = "Crb7.6";		
 
-		private APIClient Client
+		private APIClient? Client
         {
 			get { return _client; }
 			set
@@ -84,29 +84,29 @@ namespace BridgeRock.MauiExample
 			Client.SubscribeStrategy(_strategyId, _symbol);
 		}
 
-		private void HandleInstrumentUpdate(object sender, InstrumentEventArgs e)
+		private void HandleInstrumentUpdate(object? sender, InstrumentEventArgs e)
 		{
 			Trace.TraceInformation(e.Symbol + " " + (e.Details?.InstrumentType.ToString() ?? "None") + 
 								   " " + (e.Details?.ExpiryDate.ToString() ?? string.Empty) + 
 								   " " + e.Error?.Message ?? string.Empty);
 		}
 
-        private void HandleError(object client, QuantGate.API.Events.ErrorEventArgs args)
+        private void HandleError(object? client, QuantGate.API.Events.ErrorEventArgs args)
 		{
 			Trace.TraceInformation("Error! " + args.Message);
 		}
 
-		private void HandleDisconnected(object client, EventArgs args)
+		private void HandleDisconnected(object? client, EventArgs args)
 		{
 			Trace.TraceInformation("Disconnected!");
 		}
 
-		private void HandleConnected(object client, EventArgs args)
+		private void HandleConnected(object? client, EventArgs args)
 		{
 			Trace.TraceInformation("Connected!");
 		}
 
-		private void HandleConnectClicked(object client, EventArgs args)
+		private void HandleConnectClicked(object? client, EventArgs args)
         {
 			Client = new APIClient(new ConnectionToken(Environments.Development,
 													   eUsername.Text, ePassword.Text), 
@@ -129,13 +129,13 @@ namespace BridgeRock.MauiExample
 			{
 				Client?.SearchSymbols(eSearch.Text, "paper");
 			}
-			else
+			else if (_topSymbols is not null)
 			{
 				HandleTopSymbolsUpdate(this, _topSymbols);
 			}
 		}
 
-		private void HandleTopSymbolsUpdate(object sender, TopSymbolsEventArgs topSymbols)
+		private void HandleTopSymbolsUpdate(object? sender, TopSymbolsEventArgs topSymbols)
 		{
 			_topSymbols = topSymbols;
 			if (!string.IsNullOrEmpty(eSearch.Text))
@@ -155,7 +155,7 @@ namespace BridgeRock.MauiExample
 			colSearch.ItemsSource = searchRows;
 		}
 
-		private void HandleSearchUpdate(object sender, SearchResultsEventArgs e)
+		private void HandleSearchUpdate(object? sender, SearchResultsEventArgs e)
 		{
 			if (string.IsNullOrEmpty(eSearch.Text))
 				return;
@@ -173,27 +173,27 @@ namespace BridgeRock.MauiExample
 			colSearch.ItemsSource = searchRows;
 		}
 
-		private void HandleSentimentUpdate(object sender, SentimentEventArgs e)
+		private void HandleSentimentUpdate(object? sender, SentimentEventArgs e)
 		{
 			s50t.UpdateSpectrum(e);
 		}
 
-		private void HandleHeadroomUpdate(object sender, HeadroomEventArgs e)
+		private void HandleHeadroomUpdate(object? sender, HeadroomEventArgs e)
 		{
 			sgHeadroom.Value = e.Value;
 		}
 
-		private void HandleBookPressureUpdate(object sender, BookPressureEventArgs e)
+		private void HandleBookPressureUpdate(object? sender, BookPressureEventArgs e)
 		{
 			sgBookPressure.Value = e.Value;
 		}
 
-		private void HandleCommitmentUpdate(object sender, CommitmentEventArgs e)
+		private void HandleCommitmentUpdate(object? sender, CommitmentEventArgs e)
 		{
 			sgCommitment.Value = e.Value;
 		}
 
-		private void HandlePerceptionUpdate(object sender, PerceptionEventArgs e)
+		private void HandlePerceptionUpdate(object? sender, PerceptionEventArgs e)
 		{
 			sgPerception.Value = e.Value;
 		}

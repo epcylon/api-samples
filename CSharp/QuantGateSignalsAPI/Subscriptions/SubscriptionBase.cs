@@ -15,7 +15,7 @@ namespace QuantGate.API.Signals.Subscriptions
                                 uint throttleRate = 0, object reference = null) :
             base(client, destination, receipt, throttleRate)
         {
-            if (reference is object)
+            if (reference is not null)
                 References = new HashSet<object> { reference };
             else
                 References = new HashSet<object>();
@@ -29,7 +29,7 @@ namespace QuantGate.API.Signals.Subscriptions
         /// <summary>
         /// Empty object to use (instead of null).
         /// </summary>
-        private readonly object _emptyObject = new object();
+        private readonly object _emptyObject = new();
 
         /// <summary>
         /// Notifies that the object was updated (through the parent).
@@ -64,8 +64,7 @@ namespace QuantGate.API.Signals.Subscriptions
         private void HandleError(ProtoStompSubscription subscription, Exception exception)
         {
             // Get the error information.
-            SubscriptionError error =
-                new SubscriptionError(exception.Message, exception.InnerException?.Message ?? string.Empty);
+            SubscriptionError error = new(exception.Message, exception.InnerException?.Message ?? string.Empty);
             // Wrap the error and send to handlers.
             PostUpdate(WrapError(error));
             // Unsubscribe this subscription.
