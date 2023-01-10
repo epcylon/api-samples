@@ -86,11 +86,7 @@ namespace BlazorExample.Signals
         {
             // Create the API client, and wire up the handlers.
             _client = new APIClient(
-                new ConnectionToken(Environments.Production,
-                                    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
-                                    "eyJzdWIiOiJUZXN0QXBwIiwiaWF0IjoxNjMzMDEyMTUzLCJleHAiOjE2MzgyMz" +
-                                    "A0MDAsImF1ZCI6IjJXVWplb2JSWFJXOXBzTkRFY3hlMU1EOXd0ZGZkaDFDIn0." +
-                                    "xtykKWHxKwhopUkkyUm6eCa9qfQsGkhHEdAea9hdSz8"));
+                new ConnectionToken(Environments.Production, "{username here}", "{password here}"));
 
             _client.TopSymbolsUpdated += HandleTopSymbolsUpdated;
             _client.SentimentUpdated += HandleSentimentUpdated;

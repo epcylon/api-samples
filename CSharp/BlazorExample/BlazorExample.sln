@@ -5,9 +5,9 @@ VisualStudioVersion = 17.1.32104.313
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorExample", "BlazorExample.csproj", "{87D745BD-FC28-4ABE-82AE-90A919735CC7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuantGateSignalsAPI.Net6", "..\QuantGateSignalsAPI.Net6\QuantGateSignalsAPI.Net6.csproj", "{F8505B17-EB30-4197-BC12-9E9CA7151C1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccountAPI", "..\AccountAPI\AccountAPI.csproj", "{D88C737C-9920-4D20-A44F-58E895C538CB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccountAPI", "..\AccountAPI.Net6\AccountAPI.csproj", "{2D70E236-DED5-4AA6-B2B9-941356874165}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuantGateSignalsAPI", "..\QuantGateSignalsAPI\QuantGateSignalsAPI.csproj", "{9366ACCE-071B-4280-95F2-2EBB9B97591C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +19,14 @@ Global
 		{87D745BD-FC28-4ABE-82AE-90A919735CC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87D745BD-FC28-4ABE-82AE-90A919735CC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87D745BD-FC28-4ABE-82AE-90A919735CC7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F8505B17-EB30-4197-BC12-9E9CA7151C1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F8505B17-EB30-4197-BC12-9E9CA7151C1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F8505B17-EB30-4197-BC12-9E9CA7151C1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F8505B17-EB30-4197-BC12-9E9CA7151C1F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2D70E236-DED5-4AA6-B2B9-941356874165}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2D70E236-DED5-4AA6-B2B9-941356874165}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2D70E236-DED5-4AA6-B2B9-941356874165}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2D70E236-DED5-4AA6-B2B9-941356874165}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D88C737C-9920-4D20-A44F-58E895C538CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D88C737C-9920-4D20-A44F-58E895C538CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D88C737C-9920-4D20-A44F-58E895C538CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D88C737C-9920-4D20-A44F-58E895C538CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9366ACCE-071B-4280-95F2-2EBB9B97591C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9366ACCE-071B-4280-95F2-2EBB9B97591C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9366ACCE-071B-4280-95F2-2EBB9B97591C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9366ACCE-071B-4280-95F2-2EBB9B97591C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
