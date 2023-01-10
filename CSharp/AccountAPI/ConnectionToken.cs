@@ -71,7 +71,7 @@ namespace Epcylon.Net.APIs.Account
         /// <returns>The product id string from the product</returns>
         public static string ProductIDByProduct(Products product)
         {
-            if (_products.TryGetValue(product, out string id))
+            if (_products.TryGetValue(product, out string? id))
                 return id;
 
             return "none";
@@ -97,7 +97,7 @@ namespace Epcylon.Net.APIs.Account
         /// <returns>The environment id string from the environment</returns>
         public static string ConvertEnvironment(Environments environment)
         {
-            if (_environments.TryGetValue(environment, out string enumValue))
+            if (_environments.TryGetValue(environment, out string? enumValue))
                 return enumValue;
 
             return "Production";
@@ -387,7 +387,7 @@ namespace Epcylon.Net.APIs.Account
         /// Timer event handler - will refresh the token, if possible.
         /// </summary>
         /// <param name="state">Timer state object (not used).</param>
-        private void HandleTimer(object state)
+        private void HandleTimer(object? state)
         {
             long utcTicks;
 

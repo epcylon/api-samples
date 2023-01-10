@@ -1,54 +1,60 @@
-﻿using Epcylon.Net.APIs.Account;
-using QuantGate.API.Events;
+using Epcylon.Net.APIs.Account;
 using QuantGate.API.Signals;
 using QuantGate.API.Signals.Events;
-using System;
 using System.Diagnostics;
-using System.Windows.Forms;
 
-namespace WindowsFormsExample
+namespace QuantGate.WindowsFormsExample
 {
     public partial class Form1 : Form
     {
-        private readonly APIClient _client;
-        private TopSymbolsEventArgs _topSymbols;
-        private string _symbol = "NQ Z1";
-        private readonly string _strategyId = "Crb9.0";
+        private APIClient? _client;
+        private TopSymbolsEventArgs? _topSymbols;
+        private string _symbol = "NQ F3";
+        private readonly string _strategyId = "Crb7.6";
+
+        private APIClient? Client
+        {
+            get { return _client; }
+            set
+            {
+                if (_client is not null)
+                {
+                    _client.Connected -= HandleConnected;
+                    _client.Disconnected -= HandleDisconnected;
+                    _client.Error -= HandleError;
+                    _client.SymbolSearchUpdated -= HandleSearchUpdate;
+                    _client.TopSymbolsUpdated -= HandleTopSymbolsUpdate;
+                    _client.PerceptionUpdated -= HandlePerceptionUpdate;
+                }
+
+                _client = value;
+
+                if (_client is not null)
+                {
+                    _client.Connected += HandleConnected;
+                    _client.Disconnected += HandleDisconnected;
+                    _client.Error += HandleError;
+                    _client.SymbolSearchUpdated += HandleSearchUpdate;
+                    _client.TopSymbolsUpdated += HandleTopSymbolsUpdate;
+                    _client.PerceptionUpdated += HandlePerceptionUpdate;
+                }
+            }
+        }
 
         public Form1()
         {
             InitializeComponent();
 
-            //DataContext = this;
-
-            txtSearch.TextChanged += HandleSearchTextUpdate;
-
-            _client = new APIClient(
-                new ConnectionToken(Environments.Staging,
-                                    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
-                                    "eyJzdWIiOiJUZXN0QXBwIiwiaWF0IjoxNjMzMDEyMTUzLCJleHAiOjE2MzgyMz" +
-                                    "A0MDAsImF1ZCI6IjJXVWplb2JSWFJXOXBzTkRFY3hlMU1EOXd0ZGZkaDFDIn0." +
-                                    "xtykKWHxKwhopUkkyUm6eCa9qfQsGkhHEdAea9hdSz8"));
-
-            _client.Connected += HandleConnected;
-            _client.Disconnected += HandleDisconnected;
-            _client.Error += HandleError;
-
-            _client.PerceptionUpdated += HandlePerceptionUpdated;
-            _client.SymbolSearchUpdated += HandleSearchUpdate;
-            _client.TopSymbolsUpdated += HandleTopSymbolsUpdate;
-            
-            _client.Connect();
-
-            SubscribeSearch();
-            Subscribe(_symbol);
+            txtSearch.TextChanged += HandleSearchTextUpdate;            
         }
 
         private void Subscribe(string symbol)
         {
+            if (_client is null)
+                return;
+
             // Unsubscribe from all subscriptions for this symbol.
-            _client.UnsubscribeAll(_symbol);
-            //sViewer.ClearSpectrum();
+            _client.UnsubscribeAll(_symbol);            
 
             _symbol = symbol;
 
@@ -63,44 +69,44 @@ namespace WindowsFormsExample
             _client.SubscribeStrategy(_strategyId, _symbol);
         }
 
-        private void HandlePerceptionUpdated(object sender, PerceptionEventArgs e)
+        private void HandlePerceptionUpdate(object? sender, PerceptionEventArgs e)
         {
             Debug.Print("Perception updated: " + e.Symbol + "  " + e.Value);
         }
 
         private void SubscribeSearch()
         {
-            _client.SubscribeTopSymbols("ib");
+            _client?.SubscribeTopSymbols("ib");
         }
 
-        private void HandleSearchTextUpdate(object sender, EventArgs e)
+        private void HandleSearchTextUpdate(object? sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(txtSearch.Text))
             {
-                _client.SearchSymbols(txtSearch.Text, "paper");
+                _client?.SearchSymbols(txtSearch.Text, "paper");
             }
-            else
+            else if (_topSymbols is not null)
             {
                 HandleTopSymbolsUpdate(this, _topSymbols);
             }
         }
 
-        private void HandleError(object client, ErrorEventArgs args)
+        private void HandleError(object? client, API.Events.ErrorEventArgs args)
         {
             Console.WriteLine("Error! " + args.Message);
         }
 
-        private void HandleDisconnected(object client, EventArgs args)
+        private void HandleDisconnected(object? client, EventArgs args)
         {
             Console.WriteLine("Disconnected!");
         }
 
-        private void HandleConnected(object client, EventArgs args)
+        private void HandleConnected(object? client, EventArgs args)
         {
             Console.WriteLine("Connected!");
         }
 
-        private void HandleTopSymbolsUpdate(object sender, TopSymbolsEventArgs topSymbols)
+        private void HandleTopSymbolsUpdate(object? sender, TopSymbolsEventArgs topSymbols)
         {
             _topSymbols = topSymbols;
             if (!string.IsNullOrEmpty(txtSearch.Text))
@@ -117,8 +123,8 @@ namespace WindowsFormsExample
                 }));
         }
 
-        private void HandleSearchUpdate(object sender, SearchResultsEventArgs e)
-        {       
+        private void HandleSearchUpdate(object? sender, SearchResultsEventArgs e)
+        {
             if (string.IsNullOrEmpty(txtSearch.Text))
                 return;
 
@@ -135,10 +141,21 @@ namespace WindowsFormsExample
             }
         }
 
-        //private void HandleSubscribeMenuClick(object sender, RoutedEventArgs e)
-        //{
-        //    if (lvSearch.SelectedItem is SearchRow row)
-        //        Subscribe(row.Symbol);
-        //}
+        private void HandleConnectClicked(object? client, EventArgs args)
+        {
+            Client = new APIClient(new ConnectionToken(Environments.Development,
+                                                       txtUsername.Text, txtPassword.Text),
+                                   stream: DataStream.Realtime);
+
+            Client.Connect();
+
+            SubscribeSearch();
+            Subscribe(_symbol);
+        }
+
+        private void HandleDisconnectClicked(object client, EventArgs args)
+        {
+            Client?.Disconnect();
+        }
     }
 }

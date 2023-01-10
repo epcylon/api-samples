@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33209.295
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsExample", "WindowsFormsExample.csproj", "{A0D93105-BDE7-432F-8785-3457F4168387}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccountAPI", "..\AccountAPI\AccountAPI.csproj", "{3D9DC9DA-3AA8-4082-AAC8-0EF52CF8DBB2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuantGateSignalsAPI", "..\QuantGateSignalsAPI\QuantGateSignalsAPI.csproj", "{4890E474-FD2B-43AE-A730-E7472A78218B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A0D93105-BDE7-432F-8785-3457F4168387}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0D93105-BDE7-432F-8785-3457F4168387}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0D93105-BDE7-432F-8785-3457F4168387}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0D93105-BDE7-432F-8785-3457F4168387}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D9DC9DA-3AA8-4082-AAC8-0EF52CF8DBB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D9DC9DA-3AA8-4082-AAC8-0EF52CF8DBB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D9DC9DA-3AA8-4082-AAC8-0EF52CF8DBB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D9DC9DA-3AA8-4082-AAC8-0EF52CF8DBB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4890E474-FD2B-43AE-A730-E7472A78218B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4890E474-FD2B-43AE-A730-E7472A78218B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4890E474-FD2B-43AE-A730-E7472A78218B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4890E474-FD2B-43AE-A730-E7472A78218B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8F2B1811-E51F-42E9-B28E-C37BAFFAB50F}
+	EndGlobalSection
+EndGlobal

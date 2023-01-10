@@ -33,11 +33,11 @@ namespace QuantGate.WPFExample
                     _client.InstrumentUpdated -= HandleInstrumentUpdate;
                     _client.SymbolSearchUpdated -= HandleSearchUpdate;
                     _client.TopSymbolsUpdated -= HandleTopSymbolsUpdate;
-                    _client.PerceptionUpdated += HandlePerceptionUpdate;
-                    _client.CommitmentUpdated += HandleCommitmentUpdate;
-                    _client.BookPressureUpdated += HandleBookPressureUpdate;
-                    _client.HeadroomUpdated += HandleHeadroomUpdate;
-                    _client.SentimentUpdated += HandleSentimentUpdate;
+                    _client.PerceptionUpdated -= HandlePerceptionUpdate;
+                    _client.CommitmentUpdated -= HandleCommitmentUpdate;
+                    _client.BookPressureUpdated -= HandleBookPressureUpdate;
+                    _client.HeadroomUpdated -= HandleHeadroomUpdate;
+                    _client.SentimentUpdated -= HandleSentimentUpdate;
                 }
 
                 _client = value;
