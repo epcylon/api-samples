@@ -1,22 +1,36 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <RootNamespace>QuantGate.API.Signals</RootNamespace>
-    <Company>QuantGate Systems Inc</Company>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageId>QuantGate_SignalsAPI</PackageId>
-    <Authors>John Hollander</Authors>
-    <Version>1.0.0-alpha</Version>
-    <Description>The QuantGate Signal API delivers the signals and gauge data used to generate spectrums and other visual indicators for QuantGate products. The API can be integrated with both mobile applications and enterprise legacy trading platforms, and can be used with any market data feed. Requires a valid JWT token, as supplied by QuantGate Systems Inc.</Description>
-    <Copyright>2021 QuantGate Systems Inc.</Copyright>
-    <PackageProjectUrl>https://quantgatesystems.com/saas.html</PackageProjectUrl>
-    <PackageReleaseNotes>Initial release for alpha testing.</PackageReleaseNotes>
-	<LangVersion>8.0</LangVersion>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+
+	<VersionSuffix>1.0.1.$([System.DateTime]::UtcNow.ToString(mmff))</VersionSuffix>
+	<AssemblyVersion Condition=" '$(VersionSuffix)' == '' ">0.0.0.1</AssemblyVersion>
+	<AssemblyVersion Condition=" '$(VersionSuffix)' != '' ">$(VersionSuffix)</AssemblyVersion>
+	<Version Condition=" '$(VersionSuffix)' == '' ">0.0.1.0</Version>
+	<Version Condition=" '$(VersionSuffix)' != '' ">$(VersionSuffix)</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Google.Protobuf" Version="3.17.3" />
+    <None Remove="Events\placeholder.txt" />
+    <None Remove="ProtoStomp\placeholder.txt" />
+    <None Remove="Proto\placeholder.txt" />
+    <None Remove="Subscriptions\placeholder.txt" />
+    <None Remove="Utilities\placeholder.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Events\" />
+    <Folder Include="Utilities\" />
+    <Folder Include="ProtoStomp\" />
+    <Folder Include="Proto\" />
+    <Folder Include="Subscriptions\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.19.0" />
   </ItemGroup>
 
   <ItemGroup>

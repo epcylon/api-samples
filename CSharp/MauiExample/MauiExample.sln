@@ -1,13 +1,12 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MauiExample", "MauiExample.csproj", "{C13F2493-1376-443D-9E41-057FE5FE50BA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuantGateSignalsAPI.Net6", "..\QuantGateSignalsAPI.Net6\QuantGateSignalsAPI.Net6.csproj", "{438AB480-B9F0-4ACA-8766-270056C64B07}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccountAPI", "..\AccountAPI\AccountAPI.csproj", "{47F93D82-8993-4E1B-AE8E-9374906CBF9D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccountAPI", "..\AccountAPI.Net6\AccountAPI.csproj", "{47F93D82-8993-4E1B-AE8E-9374906CBF9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuantGateSignalsAPI", "..\QuantGateSignalsAPI\QuantGateSignalsAPI.csproj", "{F4EEA603-3F51-4C7B-9C5E-3C9178671992}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,14 +20,14 @@ Global
 		{C13F2493-1376-443D-9E41-057FE5FE50BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C13F2493-1376-443D-9E41-057FE5FE50BA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C13F2493-1376-443D-9E41-057FE5FE50BA}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{438AB480-B9F0-4ACA-8766-270056C64B07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{438AB480-B9F0-4ACA-8766-270056C64B07}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{438AB480-B9F0-4ACA-8766-270056C64B07}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{438AB480-B9F0-4ACA-8766-270056C64B07}.Release|Any CPU.Build.0 = Release|Any CPU
 		{47F93D82-8993-4E1B-AE8E-9374906CBF9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{47F93D82-8993-4E1B-AE8E-9374906CBF9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47F93D82-8993-4E1B-AE8E-9374906CBF9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47F93D82-8993-4E1B-AE8E-9374906CBF9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4EEA603-3F51-4C7B-9C5E-3C9178671992}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4EEA603-3F51-4C7B-9C5E-3C9178671992}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4EEA603-3F51-4C7B-9C5E-3C9178671992}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4EEA603-3F51-4C7B-9C5E-3C9178671992}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
