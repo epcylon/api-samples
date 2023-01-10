@@ -7,7 +7,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
-namespace BridgeRock.CSharpExample.Controls
+namespace QuantGate.WPFExample.Controls
 {
     /// <summary>
     /// Interaction logic for SentimentViewer.xaml
@@ -78,20 +78,20 @@ namespace BridgeRock.CSharpExample.Controls
         /// <summary>
         /// The top peak to display.
         /// </summary>
-        private Ellipse _topPeak;
+        private Ellipse? _topPeak;
         /// <summary>
         /// The bottom peak to display.
         /// </summary>
-        private Ellipse _bottomPeak;
+        private Ellipse? _bottomPeak;
 
         /// <summary>
         /// Has the data been retrieved?
         /// </summary>
         private bool _dataRetrieved = false;
 
-        private Storyboard _story = default;
-        private Rectangle _rectLoading;
-        private Viewbox _vbLoading;
+        private Storyboard? _story = default;
+        private Rectangle? _rectLoading;
+        private Viewbox? _vbLoading;
 
         /// <summary>
         /// Is the (loading) storyboard currently running?
@@ -113,7 +113,7 @@ namespace BridgeRock.CSharpExample.Controls
             _topPeakFill = new SolidColorBrush(Colors.Red);
             _bottomPeakFill = new SolidColorBrush(Colors.Blue);
             _inactiveColor = new SolidColorBrush(Color.FromArgb(0xFF, 0x27, 0x27, 0x26));
-            
+
             _hLineBrush.Freeze();
             _baselineFill.Freeze();
             _peakStroke.Freeze();
@@ -200,7 +200,7 @@ namespace BridgeRock.CSharpExample.Controls
                 Unloaded -= HandleUnloaded;
                 Loaded -= HandleSpectrumSizeChange;
                 SizeChanged -= HandleSpectrumSizeChange;
-                IsVisibleChanged -= Spectrum_IsVisibleChanged; 
+                IsVisibleChanged -= Spectrum_IsVisibleChanged;
             }
             catch (Exception ex)
             {
@@ -265,7 +265,7 @@ namespace BridgeRock.CSharpExample.Controls
                     RepeatBehavior = RepeatBehavior.Forever
                 };
                 Timeline.SetDesiredFrameRate(_story, 15);
-                
+
                 DoubleAnimation animation;
                 animation = new DoubleAnimation()
                 {
@@ -357,11 +357,14 @@ namespace BridgeRock.CSharpExample.Controls
 
                 // Add and update the peaks.
                 _topPeak = CreatePeak(_topPeakFill);
-                cvMain.Children.Add(_topPeak);
-
                 _bottomPeak = CreatePeak(_bottomPeakFill);
-                Canvas.SetTop(_bottomPeak, ActualHeight - _topPeak.Height);
-                cvMain.Children.Add(_bottomPeak);
+
+                if (_topPeak is not null && _bottomPeak is not null)
+                {
+                    cvMain.Children.Add(_topPeak);
+                    Canvas.SetTop(_bottomPeak, ActualHeight - _topPeak.Height);
+                    cvMain.Children.Add(_bottomPeak);
+                }
 
                 UpdatePeaks();
 
@@ -498,7 +501,7 @@ namespace BridgeRock.CSharpExample.Controls
         /// </summary>
         /// <param name="brush">The brush to create the peak for.</param>
         /// <returns>The new peak.</returns>
-        private Ellipse CreatePeak(SolidColorBrush brush)
+        private Ellipse? CreatePeak(SolidColorBrush brush)
         {
             Ellipse peak;
 
@@ -535,6 +538,10 @@ namespace BridgeRock.CSharpExample.Controls
         {
             try
             {
+                // Make sure loaded, before arranging.
+                if (_rectLoading is null || _vbLoading is null)
+                    return;
+
                 // Arrange the loading rectangle.
                 _rectLoading.Height = ActualHeight * 0.15;
                 _rectLoading.Width = ActualWidth * 0.75;
@@ -598,7 +605,7 @@ namespace BridgeRock.CSharpExample.Controls
                 {
                     changed = true;
                     Peaking = peaking;
-                }                
+                }
 
                 for (int index = 0; index <= SentimentEventArgs.TotalBars - 1; index++)
                 {
@@ -694,9 +701,9 @@ namespace BridgeRock.CSharpExample.Controls
             try
             {
                 // If no peaks, just return.
-                if (_topPeak is null)
+                if (_topPeak is null || _bottomPeak is null)
                     return;
-                                
+
                 switch (Peaking)
                 {
                     case 1:
@@ -836,7 +843,7 @@ namespace BridgeRock.CSharpExample.Controls
 
         // Using a DependencyProperty as the backing store for Values.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ValuesProperty =
-            DependencyProperty.Register("Values", typeof(SentimentEventArgs), typeof(SentimentViewer), 
+            DependencyProperty.Register("Values", typeof(SentimentEventArgs), typeof(SentimentViewer),
                                         new PropertyMetadata(null, HandleSentimentChange));
 
         /// <summary>
@@ -856,7 +863,7 @@ namespace BridgeRock.CSharpExample.Controls
                 else
                     viewer.UpdateSpectrum(newSentiment);
             }
-        }        
+        }
 
         /// <summary>
         /// Has the data been retrieved?
@@ -872,7 +879,7 @@ namespace BridgeRock.CSharpExample.Controls
                     {
                         _dataRetrieved = value;                                 // Set the new value.                        
 
-                        if (_story is object)
+                        if (_story is not null)
                         {
                             if (_dataRetrieved)                                 // If data not loading...
                             {
@@ -882,13 +889,21 @@ namespace BridgeRock.CSharpExample.Controls
                                     _storyboardRunning = false;                 // No longer running.
                                 }
 
-                                _vbLoading.Visibility = Visibility.Hidden;      // Hide Loading label.
-                                _rectLoading.Visibility = Visibility.Hidden;    // Hide rectangle.
+                                if (_vbLoading is not null && _rectLoading is not null)
+                                {
+                                    // Hide loading label and rectangle.
+                                    _vbLoading.Visibility = Visibility.Hidden;
+                                    _rectLoading.Visibility = Visibility.Hidden;
+                                }
                             }
                             else
                             {
-                                _vbLoading.Visibility = Visibility.Visible;     // Show Loading label.
-                                _rectLoading.Visibility = Visibility.Visible;   // Show rectangle.
+                                if (_vbLoading is not null && _rectLoading is not null)
+                                {
+                                    // Show loading label and rectangle.
+                                    _vbLoading.Visibility = Visibility.Visible;
+                                    _rectLoading.Visibility = Visibility.Visible;
+                                }                            
 
                                 if (!_storyboardRunning)                        // If we have storyboard.
                                 {

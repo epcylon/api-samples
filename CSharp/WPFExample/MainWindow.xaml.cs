@@ -6,17 +6,60 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace BridgeRock.CSharpExample
+namespace QuantGate.WPFExample
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly APIClient _client;
-        private TopSymbolsEventArgs _topSymbols;
+        private APIClient? _client;
+        private TopSymbolsEventArgs? _topSymbols;
         private string _symbol = "NQ H3";
         private readonly string _strategyId = "Crb9.0";
+
+        #region Client Property
+
+        private APIClient? Client
+        {
+            get { return _client; }
+            set
+            {
+                if (_client is not null)
+                {
+                    _client.Connected -= HandleConnected;
+                    _client.Disconnected -= HandleDisconnected;
+                    _client.Error -= HandleError;
+                    _client.InstrumentUpdated -= HandleInstrumentUpdate;
+                    _client.SymbolSearchUpdated -= HandleSearchUpdate;
+                    _client.TopSymbolsUpdated -= HandleTopSymbolsUpdate;
+                    _client.PerceptionUpdated += HandlePerceptionUpdate;
+                    _client.CommitmentUpdated += HandleCommitmentUpdate;
+                    _client.BookPressureUpdated += HandleBookPressureUpdate;
+                    _client.HeadroomUpdated += HandleHeadroomUpdate;
+                    _client.SentimentUpdated += HandleSentimentUpdate;
+                }
+
+                _client = value;
+
+                if (_client is not null)
+                {
+                    _client.Connected += HandleConnected;
+                    _client.Disconnected += HandleDisconnected;
+                    _client.Error += HandleError;
+                    _client.InstrumentUpdated += HandleInstrumentUpdate;
+                    _client.SymbolSearchUpdated += HandleSearchUpdate;
+                    _client.TopSymbolsUpdated += HandleTopSymbolsUpdate;
+                    _client.PerceptionUpdated += HandlePerceptionUpdate;
+                    _client.CommitmentUpdated += HandleCommitmentUpdate;
+                    _client.BookPressureUpdated += HandleBookPressureUpdate;
+                    _client.HeadroomUpdated += HandleHeadroomUpdate;
+                    _client.SentimentUpdated += HandleSentimentUpdate;
+                }
+            }
+        }
+
+        #endregion
 
         #region Dependency Properties
 
@@ -79,40 +122,14 @@ namespace BridgeRock.CSharpExample
             DataContext = this;
 
             txtSearch.TextChanged += HandleSearchUpdate;
+        }         
 
-            _client = new APIClient(
-                new ConnectionToken(Environments.Development, "john_hollander@hotmail.com", "Cfrimf8462!"));
-                                    //"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
-                                    //"eyJzdWIiOiJUZXN0QXBwIiwiaWF0IjoxNjMzMDEyMTUzLCJleHAiOjE2MzgyMz" +
-                                    //"A0MDAsImF1ZCI6IjJXVWplb2JSWFJXOXBzTkRFY3hlMU1EOXd0ZGZkaDFDIn0." +
-                                    //"xtykKWHxKwhopUkkyUm6eCa9qfQsGkhHEdAea9hdSz8");
-
-            _client.Connected += HandleConnected;
-            _client.Disconnected += HandleDisconnected;
-            _client.Error += HandleError;
-
-            _client.InstrumentUpdated += HandleInstrumentUpdate;
-            _client.FuturesListUpdated += HandleFuturesListUpdated;
-            _client.SymbolSearchUpdated += HandleSearchUpdate;
-            _client.TopSymbolsUpdated += HandleTopSymbolsUpdate;
-            _client.PerceptionUpdated += (s, e) => Perception = e.Value;
-            _client.CommitmentUpdated += (s, e) => Commitment = e.Value;
-            _client.BookPressureUpdated += (s, e) => BookPressure = e.Value;
-            _client.HeadroomUpdated += (s, e) => Headroom = e.Value;
-            _client.SentimentUpdated += (s, e) => Sentiment = e;
-
-            _client.Connect();
-
-            SubscribeSearch();
-            Subscribe(_symbol);
-        }
-
-        private void HandleFuturesListUpdated(object sender, FuturesListEventArgs e)
+        private void HandleFuturesListUpdated(object? sender, FuturesListEventArgs e)
         {
             Console.WriteLine("Futures list for " + e.Underlying + "/" + e.Currency + " Count=" + e.Futures.Count);
         }
 
-        private void HandleInstrumentUpdate(object sender, InstrumentEventArgs e)
+        private void HandleInstrumentUpdate(object? sender, InstrumentEventArgs e)
         {
             Console.WriteLine(e.Symbol + " " + e.Details.InstrumentType.ToString() + " " +
                               e.Details.ExpiryDate.ToString() + " " + e.Error?.Message);
@@ -120,6 +137,9 @@ namespace BridgeRock.CSharpExample
 
         private void Subscribe(string symbol)
         {
+            if (_client is null)
+                return;
+
             // Unsubscribe from all subscriptions for this symbol.
             _client.UnsubscribeAll(_symbol);
             sViewer.ClearSpectrum();
@@ -140,37 +160,37 @@ namespace BridgeRock.CSharpExample
 
         private void SubscribeSearch()
         {
-            _client.SubscribeTopSymbols("paper"); // "ib");
+            Client?.SubscribeTopSymbols("paper");
         }
 
-        private void HandleSearchUpdate(object sender, TextChangedEventArgs e)
+        private void HandleSearchUpdate(object? sender, TextChangedEventArgs e)
         {
             if (!string.IsNullOrEmpty(txtSearch.Text))
             {
-                _client.SearchSymbols(txtSearch.Text, "paper");
+                Client?.SearchSymbols(txtSearch.Text, "paper");
             }
-            else
+            else if (_topSymbols is not null)
             {
                 HandleTopSymbolsUpdate(this, _topSymbols);
             }
-        }        
+        }
 
-        private void HandleError(object client, ErrorEventArgs args)
+        private void HandleError(object? client, ErrorEventArgs args)
         {
             Console.WriteLine("Error! " + args.Message);
         }
 
-        private void HandleDisconnected(object client, EventArgs args)
+        private void HandleDisconnected(object? client, EventArgs args)
         {
             Console.WriteLine("Disconnected!");
         }
 
-        private void HandleConnected(object client, EventArgs args)
+        private void HandleConnected(object? client, EventArgs args)
         {
             Console.WriteLine("Connected!");
         }
 
-        private void HandleTopSymbolsUpdate(object sender, TopSymbolsEventArgs topSymbols)
+        private void HandleTopSymbolsUpdate(object? sender, TopSymbolsEventArgs topSymbols)
         {
             _topSymbols = topSymbols;
             if (!string.IsNullOrEmpty(txtSearch.Text))
@@ -188,7 +208,32 @@ namespace BridgeRock.CSharpExample
                     });
         }
 
-        private void HandleSearchUpdate(object sender, SearchResultsEventArgs e)
+        private void HandleHeadroomUpdate(object? sender, HeadroomEventArgs e)
+        {
+            Headroom = e.Value;
+        }
+
+        private void HandleBookPressureUpdate(object? sender, BookPressureEventArgs e)
+        {
+            BookPressure = e.Value;
+        }
+
+        private void HandleCommitmentUpdate(object? sender, CommitmentEventArgs e)
+        {
+            Commitment = e.Value;
+        }
+
+        private void HandlePerceptionUpdate(object? sender, PerceptionEventArgs e)
+        {
+            Perception = e.Value;
+        }
+
+        private void HandleSentimentUpdate(object? sender, SentimentEventArgs e)
+        {
+            Sentiment = e;
+        }
+
+        private void HandleSearchUpdate(object? sender, SearchResultsEventArgs e)
         {
             if (string.IsNullOrEmpty(txtSearch.Text))
                 return;
@@ -204,10 +249,27 @@ namespace BridgeRock.CSharpExample
                 });
         }
 
-        private void HandleSubscribeMenuClick(object sender, RoutedEventArgs e)
+        private void HandleSubscribeMenuClick(object? sender, RoutedEventArgs e)
         {
-            if (lvSearch.SelectedItem is SearchRow row)            
+            if (lvSearch.SelectedItem is SearchRow row)
                 Subscribe(row.Symbol);
+        }
+
+        private void HandleConnectClick(object sender, RoutedEventArgs e)
+        {
+            Client = new APIClient(new ConnectionToken(Environments.Development,
+                                                       txtUsername.Text, txtPassword.Text),
+                                   stream: DataStream.Realtime);
+
+            Client.Connect();
+
+            SubscribeSearch();
+            Subscribe(_symbol);
+        }
+
+        private void HandleDisconnectClick(object sender, RoutedEventArgs e)
+        {
+            Client?.Disconnect();
         }
     }
 }

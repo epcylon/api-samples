@@ -1,11 +1,20 @@
-﻿<Window x:Class="BridgeRock.CSharpExample.MainWindow"
+﻿<Window x:Class="QuantGate.WPFExample.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:controls="clr-namespace:BridgeRock.CSharpExample.Controls" mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="900">
+        xmlns:controls="clr-namespace:QuantGate.WPFExample.Controls"
+        mc:Ignorable="d" Title="MainWindow" Height="600" Width="900">
     <Grid>
+        <Label Margin="40,18,0,0" Height="30" Width="80" VerticalAlignment="Top" HorizontalAlignment="Left" Content="Username:" />
+        <TextBox x:Name="txtUsername" Margin="110,20,0,0" Height="23" Width="180" TextWrapping="Wrap" 
+                  VerticalAlignment="Top" HorizontalAlignment="Left" Text="" />
+        <Label Margin="310,18,0,0" Height="30" Width="80" VerticalAlignment="Top" HorizontalAlignment="Left" Content="Password:" />
+        <TextBox x:Name="txtPassword" Margin="375,20,0,0" Height="23" Width="140" TextWrapping="Wrap" 
+                 VerticalAlignment="Top" HorizontalAlignment="Left" Text="" />
+        <Button Margin="540,21,0,0" Height="20" Width="90" VerticalAlignment="Top" HorizontalAlignment="Left" Click="HandleConnectClick">Connect</Button>
+        <Button Margin="640,21,0,0" Height="20" Width="90" VerticalAlignment="Top" HorizontalAlignment="Left" Click="HandleDisconnectClick">Disconnect</Button>
+        
         <Slider HorizontalAlignment="Left" Margin="60,60,0,0" VerticalAlignment="Top" Orientation="Vertical" IsEnabled="False"
                 Height="300" Width="20" Minimum="-1" Maximum="1" Value="{Binding Path=Perception}"/>
 

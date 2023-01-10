@@ -1,9 +1,9 @@
-﻿namespace BridgeRock.CSharpExample
+﻿namespace QuantGate.WPFExample
 {
-    public class SearchRow
+    internal class SearchRow
     {
-        public string Symbol { get; set; }
-        public string DisplayName { get; set; }
-        public string EntryProgress { get; set; }
+        public string Symbol { get; set; } = string.Empty;
+        public string DisplayName { get; set; } = string.Empty;
+        public string EntryProgress { get; set; } = string.Empty;
     }
 }
