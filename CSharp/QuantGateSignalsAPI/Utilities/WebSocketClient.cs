@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using System.Diagnostics;
-using System.IO;
 using System.Net.WebSockets;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace QuantGate.API.Signals.Utilities
 {
@@ -146,7 +142,7 @@ namespace QuantGate.API.Signals.Utilities
         }
 
         /// <summary>
-        /// Connects to a websocket server asynchronously and handles the result.
+        /// Connects to a WebSocket server asynchronously and handles the result.
         /// </summary>
         private async void ConnectAsync()
         {
@@ -258,7 +254,7 @@ namespace QuantGate.API.Signals.Utilities
         }
 
         /// <summary>
-        /// Handles the messages being sent to the Websocket connection.
+        /// Handles the messages being sent to the WebSocket connection.
         /// </summary>
         private async Task HandleMessages()
         {
@@ -287,7 +283,7 @@ namespace QuantGate.API.Signals.Utilities
                         if (_socket.State == WebSocketState.CloseReceived &&
                             receiveResult.MessageType == WebSocketMessageType.Close)
                         {
-                            // Acknowledgeing close received from the server.
+                            // Acknowledging close received from the server.
                             _sendLoopTokenSource.Cancel();
                             await _socket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure,
                                                           "Acknowledge Close frame", CancellationToken.None);
@@ -424,16 +420,23 @@ namespace QuantGate.API.Signals.Utilities
         /// <param name="sendAsync">Send asynchronously?</param>
         public void Send(byte[] payload)
         {
-            if (_messageQueue.Count > _maxConcurrent)
+            try
             {
-                // If the queue has too many items in it, close the connection.
-                Close(WebSocketCloseStatus.InternalServerError,
-                      "Too many messages unsent - resetting connection.");
-                return;
-            }
+                if (_messageQueue.Count > _maxConcurrent)
+                {
+                    // If the queue has too many items in it, close the connection.
+                    Close(WebSocketCloseStatus.InternalServerError,
+                          "Too many messages unsent - resetting connection.");
+                    return;
+                }
 
-            // Just use the async method here - using wait could cause deadlocks.
-            _messageQueue.Add(payload);
+                // Just use the async method here - using wait could cause deadlocks.
+                _messageQueue.Add(payload);
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError(_moduleID + ":Send - " + ex.Message);
+            }
         }
 
         #endregion
