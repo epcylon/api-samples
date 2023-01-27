@@ -1598,18 +1598,12 @@ namespace QuantGate.API.Signals
         /// <returns>The DataStream value associated with the id.</returns>
         public static DataStream ToStream(string id)
         {
-            switch (id.ToLower())
-            {               
-                case ParsedDestination.RealtimeStreamID:
-                case "rt_paper":
-                    return DataStream.Realtime;
-
-                case ParsedDestination.DemoStreamID:
-                    return DataStream.Demo;
-
-                default:
-                    return DataStream.Delayed;
-            }
+            return id.ToLower() switch
+            {
+                ParsedDestination.RealtimeStreamID or "rt_paper" => DataStream.Realtime,
+                ParsedDestination.DemoStreamID => DataStream.Demo,
+                _ => DataStream.Delayed,
+            };
         }
 
         /// <summary>

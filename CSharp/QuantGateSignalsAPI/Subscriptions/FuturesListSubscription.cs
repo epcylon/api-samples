@@ -204,7 +204,7 @@ namespace QuantGate.API.Signals.Subscriptions
             {
                 //If there is a high portion, parse it.
                 if (expiryCode.Length > 1)
-                    int.TryParse(expiryCode.Substring(1), out high);
+                    _ = int.TryParse(expiryCode.AsSpan(1), out high);
 
                 //Calculate the full offset..
                 daysOffset = high * _deltaChars.Length + Array.IndexOf(_deltaChars, expiryCode[0]);
@@ -256,7 +256,7 @@ namespace QuantGate.API.Signals.Subscriptions
                     if (_futureOptionOffsetDelimiter.StartsWith(field))
                         futureMonthOffset = 1;
                     else
-                        int.TryParse(fields[(int)BaseFields.MonthOffset], out futureMonthOffset);
+                        _ = int.TryParse(fields[(int)BaseFields.MonthOffset], out futureMonthOffset);
                 }
                 else
                 {
