@@ -5,13 +5,8 @@ using QuantGate.API.Signals.Events;
 using QuantGate.API.Signals.ProtoStomp;
 using QuantGate.API.Signals.Subscriptions;
 using QuantGate.API.Signals.Utilities;
-using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using events = QuantGate.API.Events;
 
 namespace QuantGate.API.Signals
@@ -404,7 +399,7 @@ namespace QuantGate.API.Signals
                     frame = ResponseFrame.Parser.ParseFrom(message);
 
                     // If parsed properly and the consumer can be found, call the consumer for the message.
-                    if ((frame is object) && _messageConsumers.TryGetValue(frame.ResponseCase, out var consumer))
+                    if ((frame is not null) && _messageConsumers.TryGetValue(frame.ResponseCase, out var consumer))
                         consumer(frame);
                 }
                 catch (Exception ex)
@@ -476,9 +471,9 @@ namespace QuantGate.API.Signals
             try
             {
                 // If the subscription id exists, try to get the subscription.                
-                _subscriptionReferences.TryGetValue(message.SubscriptionId, out var subscription);
+                _subscriptionReferences.TryGetValue(message.SubscriptionId, out ProtoStompSubscription subscription);
 
-                if (subscription is object)
+                if (subscription is not null)
                 {
                     // If the subscription was found, handle the next message.
                     (subscription as IObserver<ByteString>).OnNext(message.Body);
@@ -501,7 +496,7 @@ namespace QuantGate.API.Signals
             try
             {
                 // Try to get the receiptable and remove if found.
-                if (_receiptReferences.TryGetValue(frame.Receipt.ReceiptId, out var receiptable))
+                if (_receiptReferences.TryGetValue(frame.Receipt.ReceiptId, out IReceiptable receiptable))
                     _receiptReferences.Remove(frame.Receipt.ReceiptId);
 
                 if (receiptable is object)
@@ -530,9 +525,9 @@ namespace QuantGate.API.Signals
             {
                 // If the subscription id exists, try to get the subscription.
                 _subscriptionReferences.TryGetValue(
-                    frame.SubscriptionError.SubscriptionId, out var subscription);
+                    frame.SubscriptionError.SubscriptionId, out ProtoStompSubscription subscription);
 
-                if (subscription is object)
+                if (subscription is not null)
                 {
                     // If the subscription was found, handle the error. 
                     (subscription as IObserver<ByteString>).
