@@ -173,14 +173,14 @@ namespace QuantGate.API.Signals.Subscriptions
                 nextSplitPoint = detailString.IndexOfAny(_deltaChars, 1);
                 while (nextSplitPoint != -1)
                 {
-                    codedExpiry = detailString.Substring(lastSplitPoint, nextSplitPoint - lastSplitPoint);
+                    codedExpiry = detailString[lastSplitPoint..nextSplitPoint];
                     toReturn.Add(DecodeFuture(baseFuture, ref fullExpiry, codedExpiry, futureMonthOffset, postfix));
 
                     lastSplitPoint = nextSplitPoint;
                     nextSplitPoint = detailString.IndexOfAny(_deltaChars, lastSplitPoint + 1);
                 }
 
-                codedExpiry = detailString.Substring(lastSplitPoint);
+                codedExpiry = detailString[lastSplitPoint..];
                 toReturn.Add(DecodeFuture(baseFuture, ref fullExpiry, codedExpiry, futureMonthOffset, postfix));
             }
             catch (Exception ex)

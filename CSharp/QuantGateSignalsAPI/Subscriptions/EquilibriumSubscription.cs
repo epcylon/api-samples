@@ -32,7 +32,6 @@ namespace QuantGate.API.Signals.Subscriptions
         }
 
         protected override EquilibriumEventArgs WrapError(SubscriptionError error)
-            => new EquilibriumEventArgs(Symbol, Stream, DateTime.UtcNow, Compression, 
-                                        0, 0, 0, 0, 0, 0, 0, true, error);
+            => new(Symbol, Stream, DateTime.UtcNow, Compression, 0, 0, 0, 0, 0, 0, 0, true, error);
     }
 }

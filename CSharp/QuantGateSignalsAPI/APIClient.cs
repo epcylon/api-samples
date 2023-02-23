@@ -53,18 +53,16 @@ namespace QuantGate.API.Signals
         /// <summary>
         /// Holds a list of all current subscriptions.
         /// </summary>
-        private readonly Dictionary<ulong, ProtoStompSubscription> _subscriptionReferences = 
-            new Dictionary<ulong, ProtoStompSubscription>();
+        private readonly Dictionary<ulong, ProtoStompSubscription> _subscriptionReferences = new();
         /// <summary>
         /// Holds a list of all current subscriptions by destination.
         /// </summary>
-        private readonly Dictionary<string, ProtoStompSubscription> _subscriptionsByDestination = 
-            new Dictionary<string, ProtoStompSubscription>();
+        private readonly Dictionary<string, ProtoStompSubscription> _subscriptionsByDestination = new();
 
         /// <summary>
         /// Holds a list of all requests requiring a receipt.
         /// </summary>
-        private readonly Dictionary<ulong, IReceiptable> _receiptReferences = new Dictionary<ulong, IReceiptable>();
+        private readonly Dictionary<ulong, IReceiptable> _receiptReferences = new();
 
         /// <summary>
         /// Search subscription.
@@ -152,7 +150,7 @@ namespace QuantGate.API.Signals
         /// <summary>
         /// Blocking message queue used in the main thread to process new actions within the thread.
         /// </summary>
-        private readonly BlockingCollection<Action> _actions = new BlockingCollection<Action>();
+        private readonly BlockingCollection<Action> _actions = new();
 
         /// <summary>
         /// Transport layer interface instance.
@@ -706,8 +704,8 @@ namespace QuantGate.API.Signals
         /// </summary>
         internal void Throttle(ProtoStompSubscription subscription, uint rate)
         {
-            ThrottleRequest throttle = new ThrottleRequest();
-            ProtoStompReceipt receipt = new ProtoStompReceipt(IDGenerator.NextID);
+            ThrottleRequest throttle = new();
+            ProtoStompReceipt receipt = new(IDGenerator.NextID);
 
             try
             {
@@ -744,8 +742,8 @@ namespace QuantGate.API.Signals
         /// <param name="subscription">The subscription to unsubscribe from.</param>
         internal void Unsubscribe(ProtoStompSubscription subscription, object reference = null)
         {
-            ProtoStompReceipt receipt = new ProtoStompReceipt(IDGenerator.NextID);
-            UnsubscribeRequest unsubscribe = new UnsubscribeRequest();
+            ProtoStompReceipt receipt = new(IDGenerator.NextID);
+            UnsubscribeRequest unsubscribe = new();
 
             try
             {

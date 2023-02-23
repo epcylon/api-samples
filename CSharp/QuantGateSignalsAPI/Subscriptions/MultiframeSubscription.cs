@@ -34,6 +34,6 @@ namespace QuantGate.API.Signals.Subscriptions
         }
 
         protected override MultiframeEquilibriumEventArgs WrapError(SubscriptionError error) =>
-            new MultiframeEquilibriumEventArgs(Symbol, Stream, DateTime.UtcNow, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, true, error);
+            new(Symbol, Stream, DateTime.UtcNow, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, true, error);
     }
 }

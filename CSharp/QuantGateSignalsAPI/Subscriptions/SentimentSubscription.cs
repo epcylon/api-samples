@@ -54,8 +54,7 @@ namespace QuantGate.API.Signals.Subscriptions
         }
 
         protected override SentimentEventArgs WrapError(SubscriptionError error) =>
-            new SentimentEventArgs(Symbol, Stream, DateTime.UtcNow, Compression, 0, 0, 0,
-                                   null, 0, 0, 0, null, true, error);
+            new(Symbol, Stream, DateTime.UtcNow, Compression, 0, 0, 0, null, 0, 0, 0, null, true, error);
 
         #region Height/Color Interpolation        
 

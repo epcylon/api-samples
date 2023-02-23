@@ -66,6 +66,6 @@ namespace QuantGate.API.Signals.Subscriptions
         }
 
         protected override PricesEventArgs WrapError(SubscriptionError error) =>
-            new PricesEventArgs(_current.Symbol, _current.Stream, error) { TimeStamp = DateTime.UtcNow };
+            new(_current.Symbol, _current.Stream, error) { TimeStamp = DateTime.UtcNow };
     }
 }

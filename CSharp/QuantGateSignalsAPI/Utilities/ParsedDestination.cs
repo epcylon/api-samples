@@ -238,7 +238,7 @@ namespace QuantGate.API.Signals.Utilities
             try
             {
                 // Split on the path delimiter and remove any empty entries.
-                fields = destination.Substring(1).Split(new char[] { _separator });
+                fields = destination[1..].Split(new char[] { _separator });
 
                 // Try to parse the subscription type.
                 if (!_subscriptionTypes.TryGetValue(fields[0], out SubscriptionType))

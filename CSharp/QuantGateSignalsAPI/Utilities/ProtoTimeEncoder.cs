@@ -7,7 +7,7 @@ namespace QuantGate.API.Signals.Utilities
         /// <summary>
         /// January 1, 1800 date.
         /// </summary>
-        private static readonly DateTime _date1800 = new DateTime(1800, 1, 1);
+        private static readonly DateTime _date1800 = new(1800, 1, 1);
         /// <summary>
         /// The number of ticks since January 1, 1800
         /// </summary>

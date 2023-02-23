@@ -9,7 +9,7 @@ namespace QuantGate.API.Signals.Subscriptions
 {    
     internal class SearchSubscription : SubscriptionBase<SymbolSearchUpdate, SearchResultsEventArgs>
     {
-        private readonly Queue<Tuple<string, string>> _queue = new Queue<Tuple<string, string>>();
+        private readonly Queue<Tuple<string, string>> _queue = new();
         private bool _connected = false;
 
         public SearchSubscription(APIClient client, EventHandler<SearchResultsEventArgs> handler,
@@ -40,7 +40,7 @@ namespace QuantGate.API.Signals.Subscriptions
 
         protected override object Preprocess(SymbolSearchUpdate update)
         {
-            List<SearchResult> results = new List<SearchResult>();
+            List<SearchResult> results = new();
 
             foreach (SymbolSearchResult result in update.Results)
                 results.Add(new SearchResult(result.Symbol,
@@ -54,9 +54,9 @@ namespace QuantGate.API.Signals.Subscriptions
         }
 
         protected override SearchResultsEventArgs HandleUpdate(SymbolSearchUpdate update, object processed) =>
-            new SearchResultsEventArgs(update.SearchTerm, (List<SearchResult>)processed);        
+            new(update.SearchTerm, (List<SearchResult>)processed);        
 
         protected override SearchResultsEventArgs WrapError(SubscriptionError error) =>
-            new SearchResultsEventArgs(string.Empty, new List<SearchResult>(), error);
+            new(string.Empty, new List<SearchResult>(), error);
     }
 }

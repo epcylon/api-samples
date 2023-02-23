@@ -26,6 +26,6 @@ namespace QuantGate.API.Signals.Subscriptions
         }
 
         protected override CommitmentEventArgs WrapError(SubscriptionError error) =>
-            new CommitmentEventArgs(Symbol, Stream, DateTime.UtcNow, 0, true, error);
+            new(Symbol, Stream, DateTime.UtcNow, 0, true, error);
     }
 }
