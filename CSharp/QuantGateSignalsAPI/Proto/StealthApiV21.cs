@@ -9,119 +9,123 @@ using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using pbr = global::Google.Protobuf.Reflection;
 using scg = global::System.Collections.Generic;
-namespace QuantGate.API.Signals.Proto.Stealth {
+namespace QuantGate.API.Signals.Proto.Stealth
+{
 
-  /// <summary>Holder for reflection information generated from stealth-api-v2.1.proto</summary>
-  internal static partial class StealthApiV21Reflection {
+    /// <summary>Holder for reflection information generated from stealth-api-v2.1.proto</summary>
+    internal static partial class StealthApiV21Reflection
+    {
 
-    #region Descriptor
-    /// <summary>File descriptor for stealth-api-v2.1.proto</summary>
-    public static pbr::FileDescriptor Descriptor {
-      get { return descriptor; }
-    }
-    private static pbr::FileDescriptor descriptor;
+        #region Descriptor
+        /// <summary>File descriptor for stealth-api-v2.1.proto</summary>
+        public static pbr::FileDescriptor Descriptor
+        {
+            get { return descriptor; }
+        }
+        private static pbr::FileDescriptor descriptor;
 
-    static StealthApiV21Reflection() {
-      byte[] descriptorData = global::System.Convert.FromBase64String(
-          string.Concat(
-            "ChZzdGVhbHRoLWFwaS12Mi4xLnByb3RvEgdzdGVhbHRoIoEBCg5SZWFsdGlt",
-            "ZVVwZGF0ZRIRCglhc2tfcHJpY2UYASABKAQSEAoIYXNrX3NpemUYAiABKAQS",
-            "EQoJYmlkX3ByaWNlGAMgASgEEhAKCGJpZF9zaXplGAQgASgEEhIKCmxhc3Rf",
-            "cHJpY2UYBSABKAQSEQoJbGFzdF9zaXplGAYgASgEIrMBCg5TbmFwc2hvdFVw",
-            "ZGF0ZRISCgpvcGVuX3ByaWNlGAEgASgEEhIKCmhpZ2hfcHJpY2UYAiABKAQS",
-            "EQoJbG93X3ByaWNlGAMgASgEEhMKC2Nsb3NlX3ByaWNlGAQgASgEEhYKDnBy",
-            "ZXZpb3VzX2Nsb3NlGAUgASgEEg4KBnZvbHVtZRgGIAEoBBIUCgxoaWdoNTJf",
-            "cHJpY2UYByABKAQSEwoLbG93NTJfcHJpY2UYCCABKAQilgEKEFN0YXRpc3Rp",
-            "Y3NVcGRhdGUSDAoEYmV0YRgBIAEoAhILCgNlcHMYAiABKAISEAoIcGVfcmF0",
-            "aW8YAyABKAISGgoSc2hhcmVzX291dHN0YW5kaW5nGAQgASgEEh0KFWhpc3Rv",
-            "cmljYWxfdm9sYXRpbGl0eRgFIAEoAhIaChJpbXBsaWVkX3ZvbGF0aWxpdHkY",
-            "BiABKAIipQEKC1F1b3RlVXBkYXRlEhEKCXRpbWVzdGFtcBgBIAEoBBIpCghy",
-            "ZWFsdGltZRgCIAEoCzIXLnN0ZWFsdGguUmVhbHRpbWVVcGRhdGUSKQoIc25h",
-            "cHNob3QYAyABKAsyFy5zdGVhbHRoLlNuYXBzaG90VXBkYXRlEi0KCnN0YXRp",
-            "c3RpY3MYBCABKAsyGS5zdGVhbHRoLlN0YXRpc3RpY3NVcGRhdGUiWQoPU2Vu",
-            "dGltZW50U3BsaW5lEg8KB2F2ZXJhZ2UYASABKBESCQoBaRgCIAEoDRIJCgFq",
-            "GAMgASgNEgkKAXgYBCABKBESCQoBeRgFIAEoERIJCgF6GAYgASgRIosBCg9T",
-            "ZW50aW1lbnRVcGRhdGUSEQoJdGltZXN0YW1wGAEgASgEEikKB2xlbmd0aHMY",
-            "AiABKAsyGC5zdGVhbHRoLlNlbnRpbWVudFNwbGluZRIoCgZjb2xvcnMYAyAB",
-            "KAsyGC5zdGVhbHRoLlNlbnRpbWVudFNwbGluZRIQCghpc19kaXJ0eRgEIAEo",
-            "CCK1AQoRRXF1aWxpYnJpdW1VcGRhdGUSEQoJdGltZXN0YW1wGAEgASgEEhkK",
-            "EWVxdWlsaWJyaXVtX3ByaWNlGAIgASgEEhAKCGdhcF9zaXplGAMgASgEEgwK",
-            "BGhpZ2gYBCABKBESCwoDbG93GAUgASgREhEKCXByb2plY3RlZBgGIAEoERIM",
-            "CgRiaWFzGAcgASgREhIKCmxhc3RfcHJpY2UYCCABKAQSEAoIaXNfZGlydHkY",
-            "CSABKAgi2AEKEE11bHRpZnJhbWVVcGRhdGUSEQoJdGltZXN0YW1wGAEgASgE",
-            "Eg0KBW1pbl81GAIgASgREg4KBm1pbl8xMBgDIAEoERIOCgZtaW5fMTUYBCAB",
-            "KBESDgoGbWluXzMwGAUgASgREg4KBm1pbl80NRgGIAEoERIOCgZtaW5fNjAY",
-            "ByABKBESDwoHbWluXzEyMBgIIAEoERIPCgdtaW5fMTgwGAkgASgREg8KB21p",
-            "bl8yNDAYCiABKBESDQoFZGF5XzEYCyABKBESEAoIaXNfZGlydHkYDCABKAgi",
-            "vgEKDVRyaWdnZXJVcGRhdGUSEQoJdGltZXN0YW1wGAEgASgEEgwKBGJpYXMY",
-            "AiABKBESEgoKcGVyY2VwdGlvbhgDIAEoERIRCglzZW50aW1lbnQYBCABKBES",
-            "EgoKY29tbWl0bWVudBgFIAEoERIZChFlcXVpbGlicml1bV9wcmljZRgGIAEo",
-            "BBIQCghnYXBfc2l6ZRgHIAEoBBISCgpsYXN0X3ByaWNlGAggASgEEhAKCGlz",
-            "X2RpcnR5GAkgASgIIkcKEVNpbmdsZVZhbHVlVXBkYXRlEhEKCXRpbWVzdGFt",
-            "cBgBIAEoBBINCgV2YWx1ZRgCIAEoERIQCghpc19kaXJ0eRgDIAEoCCJiCgpN",
-            "QUNEVXBkYXRlEhEKCXRpbWVzdGFtcBgBIAEoBBIMCgRtYWNkGAIgASgCEg4K",
-            "BnNpZ25hbBgDIAEoAhIRCgloaXN0b2dyYW0YBCABKAISEAoIaXNfZGlydHkY",
-            "BSABKAgieAoUQm9sbGluZ2VyQmFuZHNVcGRhdGUSEQoJdGltZXN0YW1wGAEg",
-            "ASgEEhIKCnVwcGVyX2JhbmQYAiABKAQSEwoLbWlkZGxlX2JhbmQYAyABKAQS",
-            "EgoKbG93ZXJfYmFuZBgEIAEoBBIQCghpc19kaXJ0eRgFIAEoCCKnAwoOU3Ry",
-            "YXRlZ3lVcGRhdGUSEQoJdGltZXN0YW1wGAEgASgEEhYKDmVudHJ5X3Byb2dy",
-            "ZXNzGAIgASgREhUKDWV4aXRfcHJvZ3Jlc3MYAyABKBESJwoGc2lnbmFsGAQg",
-            "ASgOMhcuc3RlYWx0aC5TdHJhdGVneVNpZ25hbBIYChBwZXJjZXB0aW9uX2xl",
-            "dmVsGAUgASgNEi8KEXBlcmNlcHRpb25fc2lnbmFsGAYgASgOMhQuc3RlYWx0",
-            "aC5HYXVnZVNpZ25hbBIYChBjb21taXRtZW50X2xldmVsGAcgASgNEi8KEWNv",
-            "bW1pdG1lbnRfc2lnbmFsGAggASgOMhQuc3RlYWx0aC5HYXVnZVNpZ25hbBIu",
-            "ChBzZW50aW1lbnRfc2lnbmFsGAkgASgOMhQuc3RlYWx0aC5HYXVnZVNpZ25h",
-            "bBIwChJlcXVpbGlicml1bV9zaWduYWwYCiABKA4yFC5zdGVhbHRoLkdhdWdl",
-            "U2lnbmFsEhcKD3NlbnRpbWVudF9sZXZlbBgLIAEoDRIZChFlcXVpbGlicml1",
-            "bV9sZXZlbBgMIAEoDSJHChFTaW5nbGVQcmljZVVwZGF0ZRIRCgl0aW1lc3Rh",
-            "bXAYASABKAQSDQoFdmFsdWUYAiABKAQSEAoIaXNfZGlydHkYAyABKAgisQEK",
-            "CVRpY2tWYWx1ZRINCgVzdGFydBgBIAEoARIMCgR0aWNrGAIgASgBEhMKC2Rl",
-            "bm9taW5hdG9yGAMgASgNEhAKCGRlY2ltYWxzGAQgASgREi0KBmZvcm1hdBgF",
-            "IAEoDjIdLnN0ZWFsdGguVGlja1ZhbHVlLlRpY2tGb3JtYXQiMQoKVGlja0Zv",
-            "cm1hdBILCgdEZWNpbWFsEAASDAoIRnJhY3Rpb24QARIICgRUaWNrEAIiLwoO",
-            "VHJhZGluZ1Nlc3Npb24SDQoFY2xvc2UYASABKBESDgoGbGVuZ3RoGAIgASgR",
-            "Iu8DChBJbnN0cnVtZW50VXBkYXRlEg4KBnN5bWJvbBgBIAEoCRISCgp1bmRl",
-            "cmx5aW5nGAIgASgJEhAKCGN1cnJlbmN5GAMgASgJEhAKCGV4Y2hhbmdlGAQg",
-            "ASgJEjAKD2luc3RydW1lbnRfdHlwZRgFIAEoDjIXLnN0ZWFsdGguSW5zdHJ1",
-            "bWVudFR5cGUSJwoLcHV0X29yX2NhbGwYBiABKA4yEi5zdGVhbHRoLlB1dE9y",
-            "Q2FsbBIOCgZzdHJpa2UYByABKAESEwoLZXhwaXJ5X2RhdGUYCCABKAQSEgoK",
-            "bXVsdGlwbGllchgJIAEoARIUCgxkaXNwbGF5X25hbWUYCiABKAkSEQoJdGlt",
-            "ZV96b25lGAsgASgJEicKC3RpY2tfdmFsdWVzGAwgAygLMhIuc3RlYWx0aC5U",
-            "aWNrVmFsdWUSMQoQdHJhZGluZ19zZXNzaW9ucxgNIAMoCzIXLnN0ZWFsdGgu",
-            "VHJhZGluZ1Nlc3Npb24SRAoOYnJva2VyX3N5bWJvbHMYDiADKAsyLC5zdGVh",
-            "bHRoLkluc3RydW1lbnRVcGRhdGUuQnJva2VyU3ltYm9sc0VudHJ5GjQKEkJy",
-            "b2tlclN5bWJvbHNFbnRyeRILCgNrZXkYASABKAkSDQoFdmFsdWUYAiABKAk6",
-            "AjgBIqQBChJTeW1ib2xTZWFyY2hSZXN1bHQSDgoGc3ltYm9sGAEgASgJEhIK",
-            "CnVuZGVybHlpbmcYAiABKAkSEAoIY3VycmVuY3kYAyABKAkSMAoPaW5zdHJ1",
-            "bWVudF90eXBlGAQgASgOMhcuc3RlYWx0aC5JbnN0cnVtZW50VHlwZRIQCghl",
-            "eGNoYW5nZRgFIAEoCRIUCgxkaXNwbGF5X25hbWUYBiABKAkiVwoSU3ltYm9s",
-            "U2VhcmNoVXBkYXRlEhMKC3NlYXJjaF90ZXJtGAEgASgJEiwKB3Jlc3VsdHMY",
-            "AiADKAsyGy5zdGVhbHRoLlN5bWJvbFNlYXJjaFJlc3VsdCK3AwoNVG9wU3lt",
-            "Ym9sSXRlbRIRCgl0aW1lc3RhbXAYASABKAQSDgoGc3ltYm9sGAIgASgJEhIK",
-            "CnVuZGVybHlpbmcYAyABKAkSEAoIY3VycmVuY3kYBCABKAkSMAoPaW5zdHJ1",
-            "bWVudF90eXBlGAUgASgOMhcuc3RlYWx0aC5JbnN0cnVtZW50VHlwZRIQCghl",
-            "eGNoYW5nZRgGIAEoCRIUCgxkaXNwbGF5X25hbWUYByABKAkSFgoOZW50cnlf",
-            "cHJvZ3Jlc3MYCCABKBESJwoGc2lnbmFsGAkgASgOMhcuc3RlYWx0aC5TdHJh",
-            "dGVneVNpZ25hbBIvChFwZXJjZXB0aW9uX3NpZ25hbBgKIAEoDjIULnN0ZWFs",
-            "dGguR2F1Z2VTaWduYWwSLwoRY29tbWl0bWVudF9zaWduYWwYCyABKA4yFC5z",
-            "dGVhbHRoLkdhdWdlU2lnbmFsEi4KEHNlbnRpbWVudF9zaWduYWwYDCABKA4y",
-            "FC5zdGVhbHRoLkdhdWdlU2lnbmFsEjAKEmVxdWlsaWJyaXVtX3NpZ25hbBgN",
-            "IAEoDjIULnN0ZWFsdGguR2F1Z2VTaWduYWwiOwoQVG9wU3ltYm9sc1VwZGF0",
-            "ZRInCgdzeW1ib2xzGAEgAygLMhYuc3RlYWx0aC5Ub3BTeW1ib2xJdGVtIiwK",
-            "FlNpbmdsZURlZmluaXRpb25VcGRhdGUSEgoKZGVmaW5pdGlvbhgBIAEoCSrf",
-            "AQoOSW5zdHJ1bWVudFR5cGUSEAoMTm9JbnN0cnVtZW50EAASDwoLQ29tbW9u",
-            "U3RvY2sQARIPCgtTdG9ja09wdGlvbhACEgoKBkZ1dHVyZRADEgkKBUluZGV4",
-            "EAQSEQoNRm9yZXhDb250cmFjdBAFEhAKDEZ1dHVyZU9wdGlvbhAGEhQKEEZ1",
-            "dHVyZUluc3RydW1lbnQQBxIJCgVDb21ibxAIEhMKD0NvbWJvSW5zdHJ1bWVu",
-            "dBAJEhIKDkNyeXB0b0N1cnJlbmN5EAoSEwoPUGVycGV0dWFsQ3J5cHRvEAsq",
-            "LQoJUHV0T3JDYWxsEg0KCU5vUHV0Q2FsbBAAEgcKA1B1dBABEggKBENhbGwQ",
-            "Aio7Cg5TdHJhdGVneVNpZ25hbBIICgROb25lEAASDgoKTG9uZ1NpZ25hbBAB",
-            "Eg8KC1Nob3J0U2lnbmFsEAIqQwoLR2F1Z2VTaWduYWwSCwoHVW5rbm93bhAA",
-            "EgkKBVNob3J0EAESCAoERmxhdBACEggKBExvbmcQAxIICgREdWFsEARCJqoC",
-            "I1F1YW50R2F0ZS5BUEkuU2lnbmFscy5Qcm90by5TdGVhbHRoYgZwcm90bzM="));
-      descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::QuantGate.API.Signals.Proto.Stealth.InstrumentType), typeof(global::QuantGate.API.Signals.Proto.Stealth.PutOrCall), typeof(global::QuantGate.API.Signals.Proto.Stealth.StrategySignal), typeof(global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal), }, new pbr::GeneratedClrTypeInfo[] {
+        static StealthApiV21Reflection()
+        {
+            byte[] descriptorData = global::System.Convert.FromBase64String(
+                string.Concat(
+                  "ChZzdGVhbHRoLWFwaS12Mi4xLnByb3RvEgdzdGVhbHRoIoEBCg5SZWFsdGlt",
+                  "ZVVwZGF0ZRIRCglhc2tfcHJpY2UYASABKAQSEAoIYXNrX3NpemUYAiABKAQS",
+                  "EQoJYmlkX3ByaWNlGAMgASgEEhAKCGJpZF9zaXplGAQgASgEEhIKCmxhc3Rf",
+                  "cHJpY2UYBSABKAQSEQoJbGFzdF9zaXplGAYgASgEIrMBCg5TbmFwc2hvdFVw",
+                  "ZGF0ZRISCgpvcGVuX3ByaWNlGAEgASgEEhIKCmhpZ2hfcHJpY2UYAiABKAQS",
+                  "EQoJbG93X3ByaWNlGAMgASgEEhMKC2Nsb3NlX3ByaWNlGAQgASgEEhYKDnBy",
+                  "ZXZpb3VzX2Nsb3NlGAUgASgEEg4KBnZvbHVtZRgGIAEoBBIUCgxoaWdoNTJf",
+                  "cHJpY2UYByABKAQSEwoLbG93NTJfcHJpY2UYCCABKAQilgEKEFN0YXRpc3Rp",
+                  "Y3NVcGRhdGUSDAoEYmV0YRgBIAEoAhILCgNlcHMYAiABKAISEAoIcGVfcmF0",
+                  "aW8YAyABKAISGgoSc2hhcmVzX291dHN0YW5kaW5nGAQgASgEEh0KFWhpc3Rv",
+                  "cmljYWxfdm9sYXRpbGl0eRgFIAEoAhIaChJpbXBsaWVkX3ZvbGF0aWxpdHkY",
+                  "BiABKAIipQEKC1F1b3RlVXBkYXRlEhEKCXRpbWVzdGFtcBgBIAEoBBIpCghy",
+                  "ZWFsdGltZRgCIAEoCzIXLnN0ZWFsdGguUmVhbHRpbWVVcGRhdGUSKQoIc25h",
+                  "cHNob3QYAyABKAsyFy5zdGVhbHRoLlNuYXBzaG90VXBkYXRlEi0KCnN0YXRp",
+                  "c3RpY3MYBCABKAsyGS5zdGVhbHRoLlN0YXRpc3RpY3NVcGRhdGUiWQoPU2Vu",
+                  "dGltZW50U3BsaW5lEg8KB2F2ZXJhZ2UYASABKBESCQoBaRgCIAEoDRIJCgFq",
+                  "GAMgASgNEgkKAXgYBCABKBESCQoBeRgFIAEoERIJCgF6GAYgASgRIosBCg9T",
+                  "ZW50aW1lbnRVcGRhdGUSEQoJdGltZXN0YW1wGAEgASgEEikKB2xlbmd0aHMY",
+                  "AiABKAsyGC5zdGVhbHRoLlNlbnRpbWVudFNwbGluZRIoCgZjb2xvcnMYAyAB",
+                  "KAsyGC5zdGVhbHRoLlNlbnRpbWVudFNwbGluZRIQCghpc19kaXJ0eRgEIAEo",
+                  "CCK1AQoRRXF1aWxpYnJpdW1VcGRhdGUSEQoJdGltZXN0YW1wGAEgASgEEhkK",
+                  "EWVxdWlsaWJyaXVtX3ByaWNlGAIgASgEEhAKCGdhcF9zaXplGAMgASgEEgwK",
+                  "BGhpZ2gYBCABKBESCwoDbG93GAUgASgREhEKCXByb2plY3RlZBgGIAEoERIM",
+                  "CgRiaWFzGAcgASgREhIKCmxhc3RfcHJpY2UYCCABKAQSEAoIaXNfZGlydHkY",
+                  "CSABKAgi2AEKEE11bHRpZnJhbWVVcGRhdGUSEQoJdGltZXN0YW1wGAEgASgE",
+                  "Eg0KBW1pbl81GAIgASgREg4KBm1pbl8xMBgDIAEoERIOCgZtaW5fMTUYBCAB",
+                  "KBESDgoGbWluXzMwGAUgASgREg4KBm1pbl80NRgGIAEoERIOCgZtaW5fNjAY",
+                  "ByABKBESDwoHbWluXzEyMBgIIAEoERIPCgdtaW5fMTgwGAkgASgREg8KB21p",
+                  "bl8yNDAYCiABKBESDQoFZGF5XzEYCyABKBESEAoIaXNfZGlydHkYDCABKAgi",
+                  "vgEKDVRyaWdnZXJVcGRhdGUSEQoJdGltZXN0YW1wGAEgASgEEgwKBGJpYXMY",
+                  "AiABKBESEgoKcGVyY2VwdGlvbhgDIAEoERIRCglzZW50aW1lbnQYBCABKBES",
+                  "EgoKY29tbWl0bWVudBgFIAEoERIZChFlcXVpbGlicml1bV9wcmljZRgGIAEo",
+                  "BBIQCghnYXBfc2l6ZRgHIAEoBBISCgpsYXN0X3ByaWNlGAggASgEEhAKCGlz",
+                  "X2RpcnR5GAkgASgIIkcKEVNpbmdsZVZhbHVlVXBkYXRlEhEKCXRpbWVzdGFt",
+                  "cBgBIAEoBBINCgV2YWx1ZRgCIAEoERIQCghpc19kaXJ0eRgDIAEoCCJiCgpN",
+                  "QUNEVXBkYXRlEhEKCXRpbWVzdGFtcBgBIAEoBBIMCgRtYWNkGAIgASgCEg4K",
+                  "BnNpZ25hbBgDIAEoAhIRCgloaXN0b2dyYW0YBCABKAISEAoIaXNfZGlydHkY",
+                  "BSABKAgieAoUQm9sbGluZ2VyQmFuZHNVcGRhdGUSEQoJdGltZXN0YW1wGAEg",
+                  "ASgEEhIKCnVwcGVyX2JhbmQYAiABKAQSEwoLbWlkZGxlX2JhbmQYAyABKAQS",
+                  "EgoKbG93ZXJfYmFuZBgEIAEoBBIQCghpc19kaXJ0eRgFIAEoCCKnAwoOU3Ry",
+                  "YXRlZ3lVcGRhdGUSEQoJdGltZXN0YW1wGAEgASgEEhYKDmVudHJ5X3Byb2dy",
+                  "ZXNzGAIgASgREhUKDWV4aXRfcHJvZ3Jlc3MYAyABKBESJwoGc2lnbmFsGAQg",
+                  "ASgOMhcuc3RlYWx0aC5TdHJhdGVneVNpZ25hbBIYChBwZXJjZXB0aW9uX2xl",
+                  "dmVsGAUgASgNEi8KEXBlcmNlcHRpb25fc2lnbmFsGAYgASgOMhQuc3RlYWx0",
+                  "aC5HYXVnZVNpZ25hbBIYChBjb21taXRtZW50X2xldmVsGAcgASgNEi8KEWNv",
+                  "bW1pdG1lbnRfc2lnbmFsGAggASgOMhQuc3RlYWx0aC5HYXVnZVNpZ25hbBIu",
+                  "ChBzZW50aW1lbnRfc2lnbmFsGAkgASgOMhQuc3RlYWx0aC5HYXVnZVNpZ25h",
+                  "bBIwChJlcXVpbGlicml1bV9zaWduYWwYCiABKA4yFC5zdGVhbHRoLkdhdWdl",
+                  "U2lnbmFsEhcKD3NlbnRpbWVudF9sZXZlbBgLIAEoDRIZChFlcXVpbGlicml1",
+                  "bV9sZXZlbBgMIAEoDSJHChFTaW5nbGVQcmljZVVwZGF0ZRIRCgl0aW1lc3Rh",
+                  "bXAYASABKAQSDQoFdmFsdWUYAiABKAQSEAoIaXNfZGlydHkYAyABKAgisQEK",
+                  "CVRpY2tWYWx1ZRINCgVzdGFydBgBIAEoARIMCgR0aWNrGAIgASgBEhMKC2Rl",
+                  "bm9taW5hdG9yGAMgASgNEhAKCGRlY2ltYWxzGAQgASgREi0KBmZvcm1hdBgF",
+                  "IAEoDjIdLnN0ZWFsdGguVGlja1ZhbHVlLlRpY2tGb3JtYXQiMQoKVGlja0Zv",
+                  "cm1hdBILCgdEZWNpbWFsEAASDAoIRnJhY3Rpb24QARIICgRUaWNrEAIiLwoO",
+                  "VHJhZGluZ1Nlc3Npb24SDQoFY2xvc2UYASABKBESDgoGbGVuZ3RoGAIgASgR",
+                  "Iu8DChBJbnN0cnVtZW50VXBkYXRlEg4KBnN5bWJvbBgBIAEoCRISCgp1bmRl",
+                  "cmx5aW5nGAIgASgJEhAKCGN1cnJlbmN5GAMgASgJEhAKCGV4Y2hhbmdlGAQg",
+                  "ASgJEjAKD2luc3RydW1lbnRfdHlwZRgFIAEoDjIXLnN0ZWFsdGguSW5zdHJ1",
+                  "bWVudFR5cGUSJwoLcHV0X29yX2NhbGwYBiABKA4yEi5zdGVhbHRoLlB1dE9y",
+                  "Q2FsbBIOCgZzdHJpa2UYByABKAESEwoLZXhwaXJ5X2RhdGUYCCABKAQSEgoK",
+                  "bXVsdGlwbGllchgJIAEoARIUCgxkaXNwbGF5X25hbWUYCiABKAkSEQoJdGlt",
+                  "ZV96b25lGAsgASgJEicKC3RpY2tfdmFsdWVzGAwgAygLMhIuc3RlYWx0aC5U",
+                  "aWNrVmFsdWUSMQoQdHJhZGluZ19zZXNzaW9ucxgNIAMoCzIXLnN0ZWFsdGgu",
+                  "VHJhZGluZ1Nlc3Npb24SRAoOYnJva2VyX3N5bWJvbHMYDiADKAsyLC5zdGVh",
+                  "bHRoLkluc3RydW1lbnRVcGRhdGUuQnJva2VyU3ltYm9sc0VudHJ5GjQKEkJy",
+                  "b2tlclN5bWJvbHNFbnRyeRILCgNrZXkYASABKAkSDQoFdmFsdWUYAiABKAk6",
+                  "AjgBIqQBChJTeW1ib2xTZWFyY2hSZXN1bHQSDgoGc3ltYm9sGAEgASgJEhIK",
+                  "CnVuZGVybHlpbmcYAiABKAkSEAoIY3VycmVuY3kYAyABKAkSMAoPaW5zdHJ1",
+                  "bWVudF90eXBlGAQgASgOMhcuc3RlYWx0aC5JbnN0cnVtZW50VHlwZRIQCghl",
+                  "eGNoYW5nZRgFIAEoCRIUCgxkaXNwbGF5X25hbWUYBiABKAkiVwoSU3ltYm9s",
+                  "U2VhcmNoVXBkYXRlEhMKC3NlYXJjaF90ZXJtGAEgASgJEiwKB3Jlc3VsdHMY",
+                  "AiADKAsyGy5zdGVhbHRoLlN5bWJvbFNlYXJjaFJlc3VsdCK3AwoNVG9wU3lt",
+                  "Ym9sSXRlbRIRCgl0aW1lc3RhbXAYASABKAQSDgoGc3ltYm9sGAIgASgJEhIK",
+                  "CnVuZGVybHlpbmcYAyABKAkSEAoIY3VycmVuY3kYBCABKAkSMAoPaW5zdHJ1",
+                  "bWVudF90eXBlGAUgASgOMhcuc3RlYWx0aC5JbnN0cnVtZW50VHlwZRIQCghl",
+                  "eGNoYW5nZRgGIAEoCRIUCgxkaXNwbGF5X25hbWUYByABKAkSFgoOZW50cnlf",
+                  "cHJvZ3Jlc3MYCCABKBESJwoGc2lnbmFsGAkgASgOMhcuc3RlYWx0aC5TdHJh",
+                  "dGVneVNpZ25hbBIvChFwZXJjZXB0aW9uX3NpZ25hbBgKIAEoDjIULnN0ZWFs",
+                  "dGguR2F1Z2VTaWduYWwSLwoRY29tbWl0bWVudF9zaWduYWwYCyABKA4yFC5z",
+                  "dGVhbHRoLkdhdWdlU2lnbmFsEi4KEHNlbnRpbWVudF9zaWduYWwYDCABKA4y",
+                  "FC5zdGVhbHRoLkdhdWdlU2lnbmFsEjAKEmVxdWlsaWJyaXVtX3NpZ25hbBgN",
+                  "IAEoDjIULnN0ZWFsdGguR2F1Z2VTaWduYWwiOwoQVG9wU3ltYm9sc1VwZGF0",
+                  "ZRInCgdzeW1ib2xzGAEgAygLMhYuc3RlYWx0aC5Ub3BTeW1ib2xJdGVtIiwK",
+                  "FlNpbmdsZURlZmluaXRpb25VcGRhdGUSEgoKZGVmaW5pdGlvbhgBIAEoCSrf",
+                  "AQoOSW5zdHJ1bWVudFR5cGUSEAoMTm9JbnN0cnVtZW50EAASDwoLQ29tbW9u",
+                  "U3RvY2sQARIPCgtTdG9ja09wdGlvbhACEgoKBkZ1dHVyZRADEgkKBUluZGV4",
+                  "EAQSEQoNRm9yZXhDb250cmFjdBAFEhAKDEZ1dHVyZU9wdGlvbhAGEhQKEEZ1",
+                  "dHVyZUluc3RydW1lbnQQBxIJCgVDb21ibxAIEhMKD0NvbWJvSW5zdHJ1bWVu",
+                  "dBAJEhIKDkNyeXB0b0N1cnJlbmN5EAoSEwoPUGVycGV0dWFsQ3J5cHRvEAsq",
+                  "LQoJUHV0T3JDYWxsEg0KCU5vUHV0Q2FsbBAAEgcKA1B1dBABEggKBENhbGwQ",
+                  "Aio7Cg5TdHJhdGVneVNpZ25hbBIICgROb25lEAASDgoKTG9uZ1NpZ25hbBAB",
+                  "Eg8KC1Nob3J0U2lnbmFsEAIqQwoLR2F1Z2VTaWduYWwSCwoHVW5rbm93bhAA",
+                  "EgkKBVNob3J0EAESCAoERmxhdBACEggKBExvbmcQAxIICgREdWFsEARCJqoC",
+                  "I1F1YW50R2F0ZS5BUEkuU2lnbmFscy5Qcm90by5TdGVhbHRoYgZwcm90bzM="));
+            descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
+                new pbr::FileDescriptor[] { },
+                new pbr::GeneratedClrTypeInfo(new[] { typeof(global::QuantGate.API.Signals.Proto.Stealth.InstrumentType), typeof(global::QuantGate.API.Signals.Proto.Stealth.PutOrCall), typeof(global::QuantGate.API.Signals.Proto.Stealth.StrategySignal), typeof(global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal), }, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::QuantGate.API.Signals.Proto.Stealth.RealtimeUpdate), global::QuantGate.API.Signals.Proto.Stealth.RealtimeUpdate.Parser, new[]{ "AskPrice", "AskSize", "BidPrice", "BidSize", "LastPrice", "LastSize" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::QuantGate.API.Signals.Proto.Stealth.SnapshotUpdate), global::QuantGate.API.Signals.Proto.Stealth.SnapshotUpdate.Parser, new[]{ "OpenPrice", "HighPrice", "LowPrice", "ClosePrice", "PreviousClose", "Volume", "High52Price", "Low52Price" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::QuantGate.API.Signals.Proto.Stealth.StatisticsUpdate), global::QuantGate.API.Signals.Proto.Stealth.StatisticsUpdate.Parser, new[]{ "Beta", "Eps", "PeRatio", "SharesOutstanding", "HistoricalVolatility", "ImpliedVolatility" }, null, null, null),
@@ -144,6408 +148,7638 @@ namespace QuantGate.API.Signals.Proto.Stealth {
             new pbr::GeneratedClrTypeInfo(typeof(global::QuantGate.API.Signals.Proto.Stealth.TopSymbolItem), global::QuantGate.API.Signals.Proto.Stealth.TopSymbolItem.Parser, new[]{ "Timestamp", "Symbol", "Underlying", "Currency", "InstrumentType", "Exchange", "DisplayName", "EntryProgress", "Signal", "PerceptionSignal", "CommitmentSignal", "SentimentSignal", "EquilibriumSignal" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::QuantGate.API.Signals.Proto.Stealth.TopSymbolsUpdate), global::QuantGate.API.Signals.Proto.Stealth.TopSymbolsUpdate.Parser, new[]{ "Symbols" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::QuantGate.API.Signals.Proto.Stealth.SingleDefinitionUpdate), global::QuantGate.API.Signals.Proto.Stealth.SingleDefinitionUpdate.Parser, new[]{ "Definition" }, null, null, null)
-          }));
+                }));
+        }
+        #endregion
+
     }
+    #region Enums
+    /// <summary>
+    /// The type of instrument being traded. 
+    /// </summary>
+    internal enum InstrumentType
+    {
+        /// <summary>
+        /// Not a valid instrument.
+        /// </summary>
+        [pbr::OriginalName("NoInstrument")] NoInstrument = 0,
+        /// <summary>
+        /// Common stock.
+        /// </summary>
+        [pbr::OriginalName("CommonStock")] CommonStock = 1,
+        /// <summary>
+        /// Stock option.
+        /// </summary>
+        [pbr::OriginalName("StockOption")] StockOption = 2,
+        /// <summary>
+        /// Future.
+        /// </summary>
+        [pbr::OriginalName("Future")] Future = 3,
+        /// <summary>
+        /// Index.
+        /// </summary>
+        [pbr::OriginalName("Index")] Index = 4,
+        /// <summary>
+        /// Foreign Exchange (Currency).
+        /// </summary>
+        [pbr::OriginalName("ForexContract")] ForexContract = 5,
+        /// <summary>
+        /// Future option.
+        /// </summary>
+        [pbr::OriginalName("FutureOption")] FutureOption = 6,
+        /// <summary>
+        /// Future instrument (underlying).
+        /// </summary>
+        [pbr::OriginalName("FutureInstrument")] FutureInstrument = 7,
+        /// <summary>
+        /// Combo pairing.
+        /// </summary>
+        [pbr::OriginalName("Combo")] Combo = 8,
+        /// <summary>
+        /// Combo underlying.
+        /// </summary>
+        [pbr::OriginalName("ComboInstrument")] ComboInstrument = 9,
+        /// <summary>
+        /// Crypto Currency (Bitcoin, etc.)
+        /// </summary>
+        [pbr::OriginalName("CryptoCurrency")] CryptoCurrency = 10,
+        /// <summary>
+        /// Perpetual Crypto Currency.
+        /// </summary>
+        [pbr::OriginalName("PerpetualCrypto")] PerpetualCrypto = 11,
+    }
+
+    /// <summary>
+    /// The Put/Call side ("right") of an option. 
+    /// </summary>
+    internal enum PutOrCall
+    {
+        /// <summary>
+        /// Instrument is not an option.
+        /// </summary>
+        [pbr::OriginalName("NoPutCall")] NoPutCall = 0,
+        /// <summary>
+        /// Put Option (option to sell at strike).
+        /// </summary>
+        [pbr::OriginalName("Put")] Put = 1,
+        /// <summary>
+        /// Call Option (option to buy at strike).
+        /// </summary>
+        [pbr::OriginalName("Call")] Call = 2,
+    }
+
+    /// <summary>
+    /// Entry/Exit signal state for strategies. 
+    /// </summary>
+    internal enum StrategySignal
+    {
+        /// <summary>
+        /// No current signal.
+        /// </summary>
+        [pbr::OriginalName("None")] None = 0,
+        /// <summary>
+        /// Signal to enter a long position.
+        /// </summary>
+        [pbr::OriginalName("LongSignal")] LongSignal = 1,
+        /// <summary>
+        /// Signal to enter a short position.
+        /// </summary>
+        [pbr::OriginalName("ShortSignal")] ShortSignal = 2,
+    }
+
+    /// <summary>
+    /// Gauge signal state for strategies (PCES lights). 
+    /// </summary>
+    internal enum GaugeSignal
+    {
+        /// <summary>
+        /// Unknown signal (gauge signal not set - use default).
+        /// </summary>
+        [pbr::OriginalName("Unknown")] Unknown = 0,
+        /// <summary>
+        /// Signal to enter a short position.
+        /// </summary>
+        [pbr::OriginalName("Short")] Short = 1,
+        /// <summary>
+        /// No current signal.
+        /// </summary>
+        [pbr::OriginalName("Flat")] Flat = 2,
+        /// <summary>
+        /// Signal to enter a long position.
+        /// </summary>
+        [pbr::OriginalName("Long")] Long = 3,
+        /// <summary>
+        /// Dual signal (long or short - no specific direction).
+        /// </summary>
+        [pbr::OriginalName("Dual")] Dual = 4,
+    }
+
     #endregion
 
-  }
-  #region Enums
-  /// <summary>
-  /// The type of instrument being traded. 
-  /// </summary>
-  internal enum InstrumentType {
+    #region Messages
     /// <summary>
-    /// Not a valid instrument.
+    /// RealtimeUpdate represents an update of real-time quote updates (bid/ask/last). 
     /// </summary>
-    [pbr::OriginalName("NoInstrument")] NoInstrument = 0,
-    /// <summary>
-    /// Common stock.
-    /// </summary>
-    [pbr::OriginalName("CommonStock")] CommonStock = 1,
-    /// <summary>
-    /// Stock option.
-    /// </summary>
-    [pbr::OriginalName("StockOption")] StockOption = 2,
-    /// <summary>
-    /// Future.
-    /// </summary>
-    [pbr::OriginalName("Future")] Future = 3,
-    /// <summary>
-    /// Index.
-    /// </summary>
-    [pbr::OriginalName("Index")] Index = 4,
-    /// <summary>
-    /// Foreign Exchange (Currency).
-    /// </summary>
-    [pbr::OriginalName("ForexContract")] ForexContract = 5,
-    /// <summary>
-    /// Future option.
-    /// </summary>
-    [pbr::OriginalName("FutureOption")] FutureOption = 6,
-    /// <summary>
-    /// Future instrument (underlying).
-    /// </summary>
-    [pbr::OriginalName("FutureInstrument")] FutureInstrument = 7,
-    /// <summary>
-    /// Combo pairing.
-    /// </summary>
-    [pbr::OriginalName("Combo")] Combo = 8,
-    /// <summary>
-    /// Combo underlying.
-    /// </summary>
-    [pbr::OriginalName("ComboInstrument")] ComboInstrument = 9,
-    /// <summary>
-    /// Crypto Currency (Bitcoin, etc.)
-    /// </summary>
-    [pbr::OriginalName("CryptoCurrency")] CryptoCurrency = 10,
-    /// <summary>
-    /// Perpetual Crypto Currency.
-    /// </summary>
-    [pbr::OriginalName("PerpetualCrypto")] PerpetualCrypto = 11,
-  }
+    internal sealed partial class RealtimeUpdate : pb::IMessage<RealtimeUpdate>
+    {
+        private static readonly pb::MessageParser<RealtimeUpdate> _parser = new pb::MessageParser<RealtimeUpdate>(() => new RealtimeUpdate());
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pb::MessageParser<RealtimeUpdate> Parser { get { return _parser; } }
 
-  /// <summary>
-  /// The Put/Call side ("right") of an option. 
-  /// </summary>
-  internal enum PutOrCall {
-    /// <summary>
-    /// Instrument is not an option.
-    /// </summary>
-    [pbr::OriginalName("NoPutCall")] NoPutCall = 0,
-    /// <summary>
-    /// Put Option (option to sell at strike).
-    /// </summary>
-    [pbr::OriginalName("Put")] Put = 1,
-    /// <summary>
-    /// Call Option (option to buy at strike).
-    /// </summary>
-    [pbr::OriginalName("Call")] Call = 2,
-  }
-
-  /// <summary>
-  /// Entry/Exit signal state for strategies. 
-  /// </summary>
-  internal enum StrategySignal {
-    /// <summary>
-    /// No current signal.
-    /// </summary>
-    [pbr::OriginalName("None")] None = 0,
-    /// <summary>
-    /// Signal to enter a long position.
-    /// </summary>
-    [pbr::OriginalName("LongSignal")] LongSignal = 1,
-    /// <summary>
-    /// Signal to enter a short position.
-    /// </summary>
-    [pbr::OriginalName("ShortSignal")] ShortSignal = 2,
-  }
-
-  /// <summary>
-  /// Gauge signal state for strategies (PCES lights). 
-  /// </summary>
-  internal enum GaugeSignal {
-    /// <summary>
-    /// Unknown signal (gauge signal not set - use default).
-    /// </summary>
-    [pbr::OriginalName("Unknown")] Unknown = 0,
-    /// <summary>
-    /// Signal to enter a short position.
-    /// </summary>
-    [pbr::OriginalName("Short")] Short = 1,
-    /// <summary>
-    /// No current signal.
-    /// </summary>
-    [pbr::OriginalName("Flat")] Flat = 2,
-    /// <summary>
-    /// Signal to enter a long position.
-    /// </summary>
-    [pbr::OriginalName("Long")] Long = 3,
-    /// <summary>
-    /// Dual signal (long or short - no specific direction).
-    /// </summary>
-    [pbr::OriginalName("Dual")] Dual = 4,
-  }
-
-  #endregion
-
-  #region Messages
-  /// <summary>
-  /// RealtimeUpdate represents an update of real-time quote updates (bid/ask/last). 
-  /// </summary>
-  internal sealed partial class RealtimeUpdate : pb::IMessage<RealtimeUpdate> {
-    private static readonly pb::MessageParser<RealtimeUpdate> _parser = new pb::MessageParser<RealtimeUpdate>(() => new RealtimeUpdate());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<RealtimeUpdate> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[0]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public RealtimeUpdate() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public RealtimeUpdate(RealtimeUpdate other) : this() {
-      askPrice_ = other.askPrice_;
-      askSize_ = other.askSize_;
-      bidPrice_ = other.bidPrice_;
-      bidSize_ = other.bidSize_;
-      lastPrice_ = other.lastPrice_;
-      lastSize_ = other.lastSize_;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public RealtimeUpdate Clone() {
-      return new RealtimeUpdate(this);
-    }
-
-    /// <summary>Field number for the "ask_price" field.</summary>
-    public const int AskPriceFieldNumber = 1;
-    private ulong askPrice_;
-    /// <summary>
-    /// Current inside ask price for this instrument.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong AskPrice {
-      get { return askPrice_; }
-      set {
-        askPrice_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "ask_size" field.</summary>
-    public const int AskSizeFieldNumber = 2;
-    private ulong askSize_;
-    /// <summary>
-    /// Current inside ask size for this instrument.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong AskSize {
-      get { return askSize_; }
-      set {
-        askSize_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "bid_price" field.</summary>
-    public const int BidPriceFieldNumber = 3;
-    private ulong bidPrice_;
-    /// <summary>
-    /// Current inside bid price for this instrument.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong BidPrice {
-      get { return bidPrice_; }
-      set {
-        bidPrice_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "bid_size" field.</summary>
-    public const int BidSizeFieldNumber = 4;
-    private ulong bidSize_;
-    /// <summary>
-    /// Current inside bid size for this instrument.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong BidSize {
-      get { return bidSize_; }
-      set {
-        bidSize_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "last_price" field.</summary>
-    public const int LastPriceFieldNumber = 5;
-    private ulong lastPrice_;
-    /// <summary>
-    /// The last trade price for this instrument.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong LastPrice {
-      get { return lastPrice_; }
-      set {
-        lastPrice_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "last_size" field.</summary>
-    public const int LastSizeFieldNumber = 6;
-    private ulong lastSize_;
-    /// <summary>
-    /// Size of the last trade of this instrument.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong LastSize {
-      get { return lastSize_; }
-      set {
-        lastSize_ = value;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as RealtimeUpdate);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(RealtimeUpdate other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (AskPrice != other.AskPrice) return false;
-      if (AskSize != other.AskSize) return false;
-      if (BidPrice != other.BidPrice) return false;
-      if (BidSize != other.BidSize) return false;
-      if (LastPrice != other.LastPrice) return false;
-      if (LastSize != other.LastSize) return false;
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (AskPrice != 0UL) hash ^= AskPrice.GetHashCode();
-      if (AskSize != 0UL) hash ^= AskSize.GetHashCode();
-      if (BidPrice != 0UL) hash ^= BidPrice.GetHashCode();
-      if (BidSize != 0UL) hash ^= BidSize.GetHashCode();
-      if (LastPrice != 0UL) hash ^= LastPrice.GetHashCode();
-      if (LastSize != 0UL) hash ^= LastSize.GetHashCode();
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (AskPrice != 0UL) {
-        output.WriteRawTag(8);
-        output.WriteUInt64(AskPrice);
-      }
-      if (AskSize != 0UL) {
-        output.WriteRawTag(16);
-        output.WriteUInt64(AskSize);
-      }
-      if (BidPrice != 0UL) {
-        output.WriteRawTag(24);
-        output.WriteUInt64(BidPrice);
-      }
-      if (BidSize != 0UL) {
-        output.WriteRawTag(32);
-        output.WriteUInt64(BidSize);
-      }
-      if (LastPrice != 0UL) {
-        output.WriteRawTag(40);
-        output.WriteUInt64(LastPrice);
-      }
-      if (LastSize != 0UL) {
-        output.WriteRawTag(48);
-        output.WriteUInt64(LastSize);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (AskPrice != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(AskPrice);
-      }
-      if (AskSize != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(AskSize);
-      }
-      if (BidPrice != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(BidPrice);
-      }
-      if (BidSize != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(BidSize);
-      }
-      if (LastPrice != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(LastPrice);
-      }
-      if (LastSize != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(LastSize);
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(RealtimeUpdate other) {
-      if (other == null) {
-        return;
-      }
-      if (other.AskPrice != 0UL) {
-        AskPrice = other.AskPrice;
-      }
-      if (other.AskSize != 0UL) {
-        AskSize = other.AskSize;
-      }
-      if (other.BidPrice != 0UL) {
-        BidPrice = other.BidPrice;
-      }
-      if (other.BidSize != 0UL) {
-        BidSize = other.BidSize;
-      }
-      if (other.LastPrice != 0UL) {
-        LastPrice = other.LastPrice;
-      }
-      if (other.LastSize != 0UL) {
-        LastSize = other.LastSize;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
-          case 8: {
-            AskPrice = input.ReadUInt64();
-            break;
-          }
-          case 16: {
-            AskSize = input.ReadUInt64();
-            break;
-          }
-          case 24: {
-            BidPrice = input.ReadUInt64();
-            break;
-          }
-          case 32: {
-            BidSize = input.ReadUInt64();
-            break;
-          }
-          case 40: {
-            LastPrice = input.ReadUInt64();
-            break;
-          }
-          case 48: {
-            LastSize = input.ReadUInt64();
-            break;
-          }
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pbr::MessageDescriptor Descriptor
+        {
+            get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[0]; }
         }
-      }
-    }
 
-  }
-
-  /// <summary>
-  /// SnapshotUpdate represents an update of snapshot information (trading session and yearly) 
-  /// </summary>
-  internal sealed partial class SnapshotUpdate : pb::IMessage<SnapshotUpdate> {
-    private static readonly pb::MessageParser<SnapshotUpdate> _parser = new pb::MessageParser<SnapshotUpdate>(() => new SnapshotUpdate());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<SnapshotUpdate> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[1]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public SnapshotUpdate() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public SnapshotUpdate(SnapshotUpdate other) : this() {
-      openPrice_ = other.openPrice_;
-      highPrice_ = other.highPrice_;
-      lowPrice_ = other.lowPrice_;
-      closePrice_ = other.closePrice_;
-      previousClose_ = other.previousClose_;
-      volume_ = other.volume_;
-      high52Price_ = other.high52Price_;
-      low52Price_ = other.low52Price_;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public SnapshotUpdate Clone() {
-      return new SnapshotUpdate(this);
-    }
-
-    /// <summary>Field number for the "open_price" field.</summary>
-    public const int OpenPriceFieldNumber = 1;
-    private ulong openPrice_;
-    /// <summary>
-    /// The open value of the current trading day.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong OpenPrice {
-      get { return openPrice_; }
-      set {
-        openPrice_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "high_price" field.</summary>
-    public const int HighPriceFieldNumber = 2;
-    private ulong highPrice_;
-    /// <summary>
-    /// The high value of the current trading day.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong HighPrice {
-      get { return highPrice_; }
-      set {
-        highPrice_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "low_price" field.</summary>
-    public const int LowPriceFieldNumber = 3;
-    private ulong lowPrice_;
-    /// <summary>
-    /// The low value of the current trading day.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong LowPrice {
-      get { return lowPrice_; }
-      set {
-        lowPrice_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "close_price" field.</summary>
-    public const int ClosePriceFieldNumber = 4;
-    private ulong closePrice_;
-    /// <summary>
-    /// The close value of the current trading day.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong ClosePrice {
-      get { return closePrice_; }
-      set {
-        closePrice_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "previous_close" field.</summary>
-    public const int PreviousCloseFieldNumber = 5;
-    private ulong previousClose_;
-    /// <summary>
-    /// Previous close value of current trading day.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong PreviousClose {
-      get { return previousClose_; }
-      set {
-        previousClose_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "volume" field.</summary>
-    public const int VolumeFieldNumber = 6;
-    private ulong volume_;
-    /// <summary>
-    /// The daily trading volume for this instrument.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong Volume {
-      get { return volume_; }
-      set {
-        volume_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "high52_price" field.</summary>
-    public const int High52PriceFieldNumber = 7;
-    private ulong high52Price_;
-    /// <summary>
-    /// The 52-week high value for this instrument.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong High52Price {
-      get { return high52Price_; }
-      set {
-        high52Price_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "low52_price" field.</summary>
-    public const int Low52PriceFieldNumber = 8;
-    private ulong low52Price_;
-    /// <summary>
-    /// The 52-week low value for this instrument.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong Low52Price {
-      get { return low52Price_; }
-      set {
-        low52Price_ = value;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as SnapshotUpdate);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(SnapshotUpdate other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (OpenPrice != other.OpenPrice) return false;
-      if (HighPrice != other.HighPrice) return false;
-      if (LowPrice != other.LowPrice) return false;
-      if (ClosePrice != other.ClosePrice) return false;
-      if (PreviousClose != other.PreviousClose) return false;
-      if (Volume != other.Volume) return false;
-      if (High52Price != other.High52Price) return false;
-      if (Low52Price != other.Low52Price) return false;
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (OpenPrice != 0UL) hash ^= OpenPrice.GetHashCode();
-      if (HighPrice != 0UL) hash ^= HighPrice.GetHashCode();
-      if (LowPrice != 0UL) hash ^= LowPrice.GetHashCode();
-      if (ClosePrice != 0UL) hash ^= ClosePrice.GetHashCode();
-      if (PreviousClose != 0UL) hash ^= PreviousClose.GetHashCode();
-      if (Volume != 0UL) hash ^= Volume.GetHashCode();
-      if (High52Price != 0UL) hash ^= High52Price.GetHashCode();
-      if (Low52Price != 0UL) hash ^= Low52Price.GetHashCode();
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (OpenPrice != 0UL) {
-        output.WriteRawTag(8);
-        output.WriteUInt64(OpenPrice);
-      }
-      if (HighPrice != 0UL) {
-        output.WriteRawTag(16);
-        output.WriteUInt64(HighPrice);
-      }
-      if (LowPrice != 0UL) {
-        output.WriteRawTag(24);
-        output.WriteUInt64(LowPrice);
-      }
-      if (ClosePrice != 0UL) {
-        output.WriteRawTag(32);
-        output.WriteUInt64(ClosePrice);
-      }
-      if (PreviousClose != 0UL) {
-        output.WriteRawTag(40);
-        output.WriteUInt64(PreviousClose);
-      }
-      if (Volume != 0UL) {
-        output.WriteRawTag(48);
-        output.WriteUInt64(Volume);
-      }
-      if (High52Price != 0UL) {
-        output.WriteRawTag(56);
-        output.WriteUInt64(High52Price);
-      }
-      if (Low52Price != 0UL) {
-        output.WriteRawTag(64);
-        output.WriteUInt64(Low52Price);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (OpenPrice != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(OpenPrice);
-      }
-      if (HighPrice != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(HighPrice);
-      }
-      if (LowPrice != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(LowPrice);
-      }
-      if (ClosePrice != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(ClosePrice);
-      }
-      if (PreviousClose != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(PreviousClose);
-      }
-      if (Volume != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Volume);
-      }
-      if (High52Price != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(High52Price);
-      }
-      if (Low52Price != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Low52Price);
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(SnapshotUpdate other) {
-      if (other == null) {
-        return;
-      }
-      if (other.OpenPrice != 0UL) {
-        OpenPrice = other.OpenPrice;
-      }
-      if (other.HighPrice != 0UL) {
-        HighPrice = other.HighPrice;
-      }
-      if (other.LowPrice != 0UL) {
-        LowPrice = other.LowPrice;
-      }
-      if (other.ClosePrice != 0UL) {
-        ClosePrice = other.ClosePrice;
-      }
-      if (other.PreviousClose != 0UL) {
-        PreviousClose = other.PreviousClose;
-      }
-      if (other.Volume != 0UL) {
-        Volume = other.Volume;
-      }
-      if (other.High52Price != 0UL) {
-        High52Price = other.High52Price;
-      }
-      if (other.Low52Price != 0UL) {
-        Low52Price = other.Low52Price;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
-          case 8: {
-            OpenPrice = input.ReadUInt64();
-            break;
-          }
-          case 16: {
-            HighPrice = input.ReadUInt64();
-            break;
-          }
-          case 24: {
-            LowPrice = input.ReadUInt64();
-            break;
-          }
-          case 32: {
-            ClosePrice = input.ReadUInt64();
-            break;
-          }
-          case 40: {
-            PreviousClose = input.ReadUInt64();
-            break;
-          }
-          case 48: {
-            Volume = input.ReadUInt64();
-            break;
-          }
-          case 56: {
-            High52Price = input.ReadUInt64();
-            break;
-          }
-          case 64: {
-            Low52Price = input.ReadUInt64();
-            break;
-          }
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        pbr::MessageDescriptor pb::IMessage.Descriptor
+        {
+            get { return Descriptor; }
         }
-      }
-    }
 
-  }
-
-  /// <summary>
-  /// StatisticsUpdate represents an update of statistics related to the underlying instrument. 
-  /// </summary>
-  internal sealed partial class StatisticsUpdate : pb::IMessage<StatisticsUpdate> {
-    private static readonly pb::MessageParser<StatisticsUpdate> _parser = new pb::MessageParser<StatisticsUpdate>(() => new StatisticsUpdate());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<StatisticsUpdate> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[2]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public StatisticsUpdate() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public StatisticsUpdate(StatisticsUpdate other) : this() {
-      beta_ = other.beta_;
-      eps_ = other.eps_;
-      peRatio_ = other.peRatio_;
-      sharesOutstanding_ = other.sharesOutstanding_;
-      historicalVolatility_ = other.historicalVolatility_;
-      impliedVolatility_ = other.impliedVolatility_;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public StatisticsUpdate Clone() {
-      return new StatisticsUpdate(this);
-    }
-
-    /// <summary>Field number for the "beta" field.</summary>
-    public const int BetaFieldNumber = 1;
-    private float beta_;
-    /// <summary>
-    /// The beta value for this instrument.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public float Beta {
-      get { return beta_; }
-      set {
-        beta_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "eps" field.</summary>
-    public const int EpsFieldNumber = 2;
-    private float eps_;
-    /// <summary>
-    /// The earnings per share for this instrument.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public float Eps {
-      get { return eps_; }
-      set {
-        eps_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "pe_ratio" field.</summary>
-    public const int PeRatioFieldNumber = 3;
-    private float peRatio_;
-    /// <summary>
-    /// Profit/earnings ratio for this instrument.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public float PeRatio {
-      get { return peRatio_; }
-      set {
-        peRatio_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "shares_outstanding" field.</summary>
-    public const int SharesOutstandingFieldNumber = 4;
-    private ulong sharesOutstanding_;
-    /// <summary>
-    /// The shares outstanding for this instrument.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong SharesOutstanding {
-      get { return sharesOutstanding_; }
-      set {
-        sharesOutstanding_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "historical_volatility" field.</summary>
-    public const int HistoricalVolatilityFieldNumber = 5;
-    private float historicalVolatility_;
-    /// <summary>
-    /// The historical volatility for this instrument.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public float HistoricalVolatility {
-      get { return historicalVolatility_; }
-      set {
-        historicalVolatility_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "implied_volatility" field.</summary>
-    public const int ImpliedVolatilityFieldNumber = 6;
-    private float impliedVolatility_;
-    /// <summary>
-    /// The implied volatility for this instrument.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public float ImpliedVolatility {
-      get { return impliedVolatility_; }
-      set {
-        impliedVolatility_ = value;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as StatisticsUpdate);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(StatisticsUpdate other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (Beta != other.Beta) return false;
-      if (Eps != other.Eps) return false;
-      if (PeRatio != other.PeRatio) return false;
-      if (SharesOutstanding != other.SharesOutstanding) return false;
-      if (HistoricalVolatility != other.HistoricalVolatility) return false;
-      if (ImpliedVolatility != other.ImpliedVolatility) return false;
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (Beta != 0F) hash ^= Beta.GetHashCode();
-      if (Eps != 0F) hash ^= Eps.GetHashCode();
-      if (PeRatio != 0F) hash ^= PeRatio.GetHashCode();
-      if (SharesOutstanding != 0UL) hash ^= SharesOutstanding.GetHashCode();
-      if (HistoricalVolatility != 0F) hash ^= HistoricalVolatility.GetHashCode();
-      if (ImpliedVolatility != 0F) hash ^= ImpliedVolatility.GetHashCode();
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (Beta != 0F) {
-        output.WriteRawTag(13);
-        output.WriteFloat(Beta);
-      }
-      if (Eps != 0F) {
-        output.WriteRawTag(21);
-        output.WriteFloat(Eps);
-      }
-      if (PeRatio != 0F) {
-        output.WriteRawTag(29);
-        output.WriteFloat(PeRatio);
-      }
-      if (SharesOutstanding != 0UL) {
-        output.WriteRawTag(32);
-        output.WriteUInt64(SharesOutstanding);
-      }
-      if (HistoricalVolatility != 0F) {
-        output.WriteRawTag(45);
-        output.WriteFloat(HistoricalVolatility);
-      }
-      if (ImpliedVolatility != 0F) {
-        output.WriteRawTag(53);
-        output.WriteFloat(ImpliedVolatility);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (Beta != 0F) {
-        size += 1 + 4;
-      }
-      if (Eps != 0F) {
-        size += 1 + 4;
-      }
-      if (PeRatio != 0F) {
-        size += 1 + 4;
-      }
-      if (SharesOutstanding != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(SharesOutstanding);
-      }
-      if (HistoricalVolatility != 0F) {
-        size += 1 + 4;
-      }
-      if (ImpliedVolatility != 0F) {
-        size += 1 + 4;
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(StatisticsUpdate other) {
-      if (other == null) {
-        return;
-      }
-      if (other.Beta != 0F) {
-        Beta = other.Beta;
-      }
-      if (other.Eps != 0F) {
-        Eps = other.Eps;
-      }
-      if (other.PeRatio != 0F) {
-        PeRatio = other.PeRatio;
-      }
-      if (other.SharesOutstanding != 0UL) {
-        SharesOutstanding = other.SharesOutstanding;
-      }
-      if (other.HistoricalVolatility != 0F) {
-        HistoricalVolatility = other.HistoricalVolatility;
-      }
-      if (other.ImpliedVolatility != 0F) {
-        ImpliedVolatility = other.ImpliedVolatility;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
-          case 13: {
-            Beta = input.ReadFloat();
-            break;
-          }
-          case 21: {
-            Eps = input.ReadFloat();
-            break;
-          }
-          case 29: {
-            PeRatio = input.ReadFloat();
-            break;
-          }
-          case 32: {
-            SharesOutstanding = input.ReadUInt64();
-            break;
-          }
-          case 45: {
-            HistoricalVolatility = input.ReadFloat();
-            break;
-          }
-          case 53: {
-            ImpliedVolatility = input.ReadFloat();
-            break;
-          }
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public RealtimeUpdate()
+        {
+            OnConstruction();
         }
-      }
-    }
 
-  }
+        partial void OnConstruction();
 
-  /// <summary>
-  /// QuoteUpdate represents a new real-time market data quote update.
-  /// All prices are converted to long values. 
-  /// </summary>
-  internal sealed partial class QuoteUpdate : pb::IMessage<QuoteUpdate> {
-    private static readonly pb::MessageParser<QuoteUpdate> _parser = new pb::MessageParser<QuoteUpdate>(() => new QuoteUpdate());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<QuoteUpdate> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[3]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public QuoteUpdate() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public QuoteUpdate(QuoteUpdate other) : this() {
-      timestamp_ = other.timestamp_;
-      Realtime = other.realtime_ != null ? other.Realtime.Clone() : null;
-      Snapshot = other.snapshot_ != null ? other.Snapshot.Clone() : null;
-      Statistics = other.statistics_ != null ? other.Statistics.Clone() : null;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public QuoteUpdate Clone() {
-      return new QuoteUpdate(this);
-    }
-
-    /// <summary>Field number for the "timestamp" field.</summary>
-    public const int TimestampFieldNumber = 1;
-    private ulong timestamp_;
-    /// <summary>
-    /// The timestamp of the latest update.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong Timestamp {
-      get { return timestamp_; }
-      set {
-        timestamp_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "realtime" field.</summary>
-    public const int RealtimeFieldNumber = 2;
-    private global::QuantGate.API.Signals.Proto.Stealth.RealtimeUpdate realtime_;
-    /// <summary>
-    /// Real-time quote updates (bid/ask/last).
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::QuantGate.API.Signals.Proto.Stealth.RealtimeUpdate Realtime {
-      get { return realtime_; }
-      set {
-        realtime_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "snapshot" field.</summary>
-    public const int SnapshotFieldNumber = 3;
-    private global::QuantGate.API.Signals.Proto.Stealth.SnapshotUpdate snapshot_;
-    /// <summary>
-    /// Trading session and yearly statistics snapshot.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::QuantGate.API.Signals.Proto.Stealth.SnapshotUpdate Snapshot {
-      get { return snapshot_; }
-      set {
-        snapshot_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "statistics" field.</summary>
-    public const int StatisticsFieldNumber = 4;
-    private global::QuantGate.API.Signals.Proto.Stealth.StatisticsUpdate statistics_;
-    /// <summary>
-    /// Statistics related to the underlying instrument.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::QuantGate.API.Signals.Proto.Stealth.StatisticsUpdate Statistics {
-      get { return statistics_; }
-      set {
-        statistics_ = value;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as QuoteUpdate);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(QuoteUpdate other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (Timestamp != other.Timestamp) return false;
-      if (!object.Equals(Realtime, other.Realtime)) return false;
-      if (!object.Equals(Snapshot, other.Snapshot)) return false;
-      if (!object.Equals(Statistics, other.Statistics)) return false;
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (Timestamp != 0UL) hash ^= Timestamp.GetHashCode();
-      if (realtime_ != null) hash ^= Realtime.GetHashCode();
-      if (snapshot_ != null) hash ^= Snapshot.GetHashCode();
-      if (statistics_ != null) hash ^= Statistics.GetHashCode();
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (Timestamp != 0UL) {
-        output.WriteRawTag(8);
-        output.WriteUInt64(Timestamp);
-      }
-      if (realtime_ != null) {
-        output.WriteRawTag(18);
-        output.WriteMessage(Realtime);
-      }
-      if (snapshot_ != null) {
-        output.WriteRawTag(26);
-        output.WriteMessage(Snapshot);
-      }
-      if (statistics_ != null) {
-        output.WriteRawTag(34);
-        output.WriteMessage(Statistics);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (Timestamp != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Timestamp);
-      }
-      if (realtime_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Realtime);
-      }
-      if (snapshot_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Snapshot);
-      }
-      if (statistics_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Statistics);
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(QuoteUpdate other) {
-      if (other == null) {
-        return;
-      }
-      if (other.Timestamp != 0UL) {
-        Timestamp = other.Timestamp;
-      }
-      if (other.realtime_ != null) {
-        if (realtime_ == null) {
-          realtime_ = new global::QuantGate.API.Signals.Proto.Stealth.RealtimeUpdate();
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public RealtimeUpdate(RealtimeUpdate other) : this()
+        {
+            askPrice_ = other.askPrice_;
+            askSize_ = other.askSize_;
+            bidPrice_ = other.bidPrice_;
+            bidSize_ = other.bidSize_;
+            lastPrice_ = other.lastPrice_;
+            lastSize_ = other.lastSize_;
         }
-        Realtime.MergeFrom(other.Realtime);
-      }
-      if (other.snapshot_ != null) {
-        if (snapshot_ == null) {
-          snapshot_ = new global::QuantGate.API.Signals.Proto.Stealth.SnapshotUpdate();
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public RealtimeUpdate Clone()
+        {
+            return new RealtimeUpdate(this);
         }
-        Snapshot.MergeFrom(other.Snapshot);
-      }
-      if (other.statistics_ != null) {
-        if (statistics_ == null) {
-          statistics_ = new global::QuantGate.API.Signals.Proto.Stealth.StatisticsUpdate();
-        }
-        Statistics.MergeFrom(other.Statistics);
-      }
-    }
 
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
-          case 8: {
-            Timestamp = input.ReadUInt64();
-            break;
-          }
-          case 18: {
-            if (realtime_ == null) {
-              realtime_ = new global::QuantGate.API.Signals.Proto.Stealth.RealtimeUpdate();
-            }
-            input.ReadMessage(realtime_);
-            break;
-          }
-          case 26: {
-            if (snapshot_ == null) {
-              snapshot_ = new global::QuantGate.API.Signals.Proto.Stealth.SnapshotUpdate();
-            }
-            input.ReadMessage(snapshot_);
-            break;
-          }
-          case 34: {
-            if (statistics_ == null) {
-              statistics_ = new global::QuantGate.API.Signals.Proto.Stealth.StatisticsUpdate();
-            }
-            input.ReadMessage(statistics_);
-            break;
-          }
-        }
-      }
-    }
-
-  }
-
-  /// <summary>
-  /// Holds the spline information for a sentiment length or color spline.
-  /// Values should be converted to between -1 and 1 by dividing by 1000. 
-  /// </summary>
-  internal sealed partial class SentimentSpline : pb::IMessage<SentimentSpline> {
-    private static readonly pb::MessageParser<SentimentSpline> _parser = new pb::MessageParser<SentimentSpline>(() => new SentimentSpline());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<SentimentSpline> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[4]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public SentimentSpline() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public SentimentSpline(SentimentSpline other) : this() {
-      average_ = other.average_;
-      i_ = other.i_;
-      j_ = other.j_;
-      x_ = other.x_;
-      y_ = other.y_;
-      z_ = other.z_;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public SentimentSpline Clone() {
-      return new SentimentSpline(this);
-    }
-
-    /// <summary>Field number for the "average" field.</summary>
-    public const int AverageFieldNumber = 1;
-    private int average_;
-    /// <summary>
-    /// Average length. (-1000 to 1000)
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Average {
-      get { return average_; }
-      set {
-        average_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "i" field.</summary>
-    public const int IFieldNumber = 2;
-    private uint i_;
-    /// <summary>
-    /// First spline point.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint I {
-      get { return i_; }
-      set {
-        i_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "j" field.</summary>
-    public const int JFieldNumber = 3;
-    private uint j_;
-    /// <summary>
-    /// Second spline point.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint J {
-      get { return j_; }
-      set {
-        j_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "x" field.</summary>
-    public const int XFieldNumber = 4;
-    private int x_;
-    /// <summary>
-    /// Position at point 0. (-1000 to 1000)
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int X {
-      get { return x_; }
-      set {
-        x_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "y" field.</summary>
-    public const int YFieldNumber = 5;
-    private int y_;
-    /// <summary>
-    /// Position at point i. (-1000 to 1000)
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Y {
-      get { return y_; }
-      set {
-        y_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "z" field.</summary>
-    public const int ZFieldNumber = 6;
-    private int z_;
-    /// <summary>
-    /// Position at point j. (-1000 to 1000)
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Z {
-      get { return z_; }
-      set {
-        z_ = value;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as SentimentSpline);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(SentimentSpline other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (Average != other.Average) return false;
-      if (I != other.I) return false;
-      if (J != other.J) return false;
-      if (X != other.X) return false;
-      if (Y != other.Y) return false;
-      if (Z != other.Z) return false;
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (Average != 0) hash ^= Average.GetHashCode();
-      if (I != 0) hash ^= I.GetHashCode();
-      if (J != 0) hash ^= J.GetHashCode();
-      if (X != 0) hash ^= X.GetHashCode();
-      if (Y != 0) hash ^= Y.GetHashCode();
-      if (Z != 0) hash ^= Z.GetHashCode();
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (Average != 0) {
-        output.WriteRawTag(8);
-        output.WriteSInt32(Average);
-      }
-      if (I != 0) {
-        output.WriteRawTag(16);
-        output.WriteUInt32(I);
-      }
-      if (J != 0) {
-        output.WriteRawTag(24);
-        output.WriteUInt32(J);
-      }
-      if (X != 0) {
-        output.WriteRawTag(32);
-        output.WriteSInt32(X);
-      }
-      if (Y != 0) {
-        output.WriteRawTag(40);
-        output.WriteSInt32(Y);
-      }
-      if (Z != 0) {
-        output.WriteRawTag(48);
-        output.WriteSInt32(Z);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (Average != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Average);
-      }
-      if (I != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(I);
-      }
-      if (J != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(J);
-      }
-      if (X != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeSInt32Size(X);
-      }
-      if (Y != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Y);
-      }
-      if (Z != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Z);
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(SentimentSpline other) {
-      if (other == null) {
-        return;
-      }
-      if (other.Average != 0) {
-        Average = other.Average;
-      }
-      if (other.I != 0) {
-        I = other.I;
-      }
-      if (other.J != 0) {
-        J = other.J;
-      }
-      if (other.X != 0) {
-        X = other.X;
-      }
-      if (other.Y != 0) {
-        Y = other.Y;
-      }
-      if (other.Z != 0) {
-        Z = other.Z;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
-          case 8: {
-            Average = input.ReadSInt32();
-            break;
-          }
-          case 16: {
-            I = input.ReadUInt32();
-            break;
-          }
-          case 24: {
-            J = input.ReadUInt32();
-            break;
-          }
-          case 32: {
-            X = input.ReadSInt32();
-            break;
-          }
-          case 40: {
-            Y = input.ReadSInt32();
-            break;
-          }
-          case 48: {
-            Z = input.ReadSInt32();
-            break;
-          }
-        }
-      }
-    }
-
-  }
-
-  /// <summary>
-  /// SentimentUpdate represents a new sentiment subscription update. 
-  /// </summary>
-  internal sealed partial class SentimentUpdate : pb::IMessage<SentimentUpdate> {
-    private static readonly pb::MessageParser<SentimentUpdate> _parser = new pb::MessageParser<SentimentUpdate>(() => new SentimentUpdate());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<SentimentUpdate> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[5]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public SentimentUpdate() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public SentimentUpdate(SentimentUpdate other) : this() {
-      timestamp_ = other.timestamp_;
-      Lengths = other.lengths_ != null ? other.Lengths.Clone() : null;
-      Colors = other.colors_ != null ? other.Colors.Clone() : null;
-      isDirty_ = other.isDirty_;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public SentimentUpdate Clone() {
-      return new SentimentUpdate(this);
-    }
-
-    /// <summary>Field number for the "timestamp" field.</summary>
-    public const int TimestampFieldNumber = 1;
-    private ulong timestamp_;
-    /// <summary>
-    /// The timestamp of the latest update.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong Timestamp {
-      get { return timestamp_; }
-      set {
-        timestamp_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "lengths" field.</summary>
-    public const int LengthsFieldNumber = 2;
-    private global::QuantGate.API.Signals.Proto.Stealth.SentimentSpline lengths_;
-    /// <summary>
-    /// Bar color spline component of sentiment gauge.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::QuantGate.API.Signals.Proto.Stealth.SentimentSpline Lengths {
-      get { return lengths_; }
-      set {
-        lengths_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "colors" field.</summary>
-    public const int ColorsFieldNumber = 3;
-    private global::QuantGate.API.Signals.Proto.Stealth.SentimentSpline colors_;
-    /// <summary>
-    /// Bar length component of sentiment gauge.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::QuantGate.API.Signals.Proto.Stealth.SentimentSpline Colors {
-      get { return colors_; }
-      set {
-        colors_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "is_dirty" field.</summary>
-    public const int IsDirtyFieldNumber = 4;
-    private bool isDirty_;
-    /// <summary>
-    /// Is the data that generated this potentially dirty (or stale)?
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool IsDirty {
-      get { return isDirty_; }
-      set {
-        isDirty_ = value;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as SentimentUpdate);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(SentimentUpdate other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (Timestamp != other.Timestamp) return false;
-      if (!object.Equals(Lengths, other.Lengths)) return false;
-      if (!object.Equals(Colors, other.Colors)) return false;
-      if (IsDirty != other.IsDirty) return false;
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (Timestamp != 0UL) hash ^= Timestamp.GetHashCode();
-      if (lengths_ != null) hash ^= Lengths.GetHashCode();
-      if (colors_ != null) hash ^= Colors.GetHashCode();
-      if (IsDirty != false) hash ^= IsDirty.GetHashCode();
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (Timestamp != 0UL) {
-        output.WriteRawTag(8);
-        output.WriteUInt64(Timestamp);
-      }
-      if (lengths_ != null) {
-        output.WriteRawTag(18);
-        output.WriteMessage(Lengths);
-      }
-      if (colors_ != null) {
-        output.WriteRawTag(26);
-        output.WriteMessage(Colors);
-      }
-      if (IsDirty != false) {
-        output.WriteRawTag(32);
-        output.WriteBool(IsDirty);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (Timestamp != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Timestamp);
-      }
-      if (lengths_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Lengths);
-      }
-      if (colors_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Colors);
-      }
-      if (IsDirty != false) {
-        size += 1 + 1;
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(SentimentUpdate other) {
-      if (other == null) {
-        return;
-      }
-      if (other.Timestamp != 0UL) {
-        Timestamp = other.Timestamp;
-      }
-      if (other.lengths_ != null) {
-        if (lengths_ == null) {
-          lengths_ = new global::QuantGate.API.Signals.Proto.Stealth.SentimentSpline();
-        }
-        Lengths.MergeFrom(other.Lengths);
-      }
-      if (other.colors_ != null) {
-        if (colors_ == null) {
-          colors_ = new global::QuantGate.API.Signals.Proto.Stealth.SentimentSpline();
-        }
-        Colors.MergeFrom(other.Colors);
-      }
-      if (other.IsDirty != false) {
-        IsDirty = other.IsDirty;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
-          case 8: {
-            Timestamp = input.ReadUInt64();
-            break;
-          }
-          case 18: {
-            if (lengths_ == null) {
-              lengths_ = new global::QuantGate.API.Signals.Proto.Stealth.SentimentSpline();
-            }
-            input.ReadMessage(lengths_);
-            break;
-          }
-          case 26: {
-            if (colors_ == null) {
-              colors_ = new global::QuantGate.API.Signals.Proto.Stealth.SentimentSpline();
-            }
-            input.ReadMessage(colors_);
-            break;
-          }
-          case 32: {
-            IsDirty = input.ReadBool();
-            break;
-          }
-        }
-      }
-    }
-
-  }
-
-  /// <summary>
-  /// EquilibriumUpdate represents a new equilibrium subscription update.
-  /// All prices (and gap size) are converted to long values.
-  /// Values should be converted to between -1 and 1 by dividing by 1000. 
-  /// </summary>
-  internal sealed partial class EquilibriumUpdate : pb::IMessage<EquilibriumUpdate> {
-    private static readonly pb::MessageParser<EquilibriumUpdate> _parser = new pb::MessageParser<EquilibriumUpdate>(() => new EquilibriumUpdate());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<EquilibriumUpdate> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[6]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public EquilibriumUpdate() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public EquilibriumUpdate(EquilibriumUpdate other) : this() {
-      timestamp_ = other.timestamp_;
-      equilibriumPrice_ = other.equilibriumPrice_;
-      gapSize_ = other.gapSize_;
-      high_ = other.high_;
-      low_ = other.low_;
-      projected_ = other.projected_;
-      bias_ = other.bias_;
-      lastPrice_ = other.lastPrice_;
-      isDirty_ = other.isDirty_;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public EquilibriumUpdate Clone() {
-      return new EquilibriumUpdate(this);
-    }
-
-    /// <summary>Field number for the "timestamp" field.</summary>
-    public const int TimestampFieldNumber = 1;
-    private ulong timestamp_;
-    /// <summary>
-    /// The timestamp of the latest update.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong Timestamp {
-      get { return timestamp_; }
-      set {
-        timestamp_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "equilibrium_price" field.</summary>
-    public const int EquilibriumPriceFieldNumber = 2;
-    private ulong equilibriumPrice_;
-    /// <summary>
-    /// The equilibrium price.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong EquilibriumPrice {
-      get { return equilibriumPrice_; }
-      set {
-        equilibriumPrice_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "gap_size" field.</summary>
-    public const int GapSizeFieldNumber = 3;
-    private ulong gapSize_;
-    /// <summary>
-    /// The gap size of each equilibrium deviation.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong GapSize {
-      get { return gapSize_; }
-      set {
-        gapSize_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "high" field.</summary>
-    public const int HighFieldNumber = 4;
-    private int high_;
-    /// <summary>
-    /// The position of the high value. (-1000 to 1000)
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int High {
-      get { return high_; }
-      set {
-        high_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "low" field.</summary>
-    public const int LowFieldNumber = 5;
-    private int low_;
-    /// <summary>
-    /// The position of the low value. (-1000 to 1000)
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Low {
-      get { return low_; }
-      set {
-        low_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "projected" field.</summary>
-    public const int ProjectedFieldNumber = 6;
-    private int projected_;
-    /// <summary>
-    /// Position of the projected value. (-1000 to 1000)
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Projected {
-      get { return projected_; }
-      set {
-        projected_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "bias" field.</summary>
-    public const int BiasFieldNumber = 7;
-    private int bias_;
-    /// <summary>
-    /// The bias (determined by the slope, -1000 to 1000).
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Bias {
-      get { return bias_; }
-      set {
-        bias_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "last_price" field.</summary>
-    public const int LastPriceFieldNumber = 8;
-    private ulong lastPrice_;
-    /// <summary>
-    /// Last traded price at time of calculation.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong LastPrice {
-      get { return lastPrice_; }
-      set {
-        lastPrice_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "is_dirty" field.</summary>
-    public const int IsDirtyFieldNumber = 9;
-    private bool isDirty_;
-    /// <summary>
-    /// Is the data that generated this potentially dirty (or stale)?
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool IsDirty {
-      get { return isDirty_; }
-      set {
-        isDirty_ = value;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as EquilibriumUpdate);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(EquilibriumUpdate other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (Timestamp != other.Timestamp) return false;
-      if (EquilibriumPrice != other.EquilibriumPrice) return false;
-      if (GapSize != other.GapSize) return false;
-      if (High != other.High) return false;
-      if (Low != other.Low) return false;
-      if (Projected != other.Projected) return false;
-      if (Bias != other.Bias) return false;
-      if (LastPrice != other.LastPrice) return false;
-      if (IsDirty != other.IsDirty) return false;
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (Timestamp != 0UL) hash ^= Timestamp.GetHashCode();
-      if (EquilibriumPrice != 0UL) hash ^= EquilibriumPrice.GetHashCode();
-      if (GapSize != 0UL) hash ^= GapSize.GetHashCode();
-      if (High != 0) hash ^= High.GetHashCode();
-      if (Low != 0) hash ^= Low.GetHashCode();
-      if (Projected != 0) hash ^= Projected.GetHashCode();
-      if (Bias != 0) hash ^= Bias.GetHashCode();
-      if (LastPrice != 0UL) hash ^= LastPrice.GetHashCode();
-      if (IsDirty != false) hash ^= IsDirty.GetHashCode();
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (Timestamp != 0UL) {
-        output.WriteRawTag(8);
-        output.WriteUInt64(Timestamp);
-      }
-      if (EquilibriumPrice != 0UL) {
-        output.WriteRawTag(16);
-        output.WriteUInt64(EquilibriumPrice);
-      }
-      if (GapSize != 0UL) {
-        output.WriteRawTag(24);
-        output.WriteUInt64(GapSize);
-      }
-      if (High != 0) {
-        output.WriteRawTag(32);
-        output.WriteSInt32(High);
-      }
-      if (Low != 0) {
-        output.WriteRawTag(40);
-        output.WriteSInt32(Low);
-      }
-      if (Projected != 0) {
-        output.WriteRawTag(48);
-        output.WriteSInt32(Projected);
-      }
-      if (Bias != 0) {
-        output.WriteRawTag(56);
-        output.WriteSInt32(Bias);
-      }
-      if (LastPrice != 0UL) {
-        output.WriteRawTag(64);
-        output.WriteUInt64(LastPrice);
-      }
-      if (IsDirty != false) {
-        output.WriteRawTag(72);
-        output.WriteBool(IsDirty);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (Timestamp != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Timestamp);
-      }
-      if (EquilibriumPrice != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(EquilibriumPrice);
-      }
-      if (GapSize != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(GapSize);
-      }
-      if (High != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeSInt32Size(High);
-      }
-      if (Low != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Low);
-      }
-      if (Projected != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Projected);
-      }
-      if (Bias != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Bias);
-      }
-      if (LastPrice != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(LastPrice);
-      }
-      if (IsDirty != false) {
-        size += 1 + 1;
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(EquilibriumUpdate other) {
-      if (other == null) {
-        return;
-      }
-      if (other.Timestamp != 0UL) {
-        Timestamp = other.Timestamp;
-      }
-      if (other.EquilibriumPrice != 0UL) {
-        EquilibriumPrice = other.EquilibriumPrice;
-      }
-      if (other.GapSize != 0UL) {
-        GapSize = other.GapSize;
-      }
-      if (other.High != 0) {
-        High = other.High;
-      }
-      if (other.Low != 0) {
-        Low = other.Low;
-      }
-      if (other.Projected != 0) {
-        Projected = other.Projected;
-      }
-      if (other.Bias != 0) {
-        Bias = other.Bias;
-      }
-      if (other.LastPrice != 0UL) {
-        LastPrice = other.LastPrice;
-      }
-      if (other.IsDirty != false) {
-        IsDirty = other.IsDirty;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
-          case 8: {
-            Timestamp = input.ReadUInt64();
-            break;
-          }
-          case 16: {
-            EquilibriumPrice = input.ReadUInt64();
-            break;
-          }
-          case 24: {
-            GapSize = input.ReadUInt64();
-            break;
-          }
-          case 32: {
-            High = input.ReadSInt32();
-            break;
-          }
-          case 40: {
-            Low = input.ReadSInt32();
-            break;
-          }
-          case 48: {
-            Projected = input.ReadSInt32();
-            break;
-          }
-          case 56: {
-            Bias = input.ReadSInt32();
-            break;
-          }
-          case 64: {
-            LastPrice = input.ReadUInt64();
-            break;
-          }
-          case 72: {
-            IsDirty = input.ReadBool();
-            break;
-          }
-        }
-      }
-    }
-
-  }
-
-  /// <summary>
-  /// MultiframeUpdate represents a new multi-timeframe equilibrium subscription update. 
-  /// Values should be converted to between -1 and 1 by dividing by 1000. 
-  /// </summary>
-  internal sealed partial class MultiframeUpdate : pb::IMessage<MultiframeUpdate> {
-    private static readonly pb::MessageParser<MultiframeUpdate> _parser = new pb::MessageParser<MultiframeUpdate>(() => new MultiframeUpdate());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<MultiframeUpdate> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[7]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public MultiframeUpdate() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public MultiframeUpdate(MultiframeUpdate other) : this() {
-      timestamp_ = other.timestamp_;
-      min5_ = other.min5_;
-      min10_ = other.min10_;
-      min15_ = other.min15_;
-      min30_ = other.min30_;
-      min45_ = other.min45_;
-      min60_ = other.min60_;
-      min120_ = other.min120_;
-      min180_ = other.min180_;
-      min240_ = other.min240_;
-      day1_ = other.day1_;
-      isDirty_ = other.isDirty_;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public MultiframeUpdate Clone() {
-      return new MultiframeUpdate(this);
-    }
-
-    /// <summary>Field number for the "timestamp" field.</summary>
-    public const int TimestampFieldNumber = 1;
-    private ulong timestamp_;
-    /// <summary>
-    /// The timestamp of the latest update.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong Timestamp {
-      get { return timestamp_; }
-      set {
-        timestamp_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "min_5" field.</summary>
-    public const int Min5FieldNumber = 2;
-    private int min5_;
-    /// <summary>
-    /// The 5 minute value. (-1000 to 1000)
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Min5 {
-      get { return min5_; }
-      set {
-        min5_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "min_10" field.</summary>
-    public const int Min10FieldNumber = 3;
-    private int min10_;
-    /// <summary>
-    /// The 10 minute value. (-1000 to 1000)
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Min10 {
-      get { return min10_; }
-      set {
-        min10_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "min_15" field.</summary>
-    public const int Min15FieldNumber = 4;
-    private int min15_;
-    /// <summary>
-    /// The 15 minute value. (-1000 to 1000)
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Min15 {
-      get { return min15_; }
-      set {
-        min15_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "min_30" field.</summary>
-    public const int Min30FieldNumber = 5;
-    private int min30_;
-    /// <summary>
-    /// The 30 minute value. (-1000 to 1000)
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Min30 {
-      get { return min30_; }
-      set {
-        min30_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "min_45" field.</summary>
-    public const int Min45FieldNumber = 6;
-    private int min45_;
-    /// <summary>
-    /// The 45 minute value. (-1000 to 1000)
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Min45 {
-      get { return min45_; }
-      set {
-        min45_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "min_60" field.</summary>
-    public const int Min60FieldNumber = 7;
-    private int min60_;
-    /// <summary>
-    /// The 60 minute value. (-1000 to 1000)
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Min60 {
-      get { return min60_; }
-      set {
-        min60_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "min_120" field.</summary>
-    public const int Min120FieldNumber = 8;
-    private int min120_;
-    /// <summary>
-    /// The 120 minute value. (-1000 to 1000)
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Min120 {
-      get { return min120_; }
-      set {
-        min120_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "min_180" field.</summary>
-    public const int Min180FieldNumber = 9;
-    private int min180_;
-    /// <summary>
-    /// The 180 minute value. (-1000 to 1000)
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Min180 {
-      get { return min180_; }
-      set {
-        min180_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "min_240" field.</summary>
-    public const int Min240FieldNumber = 10;
-    private int min240_;
-    /// <summary>
-    /// The 240 minute value. (-1000 to 1000)
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Min240 {
-      get { return min240_; }
-      set {
-        min240_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "day_1" field.</summary>
-    public const int Day1FieldNumber = 11;
-    private int day1_;
-    /// <summary>
-    /// The 1 day value. (-1000 to 1000)
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Day1 {
-      get { return day1_; }
-      set {
-        day1_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "is_dirty" field.</summary>
-    public const int IsDirtyFieldNumber = 12;
-    private bool isDirty_;
-    /// <summary>
-    /// Is the data that generated this potentially dirty (or stale)?
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool IsDirty {
-      get { return isDirty_; }
-      set {
-        isDirty_ = value;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as MultiframeUpdate);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(MultiframeUpdate other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (Timestamp != other.Timestamp) return false;
-      if (Min5 != other.Min5) return false;
-      if (Min10 != other.Min10) return false;
-      if (Min15 != other.Min15) return false;
-      if (Min30 != other.Min30) return false;
-      if (Min45 != other.Min45) return false;
-      if (Min60 != other.Min60) return false;
-      if (Min120 != other.Min120) return false;
-      if (Min180 != other.Min180) return false;
-      if (Min240 != other.Min240) return false;
-      if (Day1 != other.Day1) return false;
-      if (IsDirty != other.IsDirty) return false;
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (Timestamp != 0UL) hash ^= Timestamp.GetHashCode();
-      if (Min5 != 0) hash ^= Min5.GetHashCode();
-      if (Min10 != 0) hash ^= Min10.GetHashCode();
-      if (Min15 != 0) hash ^= Min15.GetHashCode();
-      if (Min30 != 0) hash ^= Min30.GetHashCode();
-      if (Min45 != 0) hash ^= Min45.GetHashCode();
-      if (Min60 != 0) hash ^= Min60.GetHashCode();
-      if (Min120 != 0) hash ^= Min120.GetHashCode();
-      if (Min180 != 0) hash ^= Min180.GetHashCode();
-      if (Min240 != 0) hash ^= Min240.GetHashCode();
-      if (Day1 != 0) hash ^= Day1.GetHashCode();
-      if (IsDirty != false) hash ^= IsDirty.GetHashCode();
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (Timestamp != 0UL) {
-        output.WriteRawTag(8);
-        output.WriteUInt64(Timestamp);
-      }
-      if (Min5 != 0) {
-        output.WriteRawTag(16);
-        output.WriteSInt32(Min5);
-      }
-      if (Min10 != 0) {
-        output.WriteRawTag(24);
-        output.WriteSInt32(Min10);
-      }
-      if (Min15 != 0) {
-        output.WriteRawTag(32);
-        output.WriteSInt32(Min15);
-      }
-      if (Min30 != 0) {
-        output.WriteRawTag(40);
-        output.WriteSInt32(Min30);
-      }
-      if (Min45 != 0) {
-        output.WriteRawTag(48);
-        output.WriteSInt32(Min45);
-      }
-      if (Min60 != 0) {
-        output.WriteRawTag(56);
-        output.WriteSInt32(Min60);
-      }
-      if (Min120 != 0) {
-        output.WriteRawTag(64);
-        output.WriteSInt32(Min120);
-      }
-      if (Min180 != 0) {
-        output.WriteRawTag(72);
-        output.WriteSInt32(Min180);
-      }
-      if (Min240 != 0) {
-        output.WriteRawTag(80);
-        output.WriteSInt32(Min240);
-      }
-      if (Day1 != 0) {
-        output.WriteRawTag(88);
-        output.WriteSInt32(Day1);
-      }
-      if (IsDirty != false) {
-        output.WriteRawTag(96);
-        output.WriteBool(IsDirty);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (Timestamp != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Timestamp);
-      }
-      if (Min5 != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Min5);
-      }
-      if (Min10 != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Min10);
-      }
-      if (Min15 != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Min15);
-      }
-      if (Min30 != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Min30);
-      }
-      if (Min45 != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Min45);
-      }
-      if (Min60 != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Min60);
-      }
-      if (Min120 != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Min120);
-      }
-      if (Min180 != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Min180);
-      }
-      if (Min240 != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Min240);
-      }
-      if (Day1 != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Day1);
-      }
-      if (IsDirty != false) {
-        size += 1 + 1;
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(MultiframeUpdate other) {
-      if (other == null) {
-        return;
-      }
-      if (other.Timestamp != 0UL) {
-        Timestamp = other.Timestamp;
-      }
-      if (other.Min5 != 0) {
-        Min5 = other.Min5;
-      }
-      if (other.Min10 != 0) {
-        Min10 = other.Min10;
-      }
-      if (other.Min15 != 0) {
-        Min15 = other.Min15;
-      }
-      if (other.Min30 != 0) {
-        Min30 = other.Min30;
-      }
-      if (other.Min45 != 0) {
-        Min45 = other.Min45;
-      }
-      if (other.Min60 != 0) {
-        Min60 = other.Min60;
-      }
-      if (other.Min120 != 0) {
-        Min120 = other.Min120;
-      }
-      if (other.Min180 != 0) {
-        Min180 = other.Min180;
-      }
-      if (other.Min240 != 0) {
-        Min240 = other.Min240;
-      }
-      if (other.Day1 != 0) {
-        Day1 = other.Day1;
-      }
-      if (other.IsDirty != false) {
-        IsDirty = other.IsDirty;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
-          case 8: {
-            Timestamp = input.ReadUInt64();
-            break;
-          }
-          case 16: {
-            Min5 = input.ReadSInt32();
-            break;
-          }
-          case 24: {
-            Min10 = input.ReadSInt32();
-            break;
-          }
-          case 32: {
-            Min15 = input.ReadSInt32();
-            break;
-          }
-          case 40: {
-            Min30 = input.ReadSInt32();
-            break;
-          }
-          case 48: {
-            Min45 = input.ReadSInt32();
-            break;
-          }
-          case 56: {
-            Min60 = input.ReadSInt32();
-            break;
-          }
-          case 64: {
-            Min120 = input.ReadSInt32();
-            break;
-          }
-          case 72: {
-            Min180 = input.ReadSInt32();
-            break;
-          }
-          case 80: {
-            Min240 = input.ReadSInt32();
-            break;
-          }
-          case 88: {
-            Day1 = input.ReadSInt32();
-            break;
-          }
-          case 96: {
-            IsDirty = input.ReadBool();
-            break;
-          }
-        }
-      }
-    }
-
-  }
-
-  /// <summary>
-  /// TriggerUpdate represents a new trigger subscription update. 
-  /// All prices (and gap size) are converted to long values.
-  /// Values should be converted to between -1 and 1 by subtracting 1001 and dividing by 1000. 
-  /// </summary>
-  internal sealed partial class TriggerUpdate : pb::IMessage<TriggerUpdate> {
-    private static readonly pb::MessageParser<TriggerUpdate> _parser = new pb::MessageParser<TriggerUpdate>(() => new TriggerUpdate());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<TriggerUpdate> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[8]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public TriggerUpdate() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public TriggerUpdate(TriggerUpdate other) : this() {
-      timestamp_ = other.timestamp_;
-      bias_ = other.bias_;
-      perception_ = other.perception_;
-      sentiment_ = other.sentiment_;
-      commitment_ = other.commitment_;
-      equilibriumPrice_ = other.equilibriumPrice_;
-      gapSize_ = other.gapSize_;
-      lastPrice_ = other.lastPrice_;
-      isDirty_ = other.isDirty_;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public TriggerUpdate Clone() {
-      return new TriggerUpdate(this);
-    }
-
-    /// <summary>Field number for the "timestamp" field.</summary>
-    public const int TimestampFieldNumber = 1;
-    private ulong timestamp_;
-    /// <summary>
-    /// The timestamp of the latest update.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong Timestamp {
-      get { return timestamp_; }
-      set {
-        timestamp_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "bias" field.</summary>
-    public const int BiasFieldNumber = 2;
-    private int bias_;
-    /// <summary>
-    /// The bias value. (-1000 to 1000)
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Bias {
-      get { return bias_; }
-      set {
-        bias_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "perception" field.</summary>
-    public const int PerceptionFieldNumber = 3;
-    private int perception_;
-    /// <summary>
-    /// The perception value. (-1000 to 1000)
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Perception {
-      get { return perception_; }
-      set {
-        perception_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "sentiment" field.</summary>
-    public const int SentimentFieldNumber = 4;
-    private int sentiment_;
-    /// <summary>
-    /// Sentiment length value at point 0. (-1000 to 1000)
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Sentiment {
-      get { return sentiment_; }
-      set {
-        sentiment_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "commitment" field.</summary>
-    public const int CommitmentFieldNumber = 5;
-    private int commitment_;
-    /// <summary>
-    /// The commitment value. (-1000 to 1000)
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Commitment {
-      get { return commitment_; }
-      set {
-        commitment_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "equilibrium_price" field.</summary>
-    public const int EquilibriumPriceFieldNumber = 6;
-    private ulong equilibriumPrice_;
-    /// <summary>
-    /// The equilibrium price.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong EquilibriumPrice {
-      get { return equilibriumPrice_; }
-      set {
-        equilibriumPrice_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "gap_size" field.</summary>
-    public const int GapSizeFieldNumber = 7;
-    private ulong gapSize_;
-    /// <summary>
-    /// The gap size of each equilibrium deviation.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong GapSize {
-      get { return gapSize_; }
-      set {
-        gapSize_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "last_price" field.</summary>
-    public const int LastPriceFieldNumber = 8;
-    private ulong lastPrice_;
-    /// <summary>
-    /// Last traded price at time of calculation.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong LastPrice {
-      get { return lastPrice_; }
-      set {
-        lastPrice_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "is_dirty" field.</summary>
-    public const int IsDirtyFieldNumber = 9;
-    private bool isDirty_;
-    /// <summary>
-    /// Is the data that generated this potentially dirty (or stale)?
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool IsDirty {
-      get { return isDirty_; }
-      set {
-        isDirty_ = value;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as TriggerUpdate);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(TriggerUpdate other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (Timestamp != other.Timestamp) return false;
-      if (Bias != other.Bias) return false;
-      if (Perception != other.Perception) return false;
-      if (Sentiment != other.Sentiment) return false;
-      if (Commitment != other.Commitment) return false;
-      if (EquilibriumPrice != other.EquilibriumPrice) return false;
-      if (GapSize != other.GapSize) return false;
-      if (LastPrice != other.LastPrice) return false;
-      if (IsDirty != other.IsDirty) return false;
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (Timestamp != 0UL) hash ^= Timestamp.GetHashCode();
-      if (Bias != 0) hash ^= Bias.GetHashCode();
-      if (Perception != 0) hash ^= Perception.GetHashCode();
-      if (Sentiment != 0) hash ^= Sentiment.GetHashCode();
-      if (Commitment != 0) hash ^= Commitment.GetHashCode();
-      if (EquilibriumPrice != 0UL) hash ^= EquilibriumPrice.GetHashCode();
-      if (GapSize != 0UL) hash ^= GapSize.GetHashCode();
-      if (LastPrice != 0UL) hash ^= LastPrice.GetHashCode();
-      if (IsDirty != false) hash ^= IsDirty.GetHashCode();
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (Timestamp != 0UL) {
-        output.WriteRawTag(8);
-        output.WriteUInt64(Timestamp);
-      }
-      if (Bias != 0) {
-        output.WriteRawTag(16);
-        output.WriteSInt32(Bias);
-      }
-      if (Perception != 0) {
-        output.WriteRawTag(24);
-        output.WriteSInt32(Perception);
-      }
-      if (Sentiment != 0) {
-        output.WriteRawTag(32);
-        output.WriteSInt32(Sentiment);
-      }
-      if (Commitment != 0) {
-        output.WriteRawTag(40);
-        output.WriteSInt32(Commitment);
-      }
-      if (EquilibriumPrice != 0UL) {
-        output.WriteRawTag(48);
-        output.WriteUInt64(EquilibriumPrice);
-      }
-      if (GapSize != 0UL) {
-        output.WriteRawTag(56);
-        output.WriteUInt64(GapSize);
-      }
-      if (LastPrice != 0UL) {
-        output.WriteRawTag(64);
-        output.WriteUInt64(LastPrice);
-      }
-      if (IsDirty != false) {
-        output.WriteRawTag(72);
-        output.WriteBool(IsDirty);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (Timestamp != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Timestamp);
-      }
-      if (Bias != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Bias);
-      }
-      if (Perception != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Perception);
-      }
-      if (Sentiment != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Sentiment);
-      }
-      if (Commitment != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Commitment);
-      }
-      if (EquilibriumPrice != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(EquilibriumPrice);
-      }
-      if (GapSize != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(GapSize);
-      }
-      if (LastPrice != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(LastPrice);
-      }
-      if (IsDirty != false) {
-        size += 1 + 1;
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(TriggerUpdate other) {
-      if (other == null) {
-        return;
-      }
-      if (other.Timestamp != 0UL) {
-        Timestamp = other.Timestamp;
-      }
-      if (other.Bias != 0) {
-        Bias = other.Bias;
-      }
-      if (other.Perception != 0) {
-        Perception = other.Perception;
-      }
-      if (other.Sentiment != 0) {
-        Sentiment = other.Sentiment;
-      }
-      if (other.Commitment != 0) {
-        Commitment = other.Commitment;
-      }
-      if (other.EquilibriumPrice != 0UL) {
-        EquilibriumPrice = other.EquilibriumPrice;
-      }
-      if (other.GapSize != 0UL) {
-        GapSize = other.GapSize;
-      }
-      if (other.LastPrice != 0UL) {
-        LastPrice = other.LastPrice;
-      }
-      if (other.IsDirty != false) {
-        IsDirty = other.IsDirty;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
-          case 8: {
-            Timestamp = input.ReadUInt64();
-            break;
-          }
-          case 16: {
-            Bias = input.ReadSInt32();
-            break;
-          }
-          case 24: {
-            Perception = input.ReadSInt32();
-            break;
-          }
-          case 32: {
-            Sentiment = input.ReadSInt32();
-            break;
-          }
-          case 40: {
-            Commitment = input.ReadSInt32();
-            break;
-          }
-          case 48: {
-            EquilibriumPrice = input.ReadUInt64();
-            break;
-          }
-          case 56: {
-            GapSize = input.ReadUInt64();
-            break;
-          }
-          case 64: {
-            LastPrice = input.ReadUInt64();
-            break;
-          }
-          case 72: {
-            IsDirty = input.ReadBool();
-            break;
-          }
-        }
-      }
-    }
-
-  }
-
-  /// <summary>
-  /// SingleValueUpdate represents a new subscription update for a gauge that returns a single
-  /// value (such as Perception, Commitment, Headroom, Book Pressure, or SMA).
-  /// Values should be converted to between -1 and 1 by dividing by 1000. 
-  /// </summary>
-  internal sealed partial class SingleValueUpdate : pb::IMessage<SingleValueUpdate> {
-    private static readonly pb::MessageParser<SingleValueUpdate> _parser = new pb::MessageParser<SingleValueUpdate>(() => new SingleValueUpdate());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<SingleValueUpdate> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[9]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public SingleValueUpdate() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public SingleValueUpdate(SingleValueUpdate other) : this() {
-      timestamp_ = other.timestamp_;
-      value_ = other.value_;
-      isDirty_ = other.isDirty_;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public SingleValueUpdate Clone() {
-      return new SingleValueUpdate(this);
-    }
-
-    /// <summary>Field number for the "timestamp" field.</summary>
-    public const int TimestampFieldNumber = 1;
-    private ulong timestamp_;
-    /// <summary>
-    /// The timestamp of the latest update.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong Timestamp {
-      get { return timestamp_; }
-      set {
-        timestamp_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "value" field.</summary>
-    public const int ValueFieldNumber = 2;
-    private int value_;
-    /// <summary>
-    /// The single value. (-1000 to 1000)
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Value {
-      get { return value_; }
-      set {
-        value_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "is_dirty" field.</summary>
-    public const int IsDirtyFieldNumber = 3;
-    private bool isDirty_;
-    /// <summary>
-    /// Is the data that generated this potentially dirty (or stale)?
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool IsDirty {
-      get { return isDirty_; }
-      set {
-        isDirty_ = value;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as SingleValueUpdate);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(SingleValueUpdate other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (Timestamp != other.Timestamp) return false;
-      if (Value != other.Value) return false;
-      if (IsDirty != other.IsDirty) return false;
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (Timestamp != 0UL) hash ^= Timestamp.GetHashCode();
-      if (Value != 0) hash ^= Value.GetHashCode();
-      if (IsDirty != false) hash ^= IsDirty.GetHashCode();
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (Timestamp != 0UL) {
-        output.WriteRawTag(8);
-        output.WriteUInt64(Timestamp);
-      }
-      if (Value != 0) {
-        output.WriteRawTag(16);
-        output.WriteSInt32(Value);
-      }
-      if (IsDirty != false) {
-        output.WriteRawTag(24);
-        output.WriteBool(IsDirty);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (Timestamp != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Timestamp);
-      }
-      if (Value != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Value);
-      }
-      if (IsDirty != false) {
-        size += 1 + 1;
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(SingleValueUpdate other) {
-      if (other == null) {
-        return;
-      }
-      if (other.Timestamp != 0UL) {
-        Timestamp = other.Timestamp;
-      }
-      if (other.Value != 0) {
-        Value = other.Value;
-      }
-      if (other.IsDirty != false) {
-        IsDirty = other.IsDirty;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
-          case 8: {
-            Timestamp = input.ReadUInt64();
-            break;
-          }
-          case 16: {
-            Value = input.ReadSInt32();
-            break;
-          }
-          case 24: {
-            IsDirty = input.ReadBool();
-            break;
-          }
-        }
-      }
-    }
-
-  }
-
-  /// <summary>
-  /// MACDUpdate represents a new subscription update for a gauge that returns MACD values. 
-  /// </summary>
-  internal sealed partial class MACDUpdate : pb::IMessage<MACDUpdate> {
-    private static readonly pb::MessageParser<MACDUpdate> _parser = new pb::MessageParser<MACDUpdate>(() => new MACDUpdate());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<MACDUpdate> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[10]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public MACDUpdate() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public MACDUpdate(MACDUpdate other) : this() {
-      timestamp_ = other.timestamp_;
-      macd_ = other.macd_;
-      signal_ = other.signal_;
-      histogram_ = other.histogram_;
-      isDirty_ = other.isDirty_;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public MACDUpdate Clone() {
-      return new MACDUpdate(this);
-    }
-
-    /// <summary>Field number for the "timestamp" field.</summary>
-    public const int TimestampFieldNumber = 1;
-    private ulong timestamp_;
-    /// <summary>
-    /// The timestamp of the latest update.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong Timestamp {
-      get { return timestamp_; }
-      set {
-        timestamp_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "macd" field.</summary>
-    public const int MacdFieldNumber = 2;
-    private float macd_;
-    /// <summary>
-    /// The MACD value (float).
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public float Macd {
-      get { return macd_; }
-      set {
-        macd_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "signal" field.</summary>
-    public const int SignalFieldNumber = 3;
-    private float signal_;
-    /// <summary>
-    /// The MACD signal value (float).
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public float Signal {
-      get { return signal_; }
-      set {
-        signal_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "histogram" field.</summary>
-    public const int HistogramFieldNumber = 4;
-    private float histogram_;
-    /// <summary>
-    /// The MACD histogram value (float, difference between MACD and signal).    
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public float Histogram {
-      get { return histogram_; }
-      set {
-        histogram_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "is_dirty" field.</summary>
-    public const int IsDirtyFieldNumber = 5;
-    private bool isDirty_;
-    /// <summary>
-    /// Is the data that generated this potentially dirty (or stale)?
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool IsDirty {
-      get { return isDirty_; }
-      set {
-        isDirty_ = value;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as MACDUpdate);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(MACDUpdate other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (Timestamp != other.Timestamp) return false;
-      if (Macd != other.Macd) return false;
-      if (Signal != other.Signal) return false;
-      if (Histogram != other.Histogram) return false;
-      if (IsDirty != other.IsDirty) return false;
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (Timestamp != 0UL) hash ^= Timestamp.GetHashCode();
-      if (Macd != 0F) hash ^= Macd.GetHashCode();
-      if (Signal != 0F) hash ^= Signal.GetHashCode();
-      if (Histogram != 0F) hash ^= Histogram.GetHashCode();
-      if (IsDirty != false) hash ^= IsDirty.GetHashCode();
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (Timestamp != 0UL) {
-        output.WriteRawTag(8);
-        output.WriteUInt64(Timestamp);
-      }
-      if (Macd != 0F) {
-        output.WriteRawTag(21);
-        output.WriteFloat(Macd);
-      }
-      if (Signal != 0F) {
-        output.WriteRawTag(29);
-        output.WriteFloat(Signal);
-      }
-      if (Histogram != 0F) {
-        output.WriteRawTag(37);
-        output.WriteFloat(Histogram);
-      }
-      if (IsDirty != false) {
-        output.WriteRawTag(40);
-        output.WriteBool(IsDirty);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (Timestamp != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Timestamp);
-      }
-      if (Macd != 0F) {
-        size += 1 + 4;
-      }
-      if (Signal != 0F) {
-        size += 1 + 4;
-      }
-      if (Histogram != 0F) {
-        size += 1 + 4;
-      }
-      if (IsDirty != false) {
-        size += 1 + 1;
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(MACDUpdate other) {
-      if (other == null) {
-        return;
-      }
-      if (other.Timestamp != 0UL) {
-        Timestamp = other.Timestamp;
-      }
-      if (other.Macd != 0F) {
-        Macd = other.Macd;
-      }
-      if (other.Signal != 0F) {
-        Signal = other.Signal;
-      }
-      if (other.Histogram != 0F) {
-        Histogram = other.Histogram;
-      }
-      if (other.IsDirty != false) {
-        IsDirty = other.IsDirty;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
-          case 8: {
-            Timestamp = input.ReadUInt64();
-            break;
-          }
-          case 21: {
-            Macd = input.ReadFloat();
-            break;
-          }
-          case 29: {
-            Signal = input.ReadFloat();
-            break;
-          }
-          case 37: {
-            Histogram = input.ReadFloat();
-            break;
-          }
-          case 40: {
-            IsDirty = input.ReadBool();
-            break;
-          }
-        }
-      }
-    }
-
-  }
-
-  /// <summary>
-  /// BollingerBandsUpdate represents a new subscription update for a gauge that returns
-  /// Bollinger band values (upper, middle, and lower bands). All band (price) values are
-  /// converted to long values. 
-  /// </summary>
-  internal sealed partial class BollingerBandsUpdate : pb::IMessage<BollingerBandsUpdate> {
-    private static readonly pb::MessageParser<BollingerBandsUpdate> _parser = new pb::MessageParser<BollingerBandsUpdate>(() => new BollingerBandsUpdate());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<BollingerBandsUpdate> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[11]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public BollingerBandsUpdate() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public BollingerBandsUpdate(BollingerBandsUpdate other) : this() {
-      timestamp_ = other.timestamp_;
-      upperBand_ = other.upperBand_;
-      middleBand_ = other.middleBand_;
-      lowerBand_ = other.lowerBand_;
-      isDirty_ = other.isDirty_;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public BollingerBandsUpdate Clone() {
-      return new BollingerBandsUpdate(this);
-    }
-
-    /// <summary>Field number for the "timestamp" field.</summary>
-    public const int TimestampFieldNumber = 1;
-    private ulong timestamp_;
-    /// <summary>
-    /// The timestamp of the latest update.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong Timestamp {
-      get { return timestamp_; }
-      set {
-        timestamp_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "upper_band" field.</summary>
-    public const int UpperBandFieldNumber = 2;
-    private ulong upperBand_;
-    /// <summary>
-    /// The upper Bollinger Band price.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong UpperBand {
-      get { return upperBand_; }
-      set {
-        upperBand_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "middle_band" field.</summary>
-    public const int MiddleBandFieldNumber = 3;
-    private ulong middleBand_;
-    /// <summary>
-    /// The middle Bollinger Band price.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong MiddleBand {
-      get { return middleBand_; }
-      set {
-        middleBand_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "lower_band" field.</summary>
-    public const int LowerBandFieldNumber = 4;
-    private ulong lowerBand_;
-    /// <summary>
-    /// The lower Bollinger Band price.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong LowerBand {
-      get { return lowerBand_; }
-      set {
-        lowerBand_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "is_dirty" field.</summary>
-    public const int IsDirtyFieldNumber = 5;
-    private bool isDirty_;
-    /// <summary>
-    /// Is the data that generated this potentially dirty (or stale)?
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool IsDirty {
-      get { return isDirty_; }
-      set {
-        isDirty_ = value;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as BollingerBandsUpdate);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(BollingerBandsUpdate other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (Timestamp != other.Timestamp) return false;
-      if (UpperBand != other.UpperBand) return false;
-      if (MiddleBand != other.MiddleBand) return false;
-      if (LowerBand != other.LowerBand) return false;
-      if (IsDirty != other.IsDirty) return false;
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (Timestamp != 0UL) hash ^= Timestamp.GetHashCode();
-      if (UpperBand != 0UL) hash ^= UpperBand.GetHashCode();
-      if (MiddleBand != 0UL) hash ^= MiddleBand.GetHashCode();
-      if (LowerBand != 0UL) hash ^= LowerBand.GetHashCode();
-      if (IsDirty != false) hash ^= IsDirty.GetHashCode();
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (Timestamp != 0UL) {
-        output.WriteRawTag(8);
-        output.WriteUInt64(Timestamp);
-      }
-      if (UpperBand != 0UL) {
-        output.WriteRawTag(16);
-        output.WriteUInt64(UpperBand);
-      }
-      if (MiddleBand != 0UL) {
-        output.WriteRawTag(24);
-        output.WriteUInt64(MiddleBand);
-      }
-      if (LowerBand != 0UL) {
-        output.WriteRawTag(32);
-        output.WriteUInt64(LowerBand);
-      }
-      if (IsDirty != false) {
-        output.WriteRawTag(40);
-        output.WriteBool(IsDirty);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (Timestamp != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Timestamp);
-      }
-      if (UpperBand != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(UpperBand);
-      }
-      if (MiddleBand != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(MiddleBand);
-      }
-      if (LowerBand != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(LowerBand);
-      }
-      if (IsDirty != false) {
-        size += 1 + 1;
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(BollingerBandsUpdate other) {
-      if (other == null) {
-        return;
-      }
-      if (other.Timestamp != 0UL) {
-        Timestamp = other.Timestamp;
-      }
-      if (other.UpperBand != 0UL) {
-        UpperBand = other.UpperBand;
-      }
-      if (other.MiddleBand != 0UL) {
-        MiddleBand = other.MiddleBand;
-      }
-      if (other.LowerBand != 0UL) {
-        LowerBand = other.LowerBand;
-      }
-      if (other.IsDirty != false) {
-        IsDirty = other.IsDirty;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
-          case 8: {
-            Timestamp = input.ReadUInt64();
-            break;
-          }
-          case 16: {
-            UpperBand = input.ReadUInt64();
-            break;
-          }
-          case 24: {
-            MiddleBand = input.ReadUInt64();
-            break;
-          }
-          case 32: {
-            LowerBand = input.ReadUInt64();
-            break;
-          }
-          case 40: {
-            IsDirty = input.ReadBool();
-            break;
-          }
-        }
-      }
-    }
-
-  }
-
-  /// <summary>
-  /// StrategyUpdate represents a new subscription update for a subscribed strategy. 
-  /// </summary>
-  internal sealed partial class StrategyUpdate : pb::IMessage<StrategyUpdate> {
-    private static readonly pb::MessageParser<StrategyUpdate> _parser = new pb::MessageParser<StrategyUpdate>(() => new StrategyUpdate());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<StrategyUpdate> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[12]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public StrategyUpdate() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public StrategyUpdate(StrategyUpdate other) : this() {
-      timestamp_ = other.timestamp_;
-      entryProgress_ = other.entryProgress_;
-      exitProgress_ = other.exitProgress_;
-      signal_ = other.signal_;
-      perceptionLevel_ = other.perceptionLevel_;
-      perceptionSignal_ = other.perceptionSignal_;
-      commitmentLevel_ = other.commitmentLevel_;
-      commitmentSignal_ = other.commitmentSignal_;
-      sentimentSignal_ = other.sentimentSignal_;
-      equilibriumSignal_ = other.equilibriumSignal_;
-      sentimentLevel_ = other.sentimentLevel_;
-      equilibriumLevel_ = other.equilibriumLevel_;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public StrategyUpdate Clone() {
-      return new StrategyUpdate(this);
-    }
-
-    /// <summary>Field number for the "timestamp" field.</summary>
-    public const int TimestampFieldNumber = 1;
-    private ulong timestamp_;
-    /// <summary>
-    /// The timestamp of the latest update.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong Timestamp {
-      get { return timestamp_; }
-      set {
-        timestamp_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "entry_progress" field.</summary>
-    public const int EntryProgressFieldNumber = 2;
-    private int entryProgress_;
-    /// <summary>
-    /// The entry progress value. (-1000 to 1000)
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int EntryProgress {
-      get { return entryProgress_; }
-      set {
-        entryProgress_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "exit_progress" field.</summary>
-    public const int ExitProgressFieldNumber = 3;
-    private int exitProgress_;
-    /// <summary>
-    /// The exit progress value. (-1000 to 1000)
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int ExitProgress {
-      get { return exitProgress_; }
-      set {
-        exitProgress_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "signal" field.</summary>
-    public const int SignalFieldNumber = 4;
-    private global::QuantGate.API.Signals.Proto.Stealth.StrategySignal signal_ = 0;
-    /// <summary>
-    /// The entry signal for the strategy.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::QuantGate.API.Signals.Proto.Stealth.StrategySignal Signal {
-      get { return signal_; }
-      set {
-        signal_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "perception_level" field.</summary>
-    public const int PerceptionLevelFieldNumber = 5;
-    private uint perceptionLevel_;
-    /// <summary>
-    /// The perception level ( 0=unset, else value=(x-1001)/1000 )
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint PerceptionLevel {
-      get { return perceptionLevel_; }
-      set {
-        perceptionLevel_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "perception_signal" field.</summary>
-    public const int PerceptionSignalFieldNumber = 6;
-    private global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal perceptionSignal_ = 0;
-    /// <summary>
-    /// The signal tied to the perception level.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal PerceptionSignal {
-      get { return perceptionSignal_; }
-      set {
-        perceptionSignal_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "commitment_level" field.</summary>
-    public const int CommitmentLevelFieldNumber = 7;
-    private uint commitmentLevel_;
-    /// <summary>
-    /// The commitment level ( 0=unset, else value=(x-1001)/1000 )
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint CommitmentLevel {
-      get { return commitmentLevel_; }
-      set {
-        commitmentLevel_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "commitment_signal" field.</summary>
-    public const int CommitmentSignalFieldNumber = 8;
-    private global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal commitmentSignal_ = 0;
-    /// <summary>
-    /// The signal tied to the commitment level.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal CommitmentSignal {
-      get { return commitmentSignal_; }
-      set {
-        commitmentSignal_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "sentiment_signal" field.</summary>
-    public const int SentimentSignalFieldNumber = 9;
-    private global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal sentimentSignal_ = 0;
-    /// <summary>
-    /// The signal tied to the 50t sentiment indication.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal SentimentSignal {
-      get { return sentimentSignal_; }
-      set {
-        sentimentSignal_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "equilibrium_signal" field.</summary>
-    public const int EquilibriumSignalFieldNumber = 10;
-    private global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal equilibriumSignal_ = 0;
-    /// <summary>
-    /// The signal tied to the equilibrium level.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal EquilibriumSignal {
-      get { return equilibriumSignal_; }
-      set {
-        equilibriumSignal_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "sentiment_level" field.</summary>
-    public const int SentimentLevelFieldNumber = 11;
-    private uint sentimentLevel_;
-    /// <summary>
-    /// The normalized sentiment level ( 0=unset, else value=(x-1001)/1000 )
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint SentimentLevel {
-      get { return sentimentLevel_; }
-      set {
-        sentimentLevel_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "equilibrium_level" field.</summary>
-    public const int EquilibriumLevelFieldNumber = 12;
-    private uint equilibriumLevel_;
-    /// <summary>
-    /// The normalized equilibrium level ( 0=unset, else value=(x-1001)/1000 )
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint EquilibriumLevel {
-      get { return equilibriumLevel_; }
-      set {
-        equilibriumLevel_ = value;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as StrategyUpdate);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(StrategyUpdate other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (Timestamp != other.Timestamp) return false;
-      if (EntryProgress != other.EntryProgress) return false;
-      if (ExitProgress != other.ExitProgress) return false;
-      if (Signal != other.Signal) return false;
-      if (PerceptionLevel != other.PerceptionLevel) return false;
-      if (PerceptionSignal != other.PerceptionSignal) return false;
-      if (CommitmentLevel != other.CommitmentLevel) return false;
-      if (CommitmentSignal != other.CommitmentSignal) return false;
-      if (SentimentSignal != other.SentimentSignal) return false;
-      if (EquilibriumSignal != other.EquilibriumSignal) return false;
-      if (SentimentLevel != other.SentimentLevel) return false;
-      if (EquilibriumLevel != other.EquilibriumLevel) return false;
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (Timestamp != 0UL) hash ^= Timestamp.GetHashCode();
-      if (EntryProgress != 0) hash ^= EntryProgress.GetHashCode();
-      if (ExitProgress != 0) hash ^= ExitProgress.GetHashCode();
-      if (Signal != 0) hash ^= Signal.GetHashCode();
-      if (PerceptionLevel != 0) hash ^= PerceptionLevel.GetHashCode();
-      if (PerceptionSignal != 0) hash ^= PerceptionSignal.GetHashCode();
-      if (CommitmentLevel != 0) hash ^= CommitmentLevel.GetHashCode();
-      if (CommitmentSignal != 0) hash ^= CommitmentSignal.GetHashCode();
-      if (SentimentSignal != 0) hash ^= SentimentSignal.GetHashCode();
-      if (EquilibriumSignal != 0) hash ^= EquilibriumSignal.GetHashCode();
-      if (SentimentLevel != 0) hash ^= SentimentLevel.GetHashCode();
-      if (EquilibriumLevel != 0) hash ^= EquilibriumLevel.GetHashCode();
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (Timestamp != 0UL) {
-        output.WriteRawTag(8);
-        output.WriteUInt64(Timestamp);
-      }
-      if (EntryProgress != 0) {
-        output.WriteRawTag(16);
-        output.WriteSInt32(EntryProgress);
-      }
-      if (ExitProgress != 0) {
-        output.WriteRawTag(24);
-        output.WriteSInt32(ExitProgress);
-      }
-      if (Signal != 0) {
-        output.WriteRawTag(32);
-        output.WriteEnum((int) Signal);
-      }
-      if (PerceptionLevel != 0) {
-        output.WriteRawTag(40);
-        output.WriteUInt32(PerceptionLevel);
-      }
-      if (PerceptionSignal != 0) {
-        output.WriteRawTag(48);
-        output.WriteEnum((int) PerceptionSignal);
-      }
-      if (CommitmentLevel != 0) {
-        output.WriteRawTag(56);
-        output.WriteUInt32(CommitmentLevel);
-      }
-      if (CommitmentSignal != 0) {
-        output.WriteRawTag(64);
-        output.WriteEnum((int) CommitmentSignal);
-      }
-      if (SentimentSignal != 0) {
-        output.WriteRawTag(72);
-        output.WriteEnum((int) SentimentSignal);
-      }
-      if (EquilibriumSignal != 0) {
-        output.WriteRawTag(80);
-        output.WriteEnum((int) EquilibriumSignal);
-      }
-      if (SentimentLevel != 0) {
-        output.WriteRawTag(88);
-        output.WriteUInt32(SentimentLevel);
-      }
-      if (EquilibriumLevel != 0) {
-        output.WriteRawTag(96);
-        output.WriteUInt32(EquilibriumLevel);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (Timestamp != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Timestamp);
-      }
-      if (EntryProgress != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeSInt32Size(EntryProgress);
-      }
-      if (ExitProgress != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeSInt32Size(ExitProgress);
-      }
-      if (Signal != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Signal);
-      }
-      if (PerceptionLevel != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(PerceptionLevel);
-      }
-      if (PerceptionSignal != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) PerceptionSignal);
-      }
-      if (CommitmentLevel != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(CommitmentLevel);
-      }
-      if (CommitmentSignal != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) CommitmentSignal);
-      }
-      if (SentimentSignal != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) SentimentSignal);
-      }
-      if (EquilibriumSignal != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) EquilibriumSignal);
-      }
-      if (SentimentLevel != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(SentimentLevel);
-      }
-      if (EquilibriumLevel != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(EquilibriumLevel);
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(StrategyUpdate other) {
-      if (other == null) {
-        return;
-      }
-      if (other.Timestamp != 0UL) {
-        Timestamp = other.Timestamp;
-      }
-      if (other.EntryProgress != 0) {
-        EntryProgress = other.EntryProgress;
-      }
-      if (other.ExitProgress != 0) {
-        ExitProgress = other.ExitProgress;
-      }
-      if (other.Signal != 0) {
-        Signal = other.Signal;
-      }
-      if (other.PerceptionLevel != 0) {
-        PerceptionLevel = other.PerceptionLevel;
-      }
-      if (other.PerceptionSignal != 0) {
-        PerceptionSignal = other.PerceptionSignal;
-      }
-      if (other.CommitmentLevel != 0) {
-        CommitmentLevel = other.CommitmentLevel;
-      }
-      if (other.CommitmentSignal != 0) {
-        CommitmentSignal = other.CommitmentSignal;
-      }
-      if (other.SentimentSignal != 0) {
-        SentimentSignal = other.SentimentSignal;
-      }
-      if (other.EquilibriumSignal != 0) {
-        EquilibriumSignal = other.EquilibriumSignal;
-      }
-      if (other.SentimentLevel != 0) {
-        SentimentLevel = other.SentimentLevel;
-      }
-      if (other.EquilibriumLevel != 0) {
-        EquilibriumLevel = other.EquilibriumLevel;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
-          case 8: {
-            Timestamp = input.ReadUInt64();
-            break;
-          }
-          case 16: {
-            EntryProgress = input.ReadSInt32();
-            break;
-          }
-          case 24: {
-            ExitProgress = input.ReadSInt32();
-            break;
-          }
-          case 32: {
-            signal_ = (global::QuantGate.API.Signals.Proto.Stealth.StrategySignal) input.ReadEnum();
-            break;
-          }
-          case 40: {
-            PerceptionLevel = input.ReadUInt32();
-            break;
-          }
-          case 48: {
-            perceptionSignal_ = (global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal) input.ReadEnum();
-            break;
-          }
-          case 56: {
-            CommitmentLevel = input.ReadUInt32();
-            break;
-          }
-          case 64: {
-            commitmentSignal_ = (global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal) input.ReadEnum();
-            break;
-          }
-          case 72: {
-            sentimentSignal_ = (global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal) input.ReadEnum();
-            break;
-          }
-          case 80: {
-            equilibriumSignal_ = (global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal) input.ReadEnum();
-            break;
-          }
-          case 88: {
-            SentimentLevel = input.ReadUInt32();
-            break;
-          }
-          case 96: {
-            EquilibriumLevel = input.ReadUInt32();
-            break;
-          }
-        }
-      }
-    }
-
-  }
-
-  /// <summary>
-  /// SinglePriceUpdate represents a new subscription update for a guage that returns a single 
-  /// price result (such as Simple Moving Average).
-  /// All prices are converted to long values, empty values will be decoded as NaN. 
-  /// </summary>
-  internal sealed partial class SinglePriceUpdate : pb::IMessage<SinglePriceUpdate> {
-    private static readonly pb::MessageParser<SinglePriceUpdate> _parser = new pb::MessageParser<SinglePriceUpdate>(() => new SinglePriceUpdate());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<SinglePriceUpdate> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[13]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public SinglePriceUpdate() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public SinglePriceUpdate(SinglePriceUpdate other) : this() {
-      timestamp_ = other.timestamp_;
-      value_ = other.value_;
-      isDirty_ = other.isDirty_;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public SinglePriceUpdate Clone() {
-      return new SinglePriceUpdate(this);
-    }
-
-    /// <summary>Field number for the "timestamp" field.</summary>
-    public const int TimestampFieldNumber = 1;
-    private ulong timestamp_;
-    /// <summary>
-    /// The timestamp of the latest update.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong Timestamp {
-      get { return timestamp_; }
-      set {
-        timestamp_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "value" field.</summary>
-    public const int ValueFieldNumber = 2;
-    private ulong value_;
-    /// <summary>
-    /// The single price value.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong Value {
-      get { return value_; }
-      set {
-        value_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "is_dirty" field.</summary>
-    public const int IsDirtyFieldNumber = 3;
-    private bool isDirty_;
-    /// <summary>
-    /// Is the data that generated this potentially dirty (or stale)?
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool IsDirty {
-      get { return isDirty_; }
-      set {
-        isDirty_ = value;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as SinglePriceUpdate);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(SinglePriceUpdate other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (Timestamp != other.Timestamp) return false;
-      if (Value != other.Value) return false;
-      if (IsDirty != other.IsDirty) return false;
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (Timestamp != 0UL) hash ^= Timestamp.GetHashCode();
-      if (Value != 0UL) hash ^= Value.GetHashCode();
-      if (IsDirty != false) hash ^= IsDirty.GetHashCode();
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (Timestamp != 0UL) {
-        output.WriteRawTag(8);
-        output.WriteUInt64(Timestamp);
-      }
-      if (Value != 0UL) {
-        output.WriteRawTag(16);
-        output.WriteUInt64(Value);
-      }
-      if (IsDirty != false) {
-        output.WriteRawTag(24);
-        output.WriteBool(IsDirty);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (Timestamp != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Timestamp);
-      }
-      if (Value != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Value);
-      }
-      if (IsDirty != false) {
-        size += 1 + 1;
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(SinglePriceUpdate other) {
-      if (other == null) {
-        return;
-      }
-      if (other.Timestamp != 0UL) {
-        Timestamp = other.Timestamp;
-      }
-      if (other.Value != 0UL) {
-        Value = other.Value;
-      }
-      if (other.IsDirty != false) {
-        IsDirty = other.IsDirty;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
-          case 8: {
-            Timestamp = input.ReadUInt64();
-            break;
-          }
-          case 16: {
-            Value = input.ReadUInt64();
-            break;
-          }
-          case 24: {
-            IsDirty = input.ReadBool();
-            break;
-          }
-        }
-      }
-    }
-
-  }
-
-  /// <summary>
-  /// Holds a single tick range for an Instrument definition. 
-  /// </summary>
-  internal sealed partial class TickValue : pb::IMessage<TickValue> {
-    private static readonly pb::MessageParser<TickValue> _parser = new pb::MessageParser<TickValue>(() => new TickValue());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<TickValue> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[14]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public TickValue() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public TickValue(TickValue other) : this() {
-      start_ = other.start_;
-      tick_ = other.tick_;
-      denominator_ = other.denominator_;
-      decimals_ = other.decimals_;
-      format_ = other.format_;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public TickValue Clone() {
-      return new TickValue(this);
-    }
-
-    /// <summary>Field number for the "start" field.</summary>
-    public const int StartFieldNumber = 1;
-    private double start_;
-    /// <summary>
-    /// The start of the tick range.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public double Start {
-      get { return start_; }
-      set {
-        start_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "tick" field.</summary>
-    public const int TickFieldNumber = 2;
-    private double tick_;
-    /// <summary>
-    /// The tick value at this range.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public double Tick {
-      get { return tick_; }
-      set {
-        tick_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "denominator" field.</summary>
-    public const int DenominatorFieldNumber = 3;
-    private uint denominator_;
-    /// <summary>
-    /// Denominator for fractional formats.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Denominator {
-      get { return denominator_; }
-      set {
-        denominator_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "decimals" field.</summary>
-    public const int DecimalsFieldNumber = 4;
-    private int decimals_;
-    /// <summary>
-    /// Number of decimals in decimal format.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Decimals {
-      get { return decimals_; }
-      set {
-        decimals_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "format" field.</summary>
-    public const int FormatFieldNumber = 5;
-    private global::QuantGate.API.Signals.Proto.Stealth.TickValue.Types.TickFormat format_ = 0;
-    /// <summary>
-    /// Format to use (Decimal/Fraction/Tick).
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::QuantGate.API.Signals.Proto.Stealth.TickValue.Types.TickFormat Format {
-      get { return format_; }
-      set {
-        format_ = value;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as TickValue);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(TickValue other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (Start != other.Start) return false;
-      if (Tick != other.Tick) return false;
-      if (Denominator != other.Denominator) return false;
-      if (Decimals != other.Decimals) return false;
-      if (Format != other.Format) return false;
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (Start != 0D) hash ^= Start.GetHashCode();
-      if (Tick != 0D) hash ^= Tick.GetHashCode();
-      if (Denominator != 0) hash ^= Denominator.GetHashCode();
-      if (Decimals != 0) hash ^= Decimals.GetHashCode();
-      if (Format != 0) hash ^= Format.GetHashCode();
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (Start != 0D) {
-        output.WriteRawTag(9);
-        output.WriteDouble(Start);
-      }
-      if (Tick != 0D) {
-        output.WriteRawTag(17);
-        output.WriteDouble(Tick);
-      }
-      if (Denominator != 0) {
-        output.WriteRawTag(24);
-        output.WriteUInt32(Denominator);
-      }
-      if (Decimals != 0) {
-        output.WriteRawTag(32);
-        output.WriteSInt32(Decimals);
-      }
-      if (Format != 0) {
-        output.WriteRawTag(40);
-        output.WriteEnum((int) Format);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (Start != 0D) {
-        size += 1 + 8;
-      }
-      if (Tick != 0D) {
-        size += 1 + 8;
-      }
-      if (Denominator != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Denominator);
-      }
-      if (Decimals != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Decimals);
-      }
-      if (Format != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Format);
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(TickValue other) {
-      if (other == null) {
-        return;
-      }
-      if (other.Start != 0D) {
-        Start = other.Start;
-      }
-      if (other.Tick != 0D) {
-        Tick = other.Tick;
-      }
-      if (other.Denominator != 0) {
-        Denominator = other.Denominator;
-      }
-      if (other.Decimals != 0) {
-        Decimals = other.Decimals;
-      }
-      if (other.Format != 0) {
-        Format = other.Format;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
-          case 9: {
-            Start = input.ReadDouble();
-            break;
-          }
-          case 17: {
-            Tick = input.ReadDouble();
-            break;
-          }
-          case 24: {
-            Denominator = input.ReadUInt32();
-            break;
-          }
-          case 32: {
-            Decimals = input.ReadSInt32();
-            break;
-          }
-          case 40: {
-            format_ = (global::QuantGate.API.Signals.Proto.Stealth.TickValue.Types.TickFormat) input.ReadEnum();
-            break;
-          }
-        }
-      }
-    }
-
-    #region Nested types
-    /// <summary>Container for nested types declared in the TickValue message type.</summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static partial class Types {
-      /// <summary>
-      /// Types of tick formats available to display prices in.
-      /// </summary>
-      internal enum TickFormat {
+        /// <summary>Field number for the "ask_price" field.</summary>
+        public const int AskPriceFieldNumber = 1;
+        private ulong askPrice_;
         /// <summary>
-        /// Decimal display (regular 0.000, etc.) 
+        /// Current inside ask price for this instrument.
         /// </summary>
-        [pbr::OriginalName("Decimal")] Decimal = 0,
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong AskPrice
+        {
+            get { return askPrice_; }
+            set
+            {
+                askPrice_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "ask_size" field.</summary>
+        public const int AskSizeFieldNumber = 2;
+        private ulong askSize_;
         /// <summary>
-        /// Fractional format, such as 34 1/4.
-        /// In this case, the denominator that will be used for non-integer portions of the
-        /// number will be that supplied with the format. Note, that the fraction is generally 
-        /// displayed in its simplified format (divide numerator and denominator by GCD). 
+        /// Current inside ask size for this instrument.
         /// </summary>
-        [pbr::OriginalName("Fraction")] Fraction = 1,
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong AskSize
+        {
+            get { return askSize_; }
+            set
+            {
+                askSize_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "bid_price" field.</summary>
+        public const int BidPriceFieldNumber = 3;
+        private ulong bidPrice_;
         /// <summary>
-        /// Tick format, such as 34'120.
-        /// In this case, the value after the tick is the non-integer portion of the number,
-        /// multiplied by the denominator value supplied, zero padded to the left to fit the
-        /// number of digits required to display the denominator value as a full integer. 
+        /// Current inside bid price for this instrument.
         /// </summary>
-        [pbr::OriginalName("Tick")] Tick = 2,
-      }
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong BidPrice
+        {
+            get { return bidPrice_; }
+            set
+            {
+                bidPrice_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "bid_size" field.</summary>
+        public const int BidSizeFieldNumber = 4;
+        private ulong bidSize_;
+        /// <summary>
+        /// Current inside bid size for this instrument.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong BidSize
+        {
+            get { return bidSize_; }
+            set
+            {
+                bidSize_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "last_price" field.</summary>
+        public const int LastPriceFieldNumber = 5;
+        private ulong lastPrice_;
+        /// <summary>
+        /// The last trade price for this instrument.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong LastPrice
+        {
+            get { return lastPrice_; }
+            set
+            {
+                lastPrice_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "last_size" field.</summary>
+        public const int LastSizeFieldNumber = 6;
+        private ulong lastSize_;
+        /// <summary>
+        /// Size of the last trade of this instrument.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong LastSize
+        {
+            get { return lastSize_; }
+            set
+            {
+                lastSize_ = value;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override bool Equals(object other)
+        {
+            return Equals(other as RealtimeUpdate);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool Equals(RealtimeUpdate other)
+        {
+            if (ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (ReferenceEquals(other, this))
+            {
+                return true;
+            }
+            if (AskPrice != other.AskPrice) return false;
+            if (AskSize != other.AskSize) return false;
+            if (BidPrice != other.BidPrice) return false;
+            if (BidSize != other.BidSize) return false;
+            if (LastPrice != other.LastPrice) return false;
+            if (LastSize != other.LastSize) return false;
+            return true;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override int GetHashCode()
+        {
+            int hash = 1;
+            if (AskPrice != 0UL) hash ^= AskPrice.GetHashCode();
+            if (AskSize != 0UL) hash ^= AskSize.GetHashCode();
+            if (BidPrice != 0UL) hash ^= BidPrice.GetHashCode();
+            if (BidSize != 0UL) hash ^= BidSize.GetHashCode();
+            if (LastPrice != 0UL) hash ^= LastPrice.GetHashCode();
+            if (LastSize != 0UL) hash ^= LastSize.GetHashCode();
+            return hash;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override string ToString()
+        {
+            return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void WriteTo(pb::CodedOutputStream output)
+        {
+            if (AskPrice != 0UL)
+            {
+                output.WriteRawTag(8);
+                output.WriteUInt64(AskPrice);
+            }
+            if (AskSize != 0UL)
+            {
+                output.WriteRawTag(16);
+                output.WriteUInt64(AskSize);
+            }
+            if (BidPrice != 0UL)
+            {
+                output.WriteRawTag(24);
+                output.WriteUInt64(BidPrice);
+            }
+            if (BidSize != 0UL)
+            {
+                output.WriteRawTag(32);
+                output.WriteUInt64(BidSize);
+            }
+            if (LastPrice != 0UL)
+            {
+                output.WriteRawTag(40);
+                output.WriteUInt64(LastPrice);
+            }
+            if (LastSize != 0UL)
+            {
+                output.WriteRawTag(48);
+                output.WriteUInt64(LastSize);
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int CalculateSize()
+        {
+            int size = 0;
+            if (AskPrice != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(AskPrice);
+            }
+            if (AskSize != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(AskSize);
+            }
+            if (BidPrice != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(BidPrice);
+            }
+            if (BidSize != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(BidSize);
+            }
+            if (LastPrice != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(LastPrice);
+            }
+            if (LastSize != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(LastSize);
+            }
+            return size;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(RealtimeUpdate other)
+        {
+            if (other == null)
+            {
+                return;
+            }
+            if (other.AskPrice != 0UL)
+            {
+                AskPrice = other.AskPrice;
+            }
+            if (other.AskSize != 0UL)
+            {
+                AskSize = other.AskSize;
+            }
+            if (other.BidPrice != 0UL)
+            {
+                BidPrice = other.BidPrice;
+            }
+            if (other.BidSize != 0UL)
+            {
+                BidSize = other.BidSize;
+            }
+            if (other.LastPrice != 0UL)
+            {
+                LastPrice = other.LastPrice;
+            }
+            if (other.LastSize != 0UL)
+            {
+                LastSize = other.LastSize;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(pb::CodedInputStream input)
+        {
+            uint tag;
+            while ((tag = input.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    default:
+                        input.SkipLastField();
+                        break;
+                    case 8:
+                        {
+                            AskPrice = input.ReadUInt64();
+                            break;
+                        }
+                    case 16:
+                        {
+                            AskSize = input.ReadUInt64();
+                            break;
+                        }
+                    case 24:
+                        {
+                            BidPrice = input.ReadUInt64();
+                            break;
+                        }
+                    case 32:
+                        {
+                            BidSize = input.ReadUInt64();
+                            break;
+                        }
+                    case 40:
+                        {
+                            LastPrice = input.ReadUInt64();
+                            break;
+                        }
+                    case 48:
+                        {
+                            LastSize = input.ReadUInt64();
+                            break;
+                        }
+                }
+            }
+        }
 
     }
+
+    /// <summary>
+    /// SnapshotUpdate represents an update of snapshot information (trading session and yearly) 
+    /// </summary>
+    internal sealed partial class SnapshotUpdate : pb::IMessage<SnapshotUpdate>
+    {
+        private static readonly pb::MessageParser<SnapshotUpdate> _parser = new pb::MessageParser<SnapshotUpdate>(() => new SnapshotUpdate());
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pb::MessageParser<SnapshotUpdate> Parser { get { return _parser; } }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pbr::MessageDescriptor Descriptor
+        {
+            get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[1]; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        pbr::MessageDescriptor pb::IMessage.Descriptor
+        {
+            get { return Descriptor; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public SnapshotUpdate()
+        {
+            OnConstruction();
+        }
+
+        partial void OnConstruction();
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public SnapshotUpdate(SnapshotUpdate other) : this()
+        {
+            openPrice_ = other.openPrice_;
+            highPrice_ = other.highPrice_;
+            lowPrice_ = other.lowPrice_;
+            closePrice_ = other.closePrice_;
+            previousClose_ = other.previousClose_;
+            volume_ = other.volume_;
+            high52Price_ = other.high52Price_;
+            low52Price_ = other.low52Price_;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public SnapshotUpdate Clone()
+        {
+            return new SnapshotUpdate(this);
+        }
+
+        /// <summary>Field number for the "open_price" field.</summary>
+        public const int OpenPriceFieldNumber = 1;
+        private ulong openPrice_;
+        /// <summary>
+        /// The open value of the current trading day.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong OpenPrice
+        {
+            get { return openPrice_; }
+            set
+            {
+                openPrice_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "high_price" field.</summary>
+        public const int HighPriceFieldNumber = 2;
+        private ulong highPrice_;
+        /// <summary>
+        /// The high value of the current trading day.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong HighPrice
+        {
+            get { return highPrice_; }
+            set
+            {
+                highPrice_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "low_price" field.</summary>
+        public const int LowPriceFieldNumber = 3;
+        private ulong lowPrice_;
+        /// <summary>
+        /// The low value of the current trading day.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong LowPrice
+        {
+            get { return lowPrice_; }
+            set
+            {
+                lowPrice_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "close_price" field.</summary>
+        public const int ClosePriceFieldNumber = 4;
+        private ulong closePrice_;
+        /// <summary>
+        /// The close value of the current trading day.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong ClosePrice
+        {
+            get { return closePrice_; }
+            set
+            {
+                closePrice_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "previous_close" field.</summary>
+        public const int PreviousCloseFieldNumber = 5;
+        private ulong previousClose_;
+        /// <summary>
+        /// Previous close value of current trading day.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong PreviousClose
+        {
+            get { return previousClose_; }
+            set
+            {
+                previousClose_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "volume" field.</summary>
+        public const int VolumeFieldNumber = 6;
+        private ulong volume_;
+        /// <summary>
+        /// The daily trading volume for this instrument.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong Volume
+        {
+            get { return volume_; }
+            set
+            {
+                volume_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "high52_price" field.</summary>
+        public const int High52PriceFieldNumber = 7;
+        private ulong high52Price_;
+        /// <summary>
+        /// The 52-week high value for this instrument.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong High52Price
+        {
+            get { return high52Price_; }
+            set
+            {
+                high52Price_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "low52_price" field.</summary>
+        public const int Low52PriceFieldNumber = 8;
+        private ulong low52Price_;
+        /// <summary>
+        /// The 52-week low value for this instrument.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong Low52Price
+        {
+            get { return low52Price_; }
+            set
+            {
+                low52Price_ = value;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override bool Equals(object other)
+        {
+            return Equals(other as SnapshotUpdate);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool Equals(SnapshotUpdate other)
+        {
+            if (ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (ReferenceEquals(other, this))
+            {
+                return true;
+            }
+            if (OpenPrice != other.OpenPrice) return false;
+            if (HighPrice != other.HighPrice) return false;
+            if (LowPrice != other.LowPrice) return false;
+            if (ClosePrice != other.ClosePrice) return false;
+            if (PreviousClose != other.PreviousClose) return false;
+            if (Volume != other.Volume) return false;
+            if (High52Price != other.High52Price) return false;
+            if (Low52Price != other.Low52Price) return false;
+            return true;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override int GetHashCode()
+        {
+            int hash = 1;
+            if (OpenPrice != 0UL) hash ^= OpenPrice.GetHashCode();
+            if (HighPrice != 0UL) hash ^= HighPrice.GetHashCode();
+            if (LowPrice != 0UL) hash ^= LowPrice.GetHashCode();
+            if (ClosePrice != 0UL) hash ^= ClosePrice.GetHashCode();
+            if (PreviousClose != 0UL) hash ^= PreviousClose.GetHashCode();
+            if (Volume != 0UL) hash ^= Volume.GetHashCode();
+            if (High52Price != 0UL) hash ^= High52Price.GetHashCode();
+            if (Low52Price != 0UL) hash ^= Low52Price.GetHashCode();
+            return hash;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override string ToString()
+        {
+            return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void WriteTo(pb::CodedOutputStream output)
+        {
+            if (OpenPrice != 0UL)
+            {
+                output.WriteRawTag(8);
+                output.WriteUInt64(OpenPrice);
+            }
+            if (HighPrice != 0UL)
+            {
+                output.WriteRawTag(16);
+                output.WriteUInt64(HighPrice);
+            }
+            if (LowPrice != 0UL)
+            {
+                output.WriteRawTag(24);
+                output.WriteUInt64(LowPrice);
+            }
+            if (ClosePrice != 0UL)
+            {
+                output.WriteRawTag(32);
+                output.WriteUInt64(ClosePrice);
+            }
+            if (PreviousClose != 0UL)
+            {
+                output.WriteRawTag(40);
+                output.WriteUInt64(PreviousClose);
+            }
+            if (Volume != 0UL)
+            {
+                output.WriteRawTag(48);
+                output.WriteUInt64(Volume);
+            }
+            if (High52Price != 0UL)
+            {
+                output.WriteRawTag(56);
+                output.WriteUInt64(High52Price);
+            }
+            if (Low52Price != 0UL)
+            {
+                output.WriteRawTag(64);
+                output.WriteUInt64(Low52Price);
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int CalculateSize()
+        {
+            int size = 0;
+            if (OpenPrice != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(OpenPrice);
+            }
+            if (HighPrice != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(HighPrice);
+            }
+            if (LowPrice != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(LowPrice);
+            }
+            if (ClosePrice != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(ClosePrice);
+            }
+            if (PreviousClose != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(PreviousClose);
+            }
+            if (Volume != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Volume);
+            }
+            if (High52Price != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(High52Price);
+            }
+            if (Low52Price != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Low52Price);
+            }
+            return size;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(SnapshotUpdate other)
+        {
+            if (other == null)
+            {
+                return;
+            }
+            if (other.OpenPrice != 0UL)
+            {
+                OpenPrice = other.OpenPrice;
+            }
+            if (other.HighPrice != 0UL)
+            {
+                HighPrice = other.HighPrice;
+            }
+            if (other.LowPrice != 0UL)
+            {
+                LowPrice = other.LowPrice;
+            }
+            if (other.ClosePrice != 0UL)
+            {
+                ClosePrice = other.ClosePrice;
+            }
+            if (other.PreviousClose != 0UL)
+            {
+                PreviousClose = other.PreviousClose;
+            }
+            if (other.Volume != 0UL)
+            {
+                Volume = other.Volume;
+            }
+            if (other.High52Price != 0UL)
+            {
+                High52Price = other.High52Price;
+            }
+            if (other.Low52Price != 0UL)
+            {
+                Low52Price = other.Low52Price;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(pb::CodedInputStream input)
+        {
+            uint tag;
+            while ((tag = input.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    default:
+                        input.SkipLastField();
+                        break;
+                    case 8:
+                        {
+                            OpenPrice = input.ReadUInt64();
+                            break;
+                        }
+                    case 16:
+                        {
+                            HighPrice = input.ReadUInt64();
+                            break;
+                        }
+                    case 24:
+                        {
+                            LowPrice = input.ReadUInt64();
+                            break;
+                        }
+                    case 32:
+                        {
+                            ClosePrice = input.ReadUInt64();
+                            break;
+                        }
+                    case 40:
+                        {
+                            PreviousClose = input.ReadUInt64();
+                            break;
+                        }
+                    case 48:
+                        {
+                            Volume = input.ReadUInt64();
+                            break;
+                        }
+                    case 56:
+                        {
+                            High52Price = input.ReadUInt64();
+                            break;
+                        }
+                    case 64:
+                        {
+                            Low52Price = input.ReadUInt64();
+                            break;
+                        }
+                }
+            }
+        }
+
+    }
+
+    /// <summary>
+    /// StatisticsUpdate represents an update of statistics related to the underlying instrument. 
+    /// </summary>
+    internal sealed partial class StatisticsUpdate : pb::IMessage<StatisticsUpdate>
+    {
+        private static readonly pb::MessageParser<StatisticsUpdate> _parser = new pb::MessageParser<StatisticsUpdate>(() => new StatisticsUpdate());
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pb::MessageParser<StatisticsUpdate> Parser { get { return _parser; } }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pbr::MessageDescriptor Descriptor
+        {
+            get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[2]; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        pbr::MessageDescriptor pb::IMessage.Descriptor
+        {
+            get { return Descriptor; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public StatisticsUpdate()
+        {
+            OnConstruction();
+        }
+
+        partial void OnConstruction();
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public StatisticsUpdate(StatisticsUpdate other) : this()
+        {
+            beta_ = other.beta_;
+            eps_ = other.eps_;
+            peRatio_ = other.peRatio_;
+            sharesOutstanding_ = other.sharesOutstanding_;
+            historicalVolatility_ = other.historicalVolatility_;
+            impliedVolatility_ = other.impliedVolatility_;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public StatisticsUpdate Clone()
+        {
+            return new StatisticsUpdate(this);
+        }
+
+        /// <summary>Field number for the "beta" field.</summary>
+        public const int BetaFieldNumber = 1;
+        private float beta_;
+        /// <summary>
+        /// The beta value for this instrument.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public float Beta
+        {
+            get { return beta_; }
+            set
+            {
+                beta_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "eps" field.</summary>
+        public const int EpsFieldNumber = 2;
+        private float eps_;
+        /// <summary>
+        /// The earnings per share for this instrument.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public float Eps
+        {
+            get { return eps_; }
+            set
+            {
+                eps_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "pe_ratio" field.</summary>
+        public const int PeRatioFieldNumber = 3;
+        private float peRatio_;
+        /// <summary>
+        /// Profit/earnings ratio for this instrument.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public float PeRatio
+        {
+            get { return peRatio_; }
+            set
+            {
+                peRatio_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "shares_outstanding" field.</summary>
+        public const int SharesOutstandingFieldNumber = 4;
+        private ulong sharesOutstanding_;
+        /// <summary>
+        /// The shares outstanding for this instrument.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong SharesOutstanding
+        {
+            get { return sharesOutstanding_; }
+            set
+            {
+                sharesOutstanding_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "historical_volatility" field.</summary>
+        public const int HistoricalVolatilityFieldNumber = 5;
+        private float historicalVolatility_;
+        /// <summary>
+        /// The historical volatility for this instrument.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public float HistoricalVolatility
+        {
+            get { return historicalVolatility_; }
+            set
+            {
+                historicalVolatility_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "implied_volatility" field.</summary>
+        public const int ImpliedVolatilityFieldNumber = 6;
+        private float impliedVolatility_;
+        /// <summary>
+        /// The implied volatility for this instrument.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public float ImpliedVolatility
+        {
+            get { return impliedVolatility_; }
+            set
+            {
+                impliedVolatility_ = value;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override bool Equals(object other)
+        {
+            return Equals(other as StatisticsUpdate);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool Equals(StatisticsUpdate other)
+        {
+            if (ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (ReferenceEquals(other, this))
+            {
+                return true;
+            }
+            if (Beta != other.Beta) return false;
+            if (Eps != other.Eps) return false;
+            if (PeRatio != other.PeRatio) return false;
+            if (SharesOutstanding != other.SharesOutstanding) return false;
+            if (HistoricalVolatility != other.HistoricalVolatility) return false;
+            if (ImpliedVolatility != other.ImpliedVolatility) return false;
+            return true;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override int GetHashCode()
+        {
+            int hash = 1;
+            if (Beta != 0F) hash ^= Beta.GetHashCode();
+            if (Eps != 0F) hash ^= Eps.GetHashCode();
+            if (PeRatio != 0F) hash ^= PeRatio.GetHashCode();
+            if (SharesOutstanding != 0UL) hash ^= SharesOutstanding.GetHashCode();
+            if (HistoricalVolatility != 0F) hash ^= HistoricalVolatility.GetHashCode();
+            if (ImpliedVolatility != 0F) hash ^= ImpliedVolatility.GetHashCode();
+            return hash;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override string ToString()
+        {
+            return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void WriteTo(pb::CodedOutputStream output)
+        {
+            if (Beta != 0F)
+            {
+                output.WriteRawTag(13);
+                output.WriteFloat(Beta);
+            }
+            if (Eps != 0F)
+            {
+                output.WriteRawTag(21);
+                output.WriteFloat(Eps);
+            }
+            if (PeRatio != 0F)
+            {
+                output.WriteRawTag(29);
+                output.WriteFloat(PeRatio);
+            }
+            if (SharesOutstanding != 0UL)
+            {
+                output.WriteRawTag(32);
+                output.WriteUInt64(SharesOutstanding);
+            }
+            if (HistoricalVolatility != 0F)
+            {
+                output.WriteRawTag(45);
+                output.WriteFloat(HistoricalVolatility);
+            }
+            if (ImpliedVolatility != 0F)
+            {
+                output.WriteRawTag(53);
+                output.WriteFloat(ImpliedVolatility);
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int CalculateSize()
+        {
+            int size = 0;
+            if (Beta != 0F)
+            {
+                size += 1 + 4;
+            }
+            if (Eps != 0F)
+            {
+                size += 1 + 4;
+            }
+            if (PeRatio != 0F)
+            {
+                size += 1 + 4;
+            }
+            if (SharesOutstanding != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(SharesOutstanding);
+            }
+            if (HistoricalVolatility != 0F)
+            {
+                size += 1 + 4;
+            }
+            if (ImpliedVolatility != 0F)
+            {
+                size += 1 + 4;
+            }
+            return size;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(StatisticsUpdate other)
+        {
+            if (other == null)
+            {
+                return;
+            }
+            if (other.Beta != 0F)
+            {
+                Beta = other.Beta;
+            }
+            if (other.Eps != 0F)
+            {
+                Eps = other.Eps;
+            }
+            if (other.PeRatio != 0F)
+            {
+                PeRatio = other.PeRatio;
+            }
+            if (other.SharesOutstanding != 0UL)
+            {
+                SharesOutstanding = other.SharesOutstanding;
+            }
+            if (other.HistoricalVolatility != 0F)
+            {
+                HistoricalVolatility = other.HistoricalVolatility;
+            }
+            if (other.ImpliedVolatility != 0F)
+            {
+                ImpliedVolatility = other.ImpliedVolatility;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(pb::CodedInputStream input)
+        {
+            uint tag;
+            while ((tag = input.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    default:
+                        input.SkipLastField();
+                        break;
+                    case 13:
+                        {
+                            Beta = input.ReadFloat();
+                            break;
+                        }
+                    case 21:
+                        {
+                            Eps = input.ReadFloat();
+                            break;
+                        }
+                    case 29:
+                        {
+                            PeRatio = input.ReadFloat();
+                            break;
+                        }
+                    case 32:
+                        {
+                            SharesOutstanding = input.ReadUInt64();
+                            break;
+                        }
+                    case 45:
+                        {
+                            HistoricalVolatility = input.ReadFloat();
+                            break;
+                        }
+                    case 53:
+                        {
+                            ImpliedVolatility = input.ReadFloat();
+                            break;
+                        }
+                }
+            }
+        }
+
+    }
+
+    /// <summary>
+    /// QuoteUpdate represents a new real-time market data quote update.
+    /// All prices are converted to long values. 
+    /// </summary>
+    internal sealed partial class QuoteUpdate : pb::IMessage<QuoteUpdate>
+    {
+        private static readonly pb::MessageParser<QuoteUpdate> _parser = new pb::MessageParser<QuoteUpdate>(() => new QuoteUpdate());
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pb::MessageParser<QuoteUpdate> Parser { get { return _parser; } }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pbr::MessageDescriptor Descriptor
+        {
+            get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[3]; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        pbr::MessageDescriptor pb::IMessage.Descriptor
+        {
+            get { return Descriptor; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public QuoteUpdate()
+        {
+            OnConstruction();
+        }
+
+        partial void OnConstruction();
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public QuoteUpdate(QuoteUpdate other) : this()
+        {
+            timestamp_ = other.timestamp_;
+            Realtime = other.realtime_ != null ? other.Realtime.Clone() : null;
+            Snapshot = other.snapshot_ != null ? other.Snapshot.Clone() : null;
+            Statistics = other.statistics_ != null ? other.Statistics.Clone() : null;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public QuoteUpdate Clone()
+        {
+            return new QuoteUpdate(this);
+        }
+
+        /// <summary>Field number for the "timestamp" field.</summary>
+        public const int TimestampFieldNumber = 1;
+        private ulong timestamp_;
+        /// <summary>
+        /// The timestamp of the latest update.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong Timestamp
+        {
+            get { return timestamp_; }
+            set
+            {
+                timestamp_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "realtime" field.</summary>
+        public const int RealtimeFieldNumber = 2;
+        private global::QuantGate.API.Signals.Proto.Stealth.RealtimeUpdate realtime_;
+        /// <summary>
+        /// Real-time quote updates (bid/ask/last).
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public global::QuantGate.API.Signals.Proto.Stealth.RealtimeUpdate Realtime
+        {
+            get { return realtime_; }
+            set
+            {
+                realtime_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "snapshot" field.</summary>
+        public const int SnapshotFieldNumber = 3;
+        private global::QuantGate.API.Signals.Proto.Stealth.SnapshotUpdate snapshot_;
+        /// <summary>
+        /// Trading session and yearly statistics snapshot.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public global::QuantGate.API.Signals.Proto.Stealth.SnapshotUpdate Snapshot
+        {
+            get { return snapshot_; }
+            set
+            {
+                snapshot_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "statistics" field.</summary>
+        public const int StatisticsFieldNumber = 4;
+        private global::QuantGate.API.Signals.Proto.Stealth.StatisticsUpdate statistics_;
+        /// <summary>
+        /// Statistics related to the underlying instrument.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public global::QuantGate.API.Signals.Proto.Stealth.StatisticsUpdate Statistics
+        {
+            get { return statistics_; }
+            set
+            {
+                statistics_ = value;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override bool Equals(object other)
+        {
+            return Equals(other as QuoteUpdate);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool Equals(QuoteUpdate other)
+        {
+            if (ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (ReferenceEquals(other, this))
+            {
+                return true;
+            }
+            if (Timestamp != other.Timestamp) return false;
+            if (!object.Equals(Realtime, other.Realtime)) return false;
+            if (!object.Equals(Snapshot, other.Snapshot)) return false;
+            if (!object.Equals(Statistics, other.Statistics)) return false;
+            return true;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override int GetHashCode()
+        {
+            int hash = 1;
+            if (Timestamp != 0UL) hash ^= Timestamp.GetHashCode();
+            if (realtime_ != null) hash ^= Realtime.GetHashCode();
+            if (snapshot_ != null) hash ^= Snapshot.GetHashCode();
+            if (statistics_ != null) hash ^= Statistics.GetHashCode();
+            return hash;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override string ToString()
+        {
+            return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void WriteTo(pb::CodedOutputStream output)
+        {
+            if (Timestamp != 0UL)
+            {
+                output.WriteRawTag(8);
+                output.WriteUInt64(Timestamp);
+            }
+            if (realtime_ != null)
+            {
+                output.WriteRawTag(18);
+                output.WriteMessage(Realtime);
+            }
+            if (snapshot_ != null)
+            {
+                output.WriteRawTag(26);
+                output.WriteMessage(Snapshot);
+            }
+            if (statistics_ != null)
+            {
+                output.WriteRawTag(34);
+                output.WriteMessage(Statistics);
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int CalculateSize()
+        {
+            int size = 0;
+            if (Timestamp != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Timestamp);
+            }
+            if (realtime_ != null)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeMessageSize(Realtime);
+            }
+            if (snapshot_ != null)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeMessageSize(Snapshot);
+            }
+            if (statistics_ != null)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeMessageSize(Statistics);
+            }
+            return size;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(QuoteUpdate other)
+        {
+            if (other == null)
+            {
+                return;
+            }
+            if (other.Timestamp != 0UL)
+            {
+                Timestamp = other.Timestamp;
+            }
+            if (other.realtime_ != null)
+            {
+                if (realtime_ == null)
+                {
+                    realtime_ = new global::QuantGate.API.Signals.Proto.Stealth.RealtimeUpdate();
+                }
+                Realtime.MergeFrom(other.Realtime);
+            }
+            if (other.snapshot_ != null)
+            {
+                if (snapshot_ == null)
+                {
+                    snapshot_ = new global::QuantGate.API.Signals.Proto.Stealth.SnapshotUpdate();
+                }
+                Snapshot.MergeFrom(other.Snapshot);
+            }
+            if (other.statistics_ != null)
+            {
+                if (statistics_ == null)
+                {
+                    statistics_ = new global::QuantGate.API.Signals.Proto.Stealth.StatisticsUpdate();
+                }
+                Statistics.MergeFrom(other.Statistics);
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(pb::CodedInputStream input)
+        {
+            uint tag;
+            while ((tag = input.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    default:
+                        input.SkipLastField();
+                        break;
+                    case 8:
+                        {
+                            Timestamp = input.ReadUInt64();
+                            break;
+                        }
+                    case 18:
+                        {
+                            if (realtime_ == null)
+                            {
+                                realtime_ = new global::QuantGate.API.Signals.Proto.Stealth.RealtimeUpdate();
+                            }
+                            input.ReadMessage(realtime_);
+                            break;
+                        }
+                    case 26:
+                        {
+                            if (snapshot_ == null)
+                            {
+                                snapshot_ = new global::QuantGate.API.Signals.Proto.Stealth.SnapshotUpdate();
+                            }
+                            input.ReadMessage(snapshot_);
+                            break;
+                        }
+                    case 34:
+                        {
+                            if (statistics_ == null)
+                            {
+                                statistics_ = new global::QuantGate.API.Signals.Proto.Stealth.StatisticsUpdate();
+                            }
+                            input.ReadMessage(statistics_);
+                            break;
+                        }
+                }
+            }
+        }
+
+    }
+
+    /// <summary>
+    /// Holds the spline information for a sentiment length or color spline.
+    /// Values should be converted to between -1 and 1 by dividing by 1000. 
+    /// </summary>
+    internal sealed partial class SentimentSpline : pb::IMessage<SentimentSpline>
+    {
+        private static readonly pb::MessageParser<SentimentSpline> _parser = new pb::MessageParser<SentimentSpline>(() => new SentimentSpline());
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pb::MessageParser<SentimentSpline> Parser { get { return _parser; } }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pbr::MessageDescriptor Descriptor
+        {
+            get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[4]; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        pbr::MessageDescriptor pb::IMessage.Descriptor
+        {
+            get { return Descriptor; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public SentimentSpline()
+        {
+            OnConstruction();
+        }
+
+        partial void OnConstruction();
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public SentimentSpline(SentimentSpline other) : this()
+        {
+            average_ = other.average_;
+            i_ = other.i_;
+            j_ = other.j_;
+            x_ = other.x_;
+            y_ = other.y_;
+            z_ = other.z_;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public SentimentSpline Clone()
+        {
+            return new SentimentSpline(this);
+        }
+
+        /// <summary>Field number for the "average" field.</summary>
+        public const int AverageFieldNumber = 1;
+        private int average_;
+        /// <summary>
+        /// Average length. (-1000 to 1000)
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int Average
+        {
+            get { return average_; }
+            set
+            {
+                average_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "i" field.</summary>
+        public const int IFieldNumber = 2;
+        private uint i_;
+        /// <summary>
+        /// First spline point.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public uint I
+        {
+            get { return i_; }
+            set
+            {
+                i_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "j" field.</summary>
+        public const int JFieldNumber = 3;
+        private uint j_;
+        /// <summary>
+        /// Second spline point.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public uint J
+        {
+            get { return j_; }
+            set
+            {
+                j_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "x" field.</summary>
+        public const int XFieldNumber = 4;
+        private int x_;
+        /// <summary>
+        /// Position at point 0. (-1000 to 1000)
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int X
+        {
+            get { return x_; }
+            set
+            {
+                x_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "y" field.</summary>
+        public const int YFieldNumber = 5;
+        private int y_;
+        /// <summary>
+        /// Position at point i. (-1000 to 1000)
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int Y
+        {
+            get { return y_; }
+            set
+            {
+                y_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "z" field.</summary>
+        public const int ZFieldNumber = 6;
+        private int z_;
+        /// <summary>
+        /// Position at point j. (-1000 to 1000)
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int Z
+        {
+            get { return z_; }
+            set
+            {
+                z_ = value;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override bool Equals(object other)
+        {
+            return Equals(other as SentimentSpline);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool Equals(SentimentSpline other)
+        {
+            if (ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (ReferenceEquals(other, this))
+            {
+                return true;
+            }
+            if (Average != other.Average) return false;
+            if (I != other.I) return false;
+            if (J != other.J) return false;
+            if (X != other.X) return false;
+            if (Y != other.Y) return false;
+            if (Z != other.Z) return false;
+            return true;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override int GetHashCode()
+        {
+            int hash = 1;
+            if (Average != 0) hash ^= Average.GetHashCode();
+            if (I != 0) hash ^= I.GetHashCode();
+            if (J != 0) hash ^= J.GetHashCode();
+            if (X != 0) hash ^= X.GetHashCode();
+            if (Y != 0) hash ^= Y.GetHashCode();
+            if (Z != 0) hash ^= Z.GetHashCode();
+            return hash;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override string ToString()
+        {
+            return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void WriteTo(pb::CodedOutputStream output)
+        {
+            if (Average != 0)
+            {
+                output.WriteRawTag(8);
+                output.WriteSInt32(Average);
+            }
+            if (I != 0)
+            {
+                output.WriteRawTag(16);
+                output.WriteUInt32(I);
+            }
+            if (J != 0)
+            {
+                output.WriteRawTag(24);
+                output.WriteUInt32(J);
+            }
+            if (X != 0)
+            {
+                output.WriteRawTag(32);
+                output.WriteSInt32(X);
+            }
+            if (Y != 0)
+            {
+                output.WriteRawTag(40);
+                output.WriteSInt32(Y);
+            }
+            if (Z != 0)
+            {
+                output.WriteRawTag(48);
+                output.WriteSInt32(Z);
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int CalculateSize()
+        {
+            int size = 0;
+            if (Average != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Average);
+            }
+            if (I != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt32Size(I);
+            }
+            if (J != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt32Size(J);
+            }
+            if (X != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeSInt32Size(X);
+            }
+            if (Y != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Y);
+            }
+            if (Z != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Z);
+            }
+            return size;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(SentimentSpline other)
+        {
+            if (other == null)
+            {
+                return;
+            }
+            if (other.Average != 0)
+            {
+                Average = other.Average;
+            }
+            if (other.I != 0)
+            {
+                I = other.I;
+            }
+            if (other.J != 0)
+            {
+                J = other.J;
+            }
+            if (other.X != 0)
+            {
+                X = other.X;
+            }
+            if (other.Y != 0)
+            {
+                Y = other.Y;
+            }
+            if (other.Z != 0)
+            {
+                Z = other.Z;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(pb::CodedInputStream input)
+        {
+            uint tag;
+            while ((tag = input.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    default:
+                        input.SkipLastField();
+                        break;
+                    case 8:
+                        {
+                            Average = input.ReadSInt32();
+                            break;
+                        }
+                    case 16:
+                        {
+                            I = input.ReadUInt32();
+                            break;
+                        }
+                    case 24:
+                        {
+                            J = input.ReadUInt32();
+                            break;
+                        }
+                    case 32:
+                        {
+                            X = input.ReadSInt32();
+                            break;
+                        }
+                    case 40:
+                        {
+                            Y = input.ReadSInt32();
+                            break;
+                        }
+                    case 48:
+                        {
+                            Z = input.ReadSInt32();
+                            break;
+                        }
+                }
+            }
+        }
+
+    }
+
+    /// <summary>
+    /// SentimentUpdate represents a new sentiment subscription update. 
+    /// </summary>
+    internal sealed partial class SentimentUpdate : pb::IMessage<SentimentUpdate>
+    {
+        private static readonly pb::MessageParser<SentimentUpdate> _parser = new pb::MessageParser<SentimentUpdate>(() => new SentimentUpdate());
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pb::MessageParser<SentimentUpdate> Parser { get { return _parser; } }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pbr::MessageDescriptor Descriptor
+        {
+            get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[5]; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        pbr::MessageDescriptor pb::IMessage.Descriptor
+        {
+            get { return Descriptor; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public SentimentUpdate()
+        {
+            OnConstruction();
+        }
+
+        partial void OnConstruction();
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public SentimentUpdate(SentimentUpdate other) : this()
+        {
+            timestamp_ = other.timestamp_;
+            Lengths = other.lengths_ != null ? other.Lengths.Clone() : null;
+            Colors = other.colors_ != null ? other.Colors.Clone() : null;
+            isDirty_ = other.isDirty_;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public SentimentUpdate Clone()
+        {
+            return new SentimentUpdate(this);
+        }
+
+        /// <summary>Field number for the "timestamp" field.</summary>
+        public const int TimestampFieldNumber = 1;
+        private ulong timestamp_;
+        /// <summary>
+        /// The timestamp of the latest update.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong Timestamp
+        {
+            get { return timestamp_; }
+            set
+            {
+                timestamp_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "lengths" field.</summary>
+        public const int LengthsFieldNumber = 2;
+        private global::QuantGate.API.Signals.Proto.Stealth.SentimentSpline lengths_;
+        /// <summary>
+        /// Bar color spline component of sentiment gauge.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public global::QuantGate.API.Signals.Proto.Stealth.SentimentSpline Lengths
+        {
+            get { return lengths_; }
+            set
+            {
+                lengths_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "colors" field.</summary>
+        public const int ColorsFieldNumber = 3;
+        private global::QuantGate.API.Signals.Proto.Stealth.SentimentSpline colors_;
+        /// <summary>
+        /// Bar length component of sentiment gauge.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public global::QuantGate.API.Signals.Proto.Stealth.SentimentSpline Colors
+        {
+            get { return colors_; }
+            set
+            {
+                colors_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "is_dirty" field.</summary>
+        public const int IsDirtyFieldNumber = 4;
+        private bool isDirty_;
+        /// <summary>
+        /// Is the data that generated this potentially dirty (or stale)?
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool IsDirty
+        {
+            get { return isDirty_; }
+            set
+            {
+                isDirty_ = value;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override bool Equals(object other)
+        {
+            return Equals(other as SentimentUpdate);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool Equals(SentimentUpdate other)
+        {
+            if (ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (ReferenceEquals(other, this))
+            {
+                return true;
+            }
+            if (Timestamp != other.Timestamp) return false;
+            if (!object.Equals(Lengths, other.Lengths)) return false;
+            if (!object.Equals(Colors, other.Colors)) return false;
+            if (IsDirty != other.IsDirty) return false;
+            return true;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override int GetHashCode()
+        {
+            int hash = 1;
+            if (Timestamp != 0UL) hash ^= Timestamp.GetHashCode();
+            if (lengths_ != null) hash ^= Lengths.GetHashCode();
+            if (colors_ != null) hash ^= Colors.GetHashCode();
+            if (IsDirty != false) hash ^= IsDirty.GetHashCode();
+            return hash;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override string ToString()
+        {
+            return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void WriteTo(pb::CodedOutputStream output)
+        {
+            if (Timestamp != 0UL)
+            {
+                output.WriteRawTag(8);
+                output.WriteUInt64(Timestamp);
+            }
+            if (lengths_ != null)
+            {
+                output.WriteRawTag(18);
+                output.WriteMessage(Lengths);
+            }
+            if (colors_ != null)
+            {
+                output.WriteRawTag(26);
+                output.WriteMessage(Colors);
+            }
+            if (IsDirty != false)
+            {
+                output.WriteRawTag(32);
+                output.WriteBool(IsDirty);
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int CalculateSize()
+        {
+            int size = 0;
+            if (Timestamp != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Timestamp);
+            }
+            if (lengths_ != null)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeMessageSize(Lengths);
+            }
+            if (colors_ != null)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeMessageSize(Colors);
+            }
+            if (IsDirty != false)
+            {
+                size += 1 + 1;
+            }
+            return size;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(SentimentUpdate other)
+        {
+            if (other == null)
+            {
+                return;
+            }
+            if (other.Timestamp != 0UL)
+            {
+                Timestamp = other.Timestamp;
+            }
+            if (other.lengths_ != null)
+            {
+                if (lengths_ == null)
+                {
+                    lengths_ = new global::QuantGate.API.Signals.Proto.Stealth.SentimentSpline();
+                }
+                Lengths.MergeFrom(other.Lengths);
+            }
+            if (other.colors_ != null)
+            {
+                if (colors_ == null)
+                {
+                    colors_ = new global::QuantGate.API.Signals.Proto.Stealth.SentimentSpline();
+                }
+                Colors.MergeFrom(other.Colors);
+            }
+            if (other.IsDirty != false)
+            {
+                IsDirty = other.IsDirty;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(pb::CodedInputStream input)
+        {
+            uint tag;
+            while ((tag = input.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    default:
+                        input.SkipLastField();
+                        break;
+                    case 8:
+                        {
+                            Timestamp = input.ReadUInt64();
+                            break;
+                        }
+                    case 18:
+                        {
+                            if (lengths_ == null)
+                            {
+                                lengths_ = new global::QuantGate.API.Signals.Proto.Stealth.SentimentSpline();
+                            }
+                            input.ReadMessage(lengths_);
+                            break;
+                        }
+                    case 26:
+                        {
+                            if (colors_ == null)
+                            {
+                                colors_ = new global::QuantGate.API.Signals.Proto.Stealth.SentimentSpline();
+                            }
+                            input.ReadMessage(colors_);
+                            break;
+                        }
+                    case 32:
+                        {
+                            IsDirty = input.ReadBool();
+                            break;
+                        }
+                }
+            }
+        }
+
+    }
+
+    /// <summary>
+    /// EquilibriumUpdate represents a new equilibrium subscription update.
+    /// All prices (and gap size) are converted to long values.
+    /// Values should be converted to between -1 and 1 by dividing by 1000. 
+    /// </summary>
+    internal sealed partial class EquilibriumUpdate : pb::IMessage<EquilibriumUpdate>
+    {
+        private static readonly pb::MessageParser<EquilibriumUpdate> _parser = new pb::MessageParser<EquilibriumUpdate>(() => new EquilibriumUpdate());
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pb::MessageParser<EquilibriumUpdate> Parser { get { return _parser; } }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pbr::MessageDescriptor Descriptor
+        {
+            get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[6]; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        pbr::MessageDescriptor pb::IMessage.Descriptor
+        {
+            get { return Descriptor; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public EquilibriumUpdate()
+        {
+            OnConstruction();
+        }
+
+        partial void OnConstruction();
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public EquilibriumUpdate(EquilibriumUpdate other) : this()
+        {
+            timestamp_ = other.timestamp_;
+            equilibriumPrice_ = other.equilibriumPrice_;
+            gapSize_ = other.gapSize_;
+            high_ = other.high_;
+            low_ = other.low_;
+            projected_ = other.projected_;
+            bias_ = other.bias_;
+            lastPrice_ = other.lastPrice_;
+            isDirty_ = other.isDirty_;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public EquilibriumUpdate Clone()
+        {
+            return new EquilibriumUpdate(this);
+        }
+
+        /// <summary>Field number for the "timestamp" field.</summary>
+        public const int TimestampFieldNumber = 1;
+        private ulong timestamp_;
+        /// <summary>
+        /// The timestamp of the latest update.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong Timestamp
+        {
+            get { return timestamp_; }
+            set
+            {
+                timestamp_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "equilibrium_price" field.</summary>
+        public const int EquilibriumPriceFieldNumber = 2;
+        private ulong equilibriumPrice_;
+        /// <summary>
+        /// The equilibrium price.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong EquilibriumPrice
+        {
+            get { return equilibriumPrice_; }
+            set
+            {
+                equilibriumPrice_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "gap_size" field.</summary>
+        public const int GapSizeFieldNumber = 3;
+        private ulong gapSize_;
+        /// <summary>
+        /// The gap size of each equilibrium deviation.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong GapSize
+        {
+            get { return gapSize_; }
+            set
+            {
+                gapSize_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "high" field.</summary>
+        public const int HighFieldNumber = 4;
+        private int high_;
+        /// <summary>
+        /// The position of the high value. (-1000 to 1000)
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int High
+        {
+            get { return high_; }
+            set
+            {
+                high_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "low" field.</summary>
+        public const int LowFieldNumber = 5;
+        private int low_;
+        /// <summary>
+        /// The position of the low value. (-1000 to 1000)
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int Low
+        {
+            get { return low_; }
+            set
+            {
+                low_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "projected" field.</summary>
+        public const int ProjectedFieldNumber = 6;
+        private int projected_;
+        /// <summary>
+        /// Position of the projected value. (-1000 to 1000)
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int Projected
+        {
+            get { return projected_; }
+            set
+            {
+                projected_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "bias" field.</summary>
+        public const int BiasFieldNumber = 7;
+        private int bias_;
+        /// <summary>
+        /// The bias (determined by the slope, -1000 to 1000).
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int Bias
+        {
+            get { return bias_; }
+            set
+            {
+                bias_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "last_price" field.</summary>
+        public const int LastPriceFieldNumber = 8;
+        private ulong lastPrice_;
+        /// <summary>
+        /// Last traded price at time of calculation.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong LastPrice
+        {
+            get { return lastPrice_; }
+            set
+            {
+                lastPrice_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "is_dirty" field.</summary>
+        public const int IsDirtyFieldNumber = 9;
+        private bool isDirty_;
+        /// <summary>
+        /// Is the data that generated this potentially dirty (or stale)?
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool IsDirty
+        {
+            get { return isDirty_; }
+            set
+            {
+                isDirty_ = value;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override bool Equals(object other)
+        {
+            return Equals(other as EquilibriumUpdate);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool Equals(EquilibriumUpdate other)
+        {
+            if (ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (ReferenceEquals(other, this))
+            {
+                return true;
+            }
+            if (Timestamp != other.Timestamp) return false;
+            if (EquilibriumPrice != other.EquilibriumPrice) return false;
+            if (GapSize != other.GapSize) return false;
+            if (High != other.High) return false;
+            if (Low != other.Low) return false;
+            if (Projected != other.Projected) return false;
+            if (Bias != other.Bias) return false;
+            if (LastPrice != other.LastPrice) return false;
+            if (IsDirty != other.IsDirty) return false;
+            return true;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override int GetHashCode()
+        {
+            int hash = 1;
+            if (Timestamp != 0UL) hash ^= Timestamp.GetHashCode();
+            if (EquilibriumPrice != 0UL) hash ^= EquilibriumPrice.GetHashCode();
+            if (GapSize != 0UL) hash ^= GapSize.GetHashCode();
+            if (High != 0) hash ^= High.GetHashCode();
+            if (Low != 0) hash ^= Low.GetHashCode();
+            if (Projected != 0) hash ^= Projected.GetHashCode();
+            if (Bias != 0) hash ^= Bias.GetHashCode();
+            if (LastPrice != 0UL) hash ^= LastPrice.GetHashCode();
+            if (IsDirty != false) hash ^= IsDirty.GetHashCode();
+            return hash;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override string ToString()
+        {
+            return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void WriteTo(pb::CodedOutputStream output)
+        {
+            if (Timestamp != 0UL)
+            {
+                output.WriteRawTag(8);
+                output.WriteUInt64(Timestamp);
+            }
+            if (EquilibriumPrice != 0UL)
+            {
+                output.WriteRawTag(16);
+                output.WriteUInt64(EquilibriumPrice);
+            }
+            if (GapSize != 0UL)
+            {
+                output.WriteRawTag(24);
+                output.WriteUInt64(GapSize);
+            }
+            if (High != 0)
+            {
+                output.WriteRawTag(32);
+                output.WriteSInt32(High);
+            }
+            if (Low != 0)
+            {
+                output.WriteRawTag(40);
+                output.WriteSInt32(Low);
+            }
+            if (Projected != 0)
+            {
+                output.WriteRawTag(48);
+                output.WriteSInt32(Projected);
+            }
+            if (Bias != 0)
+            {
+                output.WriteRawTag(56);
+                output.WriteSInt32(Bias);
+            }
+            if (LastPrice != 0UL)
+            {
+                output.WriteRawTag(64);
+                output.WriteUInt64(LastPrice);
+            }
+            if (IsDirty != false)
+            {
+                output.WriteRawTag(72);
+                output.WriteBool(IsDirty);
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int CalculateSize()
+        {
+            int size = 0;
+            if (Timestamp != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Timestamp);
+            }
+            if (EquilibriumPrice != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(EquilibriumPrice);
+            }
+            if (GapSize != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(GapSize);
+            }
+            if (High != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeSInt32Size(High);
+            }
+            if (Low != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Low);
+            }
+            if (Projected != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Projected);
+            }
+            if (Bias != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Bias);
+            }
+            if (LastPrice != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(LastPrice);
+            }
+            if (IsDirty != false)
+            {
+                size += 1 + 1;
+            }
+            return size;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(EquilibriumUpdate other)
+        {
+            if (other == null)
+            {
+                return;
+            }
+            if (other.Timestamp != 0UL)
+            {
+                Timestamp = other.Timestamp;
+            }
+            if (other.EquilibriumPrice != 0UL)
+            {
+                EquilibriumPrice = other.EquilibriumPrice;
+            }
+            if (other.GapSize != 0UL)
+            {
+                GapSize = other.GapSize;
+            }
+            if (other.High != 0)
+            {
+                High = other.High;
+            }
+            if (other.Low != 0)
+            {
+                Low = other.Low;
+            }
+            if (other.Projected != 0)
+            {
+                Projected = other.Projected;
+            }
+            if (other.Bias != 0)
+            {
+                Bias = other.Bias;
+            }
+            if (other.LastPrice != 0UL)
+            {
+                LastPrice = other.LastPrice;
+            }
+            if (other.IsDirty != false)
+            {
+                IsDirty = other.IsDirty;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(pb::CodedInputStream input)
+        {
+            uint tag;
+            while ((tag = input.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    default:
+                        input.SkipLastField();
+                        break;
+                    case 8:
+                        {
+                            Timestamp = input.ReadUInt64();
+                            break;
+                        }
+                    case 16:
+                        {
+                            EquilibriumPrice = input.ReadUInt64();
+                            break;
+                        }
+                    case 24:
+                        {
+                            GapSize = input.ReadUInt64();
+                            break;
+                        }
+                    case 32:
+                        {
+                            High = input.ReadSInt32();
+                            break;
+                        }
+                    case 40:
+                        {
+                            Low = input.ReadSInt32();
+                            break;
+                        }
+                    case 48:
+                        {
+                            Projected = input.ReadSInt32();
+                            break;
+                        }
+                    case 56:
+                        {
+                            Bias = input.ReadSInt32();
+                            break;
+                        }
+                    case 64:
+                        {
+                            LastPrice = input.ReadUInt64();
+                            break;
+                        }
+                    case 72:
+                        {
+                            IsDirty = input.ReadBool();
+                            break;
+                        }
+                }
+            }
+        }
+
+    }
+
+    /// <summary>
+    /// MultiframeUpdate represents a new multi-timeframe equilibrium subscription update. 
+    /// Values should be converted to between -1 and 1 by dividing by 1000. 
+    /// </summary>
+    internal sealed partial class MultiframeUpdate : pb::IMessage<MultiframeUpdate>
+    {
+        private static readonly pb::MessageParser<MultiframeUpdate> _parser = new pb::MessageParser<MultiframeUpdate>(() => new MultiframeUpdate());
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pb::MessageParser<MultiframeUpdate> Parser { get { return _parser; } }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pbr::MessageDescriptor Descriptor
+        {
+            get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[7]; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        pbr::MessageDescriptor pb::IMessage.Descriptor
+        {
+            get { return Descriptor; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public MultiframeUpdate()
+        {
+            OnConstruction();
+        }
+
+        partial void OnConstruction();
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public MultiframeUpdate(MultiframeUpdate other) : this()
+        {
+            timestamp_ = other.timestamp_;
+            min5_ = other.min5_;
+            min10_ = other.min10_;
+            min15_ = other.min15_;
+            min30_ = other.min30_;
+            min45_ = other.min45_;
+            min60_ = other.min60_;
+            min120_ = other.min120_;
+            min180_ = other.min180_;
+            min240_ = other.min240_;
+            day1_ = other.day1_;
+            isDirty_ = other.isDirty_;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public MultiframeUpdate Clone()
+        {
+            return new MultiframeUpdate(this);
+        }
+
+        /// <summary>Field number for the "timestamp" field.</summary>
+        public const int TimestampFieldNumber = 1;
+        private ulong timestamp_;
+        /// <summary>
+        /// The timestamp of the latest update.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong Timestamp
+        {
+            get { return timestamp_; }
+            set
+            {
+                timestamp_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "min_5" field.</summary>
+        public const int Min5FieldNumber = 2;
+        private int min5_;
+        /// <summary>
+        /// The 5 minute value. (-1000 to 1000)
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int Min5
+        {
+            get { return min5_; }
+            set
+            {
+                min5_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "min_10" field.</summary>
+        public const int Min10FieldNumber = 3;
+        private int min10_;
+        /// <summary>
+        /// The 10 minute value. (-1000 to 1000)
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int Min10
+        {
+            get { return min10_; }
+            set
+            {
+                min10_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "min_15" field.</summary>
+        public const int Min15FieldNumber = 4;
+        private int min15_;
+        /// <summary>
+        /// The 15 minute value. (-1000 to 1000)
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int Min15
+        {
+            get { return min15_; }
+            set
+            {
+                min15_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "min_30" field.</summary>
+        public const int Min30FieldNumber = 5;
+        private int min30_;
+        /// <summary>
+        /// The 30 minute value. (-1000 to 1000)
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int Min30
+        {
+            get { return min30_; }
+            set
+            {
+                min30_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "min_45" field.</summary>
+        public const int Min45FieldNumber = 6;
+        private int min45_;
+        /// <summary>
+        /// The 45 minute value. (-1000 to 1000)
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int Min45
+        {
+            get { return min45_; }
+            set
+            {
+                min45_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "min_60" field.</summary>
+        public const int Min60FieldNumber = 7;
+        private int min60_;
+        /// <summary>
+        /// The 60 minute value. (-1000 to 1000)
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int Min60
+        {
+            get { return min60_; }
+            set
+            {
+                min60_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "min_120" field.</summary>
+        public const int Min120FieldNumber = 8;
+        private int min120_;
+        /// <summary>
+        /// The 120 minute value. (-1000 to 1000)
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int Min120
+        {
+            get { return min120_; }
+            set
+            {
+                min120_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "min_180" field.</summary>
+        public const int Min180FieldNumber = 9;
+        private int min180_;
+        /// <summary>
+        /// The 180 minute value. (-1000 to 1000)
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int Min180
+        {
+            get { return min180_; }
+            set
+            {
+                min180_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "min_240" field.</summary>
+        public const int Min240FieldNumber = 10;
+        private int min240_;
+        /// <summary>
+        /// The 240 minute value. (-1000 to 1000)
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int Min240
+        {
+            get { return min240_; }
+            set
+            {
+                min240_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "day_1" field.</summary>
+        public const int Day1FieldNumber = 11;
+        private int day1_;
+        /// <summary>
+        /// The 1 day value. (-1000 to 1000)
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int Day1
+        {
+            get { return day1_; }
+            set
+            {
+                day1_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "is_dirty" field.</summary>
+        public const int IsDirtyFieldNumber = 12;
+        private bool isDirty_;
+        /// <summary>
+        /// Is the data that generated this potentially dirty (or stale)?
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool IsDirty
+        {
+            get { return isDirty_; }
+            set
+            {
+                isDirty_ = value;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override bool Equals(object other)
+        {
+            return Equals(other as MultiframeUpdate);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool Equals(MultiframeUpdate other)
+        {
+            if (ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (ReferenceEquals(other, this))
+            {
+                return true;
+            }
+            if (Timestamp != other.Timestamp) return false;
+            if (Min5 != other.Min5) return false;
+            if (Min10 != other.Min10) return false;
+            if (Min15 != other.Min15) return false;
+            if (Min30 != other.Min30) return false;
+            if (Min45 != other.Min45) return false;
+            if (Min60 != other.Min60) return false;
+            if (Min120 != other.Min120) return false;
+            if (Min180 != other.Min180) return false;
+            if (Min240 != other.Min240) return false;
+            if (Day1 != other.Day1) return false;
+            if (IsDirty != other.IsDirty) return false;
+            return true;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override int GetHashCode()
+        {
+            int hash = 1;
+            if (Timestamp != 0UL) hash ^= Timestamp.GetHashCode();
+            if (Min5 != 0) hash ^= Min5.GetHashCode();
+            if (Min10 != 0) hash ^= Min10.GetHashCode();
+            if (Min15 != 0) hash ^= Min15.GetHashCode();
+            if (Min30 != 0) hash ^= Min30.GetHashCode();
+            if (Min45 != 0) hash ^= Min45.GetHashCode();
+            if (Min60 != 0) hash ^= Min60.GetHashCode();
+            if (Min120 != 0) hash ^= Min120.GetHashCode();
+            if (Min180 != 0) hash ^= Min180.GetHashCode();
+            if (Min240 != 0) hash ^= Min240.GetHashCode();
+            if (Day1 != 0) hash ^= Day1.GetHashCode();
+            if (IsDirty != false) hash ^= IsDirty.GetHashCode();
+            return hash;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override string ToString()
+        {
+            return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void WriteTo(pb::CodedOutputStream output)
+        {
+            if (Timestamp != 0UL)
+            {
+                output.WriteRawTag(8);
+                output.WriteUInt64(Timestamp);
+            }
+            if (Min5 != 0)
+            {
+                output.WriteRawTag(16);
+                output.WriteSInt32(Min5);
+            }
+            if (Min10 != 0)
+            {
+                output.WriteRawTag(24);
+                output.WriteSInt32(Min10);
+            }
+            if (Min15 != 0)
+            {
+                output.WriteRawTag(32);
+                output.WriteSInt32(Min15);
+            }
+            if (Min30 != 0)
+            {
+                output.WriteRawTag(40);
+                output.WriteSInt32(Min30);
+            }
+            if (Min45 != 0)
+            {
+                output.WriteRawTag(48);
+                output.WriteSInt32(Min45);
+            }
+            if (Min60 != 0)
+            {
+                output.WriteRawTag(56);
+                output.WriteSInt32(Min60);
+            }
+            if (Min120 != 0)
+            {
+                output.WriteRawTag(64);
+                output.WriteSInt32(Min120);
+            }
+            if (Min180 != 0)
+            {
+                output.WriteRawTag(72);
+                output.WriteSInt32(Min180);
+            }
+            if (Min240 != 0)
+            {
+                output.WriteRawTag(80);
+                output.WriteSInt32(Min240);
+            }
+            if (Day1 != 0)
+            {
+                output.WriteRawTag(88);
+                output.WriteSInt32(Day1);
+            }
+            if (IsDirty != false)
+            {
+                output.WriteRawTag(96);
+                output.WriteBool(IsDirty);
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int CalculateSize()
+        {
+            int size = 0;
+            if (Timestamp != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Timestamp);
+            }
+            if (Min5 != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Min5);
+            }
+            if (Min10 != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Min10);
+            }
+            if (Min15 != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Min15);
+            }
+            if (Min30 != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Min30);
+            }
+            if (Min45 != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Min45);
+            }
+            if (Min60 != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Min60);
+            }
+            if (Min120 != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Min120);
+            }
+            if (Min180 != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Min180);
+            }
+            if (Min240 != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Min240);
+            }
+            if (Day1 != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Day1);
+            }
+            if (IsDirty != false)
+            {
+                size += 1 + 1;
+            }
+            return size;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(MultiframeUpdate other)
+        {
+            if (other == null)
+            {
+                return;
+            }
+            if (other.Timestamp != 0UL)
+            {
+                Timestamp = other.Timestamp;
+            }
+            if (other.Min5 != 0)
+            {
+                Min5 = other.Min5;
+            }
+            if (other.Min10 != 0)
+            {
+                Min10 = other.Min10;
+            }
+            if (other.Min15 != 0)
+            {
+                Min15 = other.Min15;
+            }
+            if (other.Min30 != 0)
+            {
+                Min30 = other.Min30;
+            }
+            if (other.Min45 != 0)
+            {
+                Min45 = other.Min45;
+            }
+            if (other.Min60 != 0)
+            {
+                Min60 = other.Min60;
+            }
+            if (other.Min120 != 0)
+            {
+                Min120 = other.Min120;
+            }
+            if (other.Min180 != 0)
+            {
+                Min180 = other.Min180;
+            }
+            if (other.Min240 != 0)
+            {
+                Min240 = other.Min240;
+            }
+            if (other.Day1 != 0)
+            {
+                Day1 = other.Day1;
+            }
+            if (other.IsDirty != false)
+            {
+                IsDirty = other.IsDirty;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(pb::CodedInputStream input)
+        {
+            uint tag;
+            while ((tag = input.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    default:
+                        input.SkipLastField();
+                        break;
+                    case 8:
+                        {
+                            Timestamp = input.ReadUInt64();
+                            break;
+                        }
+                    case 16:
+                        {
+                            Min5 = input.ReadSInt32();
+                            break;
+                        }
+                    case 24:
+                        {
+                            Min10 = input.ReadSInt32();
+                            break;
+                        }
+                    case 32:
+                        {
+                            Min15 = input.ReadSInt32();
+                            break;
+                        }
+                    case 40:
+                        {
+                            Min30 = input.ReadSInt32();
+                            break;
+                        }
+                    case 48:
+                        {
+                            Min45 = input.ReadSInt32();
+                            break;
+                        }
+                    case 56:
+                        {
+                            Min60 = input.ReadSInt32();
+                            break;
+                        }
+                    case 64:
+                        {
+                            Min120 = input.ReadSInt32();
+                            break;
+                        }
+                    case 72:
+                        {
+                            Min180 = input.ReadSInt32();
+                            break;
+                        }
+                    case 80:
+                        {
+                            Min240 = input.ReadSInt32();
+                            break;
+                        }
+                    case 88:
+                        {
+                            Day1 = input.ReadSInt32();
+                            break;
+                        }
+                    case 96:
+                        {
+                            IsDirty = input.ReadBool();
+                            break;
+                        }
+                }
+            }
+        }
+
+    }
+
+    /// <summary>
+    /// TriggerUpdate represents a new trigger subscription update. 
+    /// All prices (and gap size) are converted to long values.
+    /// Values should be converted to between -1 and 1 by subtracting 1001 and dividing by 1000. 
+    /// </summary>
+    internal sealed partial class TriggerUpdate : pb::IMessage<TriggerUpdate>
+    {
+        private static readonly pb::MessageParser<TriggerUpdate> _parser = new pb::MessageParser<TriggerUpdate>(() => new TriggerUpdate());
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pb::MessageParser<TriggerUpdate> Parser { get { return _parser; } }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pbr::MessageDescriptor Descriptor
+        {
+            get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[8]; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        pbr::MessageDescriptor pb::IMessage.Descriptor
+        {
+            get { return Descriptor; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public TriggerUpdate()
+        {
+            OnConstruction();
+        }
+
+        partial void OnConstruction();
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public TriggerUpdate(TriggerUpdate other) : this()
+        {
+            timestamp_ = other.timestamp_;
+            bias_ = other.bias_;
+            perception_ = other.perception_;
+            sentiment_ = other.sentiment_;
+            commitment_ = other.commitment_;
+            equilibriumPrice_ = other.equilibriumPrice_;
+            gapSize_ = other.gapSize_;
+            lastPrice_ = other.lastPrice_;
+            isDirty_ = other.isDirty_;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public TriggerUpdate Clone()
+        {
+            return new TriggerUpdate(this);
+        }
+
+        /// <summary>Field number for the "timestamp" field.</summary>
+        public const int TimestampFieldNumber = 1;
+        private ulong timestamp_;
+        /// <summary>
+        /// The timestamp of the latest update.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong Timestamp
+        {
+            get { return timestamp_; }
+            set
+            {
+                timestamp_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "bias" field.</summary>
+        public const int BiasFieldNumber = 2;
+        private int bias_;
+        /// <summary>
+        /// The bias value. (-1000 to 1000)
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int Bias
+        {
+            get { return bias_; }
+            set
+            {
+                bias_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "perception" field.</summary>
+        public const int PerceptionFieldNumber = 3;
+        private int perception_;
+        /// <summary>
+        /// The perception value. (-1000 to 1000)
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int Perception
+        {
+            get { return perception_; }
+            set
+            {
+                perception_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "sentiment" field.</summary>
+        public const int SentimentFieldNumber = 4;
+        private int sentiment_;
+        /// <summary>
+        /// Sentiment length value at point 0. (-1000 to 1000)
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int Sentiment
+        {
+            get { return sentiment_; }
+            set
+            {
+                sentiment_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "commitment" field.</summary>
+        public const int CommitmentFieldNumber = 5;
+        private int commitment_;
+        /// <summary>
+        /// The commitment value. (-1000 to 1000)
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int Commitment
+        {
+            get { return commitment_; }
+            set
+            {
+                commitment_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "equilibrium_price" field.</summary>
+        public const int EquilibriumPriceFieldNumber = 6;
+        private ulong equilibriumPrice_;
+        /// <summary>
+        /// The equilibrium price.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong EquilibriumPrice
+        {
+            get { return equilibriumPrice_; }
+            set
+            {
+                equilibriumPrice_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "gap_size" field.</summary>
+        public const int GapSizeFieldNumber = 7;
+        private ulong gapSize_;
+        /// <summary>
+        /// The gap size of each equilibrium deviation.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong GapSize
+        {
+            get { return gapSize_; }
+            set
+            {
+                gapSize_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "last_price" field.</summary>
+        public const int LastPriceFieldNumber = 8;
+        private ulong lastPrice_;
+        /// <summary>
+        /// Last traded price at time of calculation.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong LastPrice
+        {
+            get { return lastPrice_; }
+            set
+            {
+                lastPrice_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "is_dirty" field.</summary>
+        public const int IsDirtyFieldNumber = 9;
+        private bool isDirty_;
+        /// <summary>
+        /// Is the data that generated this potentially dirty (or stale)?
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool IsDirty
+        {
+            get { return isDirty_; }
+            set
+            {
+                isDirty_ = value;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override bool Equals(object other)
+        {
+            return Equals(other as TriggerUpdate);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool Equals(TriggerUpdate other)
+        {
+            if (ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (ReferenceEquals(other, this))
+            {
+                return true;
+            }
+            if (Timestamp != other.Timestamp) return false;
+            if (Bias != other.Bias) return false;
+            if (Perception != other.Perception) return false;
+            if (Sentiment != other.Sentiment) return false;
+            if (Commitment != other.Commitment) return false;
+            if (EquilibriumPrice != other.EquilibriumPrice) return false;
+            if (GapSize != other.GapSize) return false;
+            if (LastPrice != other.LastPrice) return false;
+            if (IsDirty != other.IsDirty) return false;
+            return true;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override int GetHashCode()
+        {
+            int hash = 1;
+            if (Timestamp != 0UL) hash ^= Timestamp.GetHashCode();
+            if (Bias != 0) hash ^= Bias.GetHashCode();
+            if (Perception != 0) hash ^= Perception.GetHashCode();
+            if (Sentiment != 0) hash ^= Sentiment.GetHashCode();
+            if (Commitment != 0) hash ^= Commitment.GetHashCode();
+            if (EquilibriumPrice != 0UL) hash ^= EquilibriumPrice.GetHashCode();
+            if (GapSize != 0UL) hash ^= GapSize.GetHashCode();
+            if (LastPrice != 0UL) hash ^= LastPrice.GetHashCode();
+            if (IsDirty != false) hash ^= IsDirty.GetHashCode();
+            return hash;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override string ToString()
+        {
+            return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void WriteTo(pb::CodedOutputStream output)
+        {
+            if (Timestamp != 0UL)
+            {
+                output.WriteRawTag(8);
+                output.WriteUInt64(Timestamp);
+            }
+            if (Bias != 0)
+            {
+                output.WriteRawTag(16);
+                output.WriteSInt32(Bias);
+            }
+            if (Perception != 0)
+            {
+                output.WriteRawTag(24);
+                output.WriteSInt32(Perception);
+            }
+            if (Sentiment != 0)
+            {
+                output.WriteRawTag(32);
+                output.WriteSInt32(Sentiment);
+            }
+            if (Commitment != 0)
+            {
+                output.WriteRawTag(40);
+                output.WriteSInt32(Commitment);
+            }
+            if (EquilibriumPrice != 0UL)
+            {
+                output.WriteRawTag(48);
+                output.WriteUInt64(EquilibriumPrice);
+            }
+            if (GapSize != 0UL)
+            {
+                output.WriteRawTag(56);
+                output.WriteUInt64(GapSize);
+            }
+            if (LastPrice != 0UL)
+            {
+                output.WriteRawTag(64);
+                output.WriteUInt64(LastPrice);
+            }
+            if (IsDirty != false)
+            {
+                output.WriteRawTag(72);
+                output.WriteBool(IsDirty);
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int CalculateSize()
+        {
+            int size = 0;
+            if (Timestamp != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Timestamp);
+            }
+            if (Bias != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Bias);
+            }
+            if (Perception != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Perception);
+            }
+            if (Sentiment != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Sentiment);
+            }
+            if (Commitment != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Commitment);
+            }
+            if (EquilibriumPrice != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(EquilibriumPrice);
+            }
+            if (GapSize != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(GapSize);
+            }
+            if (LastPrice != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(LastPrice);
+            }
+            if (IsDirty != false)
+            {
+                size += 1 + 1;
+            }
+            return size;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(TriggerUpdate other)
+        {
+            if (other == null)
+            {
+                return;
+            }
+            if (other.Timestamp != 0UL)
+            {
+                Timestamp = other.Timestamp;
+            }
+            if (other.Bias != 0)
+            {
+                Bias = other.Bias;
+            }
+            if (other.Perception != 0)
+            {
+                Perception = other.Perception;
+            }
+            if (other.Sentiment != 0)
+            {
+                Sentiment = other.Sentiment;
+            }
+            if (other.Commitment != 0)
+            {
+                Commitment = other.Commitment;
+            }
+            if (other.EquilibriumPrice != 0UL)
+            {
+                EquilibriumPrice = other.EquilibriumPrice;
+            }
+            if (other.GapSize != 0UL)
+            {
+                GapSize = other.GapSize;
+            }
+            if (other.LastPrice != 0UL)
+            {
+                LastPrice = other.LastPrice;
+            }
+            if (other.IsDirty != false)
+            {
+                IsDirty = other.IsDirty;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(pb::CodedInputStream input)
+        {
+            uint tag;
+            while ((tag = input.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    default:
+                        input.SkipLastField();
+                        break;
+                    case 8:
+                        {
+                            Timestamp = input.ReadUInt64();
+                            break;
+                        }
+                    case 16:
+                        {
+                            Bias = input.ReadSInt32();
+                            break;
+                        }
+                    case 24:
+                        {
+                            Perception = input.ReadSInt32();
+                            break;
+                        }
+                    case 32:
+                        {
+                            Sentiment = input.ReadSInt32();
+                            break;
+                        }
+                    case 40:
+                        {
+                            Commitment = input.ReadSInt32();
+                            break;
+                        }
+                    case 48:
+                        {
+                            EquilibriumPrice = input.ReadUInt64();
+                            break;
+                        }
+                    case 56:
+                        {
+                            GapSize = input.ReadUInt64();
+                            break;
+                        }
+                    case 64:
+                        {
+                            LastPrice = input.ReadUInt64();
+                            break;
+                        }
+                    case 72:
+                        {
+                            IsDirty = input.ReadBool();
+                            break;
+                        }
+                }
+            }
+        }
+
+    }
+
+    /// <summary>
+    /// SingleValueUpdate represents a new subscription update for a gauge that returns a single
+    /// value (such as Perception, Commitment, Headroom, Book Pressure, or SMA).
+    /// Values should be converted to between -1 and 1 by dividing by 1000. 
+    /// </summary>
+    internal sealed partial class SingleValueUpdate : pb::IMessage<SingleValueUpdate>
+    {
+        private static readonly pb::MessageParser<SingleValueUpdate> _parser = new pb::MessageParser<SingleValueUpdate>(() => new SingleValueUpdate());
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pb::MessageParser<SingleValueUpdate> Parser { get { return _parser; } }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pbr::MessageDescriptor Descriptor
+        {
+            get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[9]; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        pbr::MessageDescriptor pb::IMessage.Descriptor
+        {
+            get { return Descriptor; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public SingleValueUpdate()
+        {
+            OnConstruction();
+        }
+
+        partial void OnConstruction();
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public SingleValueUpdate(SingleValueUpdate other) : this()
+        {
+            timestamp_ = other.timestamp_;
+            value_ = other.value_;
+            isDirty_ = other.isDirty_;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public SingleValueUpdate Clone()
+        {
+            return new SingleValueUpdate(this);
+        }
+
+        /// <summary>Field number for the "timestamp" field.</summary>
+        public const int TimestampFieldNumber = 1;
+        private ulong timestamp_;
+        /// <summary>
+        /// The timestamp of the latest update.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong Timestamp
+        {
+            get { return timestamp_; }
+            set
+            {
+                timestamp_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "value" field.</summary>
+        public const int ValueFieldNumber = 2;
+        private int value_;
+        /// <summary>
+        /// The single value. (-1000 to 1000)
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int Value
+        {
+            get { return value_; }
+            set
+            {
+                value_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "is_dirty" field.</summary>
+        public const int IsDirtyFieldNumber = 3;
+        private bool isDirty_;
+        /// <summary>
+        /// Is the data that generated this potentially dirty (or stale)?
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool IsDirty
+        {
+            get { return isDirty_; }
+            set
+            {
+                isDirty_ = value;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override bool Equals(object other)
+        {
+            return Equals(other as SingleValueUpdate);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool Equals(SingleValueUpdate other)
+        {
+            if (ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (ReferenceEquals(other, this))
+            {
+                return true;
+            }
+            if (Timestamp != other.Timestamp) return false;
+            if (Value != other.Value) return false;
+            if (IsDirty != other.IsDirty) return false;
+            return true;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override int GetHashCode()
+        {
+            int hash = 1;
+            if (Timestamp != 0UL) hash ^= Timestamp.GetHashCode();
+            if (Value != 0) hash ^= Value.GetHashCode();
+            if (IsDirty != false) hash ^= IsDirty.GetHashCode();
+            return hash;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override string ToString()
+        {
+            return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void WriteTo(pb::CodedOutputStream output)
+        {
+            if (Timestamp != 0UL)
+            {
+                output.WriteRawTag(8);
+                output.WriteUInt64(Timestamp);
+            }
+            if (Value != 0)
+            {
+                output.WriteRawTag(16);
+                output.WriteSInt32(Value);
+            }
+            if (IsDirty != false)
+            {
+                output.WriteRawTag(24);
+                output.WriteBool(IsDirty);
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int CalculateSize()
+        {
+            int size = 0;
+            if (Timestamp != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Timestamp);
+            }
+            if (Value != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Value);
+            }
+            if (IsDirty != false)
+            {
+                size += 1 + 1;
+            }
+            return size;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(SingleValueUpdate other)
+        {
+            if (other == null)
+            {
+                return;
+            }
+            if (other.Timestamp != 0UL)
+            {
+                Timestamp = other.Timestamp;
+            }
+            if (other.Value != 0)
+            {
+                Value = other.Value;
+            }
+            if (other.IsDirty != false)
+            {
+                IsDirty = other.IsDirty;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(pb::CodedInputStream input)
+        {
+            uint tag;
+            while ((tag = input.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    default:
+                        input.SkipLastField();
+                        break;
+                    case 8:
+                        {
+                            Timestamp = input.ReadUInt64();
+                            break;
+                        }
+                    case 16:
+                        {
+                            Value = input.ReadSInt32();
+                            break;
+                        }
+                    case 24:
+                        {
+                            IsDirty = input.ReadBool();
+                            break;
+                        }
+                }
+            }
+        }
+
+    }
+
+    /// <summary>
+    /// MACDUpdate represents a new subscription update for a gauge that returns MACD values. 
+    /// </summary>
+    internal sealed partial class MACDUpdate : pb::IMessage<MACDUpdate>
+    {
+        private static readonly pb::MessageParser<MACDUpdate> _parser = new pb::MessageParser<MACDUpdate>(() => new MACDUpdate());
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pb::MessageParser<MACDUpdate> Parser { get { return _parser; } }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pbr::MessageDescriptor Descriptor
+        {
+            get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[10]; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        pbr::MessageDescriptor pb::IMessage.Descriptor
+        {
+            get { return Descriptor; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public MACDUpdate()
+        {
+            OnConstruction();
+        }
+
+        partial void OnConstruction();
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public MACDUpdate(MACDUpdate other) : this()
+        {
+            timestamp_ = other.timestamp_;
+            macd_ = other.macd_;
+            signal_ = other.signal_;
+            histogram_ = other.histogram_;
+            isDirty_ = other.isDirty_;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public MACDUpdate Clone()
+        {
+            return new MACDUpdate(this);
+        }
+
+        /// <summary>Field number for the "timestamp" field.</summary>
+        public const int TimestampFieldNumber = 1;
+        private ulong timestamp_;
+        /// <summary>
+        /// The timestamp of the latest update.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong Timestamp
+        {
+            get { return timestamp_; }
+            set
+            {
+                timestamp_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "macd" field.</summary>
+        public const int MacdFieldNumber = 2;
+        private float macd_;
+        /// <summary>
+        /// The MACD value (float).
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public float Macd
+        {
+            get { return macd_; }
+            set
+            {
+                macd_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "signal" field.</summary>
+        public const int SignalFieldNumber = 3;
+        private float signal_;
+        /// <summary>
+        /// The MACD signal value (float).
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public float Signal
+        {
+            get { return signal_; }
+            set
+            {
+                signal_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "histogram" field.</summary>
+        public const int HistogramFieldNumber = 4;
+        private float histogram_;
+        /// <summary>
+        /// The MACD histogram value (float, difference between MACD and signal).    
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public float Histogram
+        {
+            get { return histogram_; }
+            set
+            {
+                histogram_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "is_dirty" field.</summary>
+        public const int IsDirtyFieldNumber = 5;
+        private bool isDirty_;
+        /// <summary>
+        /// Is the data that generated this potentially dirty (or stale)?
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool IsDirty
+        {
+            get { return isDirty_; }
+            set
+            {
+                isDirty_ = value;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override bool Equals(object other)
+        {
+            return Equals(other as MACDUpdate);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool Equals(MACDUpdate other)
+        {
+            if (ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (ReferenceEquals(other, this))
+            {
+                return true;
+            }
+            if (Timestamp != other.Timestamp) return false;
+            if (Macd != other.Macd) return false;
+            if (Signal != other.Signal) return false;
+            if (Histogram != other.Histogram) return false;
+            if (IsDirty != other.IsDirty) return false;
+            return true;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override int GetHashCode()
+        {
+            int hash = 1;
+            if (Timestamp != 0UL) hash ^= Timestamp.GetHashCode();
+            if (Macd != 0F) hash ^= Macd.GetHashCode();
+            if (Signal != 0F) hash ^= Signal.GetHashCode();
+            if (Histogram != 0F) hash ^= Histogram.GetHashCode();
+            if (IsDirty != false) hash ^= IsDirty.GetHashCode();
+            return hash;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override string ToString()
+        {
+            return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void WriteTo(pb::CodedOutputStream output)
+        {
+            if (Timestamp != 0UL)
+            {
+                output.WriteRawTag(8);
+                output.WriteUInt64(Timestamp);
+            }
+            if (Macd != 0F)
+            {
+                output.WriteRawTag(21);
+                output.WriteFloat(Macd);
+            }
+            if (Signal != 0F)
+            {
+                output.WriteRawTag(29);
+                output.WriteFloat(Signal);
+            }
+            if (Histogram != 0F)
+            {
+                output.WriteRawTag(37);
+                output.WriteFloat(Histogram);
+            }
+            if (IsDirty != false)
+            {
+                output.WriteRawTag(40);
+                output.WriteBool(IsDirty);
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int CalculateSize()
+        {
+            int size = 0;
+            if (Timestamp != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Timestamp);
+            }
+            if (Macd != 0F)
+            {
+                size += 1 + 4;
+            }
+            if (Signal != 0F)
+            {
+                size += 1 + 4;
+            }
+            if (Histogram != 0F)
+            {
+                size += 1 + 4;
+            }
+            if (IsDirty != false)
+            {
+                size += 1 + 1;
+            }
+            return size;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(MACDUpdate other)
+        {
+            if (other == null)
+            {
+                return;
+            }
+            if (other.Timestamp != 0UL)
+            {
+                Timestamp = other.Timestamp;
+            }
+            if (other.Macd != 0F)
+            {
+                Macd = other.Macd;
+            }
+            if (other.Signal != 0F)
+            {
+                Signal = other.Signal;
+            }
+            if (other.Histogram != 0F)
+            {
+                Histogram = other.Histogram;
+            }
+            if (other.IsDirty != false)
+            {
+                IsDirty = other.IsDirty;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(pb::CodedInputStream input)
+        {
+            uint tag;
+            while ((tag = input.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    default:
+                        input.SkipLastField();
+                        break;
+                    case 8:
+                        {
+                            Timestamp = input.ReadUInt64();
+                            break;
+                        }
+                    case 21:
+                        {
+                            Macd = input.ReadFloat();
+                            break;
+                        }
+                    case 29:
+                        {
+                            Signal = input.ReadFloat();
+                            break;
+                        }
+                    case 37:
+                        {
+                            Histogram = input.ReadFloat();
+                            break;
+                        }
+                    case 40:
+                        {
+                            IsDirty = input.ReadBool();
+                            break;
+                        }
+                }
+            }
+        }
+
+    }
+
+    /// <summary>
+    /// BollingerBandsUpdate represents a new subscription update for a gauge that returns
+    /// Bollinger band values (upper, middle, and lower bands). All band (price) values are
+    /// converted to long values. 
+    /// </summary>
+    internal sealed partial class BollingerBandsUpdate : pb::IMessage<BollingerBandsUpdate>
+    {
+        private static readonly pb::MessageParser<BollingerBandsUpdate> _parser = new pb::MessageParser<BollingerBandsUpdate>(() => new BollingerBandsUpdate());
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pb::MessageParser<BollingerBandsUpdate> Parser { get { return _parser; } }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pbr::MessageDescriptor Descriptor
+        {
+            get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[11]; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        pbr::MessageDescriptor pb::IMessage.Descriptor
+        {
+            get { return Descriptor; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public BollingerBandsUpdate()
+        {
+            OnConstruction();
+        }
+
+        partial void OnConstruction();
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public BollingerBandsUpdate(BollingerBandsUpdate other) : this()
+        {
+            timestamp_ = other.timestamp_;
+            upperBand_ = other.upperBand_;
+            middleBand_ = other.middleBand_;
+            lowerBand_ = other.lowerBand_;
+            isDirty_ = other.isDirty_;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public BollingerBandsUpdate Clone()
+        {
+            return new BollingerBandsUpdate(this);
+        }
+
+        /// <summary>Field number for the "timestamp" field.</summary>
+        public const int TimestampFieldNumber = 1;
+        private ulong timestamp_;
+        /// <summary>
+        /// The timestamp of the latest update.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong Timestamp
+        {
+            get { return timestamp_; }
+            set
+            {
+                timestamp_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "upper_band" field.</summary>
+        public const int UpperBandFieldNumber = 2;
+        private ulong upperBand_;
+        /// <summary>
+        /// The upper Bollinger Band price.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong UpperBand
+        {
+            get { return upperBand_; }
+            set
+            {
+                upperBand_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "middle_band" field.</summary>
+        public const int MiddleBandFieldNumber = 3;
+        private ulong middleBand_;
+        /// <summary>
+        /// The middle Bollinger Band price.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong MiddleBand
+        {
+            get { return middleBand_; }
+            set
+            {
+                middleBand_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "lower_band" field.</summary>
+        public const int LowerBandFieldNumber = 4;
+        private ulong lowerBand_;
+        /// <summary>
+        /// The lower Bollinger Band price.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong LowerBand
+        {
+            get { return lowerBand_; }
+            set
+            {
+                lowerBand_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "is_dirty" field.</summary>
+        public const int IsDirtyFieldNumber = 5;
+        private bool isDirty_;
+        /// <summary>
+        /// Is the data that generated this potentially dirty (or stale)?
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool IsDirty
+        {
+            get { return isDirty_; }
+            set
+            {
+                isDirty_ = value;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override bool Equals(object other)
+        {
+            return Equals(other as BollingerBandsUpdate);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool Equals(BollingerBandsUpdate other)
+        {
+            if (ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (ReferenceEquals(other, this))
+            {
+                return true;
+            }
+            if (Timestamp != other.Timestamp) return false;
+            if (UpperBand != other.UpperBand) return false;
+            if (MiddleBand != other.MiddleBand) return false;
+            if (LowerBand != other.LowerBand) return false;
+            if (IsDirty != other.IsDirty) return false;
+            return true;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override int GetHashCode()
+        {
+            int hash = 1;
+            if (Timestamp != 0UL) hash ^= Timestamp.GetHashCode();
+            if (UpperBand != 0UL) hash ^= UpperBand.GetHashCode();
+            if (MiddleBand != 0UL) hash ^= MiddleBand.GetHashCode();
+            if (LowerBand != 0UL) hash ^= LowerBand.GetHashCode();
+            if (IsDirty != false) hash ^= IsDirty.GetHashCode();
+            return hash;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override string ToString()
+        {
+            return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void WriteTo(pb::CodedOutputStream output)
+        {
+            if (Timestamp != 0UL)
+            {
+                output.WriteRawTag(8);
+                output.WriteUInt64(Timestamp);
+            }
+            if (UpperBand != 0UL)
+            {
+                output.WriteRawTag(16);
+                output.WriteUInt64(UpperBand);
+            }
+            if (MiddleBand != 0UL)
+            {
+                output.WriteRawTag(24);
+                output.WriteUInt64(MiddleBand);
+            }
+            if (LowerBand != 0UL)
+            {
+                output.WriteRawTag(32);
+                output.WriteUInt64(LowerBand);
+            }
+            if (IsDirty != false)
+            {
+                output.WriteRawTag(40);
+                output.WriteBool(IsDirty);
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int CalculateSize()
+        {
+            int size = 0;
+            if (Timestamp != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Timestamp);
+            }
+            if (UpperBand != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(UpperBand);
+            }
+            if (MiddleBand != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(MiddleBand);
+            }
+            if (LowerBand != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(LowerBand);
+            }
+            if (IsDirty != false)
+            {
+                size += 1 + 1;
+            }
+            return size;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(BollingerBandsUpdate other)
+        {
+            if (other == null)
+            {
+                return;
+            }
+            if (other.Timestamp != 0UL)
+            {
+                Timestamp = other.Timestamp;
+            }
+            if (other.UpperBand != 0UL)
+            {
+                UpperBand = other.UpperBand;
+            }
+            if (other.MiddleBand != 0UL)
+            {
+                MiddleBand = other.MiddleBand;
+            }
+            if (other.LowerBand != 0UL)
+            {
+                LowerBand = other.LowerBand;
+            }
+            if (other.IsDirty != false)
+            {
+                IsDirty = other.IsDirty;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(pb::CodedInputStream input)
+        {
+            uint tag;
+            while ((tag = input.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    default:
+                        input.SkipLastField();
+                        break;
+                    case 8:
+                        {
+                            Timestamp = input.ReadUInt64();
+                            break;
+                        }
+                    case 16:
+                        {
+                            UpperBand = input.ReadUInt64();
+                            break;
+                        }
+                    case 24:
+                        {
+                            MiddleBand = input.ReadUInt64();
+                            break;
+                        }
+                    case 32:
+                        {
+                            LowerBand = input.ReadUInt64();
+                            break;
+                        }
+                    case 40:
+                        {
+                            IsDirty = input.ReadBool();
+                            break;
+                        }
+                }
+            }
+        }
+
+    }
+
+    /// <summary>
+    /// StrategyUpdate represents a new subscription update for a subscribed strategy. 
+    /// </summary>
+    internal sealed partial class StrategyUpdate : pb::IMessage<StrategyUpdate>
+    {
+        private static readonly pb::MessageParser<StrategyUpdate> _parser = new pb::MessageParser<StrategyUpdate>(() => new StrategyUpdate());
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pb::MessageParser<StrategyUpdate> Parser { get { return _parser; } }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pbr::MessageDescriptor Descriptor
+        {
+            get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[12]; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        pbr::MessageDescriptor pb::IMessage.Descriptor
+        {
+            get { return Descriptor; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public StrategyUpdate()
+        {
+            OnConstruction();
+        }
+
+        partial void OnConstruction();
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public StrategyUpdate(StrategyUpdate other) : this()
+        {
+            timestamp_ = other.timestamp_;
+            entryProgress_ = other.entryProgress_;
+            exitProgress_ = other.exitProgress_;
+            signal_ = other.signal_;
+            perceptionLevel_ = other.perceptionLevel_;
+            perceptionSignal_ = other.perceptionSignal_;
+            commitmentLevel_ = other.commitmentLevel_;
+            commitmentSignal_ = other.commitmentSignal_;
+            sentimentSignal_ = other.sentimentSignal_;
+            equilibriumSignal_ = other.equilibriumSignal_;
+            sentimentLevel_ = other.sentimentLevel_;
+            equilibriumLevel_ = other.equilibriumLevel_;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public StrategyUpdate Clone()
+        {
+            return new StrategyUpdate(this);
+        }
+
+        /// <summary>Field number for the "timestamp" field.</summary>
+        public const int TimestampFieldNumber = 1;
+        private ulong timestamp_;
+        /// <summary>
+        /// The timestamp of the latest update.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong Timestamp
+        {
+            get { return timestamp_; }
+            set
+            {
+                timestamp_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "entry_progress" field.</summary>
+        public const int EntryProgressFieldNumber = 2;
+        private int entryProgress_;
+        /// <summary>
+        /// The entry progress value. (-1000 to 1000)
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int EntryProgress
+        {
+            get { return entryProgress_; }
+            set
+            {
+                entryProgress_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "exit_progress" field.</summary>
+        public const int ExitProgressFieldNumber = 3;
+        private int exitProgress_;
+        /// <summary>
+        /// The exit progress value. (-1000 to 1000)
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int ExitProgress
+        {
+            get { return exitProgress_; }
+            set
+            {
+                exitProgress_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "signal" field.</summary>
+        public const int SignalFieldNumber = 4;
+        private global::QuantGate.API.Signals.Proto.Stealth.StrategySignal signal_ = 0;
+        /// <summary>
+        /// The entry signal for the strategy.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public global::QuantGate.API.Signals.Proto.Stealth.StrategySignal Signal
+        {
+            get { return signal_; }
+            set
+            {
+                signal_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "perception_level" field.</summary>
+        public const int PerceptionLevelFieldNumber = 5;
+        private uint perceptionLevel_;
+        /// <summary>
+        /// The perception level ( 0=unset, else value=(x-1001)/1000 )
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public uint PerceptionLevel
+        {
+            get { return perceptionLevel_; }
+            set
+            {
+                perceptionLevel_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "perception_signal" field.</summary>
+        public const int PerceptionSignalFieldNumber = 6;
+        private global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal perceptionSignal_ = 0;
+        /// <summary>
+        /// The signal tied to the perception level.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal PerceptionSignal
+        {
+            get { return perceptionSignal_; }
+            set
+            {
+                perceptionSignal_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "commitment_level" field.</summary>
+        public const int CommitmentLevelFieldNumber = 7;
+        private uint commitmentLevel_;
+        /// <summary>
+        /// The commitment level ( 0=unset, else value=(x-1001)/1000 )
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public uint CommitmentLevel
+        {
+            get { return commitmentLevel_; }
+            set
+            {
+                commitmentLevel_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "commitment_signal" field.</summary>
+        public const int CommitmentSignalFieldNumber = 8;
+        private global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal commitmentSignal_ = 0;
+        /// <summary>
+        /// The signal tied to the commitment level.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal CommitmentSignal
+        {
+            get { return commitmentSignal_; }
+            set
+            {
+                commitmentSignal_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "sentiment_signal" field.</summary>
+        public const int SentimentSignalFieldNumber = 9;
+        private global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal sentimentSignal_ = 0;
+        /// <summary>
+        /// The signal tied to the 50t sentiment indication.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal SentimentSignal
+        {
+            get { return sentimentSignal_; }
+            set
+            {
+                sentimentSignal_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "equilibrium_signal" field.</summary>
+        public const int EquilibriumSignalFieldNumber = 10;
+        private global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal equilibriumSignal_ = 0;
+        /// <summary>
+        /// The signal tied to the equilibrium level.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal EquilibriumSignal
+        {
+            get { return equilibriumSignal_; }
+            set
+            {
+                equilibriumSignal_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "sentiment_level" field.</summary>
+        public const int SentimentLevelFieldNumber = 11;
+        private uint sentimentLevel_;
+        /// <summary>
+        /// The normalized sentiment level ( 0=unset, else value=(x-1001)/1000 )
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public uint SentimentLevel
+        {
+            get { return sentimentLevel_; }
+            set
+            {
+                sentimentLevel_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "equilibrium_level" field.</summary>
+        public const int EquilibriumLevelFieldNumber = 12;
+        private uint equilibriumLevel_;
+        /// <summary>
+        /// The normalized equilibrium level ( 0=unset, else value=(x-1001)/1000 )
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public uint EquilibriumLevel
+        {
+            get { return equilibriumLevel_; }
+            set
+            {
+                equilibriumLevel_ = value;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override bool Equals(object other)
+        {
+            return Equals(other as StrategyUpdate);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool Equals(StrategyUpdate other)
+        {
+            if (ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (ReferenceEquals(other, this))
+            {
+                return true;
+            }
+            if (Timestamp != other.Timestamp) return false;
+            if (EntryProgress != other.EntryProgress) return false;
+            if (ExitProgress != other.ExitProgress) return false;
+            if (Signal != other.Signal) return false;
+            if (PerceptionLevel != other.PerceptionLevel) return false;
+            if (PerceptionSignal != other.PerceptionSignal) return false;
+            if (CommitmentLevel != other.CommitmentLevel) return false;
+            if (CommitmentSignal != other.CommitmentSignal) return false;
+            if (SentimentSignal != other.SentimentSignal) return false;
+            if (EquilibriumSignal != other.EquilibriumSignal) return false;
+            if (SentimentLevel != other.SentimentLevel) return false;
+            if (EquilibriumLevel != other.EquilibriumLevel) return false;
+            return true;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override int GetHashCode()
+        {
+            int hash = 1;
+            if (Timestamp != 0UL) hash ^= Timestamp.GetHashCode();
+            if (EntryProgress != 0) hash ^= EntryProgress.GetHashCode();
+            if (ExitProgress != 0) hash ^= ExitProgress.GetHashCode();
+            if (Signal != 0) hash ^= Signal.GetHashCode();
+            if (PerceptionLevel != 0) hash ^= PerceptionLevel.GetHashCode();
+            if (PerceptionSignal != 0) hash ^= PerceptionSignal.GetHashCode();
+            if (CommitmentLevel != 0) hash ^= CommitmentLevel.GetHashCode();
+            if (CommitmentSignal != 0) hash ^= CommitmentSignal.GetHashCode();
+            if (SentimentSignal != 0) hash ^= SentimentSignal.GetHashCode();
+            if (EquilibriumSignal != 0) hash ^= EquilibriumSignal.GetHashCode();
+            if (SentimentLevel != 0) hash ^= SentimentLevel.GetHashCode();
+            if (EquilibriumLevel != 0) hash ^= EquilibriumLevel.GetHashCode();
+            return hash;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override string ToString()
+        {
+            return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void WriteTo(pb::CodedOutputStream output)
+        {
+            if (Timestamp != 0UL)
+            {
+                output.WriteRawTag(8);
+                output.WriteUInt64(Timestamp);
+            }
+            if (EntryProgress != 0)
+            {
+                output.WriteRawTag(16);
+                output.WriteSInt32(EntryProgress);
+            }
+            if (ExitProgress != 0)
+            {
+                output.WriteRawTag(24);
+                output.WriteSInt32(ExitProgress);
+            }
+            if (Signal != 0)
+            {
+                output.WriteRawTag(32);
+                output.WriteEnum((int)Signal);
+            }
+            if (PerceptionLevel != 0)
+            {
+                output.WriteRawTag(40);
+                output.WriteUInt32(PerceptionLevel);
+            }
+            if (PerceptionSignal != 0)
+            {
+                output.WriteRawTag(48);
+                output.WriteEnum((int)PerceptionSignal);
+            }
+            if (CommitmentLevel != 0)
+            {
+                output.WriteRawTag(56);
+                output.WriteUInt32(CommitmentLevel);
+            }
+            if (CommitmentSignal != 0)
+            {
+                output.WriteRawTag(64);
+                output.WriteEnum((int)CommitmentSignal);
+            }
+            if (SentimentSignal != 0)
+            {
+                output.WriteRawTag(72);
+                output.WriteEnum((int)SentimentSignal);
+            }
+            if (EquilibriumSignal != 0)
+            {
+                output.WriteRawTag(80);
+                output.WriteEnum((int)EquilibriumSignal);
+            }
+            if (SentimentLevel != 0)
+            {
+                output.WriteRawTag(88);
+                output.WriteUInt32(SentimentLevel);
+            }
+            if (EquilibriumLevel != 0)
+            {
+                output.WriteRawTag(96);
+                output.WriteUInt32(EquilibriumLevel);
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int CalculateSize()
+        {
+            int size = 0;
+            if (Timestamp != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Timestamp);
+            }
+            if (EntryProgress != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeSInt32Size(EntryProgress);
+            }
+            if (ExitProgress != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeSInt32Size(ExitProgress);
+            }
+            if (Signal != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeEnumSize((int)Signal);
+            }
+            if (PerceptionLevel != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt32Size(PerceptionLevel);
+            }
+            if (PerceptionSignal != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeEnumSize((int)PerceptionSignal);
+            }
+            if (CommitmentLevel != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt32Size(CommitmentLevel);
+            }
+            if (CommitmentSignal != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeEnumSize((int)CommitmentSignal);
+            }
+            if (SentimentSignal != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeEnumSize((int)SentimentSignal);
+            }
+            if (EquilibriumSignal != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeEnumSize((int)EquilibriumSignal);
+            }
+            if (SentimentLevel != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt32Size(SentimentLevel);
+            }
+            if (EquilibriumLevel != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt32Size(EquilibriumLevel);
+            }
+            return size;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(StrategyUpdate other)
+        {
+            if (other == null)
+            {
+                return;
+            }
+            if (other.Timestamp != 0UL)
+            {
+                Timestamp = other.Timestamp;
+            }
+            if (other.EntryProgress != 0)
+            {
+                EntryProgress = other.EntryProgress;
+            }
+            if (other.ExitProgress != 0)
+            {
+                ExitProgress = other.ExitProgress;
+            }
+            if (other.Signal != 0)
+            {
+                Signal = other.Signal;
+            }
+            if (other.PerceptionLevel != 0)
+            {
+                PerceptionLevel = other.PerceptionLevel;
+            }
+            if (other.PerceptionSignal != 0)
+            {
+                PerceptionSignal = other.PerceptionSignal;
+            }
+            if (other.CommitmentLevel != 0)
+            {
+                CommitmentLevel = other.CommitmentLevel;
+            }
+            if (other.CommitmentSignal != 0)
+            {
+                CommitmentSignal = other.CommitmentSignal;
+            }
+            if (other.SentimentSignal != 0)
+            {
+                SentimentSignal = other.SentimentSignal;
+            }
+            if (other.EquilibriumSignal != 0)
+            {
+                EquilibriumSignal = other.EquilibriumSignal;
+            }
+            if (other.SentimentLevel != 0)
+            {
+                SentimentLevel = other.SentimentLevel;
+            }
+            if (other.EquilibriumLevel != 0)
+            {
+                EquilibriumLevel = other.EquilibriumLevel;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(pb::CodedInputStream input)
+        {
+            uint tag;
+            while ((tag = input.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    default:
+                        input.SkipLastField();
+                        break;
+                    case 8:
+                        {
+                            Timestamp = input.ReadUInt64();
+                            break;
+                        }
+                    case 16:
+                        {
+                            EntryProgress = input.ReadSInt32();
+                            break;
+                        }
+                    case 24:
+                        {
+                            ExitProgress = input.ReadSInt32();
+                            break;
+                        }
+                    case 32:
+                        {
+                            signal_ = (global::QuantGate.API.Signals.Proto.Stealth.StrategySignal)input.ReadEnum();
+                            break;
+                        }
+                    case 40:
+                        {
+                            PerceptionLevel = input.ReadUInt32();
+                            break;
+                        }
+                    case 48:
+                        {
+                            perceptionSignal_ = (global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal)input.ReadEnum();
+                            break;
+                        }
+                    case 56:
+                        {
+                            CommitmentLevel = input.ReadUInt32();
+                            break;
+                        }
+                    case 64:
+                        {
+                            commitmentSignal_ = (global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal)input.ReadEnum();
+                            break;
+                        }
+                    case 72:
+                        {
+                            sentimentSignal_ = (global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal)input.ReadEnum();
+                            break;
+                        }
+                    case 80:
+                        {
+                            equilibriumSignal_ = (global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal)input.ReadEnum();
+                            break;
+                        }
+                    case 88:
+                        {
+                            SentimentLevel = input.ReadUInt32();
+                            break;
+                        }
+                    case 96:
+                        {
+                            EquilibriumLevel = input.ReadUInt32();
+                            break;
+                        }
+                }
+            }
+        }
+
+    }
+
+    /// <summary>
+    /// SinglePriceUpdate represents a new subscription update for a guage that returns a single 
+    /// price result (such as Simple Moving Average).
+    /// All prices are converted to long values, empty values will be decoded as NaN. 
+    /// </summary>
+    internal sealed partial class SinglePriceUpdate : pb::IMessage<SinglePriceUpdate>
+    {
+        private static readonly pb::MessageParser<SinglePriceUpdate> _parser = new pb::MessageParser<SinglePriceUpdate>(() => new SinglePriceUpdate());
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pb::MessageParser<SinglePriceUpdate> Parser { get { return _parser; } }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pbr::MessageDescriptor Descriptor
+        {
+            get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[13]; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        pbr::MessageDescriptor pb::IMessage.Descriptor
+        {
+            get { return Descriptor; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public SinglePriceUpdate()
+        {
+            OnConstruction();
+        }
+
+        partial void OnConstruction();
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public SinglePriceUpdate(SinglePriceUpdate other) : this()
+        {
+            timestamp_ = other.timestamp_;
+            value_ = other.value_;
+            isDirty_ = other.isDirty_;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public SinglePriceUpdate Clone()
+        {
+            return new SinglePriceUpdate(this);
+        }
+
+        /// <summary>Field number for the "timestamp" field.</summary>
+        public const int TimestampFieldNumber = 1;
+        private ulong timestamp_;
+        /// <summary>
+        /// The timestamp of the latest update.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong Timestamp
+        {
+            get { return timestamp_; }
+            set
+            {
+                timestamp_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "value" field.</summary>
+        public const int ValueFieldNumber = 2;
+        private ulong value_;
+        /// <summary>
+        /// The single price value.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong Value
+        {
+            get { return value_; }
+            set
+            {
+                value_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "is_dirty" field.</summary>
+        public const int IsDirtyFieldNumber = 3;
+        private bool isDirty_;
+        /// <summary>
+        /// Is the data that generated this potentially dirty (or stale)?
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool IsDirty
+        {
+            get { return isDirty_; }
+            set
+            {
+                isDirty_ = value;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override bool Equals(object other)
+        {
+            return Equals(other as SinglePriceUpdate);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool Equals(SinglePriceUpdate other)
+        {
+            if (ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (ReferenceEquals(other, this))
+            {
+                return true;
+            }
+            if (Timestamp != other.Timestamp) return false;
+            if (Value != other.Value) return false;
+            if (IsDirty != other.IsDirty) return false;
+            return true;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override int GetHashCode()
+        {
+            int hash = 1;
+            if (Timestamp != 0UL) hash ^= Timestamp.GetHashCode();
+            if (Value != 0UL) hash ^= Value.GetHashCode();
+            if (IsDirty != false) hash ^= IsDirty.GetHashCode();
+            return hash;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override string ToString()
+        {
+            return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void WriteTo(pb::CodedOutputStream output)
+        {
+            if (Timestamp != 0UL)
+            {
+                output.WriteRawTag(8);
+                output.WriteUInt64(Timestamp);
+            }
+            if (Value != 0UL)
+            {
+                output.WriteRawTag(16);
+                output.WriteUInt64(Value);
+            }
+            if (IsDirty != false)
+            {
+                output.WriteRawTag(24);
+                output.WriteBool(IsDirty);
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int CalculateSize()
+        {
+            int size = 0;
+            if (Timestamp != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Timestamp);
+            }
+            if (Value != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Value);
+            }
+            if (IsDirty != false)
+            {
+                size += 1 + 1;
+            }
+            return size;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(SinglePriceUpdate other)
+        {
+            if (other == null)
+            {
+                return;
+            }
+            if (other.Timestamp != 0UL)
+            {
+                Timestamp = other.Timestamp;
+            }
+            if (other.Value != 0UL)
+            {
+                Value = other.Value;
+            }
+            if (other.IsDirty != false)
+            {
+                IsDirty = other.IsDirty;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(pb::CodedInputStream input)
+        {
+            uint tag;
+            while ((tag = input.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    default:
+                        input.SkipLastField();
+                        break;
+                    case 8:
+                        {
+                            Timestamp = input.ReadUInt64();
+                            break;
+                        }
+                    case 16:
+                        {
+                            Value = input.ReadUInt64();
+                            break;
+                        }
+                    case 24:
+                        {
+                            IsDirty = input.ReadBool();
+                            break;
+                        }
+                }
+            }
+        }
+
+    }
+
+    /// <summary>
+    /// Holds a single tick range for an Instrument definition. 
+    /// </summary>
+    internal sealed partial class TickValue : pb::IMessage<TickValue>
+    {
+        private static readonly pb::MessageParser<TickValue> _parser = new pb::MessageParser<TickValue>(() => new TickValue());
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pb::MessageParser<TickValue> Parser { get { return _parser; } }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pbr::MessageDescriptor Descriptor
+        {
+            get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[14]; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        pbr::MessageDescriptor pb::IMessage.Descriptor
+        {
+            get { return Descriptor; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public TickValue()
+        {
+            OnConstruction();
+        }
+
+        partial void OnConstruction();
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public TickValue(TickValue other) : this()
+        {
+            start_ = other.start_;
+            tick_ = other.tick_;
+            denominator_ = other.denominator_;
+            decimals_ = other.decimals_;
+            format_ = other.format_;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public TickValue Clone()
+        {
+            return new TickValue(this);
+        }
+
+        /// <summary>Field number for the "start" field.</summary>
+        public const int StartFieldNumber = 1;
+        private double start_;
+        /// <summary>
+        /// The start of the tick range.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public double Start
+        {
+            get { return start_; }
+            set
+            {
+                start_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "tick" field.</summary>
+        public const int TickFieldNumber = 2;
+        private double tick_;
+        /// <summary>
+        /// The tick value at this range.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public double Tick
+        {
+            get { return tick_; }
+            set
+            {
+                tick_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "denominator" field.</summary>
+        public const int DenominatorFieldNumber = 3;
+        private uint denominator_;
+        /// <summary>
+        /// Denominator for fractional formats.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public uint Denominator
+        {
+            get { return denominator_; }
+            set
+            {
+                denominator_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "decimals" field.</summary>
+        public const int DecimalsFieldNumber = 4;
+        private int decimals_;
+        /// <summary>
+        /// Number of decimals in decimal format.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int Decimals
+        {
+            get { return decimals_; }
+            set
+            {
+                decimals_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "format" field.</summary>
+        public const int FormatFieldNumber = 5;
+        private global::QuantGate.API.Signals.Proto.Stealth.TickValue.Types.TickFormat format_ = 0;
+        /// <summary>
+        /// Format to use (Decimal/Fraction/Tick).
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public global::QuantGate.API.Signals.Proto.Stealth.TickValue.Types.TickFormat Format
+        {
+            get { return format_; }
+            set
+            {
+                format_ = value;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override bool Equals(object other)
+        {
+            return Equals(other as TickValue);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool Equals(TickValue other)
+        {
+            if (ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (ReferenceEquals(other, this))
+            {
+                return true;
+            }
+            if (Start != other.Start) return false;
+            if (Tick != other.Tick) return false;
+            if (Denominator != other.Denominator) return false;
+            if (Decimals != other.Decimals) return false;
+            if (Format != other.Format) return false;
+            return true;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override int GetHashCode()
+        {
+            int hash = 1;
+            if (Start != 0D) hash ^= Start.GetHashCode();
+            if (Tick != 0D) hash ^= Tick.GetHashCode();
+            if (Denominator != 0) hash ^= Denominator.GetHashCode();
+            if (Decimals != 0) hash ^= Decimals.GetHashCode();
+            if (Format != 0) hash ^= Format.GetHashCode();
+            return hash;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override string ToString()
+        {
+            return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void WriteTo(pb::CodedOutputStream output)
+        {
+            if (Start != 0D)
+            {
+                output.WriteRawTag(9);
+                output.WriteDouble(Start);
+            }
+            if (Tick != 0D)
+            {
+                output.WriteRawTag(17);
+                output.WriteDouble(Tick);
+            }
+            if (Denominator != 0)
+            {
+                output.WriteRawTag(24);
+                output.WriteUInt32(Denominator);
+            }
+            if (Decimals != 0)
+            {
+                output.WriteRawTag(32);
+                output.WriteSInt32(Decimals);
+            }
+            if (Format != 0)
+            {
+                output.WriteRawTag(40);
+                output.WriteEnum((int)Format);
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int CalculateSize()
+        {
+            int size = 0;
+            if (Start != 0D)
+            {
+                size += 1 + 8;
+            }
+            if (Tick != 0D)
+            {
+                size += 1 + 8;
+            }
+            if (Denominator != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Denominator);
+            }
+            if (Decimals != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Decimals);
+            }
+            if (Format != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeEnumSize((int)Format);
+            }
+            return size;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(TickValue other)
+        {
+            if (other == null)
+            {
+                return;
+            }
+            if (other.Start != 0D)
+            {
+                Start = other.Start;
+            }
+            if (other.Tick != 0D)
+            {
+                Tick = other.Tick;
+            }
+            if (other.Denominator != 0)
+            {
+                Denominator = other.Denominator;
+            }
+            if (other.Decimals != 0)
+            {
+                Decimals = other.Decimals;
+            }
+            if (other.Format != 0)
+            {
+                Format = other.Format;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(pb::CodedInputStream input)
+        {
+            uint tag;
+            while ((tag = input.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    default:
+                        input.SkipLastField();
+                        break;
+                    case 9:
+                        {
+                            Start = input.ReadDouble();
+                            break;
+                        }
+                    case 17:
+                        {
+                            Tick = input.ReadDouble();
+                            break;
+                        }
+                    case 24:
+                        {
+                            Denominator = input.ReadUInt32();
+                            break;
+                        }
+                    case 32:
+                        {
+                            Decimals = input.ReadSInt32();
+                            break;
+                        }
+                    case 40:
+                        {
+                            format_ = (global::QuantGate.API.Signals.Proto.Stealth.TickValue.Types.TickFormat)input.ReadEnum();
+                            break;
+                        }
+                }
+            }
+        }
+
+        #region Nested types
+        /// <summary>Container for nested types declared in the TickValue message type.</summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static partial class Types
+        {
+            /// <summary>
+            /// Types of tick formats available to display prices in.
+            /// </summary>
+            internal enum TickFormat
+            {
+                /// <summary>
+                /// Decimal display (regular 0.000, etc.) 
+                /// </summary>
+                [pbr::OriginalName("Decimal")] Decimal = 0,
+                /// <summary>
+                /// Fractional format, such as 34 1/4.
+                /// In this case, the denominator that will be used for non-integer portions of the
+                /// number will be that supplied with the format. Note, that the fraction is generally 
+                /// displayed in its simplified format (divide numerator and denominator by GCD). 
+                /// </summary>
+                [pbr::OriginalName("Fraction")] Fraction = 1,
+                /// <summary>
+                /// Tick format, such as 34'120.
+                /// In this case, the value after the tick is the non-integer portion of the number,
+                /// multiplied by the denominator value supplied, zero padded to the left to fit the
+                /// number of digits required to display the denominator value as a full integer. 
+                /// </summary>
+                [pbr::OriginalName("Tick")] Tick = 2,
+            }
+
+        }
+        #endregion
+
+    }
+
+    /// <summary>
+    /// Holds information about the current trading session for an instrument. 
+    /// </summary>
+    internal sealed partial class TradingSession : pb::IMessage<TradingSession>
+    {
+        private static readonly pb::MessageParser<TradingSession> _parser = new pb::MessageParser<TradingSession>(() => new TradingSession());
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pb::MessageParser<TradingSession> Parser { get { return _parser; } }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pbr::MessageDescriptor Descriptor
+        {
+            get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[15]; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        pbr::MessageDescriptor pb::IMessage.Descriptor
+        {
+            get { return Descriptor; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public TradingSession()
+        {
+            OnConstruction();
+        }
+
+        partial void OnConstruction();
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public TradingSession(TradingSession other) : this()
+        {
+            close_ = other.close_;
+            length_ = other.length_;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public TradingSession Clone()
+        {
+            return new TradingSession(this);
+        }
+
+        /// <summary>Field number for the "close" field.</summary>
+        public const int CloseFieldNumber = 1;
+        private int close_;
+        /// <summary>
+        /// The close time of the trading session in minutes from midnight.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int Close
+        {
+            get { return close_; }
+            set
+            {
+                close_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "length" field.</summary>
+        public const int LengthFieldNumber = 2;
+        private int length_;
+        /// <summary>
+        /// The length of the trading session in minutes from midnight.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int Length
+        {
+            get { return length_; }
+            set
+            {
+                length_ = value;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override bool Equals(object other)
+        {
+            return Equals(other as TradingSession);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool Equals(TradingSession other)
+        {
+            if (ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (ReferenceEquals(other, this))
+            {
+                return true;
+            }
+            if (Close != other.Close) return false;
+            if (Length != other.Length) return false;
+            return true;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override int GetHashCode()
+        {
+            int hash = 1;
+            if (Close != 0) hash ^= Close.GetHashCode();
+            if (Length != 0) hash ^= Length.GetHashCode();
+            return hash;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override string ToString()
+        {
+            return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void WriteTo(pb::CodedOutputStream output)
+        {
+            if (Close != 0)
+            {
+                output.WriteRawTag(8);
+                output.WriteSInt32(Close);
+            }
+            if (Length != 0)
+            {
+                output.WriteRawTag(16);
+                output.WriteSInt32(Length);
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int CalculateSize()
+        {
+            int size = 0;
+            if (Close != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Close);
+            }
+            if (Length != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Length);
+            }
+            return size;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(TradingSession other)
+        {
+            if (other == null)
+            {
+                return;
+            }
+            if (other.Close != 0)
+            {
+                Close = other.Close;
+            }
+            if (other.Length != 0)
+            {
+                Length = other.Length;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(pb::CodedInputStream input)
+        {
+            uint tag;
+            while ((tag = input.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    default:
+                        input.SkipLastField();
+                        break;
+                    case 8:
+                        {
+                            Close = input.ReadSInt32();
+                            break;
+                        }
+                    case 16:
+                        {
+                            Length = input.ReadSInt32();
+                            break;
+                        }
+                }
+            }
+        }
+
+    }
+
+    /// <summary>
+    /// Holds the details of a trading instrument. 
+    /// </summary>
+    internal sealed partial class InstrumentUpdate : pb::IMessage<InstrumentUpdate>
+    {
+        private static readonly pb::MessageParser<InstrumentUpdate> _parser = new pb::MessageParser<InstrumentUpdate>(() => new InstrumentUpdate());
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pb::MessageParser<InstrumentUpdate> Parser { get { return _parser; } }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pbr::MessageDescriptor Descriptor
+        {
+            get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[16]; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        pbr::MessageDescriptor pb::IMessage.Descriptor
+        {
+            get { return Descriptor; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public InstrumentUpdate()
+        {
+            OnConstruction();
+        }
+
+        partial void OnConstruction();
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public InstrumentUpdate(InstrumentUpdate other) : this()
+        {
+            symbol_ = other.symbol_;
+            underlying_ = other.underlying_;
+            currency_ = other.currency_;
+            exchange_ = other.exchange_;
+            instrumentType_ = other.instrumentType_;
+            putOrCall_ = other.putOrCall_;
+            strike_ = other.strike_;
+            expiryDate_ = other.expiryDate_;
+            multiplier_ = other.multiplier_;
+            displayName_ = other.displayName_;
+            timeZone_ = other.timeZone_;
+            tickValues_ = other.tickValues_.Clone();
+            tradingSessions_ = other.tradingSessions_.Clone();
+            brokerSymbols_ = other.brokerSymbols_.Clone();
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public InstrumentUpdate Clone()
+        {
+            return new InstrumentUpdate(this);
+        }
+
+        /// <summary>Field number for the "symbol" field.</summary>
+        public const int SymbolFieldNumber = 1;
+        private string symbol_ = "";
+        /// <summary>
+        /// The symbol as listed by our servers.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public string Symbol
+        {
+            get { return symbol_; }
+            set
+            {
+                symbol_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+            }
+        }
+
+        /// <summary>Field number for the "underlying" field.</summary>
+        public const int UnderlyingFieldNumber = 2;
+        private string underlying_ = "";
+        /// <summary>
+        /// The underlying symbol.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public string Underlying
+        {
+            get { return underlying_; }
+            set
+            {
+                underlying_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+            }
+        }
+
+        /// <summary>Field number for the "currency" field.</summary>
+        public const int CurrencyFieldNumber = 3;
+        private string currency_ = "";
+        /// <summary>
+        /// The currency the instrument is traded in.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public string Currency
+        {
+            get { return currency_; }
+            set
+            {
+                currency_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+            }
+        }
+
+        /// <summary>Field number for the "exchange" field.</summary>
+        public const int ExchangeFieldNumber = 4;
+        private string exchange_ = "";
+        /// <summary>
+        /// The exchange that the instrument is listed on.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public string Exchange
+        {
+            get { return exchange_; }
+            set
+            {
+                exchange_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+            }
+        }
+
+        /// <summary>Field number for the "instrument_type" field.</summary>
+        public const int InstrumentTypeFieldNumber = 5;
+        private global::QuantGate.API.Signals.Proto.Stealth.InstrumentType instrumentType_ = 0;
+        /// <summary>
+        /// The type of instrument (CS, FUT, IDX, FX, CRY, etc.).
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public global::QuantGate.API.Signals.Proto.Stealth.InstrumentType InstrumentType
+        {
+            get { return instrumentType_; }
+            set
+            {
+                instrumentType_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "put_or_call" field.</summary>
+        public const int PutOrCallFieldNumber = 6;
+        private global::QuantGate.API.Signals.Proto.Stealth.PutOrCall putOrCall_ = 0;
+        /// <summary>
+        /// "Right" of an option, if an option (empty otherwise).
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public global::QuantGate.API.Signals.Proto.Stealth.PutOrCall PutOrCall
+        {
+            get { return putOrCall_; }
+            set
+            {
+                putOrCall_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "strike" field.</summary>
+        public const int StrikeFieldNumber = 7;
+        private double strike_;
+        /// <summary>
+        /// Strike price of an option, if an option (zero otherwise).
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public double Strike
+        {
+            get { return strike_; }
+            set
+            {
+                strike_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "expiry_date" field.</summary>
+        public const int ExpiryDateFieldNumber = 8;
+        private ulong expiryDate_;
+        /// <summary>
+        /// The expiry date of the instrument, if applicable (days from Jan 1, 1800).
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong ExpiryDate
+        {
+            get { return expiryDate_; }
+            set
+            {
+                expiryDate_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "multiplier" field.</summary>
+        public const int MultiplierFieldNumber = 9;
+        private double multiplier_;
+        /// <summary>
+        /// The price multiplier.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public double Multiplier
+        {
+            get { return multiplier_; }
+            set
+            {
+                multiplier_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "display_name" field.</summary>
+        public const int DisplayNameFieldNumber = 10;
+        private string displayName_ = "";
+        /// <summary>
+        /// The display name of the instrument.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public string DisplayName
+        {
+            get { return displayName_; }
+            set
+            {
+                displayName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+            }
+        }
+
+        /// <summary>Field number for the "time_zone" field.</summary>
+        public const int TimeZoneFieldNumber = 11;
+        private string timeZone_ = "";
+        /// <summary>
+        /// The time zone of the primary exchange the instrument is traded on.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public string TimeZone
+        {
+            get { return timeZone_; }
+            set
+            {
+                timeZone_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+            }
+        }
+
+        /// <summary>Field number for the "tick_values" field.</summary>
+        public const int TickValuesFieldNumber = 12;
+        private static readonly pb::FieldCodec<global::QuantGate.API.Signals.Proto.Stealth.TickValue> _repeated_tickValues_codec
+            = pb::FieldCodec.ForMessage(98, global::QuantGate.API.Signals.Proto.Stealth.TickValue.Parser);
+        private readonly pbc::RepeatedField<global::QuantGate.API.Signals.Proto.Stealth.TickValue> tickValues_ = new pbc::RepeatedField<global::QuantGate.API.Signals.Proto.Stealth.TickValue>();
+        /// <summary>
+        /// The tick values used to determine price levels.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public pbc::RepeatedField<global::QuantGate.API.Signals.Proto.Stealth.TickValue> TickValues
+        {
+            get { return tickValues_; }
+        }
+
+        /// <summary>Field number for the "trading_sessions" field.</summary>
+        public const int TradingSessionsFieldNumber = 13;
+        private static readonly pb::FieldCodec<global::QuantGate.API.Signals.Proto.Stealth.TradingSession> _repeated_tradingSessions_codec
+            = pb::FieldCodec.ForMessage(106, global::QuantGate.API.Signals.Proto.Stealth.TradingSession.Parser);
+        private readonly pbc::RepeatedField<global::QuantGate.API.Signals.Proto.Stealth.TradingSession> tradingSessions_ = new pbc::RepeatedField<global::QuantGate.API.Signals.Proto.Stealth.TradingSession>();
+        /// <summary>
+        /// The trading session end times and lengths for each day Sun-Sat.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public pbc::RepeatedField<global::QuantGate.API.Signals.Proto.Stealth.TradingSession> TradingSessions
+        {
+            get { return tradingSessions_; }
+        }
+
+        /// <summary>Field number for the "broker_symbols" field.</summary>
+        public const int BrokerSymbolsFieldNumber = 14;
+        private static readonly pbc::MapField<string, string>.Codec _map_brokerSymbols_codec
+            = new pbc::MapField<string, string>.Codec(pb::FieldCodec.ForString(10), pb::FieldCodec.ForString(18), 114);
+        private readonly pbc::MapField<string, string> brokerSymbols_ = new pbc::MapField<string, string>();
+        /// <summary>
+        /// Map of broker symbols according to broker (ib, cqg, dtniq, etc.).
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public pbc::MapField<string, string> BrokerSymbols
+        {
+            get { return brokerSymbols_; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override bool Equals(object other)
+        {
+            return Equals(other as InstrumentUpdate);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool Equals(InstrumentUpdate other)
+        {
+            if (ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (ReferenceEquals(other, this))
+            {
+                return true;
+            }
+            if (Symbol != other.Symbol) return false;
+            if (Underlying != other.Underlying) return false;
+            if (Currency != other.Currency) return false;
+            if (Exchange != other.Exchange) return false;
+            if (InstrumentType != other.InstrumentType) return false;
+            if (PutOrCall != other.PutOrCall) return false;
+            if (Strike != other.Strike) return false;
+            if (ExpiryDate != other.ExpiryDate) return false;
+            if (Multiplier != other.Multiplier) return false;
+            if (DisplayName != other.DisplayName) return false;
+            if (TimeZone != other.TimeZone) return false;
+            if (!tickValues_.Equals(other.tickValues_)) return false;
+            if (!tradingSessions_.Equals(other.tradingSessions_)) return false;
+            if (!BrokerSymbols.Equals(other.BrokerSymbols)) return false;
+            return true;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override int GetHashCode()
+        {
+            int hash = 1;
+            if (Symbol.Length != 0) hash ^= Symbol.GetHashCode();
+            if (Underlying.Length != 0) hash ^= Underlying.GetHashCode();
+            if (Currency.Length != 0) hash ^= Currency.GetHashCode();
+            if (Exchange.Length != 0) hash ^= Exchange.GetHashCode();
+            if (InstrumentType != 0) hash ^= InstrumentType.GetHashCode();
+            if (PutOrCall != 0) hash ^= PutOrCall.GetHashCode();
+            if (Strike != 0D) hash ^= Strike.GetHashCode();
+            if (ExpiryDate != 0UL) hash ^= ExpiryDate.GetHashCode();
+            if (Multiplier != 0D) hash ^= Multiplier.GetHashCode();
+            if (DisplayName.Length != 0) hash ^= DisplayName.GetHashCode();
+            if (TimeZone.Length != 0) hash ^= TimeZone.GetHashCode();
+            hash ^= tickValues_.GetHashCode();
+            hash ^= tradingSessions_.GetHashCode();
+            hash ^= BrokerSymbols.GetHashCode();
+            return hash;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override string ToString()
+        {
+            return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void WriteTo(pb::CodedOutputStream output)
+        {
+            if (Symbol.Length != 0)
+            {
+                output.WriteRawTag(10);
+                output.WriteString(Symbol);
+            }
+            if (Underlying.Length != 0)
+            {
+                output.WriteRawTag(18);
+                output.WriteString(Underlying);
+            }
+            if (Currency.Length != 0)
+            {
+                output.WriteRawTag(26);
+                output.WriteString(Currency);
+            }
+            if (Exchange.Length != 0)
+            {
+                output.WriteRawTag(34);
+                output.WriteString(Exchange);
+            }
+            if (InstrumentType != 0)
+            {
+                output.WriteRawTag(40);
+                output.WriteEnum((int)InstrumentType);
+            }
+            if (PutOrCall != 0)
+            {
+                output.WriteRawTag(48);
+                output.WriteEnum((int)PutOrCall);
+            }
+            if (Strike != 0D)
+            {
+                output.WriteRawTag(57);
+                output.WriteDouble(Strike);
+            }
+            if (ExpiryDate != 0UL)
+            {
+                output.WriteRawTag(64);
+                output.WriteUInt64(ExpiryDate);
+            }
+            if (Multiplier != 0D)
+            {
+                output.WriteRawTag(73);
+                output.WriteDouble(Multiplier);
+            }
+            if (DisplayName.Length != 0)
+            {
+                output.WriteRawTag(82);
+                output.WriteString(DisplayName);
+            }
+            if (TimeZone.Length != 0)
+            {
+                output.WriteRawTag(90);
+                output.WriteString(TimeZone);
+            }
+            tickValues_.WriteTo(output, _repeated_tickValues_codec);
+            tradingSessions_.WriteTo(output, _repeated_tradingSessions_codec);
+            brokerSymbols_.WriteTo(output, _map_brokerSymbols_codec);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int CalculateSize()
+        {
+            int size = 0;
+            if (Symbol.Length != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeStringSize(Symbol);
+            }
+            if (Underlying.Length != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeStringSize(Underlying);
+            }
+            if (Currency.Length != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeStringSize(Currency);
+            }
+            if (Exchange.Length != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeStringSize(Exchange);
+            }
+            if (InstrumentType != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeEnumSize((int)InstrumentType);
+            }
+            if (PutOrCall != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeEnumSize((int)PutOrCall);
+            }
+            if (Strike != 0D)
+            {
+                size += 1 + 8;
+            }
+            if (ExpiryDate != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(ExpiryDate);
+            }
+            if (Multiplier != 0D)
+            {
+                size += 1 + 8;
+            }
+            if (DisplayName.Length != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeStringSize(DisplayName);
+            }
+            if (TimeZone.Length != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeStringSize(TimeZone);
+            }
+            size += tickValues_.CalculateSize(_repeated_tickValues_codec);
+            size += tradingSessions_.CalculateSize(_repeated_tradingSessions_codec);
+            size += brokerSymbols_.CalculateSize(_map_brokerSymbols_codec);
+            return size;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(InstrumentUpdate other)
+        {
+            if (other == null)
+            {
+                return;
+            }
+            if (other.Symbol.Length != 0)
+            {
+                Symbol = other.Symbol;
+            }
+            if (other.Underlying.Length != 0)
+            {
+                Underlying = other.Underlying;
+            }
+            if (other.Currency.Length != 0)
+            {
+                Currency = other.Currency;
+            }
+            if (other.Exchange.Length != 0)
+            {
+                Exchange = other.Exchange;
+            }
+            if (other.InstrumentType != 0)
+            {
+                InstrumentType = other.InstrumentType;
+            }
+            if (other.PutOrCall != 0)
+            {
+                PutOrCall = other.PutOrCall;
+            }
+            if (other.Strike != 0D)
+            {
+                Strike = other.Strike;
+            }
+            if (other.ExpiryDate != 0UL)
+            {
+                ExpiryDate = other.ExpiryDate;
+            }
+            if (other.Multiplier != 0D)
+            {
+                Multiplier = other.Multiplier;
+            }
+            if (other.DisplayName.Length != 0)
+            {
+                DisplayName = other.DisplayName;
+            }
+            if (other.TimeZone.Length != 0)
+            {
+                TimeZone = other.TimeZone;
+            }
+            tickValues_.Add(other.tickValues_);
+            tradingSessions_.Add(other.tradingSessions_);
+            brokerSymbols_.Add(other.brokerSymbols_);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(pb::CodedInputStream input)
+        {
+            uint tag;
+            while ((tag = input.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    default:
+                        input.SkipLastField();
+                        break;
+                    case 10:
+                        {
+                            Symbol = input.ReadString();
+                            break;
+                        }
+                    case 18:
+                        {
+                            Underlying = input.ReadString();
+                            break;
+                        }
+                    case 26:
+                        {
+                            Currency = input.ReadString();
+                            break;
+                        }
+                    case 34:
+                        {
+                            Exchange = input.ReadString();
+                            break;
+                        }
+                    case 40:
+                        {
+                            instrumentType_ = (global::QuantGate.API.Signals.Proto.Stealth.InstrumentType)input.ReadEnum();
+                            break;
+                        }
+                    case 48:
+                        {
+                            putOrCall_ = (global::QuantGate.API.Signals.Proto.Stealth.PutOrCall)input.ReadEnum();
+                            break;
+                        }
+                    case 57:
+                        {
+                            Strike = input.ReadDouble();
+                            break;
+                        }
+                    case 64:
+                        {
+                            ExpiryDate = input.ReadUInt64();
+                            break;
+                        }
+                    case 73:
+                        {
+                            Multiplier = input.ReadDouble();
+                            break;
+                        }
+                    case 82:
+                        {
+                            DisplayName = input.ReadString();
+                            break;
+                        }
+                    case 90:
+                        {
+                            TimeZone = input.ReadString();
+                            break;
+                        }
+                    case 98:
+                        {
+                            tickValues_.AddEntriesFrom(input, _repeated_tickValues_codec);
+                            break;
+                        }
+                    case 106:
+                        {
+                            tradingSessions_.AddEntriesFrom(input, _repeated_tradingSessions_codec);
+                            break;
+                        }
+                    case 114:
+                        {
+                            brokerSymbols_.AddEntriesFrom(input, _map_brokerSymbols_codec);
+                            break;
+                        }
+                }
+            }
+        }
+
+    }
+
+    /// <summary>
+    /// Holds basic information for an individual symbol within a symbol search result. 
+    /// </summary>
+    internal sealed partial class SymbolSearchResult : pb::IMessage<SymbolSearchResult>
+    {
+        private static readonly pb::MessageParser<SymbolSearchResult> _parser = new pb::MessageParser<SymbolSearchResult>(() => new SymbolSearchResult());
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pb::MessageParser<SymbolSearchResult> Parser { get { return _parser; } }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pbr::MessageDescriptor Descriptor
+        {
+            get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[17]; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        pbr::MessageDescriptor pb::IMessage.Descriptor
+        {
+            get { return Descriptor; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public SymbolSearchResult()
+        {
+            OnConstruction();
+        }
+
+        partial void OnConstruction();
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public SymbolSearchResult(SymbolSearchResult other) : this()
+        {
+            symbol_ = other.symbol_;
+            underlying_ = other.underlying_;
+            currency_ = other.currency_;
+            instrumentType_ = other.instrumentType_;
+            exchange_ = other.exchange_;
+            displayName_ = other.displayName_;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public SymbolSearchResult Clone()
+        {
+            return new SymbolSearchResult(this);
+        }
+
+        /// <summary>Field number for the "symbol" field.</summary>
+        public const int SymbolFieldNumber = 1;
+        private string symbol_ = "";
+        /// <summary>
+        /// The symbol as listed by our servers.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public string Symbol
+        {
+            get { return symbol_; }
+            set
+            {
+                symbol_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+            }
+        }
+
+        /// <summary>Field number for the "underlying" field.</summary>
+        public const int UnderlyingFieldNumber = 2;
+        private string underlying_ = "";
+        /// <summary>
+        /// The underlying symbol.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public string Underlying
+        {
+            get { return underlying_; }
+            set
+            {
+                underlying_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+            }
+        }
+
+        /// <summary>Field number for the "currency" field.</summary>
+        public const int CurrencyFieldNumber = 3;
+        private string currency_ = "";
+        /// <summary>
+        /// The currency the instrument is traded in.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public string Currency
+        {
+            get { return currency_; }
+            set
+            {
+                currency_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+            }
+        }
+
+        /// <summary>Field number for the "instrument_type" field.</summary>
+        public const int InstrumentTypeFieldNumber = 4;
+        private global::QuantGate.API.Signals.Proto.Stealth.InstrumentType instrumentType_ = 0;
+        /// <summary>
+        /// The type of instrument (CS, FUT, IDX, FX, CRY, etc.).
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public global::QuantGate.API.Signals.Proto.Stealth.InstrumentType InstrumentType
+        {
+            get { return instrumentType_; }
+            set
+            {
+                instrumentType_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "exchange" field.</summary>
+        public const int ExchangeFieldNumber = 5;
+        private string exchange_ = "";
+        /// <summary>
+        /// The primary exchange (MIC) the instrument is traded on.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public string Exchange
+        {
+            get { return exchange_; }
+            set
+            {
+                exchange_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+            }
+        }
+
+        /// <summary>Field number for the "display_name" field.</summary>
+        public const int DisplayNameFieldNumber = 6;
+        private string displayName_ = "";
+        /// <summary>
+        /// The display name of the instrument.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public string DisplayName
+        {
+            get { return displayName_; }
+            set
+            {
+                displayName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override bool Equals(object other)
+        {
+            return Equals(other as SymbolSearchResult);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool Equals(SymbolSearchResult other)
+        {
+            if (ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (ReferenceEquals(other, this))
+            {
+                return true;
+            }
+            if (Symbol != other.Symbol) return false;
+            if (Underlying != other.Underlying) return false;
+            if (Currency != other.Currency) return false;
+            if (InstrumentType != other.InstrumentType) return false;
+            if (Exchange != other.Exchange) return false;
+            if (DisplayName != other.DisplayName) return false;
+            return true;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override int GetHashCode()
+        {
+            int hash = 1;
+            if (Symbol.Length != 0) hash ^= Symbol.GetHashCode();
+            if (Underlying.Length != 0) hash ^= Underlying.GetHashCode();
+            if (Currency.Length != 0) hash ^= Currency.GetHashCode();
+            if (InstrumentType != 0) hash ^= InstrumentType.GetHashCode();
+            if (Exchange.Length != 0) hash ^= Exchange.GetHashCode();
+            if (DisplayName.Length != 0) hash ^= DisplayName.GetHashCode();
+            return hash;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override string ToString()
+        {
+            return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void WriteTo(pb::CodedOutputStream output)
+        {
+            if (Symbol.Length != 0)
+            {
+                output.WriteRawTag(10);
+                output.WriteString(Symbol);
+            }
+            if (Underlying.Length != 0)
+            {
+                output.WriteRawTag(18);
+                output.WriteString(Underlying);
+            }
+            if (Currency.Length != 0)
+            {
+                output.WriteRawTag(26);
+                output.WriteString(Currency);
+            }
+            if (InstrumentType != 0)
+            {
+                output.WriteRawTag(32);
+                output.WriteEnum((int)InstrumentType);
+            }
+            if (Exchange.Length != 0)
+            {
+                output.WriteRawTag(42);
+                output.WriteString(Exchange);
+            }
+            if (DisplayName.Length != 0)
+            {
+                output.WriteRawTag(50);
+                output.WriteString(DisplayName);
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int CalculateSize()
+        {
+            int size = 0;
+            if (Symbol.Length != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeStringSize(Symbol);
+            }
+            if (Underlying.Length != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeStringSize(Underlying);
+            }
+            if (Currency.Length != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeStringSize(Currency);
+            }
+            if (InstrumentType != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeEnumSize((int)InstrumentType);
+            }
+            if (Exchange.Length != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeStringSize(Exchange);
+            }
+            if (DisplayName.Length != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeStringSize(DisplayName);
+            }
+            return size;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(SymbolSearchResult other)
+        {
+            if (other == null)
+            {
+                return;
+            }
+            if (other.Symbol.Length != 0)
+            {
+                Symbol = other.Symbol;
+            }
+            if (other.Underlying.Length != 0)
+            {
+                Underlying = other.Underlying;
+            }
+            if (other.Currency.Length != 0)
+            {
+                Currency = other.Currency;
+            }
+            if (other.InstrumentType != 0)
+            {
+                InstrumentType = other.InstrumentType;
+            }
+            if (other.Exchange.Length != 0)
+            {
+                Exchange = other.Exchange;
+            }
+            if (other.DisplayName.Length != 0)
+            {
+                DisplayName = other.DisplayName;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(pb::CodedInputStream input)
+        {
+            uint tag;
+            while ((tag = input.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    default:
+                        input.SkipLastField();
+                        break;
+                    case 10:
+                        {
+                            Symbol = input.ReadString();
+                            break;
+                        }
+                    case 18:
+                        {
+                            Underlying = input.ReadString();
+                            break;
+                        }
+                    case 26:
+                        {
+                            Currency = input.ReadString();
+                            break;
+                        }
+                    case 32:
+                        {
+                            instrumentType_ = (global::QuantGate.API.Signals.Proto.Stealth.InstrumentType)input.ReadEnum();
+                            break;
+                        }
+                    case 42:
+                        {
+                            Exchange = input.ReadString();
+                            break;
+                        }
+                    case 50:
+                        {
+                            DisplayName = input.ReadString();
+                            break;
+                        }
+                }
+            }
+        }
+
+    }
+
+    /// <summary>
+    /// Holds the results of a symbol search request within a symbol search subscription.
+    /// Note: The user must subscribe to a definition/search subscription to get results 
+    ///       and make specific requests using a definition/search/{term} send message. 
+    /// </summary>
+    internal sealed partial class SymbolSearchUpdate : pb::IMessage<SymbolSearchUpdate>
+    {
+        private static readonly pb::MessageParser<SymbolSearchUpdate> _parser = new pb::MessageParser<SymbolSearchUpdate>(() => new SymbolSearchUpdate());
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pb::MessageParser<SymbolSearchUpdate> Parser { get { return _parser; } }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pbr::MessageDescriptor Descriptor
+        {
+            get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[18]; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        pbr::MessageDescriptor pb::IMessage.Descriptor
+        {
+            get { return Descriptor; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public SymbolSearchUpdate()
+        {
+            OnConstruction();
+        }
+
+        partial void OnConstruction();
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public SymbolSearchUpdate(SymbolSearchUpdate other) : this()
+        {
+            searchTerm_ = other.searchTerm_;
+            results_ = other.results_.Clone();
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public SymbolSearchUpdate Clone()
+        {
+            return new SymbolSearchUpdate(this);
+        }
+
+        /// <summary>Field number for the "search_term" field.</summary>
+        public const int SearchTermFieldNumber = 1;
+        private string searchTerm_ = "";
+        /// <summary>
+        /// The search term the results are for.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public string SearchTerm
+        {
+            get { return searchTerm_; }
+            set
+            {
+                searchTerm_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+            }
+        }
+
+        /// <summary>Field number for the "results" field.</summary>
+        public const int ResultsFieldNumber = 2;
+        private static readonly pb::FieldCodec<global::QuantGate.API.Signals.Proto.Stealth.SymbolSearchResult> _repeated_results_codec
+            = pb::FieldCodec.ForMessage(18, global::QuantGate.API.Signals.Proto.Stealth.SymbolSearchResult.Parser);
+        private readonly pbc::RepeatedField<global::QuantGate.API.Signals.Proto.Stealth.SymbolSearchResult> results_ = new pbc::RepeatedField<global::QuantGate.API.Signals.Proto.Stealth.SymbolSearchResult>();
+        /// <summary>
+        /// The search results.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public pbc::RepeatedField<global::QuantGate.API.Signals.Proto.Stealth.SymbolSearchResult> Results
+        {
+            get { return results_; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override bool Equals(object other)
+        {
+            return Equals(other as SymbolSearchUpdate);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool Equals(SymbolSearchUpdate other)
+        {
+            if (ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (ReferenceEquals(other, this))
+            {
+                return true;
+            }
+            if (SearchTerm != other.SearchTerm) return false;
+            if (!results_.Equals(other.results_)) return false;
+            return true;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override int GetHashCode()
+        {
+            int hash = 1;
+            if (SearchTerm.Length != 0) hash ^= SearchTerm.GetHashCode();
+            hash ^= results_.GetHashCode();
+            return hash;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override string ToString()
+        {
+            return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void WriteTo(pb::CodedOutputStream output)
+        {
+            if (SearchTerm.Length != 0)
+            {
+                output.WriteRawTag(10);
+                output.WriteString(SearchTerm);
+            }
+            results_.WriteTo(output, _repeated_results_codec);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int CalculateSize()
+        {
+            int size = 0;
+            if (SearchTerm.Length != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeStringSize(SearchTerm);
+            }
+            size += results_.CalculateSize(_repeated_results_codec);
+            return size;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(SymbolSearchUpdate other)
+        {
+            if (other == null)
+            {
+                return;
+            }
+            if (other.SearchTerm.Length != 0)
+            {
+                SearchTerm = other.SearchTerm;
+            }
+            results_.Add(other.results_);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(pb::CodedInputStream input)
+        {
+            uint tag;
+            while ((tag = input.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    default:
+                        input.SkipLastField();
+                        break;
+                    case 10:
+                        {
+                            SearchTerm = input.ReadString();
+                            break;
+                        }
+                    case 18:
+                        {
+                            results_.AddEntriesFrom(input, _repeated_results_codec);
+                            break;
+                        }
+                }
+            }
+        }
+
+    }
+
+    /// <summary>
+    /// Holds basic information for an individual symbol within a top symbols update. 
+    /// </summary>
+    internal sealed partial class TopSymbolItem : pb::IMessage<TopSymbolItem>
+    {
+        private static readonly pb::MessageParser<TopSymbolItem> _parser = new pb::MessageParser<TopSymbolItem>(() => new TopSymbolItem());
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pb::MessageParser<TopSymbolItem> Parser { get { return _parser; } }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pbr::MessageDescriptor Descriptor
+        {
+            get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[19]; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        pbr::MessageDescriptor pb::IMessage.Descriptor
+        {
+            get { return Descriptor; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public TopSymbolItem()
+        {
+            OnConstruction();
+        }
+
+        partial void OnConstruction();
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public TopSymbolItem(TopSymbolItem other) : this()
+        {
+            timestamp_ = other.timestamp_;
+            symbol_ = other.symbol_;
+            underlying_ = other.underlying_;
+            currency_ = other.currency_;
+            instrumentType_ = other.instrumentType_;
+            exchange_ = other.exchange_;
+            displayName_ = other.displayName_;
+            entryProgress_ = other.entryProgress_;
+            signal_ = other.signal_;
+            perceptionSignal_ = other.perceptionSignal_;
+            commitmentSignal_ = other.commitmentSignal_;
+            sentimentSignal_ = other.sentimentSignal_;
+            equilibriumSignal_ = other.equilibriumSignal_;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public TopSymbolItem Clone()
+        {
+            return new TopSymbolItem(this);
+        }
+
+        /// <summary>Field number for the "timestamp" field.</summary>
+        public const int TimestampFieldNumber = 1;
+        private ulong timestamp_;
+        /// <summary>
+        /// The timestamp of the latest update.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong Timestamp
+        {
+            get { return timestamp_; }
+            set
+            {
+                timestamp_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "symbol" field.</summary>
+        public const int SymbolFieldNumber = 2;
+        private string symbol_ = "";
+        /// <summary>
+        /// The symbol as listed by our servers.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public string Symbol
+        {
+            get { return symbol_; }
+            set
+            {
+                symbol_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+            }
+        }
+
+        /// <summary>Field number for the "underlying" field.</summary>
+        public const int UnderlyingFieldNumber = 3;
+        private string underlying_ = "";
+        /// <summary>
+        /// The underlying symbol.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public string Underlying
+        {
+            get { return underlying_; }
+            set
+            {
+                underlying_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+            }
+        }
+
+        /// <summary>Field number for the "currency" field.</summary>
+        public const int CurrencyFieldNumber = 4;
+        private string currency_ = "";
+        /// <summary>
+        /// The currency the instrument is traded in.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public string Currency
+        {
+            get { return currency_; }
+            set
+            {
+                currency_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+            }
+        }
+
+        /// <summary>Field number for the "instrument_type" field.</summary>
+        public const int InstrumentTypeFieldNumber = 5;
+        private global::QuantGate.API.Signals.Proto.Stealth.InstrumentType instrumentType_ = 0;
+        /// <summary>
+        /// The type of instrument (CS, FUT, IDX, FX, CRY, etc.).
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public global::QuantGate.API.Signals.Proto.Stealth.InstrumentType InstrumentType
+        {
+            get { return instrumentType_; }
+            set
+            {
+                instrumentType_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "exchange" field.</summary>
+        public const int ExchangeFieldNumber = 6;
+        private string exchange_ = "";
+        /// <summary>
+        /// The primary exchange (MIC) the instrument is traded on.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public string Exchange
+        {
+            get { return exchange_; }
+            set
+            {
+                exchange_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+            }
+        }
+
+        /// <summary>Field number for the "display_name" field.</summary>
+        public const int DisplayNameFieldNumber = 7;
+        private string displayName_ = "";
+        /// <summary>
+        /// The display name of the instrument.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public string DisplayName
+        {
+            get { return displayName_; }
+            set
+            {
+                displayName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+            }
+        }
+
+        /// <summary>Field number for the "entry_progress" field.</summary>
+        public const int EntryProgressFieldNumber = 8;
+        private int entryProgress_;
+        /// <summary>
+        /// The entry progress value. (-1000 to 1000)
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int EntryProgress
+        {
+            get { return entryProgress_; }
+            set
+            {
+                entryProgress_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "signal" field.</summary>
+        public const int SignalFieldNumber = 9;
+        private global::QuantGate.API.Signals.Proto.Stealth.StrategySignal signal_ = 0;
+        /// <summary>
+        /// The entry signal for the strategy.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public global::QuantGate.API.Signals.Proto.Stealth.StrategySignal Signal
+        {
+            get { return signal_; }
+            set
+            {
+                signal_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "perception_signal" field.</summary>
+        public const int PerceptionSignalFieldNumber = 10;
+        private global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal perceptionSignal_ = 0;
+        /// <summary>
+        /// The signal tied to the perception level.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal PerceptionSignal
+        {
+            get { return perceptionSignal_; }
+            set
+            {
+                perceptionSignal_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "commitment_signal" field.</summary>
+        public const int CommitmentSignalFieldNumber = 11;
+        private global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal commitmentSignal_ = 0;
+        /// <summary>
+        /// The signal tied to the commitment level.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal CommitmentSignal
+        {
+            get { return commitmentSignal_; }
+            set
+            {
+                commitmentSignal_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "sentiment_signal" field.</summary>
+        public const int SentimentSignalFieldNumber = 12;
+        private global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal sentimentSignal_ = 0;
+        /// <summary>
+        /// The signal tied to the 50t sentiment indication.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal SentimentSignal
+        {
+            get { return sentimentSignal_; }
+            set
+            {
+                sentimentSignal_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "equilibrium_signal" field.</summary>
+        public const int EquilibriumSignalFieldNumber = 13;
+        private global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal equilibriumSignal_ = 0;
+        /// <summary>
+        /// The signal tied to the equilibrium level.    
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal EquilibriumSignal
+        {
+            get { return equilibriumSignal_; }
+            set
+            {
+                equilibriumSignal_ = value;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override bool Equals(object other)
+        {
+            return Equals(other as TopSymbolItem);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool Equals(TopSymbolItem other)
+        {
+            if (ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (ReferenceEquals(other, this))
+            {
+                return true;
+            }
+            if (Timestamp != other.Timestamp) return false;
+            if (Symbol != other.Symbol) return false;
+            if (Underlying != other.Underlying) return false;
+            if (Currency != other.Currency) return false;
+            if (InstrumentType != other.InstrumentType) return false;
+            if (Exchange != other.Exchange) return false;
+            if (DisplayName != other.DisplayName) return false;
+            if (EntryProgress != other.EntryProgress) return false;
+            if (Signal != other.Signal) return false;
+            if (PerceptionSignal != other.PerceptionSignal) return false;
+            if (CommitmentSignal != other.CommitmentSignal) return false;
+            if (SentimentSignal != other.SentimentSignal) return false;
+            if (EquilibriumSignal != other.EquilibriumSignal) return false;
+            return true;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override int GetHashCode()
+        {
+            int hash = 1;
+            if (Timestamp != 0UL) hash ^= Timestamp.GetHashCode();
+            if (Symbol.Length != 0) hash ^= Symbol.GetHashCode();
+            if (Underlying.Length != 0) hash ^= Underlying.GetHashCode();
+            if (Currency.Length != 0) hash ^= Currency.GetHashCode();
+            if (InstrumentType != 0) hash ^= InstrumentType.GetHashCode();
+            if (Exchange.Length != 0) hash ^= Exchange.GetHashCode();
+            if (DisplayName.Length != 0) hash ^= DisplayName.GetHashCode();
+            if (EntryProgress != 0) hash ^= EntryProgress.GetHashCode();
+            if (Signal != 0) hash ^= Signal.GetHashCode();
+            if (PerceptionSignal != 0) hash ^= PerceptionSignal.GetHashCode();
+            if (CommitmentSignal != 0) hash ^= CommitmentSignal.GetHashCode();
+            if (SentimentSignal != 0) hash ^= SentimentSignal.GetHashCode();
+            if (EquilibriumSignal != 0) hash ^= EquilibriumSignal.GetHashCode();
+            return hash;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override string ToString()
+        {
+            return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void WriteTo(pb::CodedOutputStream output)
+        {
+            if (Timestamp != 0UL)
+            {
+                output.WriteRawTag(8);
+                output.WriteUInt64(Timestamp);
+            }
+            if (Symbol.Length != 0)
+            {
+                output.WriteRawTag(18);
+                output.WriteString(Symbol);
+            }
+            if (Underlying.Length != 0)
+            {
+                output.WriteRawTag(26);
+                output.WriteString(Underlying);
+            }
+            if (Currency.Length != 0)
+            {
+                output.WriteRawTag(34);
+                output.WriteString(Currency);
+            }
+            if (InstrumentType != 0)
+            {
+                output.WriteRawTag(40);
+                output.WriteEnum((int)InstrumentType);
+            }
+            if (Exchange.Length != 0)
+            {
+                output.WriteRawTag(50);
+                output.WriteString(Exchange);
+            }
+            if (DisplayName.Length != 0)
+            {
+                output.WriteRawTag(58);
+                output.WriteString(DisplayName);
+            }
+            if (EntryProgress != 0)
+            {
+                output.WriteRawTag(64);
+                output.WriteSInt32(EntryProgress);
+            }
+            if (Signal != 0)
+            {
+                output.WriteRawTag(72);
+                output.WriteEnum((int)Signal);
+            }
+            if (PerceptionSignal != 0)
+            {
+                output.WriteRawTag(80);
+                output.WriteEnum((int)PerceptionSignal);
+            }
+            if (CommitmentSignal != 0)
+            {
+                output.WriteRawTag(88);
+                output.WriteEnum((int)CommitmentSignal);
+            }
+            if (SentimentSignal != 0)
+            {
+                output.WriteRawTag(96);
+                output.WriteEnum((int)SentimentSignal);
+            }
+            if (EquilibriumSignal != 0)
+            {
+                output.WriteRawTag(104);
+                output.WriteEnum((int)EquilibriumSignal);
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int CalculateSize()
+        {
+            int size = 0;
+            if (Timestamp != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Timestamp);
+            }
+            if (Symbol.Length != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeStringSize(Symbol);
+            }
+            if (Underlying.Length != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeStringSize(Underlying);
+            }
+            if (Currency.Length != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeStringSize(Currency);
+            }
+            if (InstrumentType != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeEnumSize((int)InstrumentType);
+            }
+            if (Exchange.Length != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeStringSize(Exchange);
+            }
+            if (DisplayName.Length != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeStringSize(DisplayName);
+            }
+            if (EntryProgress != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeSInt32Size(EntryProgress);
+            }
+            if (Signal != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeEnumSize((int)Signal);
+            }
+            if (PerceptionSignal != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeEnumSize((int)PerceptionSignal);
+            }
+            if (CommitmentSignal != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeEnumSize((int)CommitmentSignal);
+            }
+            if (SentimentSignal != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeEnumSize((int)SentimentSignal);
+            }
+            if (EquilibriumSignal != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeEnumSize((int)EquilibriumSignal);
+            }
+            return size;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(TopSymbolItem other)
+        {
+            if (other == null)
+            {
+                return;
+            }
+            if (other.Timestamp != 0UL)
+            {
+                Timestamp = other.Timestamp;
+            }
+            if (other.Symbol.Length != 0)
+            {
+                Symbol = other.Symbol;
+            }
+            if (other.Underlying.Length != 0)
+            {
+                Underlying = other.Underlying;
+            }
+            if (other.Currency.Length != 0)
+            {
+                Currency = other.Currency;
+            }
+            if (other.InstrumentType != 0)
+            {
+                InstrumentType = other.InstrumentType;
+            }
+            if (other.Exchange.Length != 0)
+            {
+                Exchange = other.Exchange;
+            }
+            if (other.DisplayName.Length != 0)
+            {
+                DisplayName = other.DisplayName;
+            }
+            if (other.EntryProgress != 0)
+            {
+                EntryProgress = other.EntryProgress;
+            }
+            if (other.Signal != 0)
+            {
+                Signal = other.Signal;
+            }
+            if (other.PerceptionSignal != 0)
+            {
+                PerceptionSignal = other.PerceptionSignal;
+            }
+            if (other.CommitmentSignal != 0)
+            {
+                CommitmentSignal = other.CommitmentSignal;
+            }
+            if (other.SentimentSignal != 0)
+            {
+                SentimentSignal = other.SentimentSignal;
+            }
+            if (other.EquilibriumSignal != 0)
+            {
+                EquilibriumSignal = other.EquilibriumSignal;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(pb::CodedInputStream input)
+        {
+            uint tag;
+            while ((tag = input.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    default:
+                        input.SkipLastField();
+                        break;
+                    case 8:
+                        {
+                            Timestamp = input.ReadUInt64();
+                            break;
+                        }
+                    case 18:
+                        {
+                            Symbol = input.ReadString();
+                            break;
+                        }
+                    case 26:
+                        {
+                            Underlying = input.ReadString();
+                            break;
+                        }
+                    case 34:
+                        {
+                            Currency = input.ReadString();
+                            break;
+                        }
+                    case 40:
+                        {
+                            instrumentType_ = (global::QuantGate.API.Signals.Proto.Stealth.InstrumentType)input.ReadEnum();
+                            break;
+                        }
+                    case 50:
+                        {
+                            Exchange = input.ReadString();
+                            break;
+                        }
+                    case 58:
+                        {
+                            DisplayName = input.ReadString();
+                            break;
+                        }
+                    case 64:
+                        {
+                            EntryProgress = input.ReadSInt32();
+                            break;
+                        }
+                    case 72:
+                        {
+                            signal_ = (global::QuantGate.API.Signals.Proto.Stealth.StrategySignal)input.ReadEnum();
+                            break;
+                        }
+                    case 80:
+                        {
+                            perceptionSignal_ = (global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal)input.ReadEnum();
+                            break;
+                        }
+                    case 88:
+                        {
+                            commitmentSignal_ = (global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal)input.ReadEnum();
+                            break;
+                        }
+                    case 96:
+                        {
+                            sentimentSignal_ = (global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal)input.ReadEnum();
+                            break;
+                        }
+                    case 104:
+                        {
+                            equilibriumSignal_ = (global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal)input.ReadEnum();
+                            break;
+                        }
+                }
+            }
+        }
+
+    }
+
+    /// <summary>
+    /// Holds an update of the current top items of a top symbols subscription. 
+    /// </summary>
+    internal sealed partial class TopSymbolsUpdate : pb::IMessage<TopSymbolsUpdate>
+    {
+        private static readonly pb::MessageParser<TopSymbolsUpdate> _parser = new pb::MessageParser<TopSymbolsUpdate>(() => new TopSymbolsUpdate());
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pb::MessageParser<TopSymbolsUpdate> Parser { get { return _parser; } }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pbr::MessageDescriptor Descriptor
+        {
+            get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[20]; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        pbr::MessageDescriptor pb::IMessage.Descriptor
+        {
+            get { return Descriptor; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public TopSymbolsUpdate()
+        {
+            OnConstruction();
+        }
+
+        partial void OnConstruction();
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public TopSymbolsUpdate(TopSymbolsUpdate other) : this()
+        {
+            symbols_ = other.symbols_.Clone();
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public TopSymbolsUpdate Clone()
+        {
+            return new TopSymbolsUpdate(this);
+        }
+
+        /// <summary>Field number for the "symbols" field.</summary>
+        public const int SymbolsFieldNumber = 1;
+        private static readonly pb::FieldCodec<global::QuantGate.API.Signals.Proto.Stealth.TopSymbolItem> _repeated_symbols_codec
+            = pb::FieldCodec.ForMessage(10, global::QuantGate.API.Signals.Proto.Stealth.TopSymbolItem.Parser);
+        private readonly pbc::RepeatedField<global::QuantGate.API.Signals.Proto.Stealth.TopSymbolItem> symbols_ = new pbc::RepeatedField<global::QuantGate.API.Signals.Proto.Stealth.TopSymbolItem>();
+        /// <summary>
+        /// The top symbol results;
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public pbc::RepeatedField<global::QuantGate.API.Signals.Proto.Stealth.TopSymbolItem> Symbols
+        {
+            get { return symbols_; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override bool Equals(object other)
+        {
+            return Equals(other as TopSymbolsUpdate);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool Equals(TopSymbolsUpdate other)
+        {
+            if (ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (ReferenceEquals(other, this))
+            {
+                return true;
+            }
+            if (!symbols_.Equals(other.symbols_)) return false;
+            return true;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override int GetHashCode()
+        {
+            int hash = 1;
+            hash ^= symbols_.GetHashCode();
+            return hash;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override string ToString()
+        {
+            return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void WriteTo(pb::CodedOutputStream output)
+        {
+            symbols_.WriteTo(output, _repeated_symbols_codec);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int CalculateSize()
+        {
+            int size = 0;
+            size += symbols_.CalculateSize(_repeated_symbols_codec);
+            return size;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(TopSymbolsUpdate other)
+        {
+            if (other == null)
+            {
+                return;
+            }
+            symbols_.Add(other.symbols_);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(pb::CodedInputStream input)
+        {
+            uint tag;
+            while ((tag = input.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    default:
+                        input.SkipLastField();
+                        break;
+                    case 10:
+                        {
+                            symbols_.AddEntriesFrom(input, _repeated_symbols_codec);
+                            break;
+                        }
+                }
+            }
+        }
+
+    }
+
+    /// <summary>
+    /// Holds a single security definition or list definition as a string. 
+    /// </summary>
+    internal sealed partial class SingleDefinitionUpdate : pb::IMessage<SingleDefinitionUpdate>
+    {
+        private static readonly pb::MessageParser<SingleDefinitionUpdate> _parser = new pb::MessageParser<SingleDefinitionUpdate>(() => new SingleDefinitionUpdate());
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pb::MessageParser<SingleDefinitionUpdate> Parser { get { return _parser; } }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pbr::MessageDescriptor Descriptor
+        {
+            get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[21]; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        pbr::MessageDescriptor pb::IMessage.Descriptor
+        {
+            get { return Descriptor; }
+        }
+
+        [System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public SingleDefinitionUpdate()
+        {
+            OnConstruction();
+        }
+
+        partial void OnConstruction();
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public SingleDefinitionUpdate(SingleDefinitionUpdate other) : this()
+        {
+            definition_ = other.definition_;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public SingleDefinitionUpdate Clone()
+        {
+            return new SingleDefinitionUpdate(this);
+        }
+
+        /// <summary>Field number for the "definition" field.</summary>
+        public const int DefinitionFieldNumber = 1;
+        private string definition_ = "";
+        /// <summary>
+        /// The simple definition.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public string Definition
+        {
+            get { return definition_; }
+            set
+            {
+                definition_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override bool Equals(object other)
+        {
+            return Equals(other as SingleDefinitionUpdate);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool Equals(SingleDefinitionUpdate other)
+        {
+            if (ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (ReferenceEquals(other, this))
+            {
+                return true;
+            }
+            if (Definition != other.Definition) return false;
+            return true;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override int GetHashCode()
+        {
+            int hash = 1;
+            if (Definition.Length != 0) hash ^= Definition.GetHashCode();
+            return hash;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override string ToString()
+        {
+            return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void WriteTo(pb::CodedOutputStream output)
+        {
+            if (Definition.Length != 0)
+            {
+                output.WriteRawTag(10);
+                output.WriteString(Definition);
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int CalculateSize()
+        {
+            int size = 0;
+            if (Definition.Length != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeStringSize(Definition);
+            }
+            return size;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(SingleDefinitionUpdate other)
+        {
+            if (other == null)
+            {
+                return;
+            }
+            if (other.Definition.Length != 0)
+            {
+                Definition = other.Definition;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(pb::CodedInputStream input)
+        {
+            uint tag;
+            while ((tag = input.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    default:
+                        input.SkipLastField();
+                        break;
+                    case 10:
+                        {
+                            Definition = input.ReadString();
+                            break;
+                        }
+                }
+            }
+        }
+
+    }
+
     #endregion
-
-  }
-
-  /// <summary>
-  /// Holds information about the current trading session for an instrument. 
-  /// </summary>
-  internal sealed partial class TradingSession : pb::IMessage<TradingSession> {
-    private static readonly pb::MessageParser<TradingSession> _parser = new pb::MessageParser<TradingSession>(() => new TradingSession());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<TradingSession> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[15]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public TradingSession() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public TradingSession(TradingSession other) : this() {
-      close_ = other.close_;
-      length_ = other.length_;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public TradingSession Clone() {
-      return new TradingSession(this);
-    }
-
-    /// <summary>Field number for the "close" field.</summary>
-    public const int CloseFieldNumber = 1;
-    private int close_;
-    /// <summary>
-    /// The close time of the trading session in minutes from midnight.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Close {
-      get { return close_; }
-      set {
-        close_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "length" field.</summary>
-    public const int LengthFieldNumber = 2;
-    private int length_;
-    /// <summary>
-    /// The length of the trading session in minutes from midnight.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Length {
-      get { return length_; }
-      set {
-        length_ = value;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as TradingSession);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(TradingSession other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (Close != other.Close) return false;
-      if (Length != other.Length) return false;
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (Close != 0) hash ^= Close.GetHashCode();
-      if (Length != 0) hash ^= Length.GetHashCode();
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (Close != 0) {
-        output.WriteRawTag(8);
-        output.WriteSInt32(Close);
-      }
-      if (Length != 0) {
-        output.WriteRawTag(16);
-        output.WriteSInt32(Length);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (Close != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Close);
-      }
-      if (Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeSInt32Size(Length);
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(TradingSession other) {
-      if (other == null) {
-        return;
-      }
-      if (other.Close != 0) {
-        Close = other.Close;
-      }
-      if (other.Length != 0) {
-        Length = other.Length;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
-          case 8: {
-            Close = input.ReadSInt32();
-            break;
-          }
-          case 16: {
-            Length = input.ReadSInt32();
-            break;
-          }
-        }
-      }
-    }
-
-  }
-
-  /// <summary>
-  /// Holds the details of a trading instrument. 
-  /// </summary>
-  internal sealed partial class InstrumentUpdate : pb::IMessage<InstrumentUpdate> {
-    private static readonly pb::MessageParser<InstrumentUpdate> _parser = new pb::MessageParser<InstrumentUpdate>(() => new InstrumentUpdate());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<InstrumentUpdate> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[16]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public InstrumentUpdate() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public InstrumentUpdate(InstrumentUpdate other) : this() {
-      symbol_ = other.symbol_;
-      underlying_ = other.underlying_;
-      currency_ = other.currency_;
-      exchange_ = other.exchange_;
-      instrumentType_ = other.instrumentType_;
-      putOrCall_ = other.putOrCall_;
-      strike_ = other.strike_;
-      expiryDate_ = other.expiryDate_;
-      multiplier_ = other.multiplier_;
-      displayName_ = other.displayName_;
-      timeZone_ = other.timeZone_;
-      tickValues_ = other.tickValues_.Clone();
-      tradingSessions_ = other.tradingSessions_.Clone();
-      brokerSymbols_ = other.brokerSymbols_.Clone();
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public InstrumentUpdate Clone() {
-      return new InstrumentUpdate(this);
-    }
-
-    /// <summary>Field number for the "symbol" field.</summary>
-    public const int SymbolFieldNumber = 1;
-    private string symbol_ = "";
-    /// <summary>
-    /// The symbol as listed by our servers.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Symbol {
-      get { return symbol_; }
-      set {
-        symbol_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "underlying" field.</summary>
-    public const int UnderlyingFieldNumber = 2;
-    private string underlying_ = "";
-    /// <summary>
-    /// The underlying symbol.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Underlying {
-      get { return underlying_; }
-      set {
-        underlying_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "currency" field.</summary>
-    public const int CurrencyFieldNumber = 3;
-    private string currency_ = "";
-    /// <summary>
-    /// The currency the instrument is traded in.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Currency {
-      get { return currency_; }
-      set {
-        currency_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "exchange" field.</summary>
-    public const int ExchangeFieldNumber = 4;
-    private string exchange_ = "";
-    /// <summary>
-    /// The exchange that the instrument is listed on.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Exchange {
-      get { return exchange_; }
-      set {
-        exchange_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "instrument_type" field.</summary>
-    public const int InstrumentTypeFieldNumber = 5;
-    private global::QuantGate.API.Signals.Proto.Stealth.InstrumentType instrumentType_ = 0;
-    /// <summary>
-    /// The type of instrument (CS, FUT, IDX, FX, CRY, etc.).
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::QuantGate.API.Signals.Proto.Stealth.InstrumentType InstrumentType {
-      get { return instrumentType_; }
-      set {
-        instrumentType_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "put_or_call" field.</summary>
-    public const int PutOrCallFieldNumber = 6;
-    private global::QuantGate.API.Signals.Proto.Stealth.PutOrCall putOrCall_ = 0;
-    /// <summary>
-    /// "Right" of an option, if an option (empty otherwise).
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::QuantGate.API.Signals.Proto.Stealth.PutOrCall PutOrCall {
-      get { return putOrCall_; }
-      set {
-        putOrCall_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "strike" field.</summary>
-    public const int StrikeFieldNumber = 7;
-    private double strike_;
-    /// <summary>
-    /// Strike price of an option, if an option (zero otherwise).
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public double Strike {
-      get { return strike_; }
-      set {
-        strike_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "expiry_date" field.</summary>
-    public const int ExpiryDateFieldNumber = 8;
-    private ulong expiryDate_;
-    /// <summary>
-    /// The expiry date of the instrument, if applicable (days from Jan 1, 1800).
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong ExpiryDate {
-      get { return expiryDate_; }
-      set {
-        expiryDate_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "multiplier" field.</summary>
-    public const int MultiplierFieldNumber = 9;
-    private double multiplier_;
-    /// <summary>
-    /// The price multiplier.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public double Multiplier {
-      get { return multiplier_; }
-      set {
-        multiplier_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "display_name" field.</summary>
-    public const int DisplayNameFieldNumber = 10;
-    private string displayName_ = "";
-    /// <summary>
-    /// The display name of the instrument.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string DisplayName {
-      get { return displayName_; }
-      set {
-        displayName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "time_zone" field.</summary>
-    public const int TimeZoneFieldNumber = 11;
-    private string timeZone_ = "";
-    /// <summary>
-    /// The time zone of the primary exchange the instrument is traded on.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string TimeZone {
-      get { return timeZone_; }
-      set {
-        timeZone_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "tick_values" field.</summary>
-    public const int TickValuesFieldNumber = 12;
-    private static readonly pb::FieldCodec<global::QuantGate.API.Signals.Proto.Stealth.TickValue> _repeated_tickValues_codec
-        = pb::FieldCodec.ForMessage(98, global::QuantGate.API.Signals.Proto.Stealth.TickValue.Parser);
-    private readonly pbc::RepeatedField<global::QuantGate.API.Signals.Proto.Stealth.TickValue> tickValues_ = new pbc::RepeatedField<global::QuantGate.API.Signals.Proto.Stealth.TickValue>();
-    /// <summary>
-    /// The tick values used to determine price levels.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::QuantGate.API.Signals.Proto.Stealth.TickValue> TickValues {
-      get { return tickValues_; }
-    }
-
-    /// <summary>Field number for the "trading_sessions" field.</summary>
-    public const int TradingSessionsFieldNumber = 13;
-    private static readonly pb::FieldCodec<global::QuantGate.API.Signals.Proto.Stealth.TradingSession> _repeated_tradingSessions_codec
-        = pb::FieldCodec.ForMessage(106, global::QuantGate.API.Signals.Proto.Stealth.TradingSession.Parser);
-    private readonly pbc::RepeatedField<global::QuantGate.API.Signals.Proto.Stealth.TradingSession> tradingSessions_ = new pbc::RepeatedField<global::QuantGate.API.Signals.Proto.Stealth.TradingSession>();
-    /// <summary>
-    /// The trading session end times and lengths for each day Sun-Sat.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::QuantGate.API.Signals.Proto.Stealth.TradingSession> TradingSessions {
-      get { return tradingSessions_; }
-    }
-
-    /// <summary>Field number for the "broker_symbols" field.</summary>
-    public const int BrokerSymbolsFieldNumber = 14;
-    private static readonly pbc::MapField<string, string>.Codec _map_brokerSymbols_codec
-        = new pbc::MapField<string, string>.Codec(pb::FieldCodec.ForString(10), pb::FieldCodec.ForString(18), 114);
-    private readonly pbc::MapField<string, string> brokerSymbols_ = new pbc::MapField<string, string>();
-    /// <summary>
-    /// Map of broker symbols according to broker (ib, cqg, dtniq, etc.).
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::MapField<string, string> BrokerSymbols {
-      get { return brokerSymbols_; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as InstrumentUpdate);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(InstrumentUpdate other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (Symbol != other.Symbol) return false;
-      if (Underlying != other.Underlying) return false;
-      if (Currency != other.Currency) return false;
-      if (Exchange != other.Exchange) return false;
-      if (InstrumentType != other.InstrumentType) return false;
-      if (PutOrCall != other.PutOrCall) return false;
-      if (Strike != other.Strike) return false;
-      if (ExpiryDate != other.ExpiryDate) return false;
-      if (Multiplier != other.Multiplier) return false;
-      if (DisplayName != other.DisplayName) return false;
-      if (TimeZone != other.TimeZone) return false;
-      if(!tickValues_.Equals(other.tickValues_)) return false;
-      if(!tradingSessions_.Equals(other.tradingSessions_)) return false;
-      if (!BrokerSymbols.Equals(other.BrokerSymbols)) return false;
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (Symbol.Length != 0) hash ^= Symbol.GetHashCode();
-      if (Underlying.Length != 0) hash ^= Underlying.GetHashCode();
-      if (Currency.Length != 0) hash ^= Currency.GetHashCode();
-      if (Exchange.Length != 0) hash ^= Exchange.GetHashCode();
-      if (InstrumentType != 0) hash ^= InstrumentType.GetHashCode();
-      if (PutOrCall != 0) hash ^= PutOrCall.GetHashCode();
-      if (Strike != 0D) hash ^= Strike.GetHashCode();
-      if (ExpiryDate != 0UL) hash ^= ExpiryDate.GetHashCode();
-      if (Multiplier != 0D) hash ^= Multiplier.GetHashCode();
-      if (DisplayName.Length != 0) hash ^= DisplayName.GetHashCode();
-      if (TimeZone.Length != 0) hash ^= TimeZone.GetHashCode();
-      hash ^= tickValues_.GetHashCode();
-      hash ^= tradingSessions_.GetHashCode();
-      hash ^= BrokerSymbols.GetHashCode();
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (Symbol.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(Symbol);
-      }
-      if (Underlying.Length != 0) {
-        output.WriteRawTag(18);
-        output.WriteString(Underlying);
-      }
-      if (Currency.Length != 0) {
-        output.WriteRawTag(26);
-        output.WriteString(Currency);
-      }
-      if (Exchange.Length != 0) {
-        output.WriteRawTag(34);
-        output.WriteString(Exchange);
-      }
-      if (InstrumentType != 0) {
-        output.WriteRawTag(40);
-        output.WriteEnum((int) InstrumentType);
-      }
-      if (PutOrCall != 0) {
-        output.WriteRawTag(48);
-        output.WriteEnum((int) PutOrCall);
-      }
-      if (Strike != 0D) {
-        output.WriteRawTag(57);
-        output.WriteDouble(Strike);
-      }
-      if (ExpiryDate != 0UL) {
-        output.WriteRawTag(64);
-        output.WriteUInt64(ExpiryDate);
-      }
-      if (Multiplier != 0D) {
-        output.WriteRawTag(73);
-        output.WriteDouble(Multiplier);
-      }
-      if (DisplayName.Length != 0) {
-        output.WriteRawTag(82);
-        output.WriteString(DisplayName);
-      }
-      if (TimeZone.Length != 0) {
-        output.WriteRawTag(90);
-        output.WriteString(TimeZone);
-      }
-      tickValues_.WriteTo(output, _repeated_tickValues_codec);
-      tradingSessions_.WriteTo(output, _repeated_tradingSessions_codec);
-      brokerSymbols_.WriteTo(output, _map_brokerSymbols_codec);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (Symbol.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Symbol);
-      }
-      if (Underlying.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Underlying);
-      }
-      if (Currency.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Currency);
-      }
-      if (Exchange.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Exchange);
-      }
-      if (InstrumentType != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) InstrumentType);
-      }
-      if (PutOrCall != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) PutOrCall);
-      }
-      if (Strike != 0D) {
-        size += 1 + 8;
-      }
-      if (ExpiryDate != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(ExpiryDate);
-      }
-      if (Multiplier != 0D) {
-        size += 1 + 8;
-      }
-      if (DisplayName.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(DisplayName);
-      }
-      if (TimeZone.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(TimeZone);
-      }
-      size += tickValues_.CalculateSize(_repeated_tickValues_codec);
-      size += tradingSessions_.CalculateSize(_repeated_tradingSessions_codec);
-      size += brokerSymbols_.CalculateSize(_map_brokerSymbols_codec);
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(InstrumentUpdate other) {
-      if (other == null) {
-        return;
-      }
-      if (other.Symbol.Length != 0) {
-        Symbol = other.Symbol;
-      }
-      if (other.Underlying.Length != 0) {
-        Underlying = other.Underlying;
-      }
-      if (other.Currency.Length != 0) {
-        Currency = other.Currency;
-      }
-      if (other.Exchange.Length != 0) {
-        Exchange = other.Exchange;
-      }
-      if (other.InstrumentType != 0) {
-        InstrumentType = other.InstrumentType;
-      }
-      if (other.PutOrCall != 0) {
-        PutOrCall = other.PutOrCall;
-      }
-      if (other.Strike != 0D) {
-        Strike = other.Strike;
-      }
-      if (other.ExpiryDate != 0UL) {
-        ExpiryDate = other.ExpiryDate;
-      }
-      if (other.Multiplier != 0D) {
-        Multiplier = other.Multiplier;
-      }
-      if (other.DisplayName.Length != 0) {
-        DisplayName = other.DisplayName;
-      }
-      if (other.TimeZone.Length != 0) {
-        TimeZone = other.TimeZone;
-      }
-      tickValues_.Add(other.tickValues_);
-      tradingSessions_.Add(other.tradingSessions_);
-      brokerSymbols_.Add(other.brokerSymbols_);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
-          case 10: {
-            Symbol = input.ReadString();
-            break;
-          }
-          case 18: {
-            Underlying = input.ReadString();
-            break;
-          }
-          case 26: {
-            Currency = input.ReadString();
-            break;
-          }
-          case 34: {
-            Exchange = input.ReadString();
-            break;
-          }
-          case 40: {
-            instrumentType_ = (global::QuantGate.API.Signals.Proto.Stealth.InstrumentType) input.ReadEnum();
-            break;
-          }
-          case 48: {
-            putOrCall_ = (global::QuantGate.API.Signals.Proto.Stealth.PutOrCall) input.ReadEnum();
-            break;
-          }
-          case 57: {
-            Strike = input.ReadDouble();
-            break;
-          }
-          case 64: {
-            ExpiryDate = input.ReadUInt64();
-            break;
-          }
-          case 73: {
-            Multiplier = input.ReadDouble();
-            break;
-          }
-          case 82: {
-            DisplayName = input.ReadString();
-            break;
-          }
-          case 90: {
-            TimeZone = input.ReadString();
-            break;
-          }
-          case 98: {
-            tickValues_.AddEntriesFrom(input, _repeated_tickValues_codec);
-            break;
-          }
-          case 106: {
-            tradingSessions_.AddEntriesFrom(input, _repeated_tradingSessions_codec);
-            break;
-          }
-          case 114: {
-            brokerSymbols_.AddEntriesFrom(input, _map_brokerSymbols_codec);
-            break;
-          }
-        }
-      }
-    }
-
-  }
-
-  /// <summary>
-  /// Holds basic information for an individual symbol within a symbol search result. 
-  /// </summary>
-  internal sealed partial class SymbolSearchResult : pb::IMessage<SymbolSearchResult> {
-    private static readonly pb::MessageParser<SymbolSearchResult> _parser = new pb::MessageParser<SymbolSearchResult>(() => new SymbolSearchResult());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<SymbolSearchResult> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[17]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public SymbolSearchResult() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public SymbolSearchResult(SymbolSearchResult other) : this() {
-      symbol_ = other.symbol_;
-      underlying_ = other.underlying_;
-      currency_ = other.currency_;
-      instrumentType_ = other.instrumentType_;
-      exchange_ = other.exchange_;
-      displayName_ = other.displayName_;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public SymbolSearchResult Clone() {
-      return new SymbolSearchResult(this);
-    }
-
-    /// <summary>Field number for the "symbol" field.</summary>
-    public const int SymbolFieldNumber = 1;
-    private string symbol_ = "";
-    /// <summary>
-    /// The symbol as listed by our servers.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Symbol {
-      get { return symbol_; }
-      set {
-        symbol_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "underlying" field.</summary>
-    public const int UnderlyingFieldNumber = 2;
-    private string underlying_ = "";
-    /// <summary>
-    /// The underlying symbol.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Underlying {
-      get { return underlying_; }
-      set {
-        underlying_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "currency" field.</summary>
-    public const int CurrencyFieldNumber = 3;
-    private string currency_ = "";
-    /// <summary>
-    /// The currency the instrument is traded in.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Currency {
-      get { return currency_; }
-      set {
-        currency_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "instrument_type" field.</summary>
-    public const int InstrumentTypeFieldNumber = 4;
-    private global::QuantGate.API.Signals.Proto.Stealth.InstrumentType instrumentType_ = 0;
-    /// <summary>
-    /// The type of instrument (CS, FUT, IDX, FX, CRY, etc.).
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::QuantGate.API.Signals.Proto.Stealth.InstrumentType InstrumentType {
-      get { return instrumentType_; }
-      set {
-        instrumentType_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "exchange" field.</summary>
-    public const int ExchangeFieldNumber = 5;
-    private string exchange_ = "";
-    /// <summary>
-    /// The primary exchange (MIC) the instrument is traded on.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Exchange {
-      get { return exchange_; }
-      set {
-        exchange_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "display_name" field.</summary>
-    public const int DisplayNameFieldNumber = 6;
-    private string displayName_ = "";
-    /// <summary>
-    /// The display name of the instrument.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string DisplayName {
-      get { return displayName_; }
-      set {
-        displayName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as SymbolSearchResult);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(SymbolSearchResult other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (Symbol != other.Symbol) return false;
-      if (Underlying != other.Underlying) return false;
-      if (Currency != other.Currency) return false;
-      if (InstrumentType != other.InstrumentType) return false;
-      if (Exchange != other.Exchange) return false;
-      if (DisplayName != other.DisplayName) return false;
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (Symbol.Length != 0) hash ^= Symbol.GetHashCode();
-      if (Underlying.Length != 0) hash ^= Underlying.GetHashCode();
-      if (Currency.Length != 0) hash ^= Currency.GetHashCode();
-      if (InstrumentType != 0) hash ^= InstrumentType.GetHashCode();
-      if (Exchange.Length != 0) hash ^= Exchange.GetHashCode();
-      if (DisplayName.Length != 0) hash ^= DisplayName.GetHashCode();
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (Symbol.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(Symbol);
-      }
-      if (Underlying.Length != 0) {
-        output.WriteRawTag(18);
-        output.WriteString(Underlying);
-      }
-      if (Currency.Length != 0) {
-        output.WriteRawTag(26);
-        output.WriteString(Currency);
-      }
-      if (InstrumentType != 0) {
-        output.WriteRawTag(32);
-        output.WriteEnum((int) InstrumentType);
-      }
-      if (Exchange.Length != 0) {
-        output.WriteRawTag(42);
-        output.WriteString(Exchange);
-      }
-      if (DisplayName.Length != 0) {
-        output.WriteRawTag(50);
-        output.WriteString(DisplayName);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (Symbol.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Symbol);
-      }
-      if (Underlying.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Underlying);
-      }
-      if (Currency.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Currency);
-      }
-      if (InstrumentType != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) InstrumentType);
-      }
-      if (Exchange.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Exchange);
-      }
-      if (DisplayName.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(DisplayName);
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(SymbolSearchResult other) {
-      if (other == null) {
-        return;
-      }
-      if (other.Symbol.Length != 0) {
-        Symbol = other.Symbol;
-      }
-      if (other.Underlying.Length != 0) {
-        Underlying = other.Underlying;
-      }
-      if (other.Currency.Length != 0) {
-        Currency = other.Currency;
-      }
-      if (other.InstrumentType != 0) {
-        InstrumentType = other.InstrumentType;
-      }
-      if (other.Exchange.Length != 0) {
-        Exchange = other.Exchange;
-      }
-      if (other.DisplayName.Length != 0) {
-        DisplayName = other.DisplayName;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
-          case 10: {
-            Symbol = input.ReadString();
-            break;
-          }
-          case 18: {
-            Underlying = input.ReadString();
-            break;
-          }
-          case 26: {
-            Currency = input.ReadString();
-            break;
-          }
-          case 32: {
-            instrumentType_ = (global::QuantGate.API.Signals.Proto.Stealth.InstrumentType) input.ReadEnum();
-            break;
-          }
-          case 42: {
-            Exchange = input.ReadString();
-            break;
-          }
-          case 50: {
-            DisplayName = input.ReadString();
-            break;
-          }
-        }
-      }
-    }
-
-  }
-
-  /// <summary>
-  /// Holds the results of a symbol search request within a symbol search subscription.
-  /// Note: The user must subscribe to a definition/search subscription to get results 
-  ///       and make specific requests using a definition/search/{term} send message. 
-  /// </summary>
-  internal sealed partial class SymbolSearchUpdate : pb::IMessage<SymbolSearchUpdate> {
-    private static readonly pb::MessageParser<SymbolSearchUpdate> _parser = new pb::MessageParser<SymbolSearchUpdate>(() => new SymbolSearchUpdate());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<SymbolSearchUpdate> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[18]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public SymbolSearchUpdate() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public SymbolSearchUpdate(SymbolSearchUpdate other) : this() {
-      searchTerm_ = other.searchTerm_;
-      results_ = other.results_.Clone();
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public SymbolSearchUpdate Clone() {
-      return new SymbolSearchUpdate(this);
-    }
-
-    /// <summary>Field number for the "search_term" field.</summary>
-    public const int SearchTermFieldNumber = 1;
-    private string searchTerm_ = "";
-    /// <summary>
-    /// The search term the results are for.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string SearchTerm {
-      get { return searchTerm_; }
-      set {
-        searchTerm_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "results" field.</summary>
-    public const int ResultsFieldNumber = 2;
-    private static readonly pb::FieldCodec<global::QuantGate.API.Signals.Proto.Stealth.SymbolSearchResult> _repeated_results_codec
-        = pb::FieldCodec.ForMessage(18, global::QuantGate.API.Signals.Proto.Stealth.SymbolSearchResult.Parser);
-    private readonly pbc::RepeatedField<global::QuantGate.API.Signals.Proto.Stealth.SymbolSearchResult> results_ = new pbc::RepeatedField<global::QuantGate.API.Signals.Proto.Stealth.SymbolSearchResult>();
-    /// <summary>
-    /// The search results.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::QuantGate.API.Signals.Proto.Stealth.SymbolSearchResult> Results {
-      get { return results_; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as SymbolSearchUpdate);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(SymbolSearchUpdate other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (SearchTerm != other.SearchTerm) return false;
-      if(!results_.Equals(other.results_)) return false;
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (SearchTerm.Length != 0) hash ^= SearchTerm.GetHashCode();
-      hash ^= results_.GetHashCode();
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (SearchTerm.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(SearchTerm);
-      }
-      results_.WriteTo(output, _repeated_results_codec);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (SearchTerm.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(SearchTerm);
-      }
-      size += results_.CalculateSize(_repeated_results_codec);
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(SymbolSearchUpdate other) {
-      if (other == null) {
-        return;
-      }
-      if (other.SearchTerm.Length != 0) {
-        SearchTerm = other.SearchTerm;
-      }
-      results_.Add(other.results_);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
-          case 10: {
-            SearchTerm = input.ReadString();
-            break;
-          }
-          case 18: {
-            results_.AddEntriesFrom(input, _repeated_results_codec);
-            break;
-          }
-        }
-      }
-    }
-
-  }
-
-  /// <summary>
-  /// Holds basic information for an individual symbol within a top symbols update. 
-  /// </summary>
-  internal sealed partial class TopSymbolItem : pb::IMessage<TopSymbolItem> {
-    private static readonly pb::MessageParser<TopSymbolItem> _parser = new pb::MessageParser<TopSymbolItem>(() => new TopSymbolItem());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<TopSymbolItem> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[19]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public TopSymbolItem() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public TopSymbolItem(TopSymbolItem other) : this() {
-      timestamp_ = other.timestamp_;
-      symbol_ = other.symbol_;
-      underlying_ = other.underlying_;
-      currency_ = other.currency_;
-      instrumentType_ = other.instrumentType_;
-      exchange_ = other.exchange_;
-      displayName_ = other.displayName_;
-      entryProgress_ = other.entryProgress_;
-      signal_ = other.signal_;
-      perceptionSignal_ = other.perceptionSignal_;
-      commitmentSignal_ = other.commitmentSignal_;
-      sentimentSignal_ = other.sentimentSignal_;
-      equilibriumSignal_ = other.equilibriumSignal_;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public TopSymbolItem Clone() {
-      return new TopSymbolItem(this);
-    }
-
-    /// <summary>Field number for the "timestamp" field.</summary>
-    public const int TimestampFieldNumber = 1;
-    private ulong timestamp_;
-    /// <summary>
-    /// The timestamp of the latest update.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong Timestamp {
-      get { return timestamp_; }
-      set {
-        timestamp_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "symbol" field.</summary>
-    public const int SymbolFieldNumber = 2;
-    private string symbol_ = "";
-    /// <summary>
-    /// The symbol as listed by our servers.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Symbol {
-      get { return symbol_; }
-      set {
-        symbol_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "underlying" field.</summary>
-    public const int UnderlyingFieldNumber = 3;
-    private string underlying_ = "";
-    /// <summary>
-    /// The underlying symbol.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Underlying {
-      get { return underlying_; }
-      set {
-        underlying_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "currency" field.</summary>
-    public const int CurrencyFieldNumber = 4;
-    private string currency_ = "";
-    /// <summary>
-    /// The currency the instrument is traded in.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Currency {
-      get { return currency_; }
-      set {
-        currency_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "instrument_type" field.</summary>
-    public const int InstrumentTypeFieldNumber = 5;
-    private global::QuantGate.API.Signals.Proto.Stealth.InstrumentType instrumentType_ = 0;
-    /// <summary>
-    /// The type of instrument (CS, FUT, IDX, FX, CRY, etc.).
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::QuantGate.API.Signals.Proto.Stealth.InstrumentType InstrumentType {
-      get { return instrumentType_; }
-      set {
-        instrumentType_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "exchange" field.</summary>
-    public const int ExchangeFieldNumber = 6;
-    private string exchange_ = "";
-    /// <summary>
-    /// The primary exchange (MIC) the instrument is traded on.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Exchange {
-      get { return exchange_; }
-      set {
-        exchange_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "display_name" field.</summary>
-    public const int DisplayNameFieldNumber = 7;
-    private string displayName_ = "";
-    /// <summary>
-    /// The display name of the instrument.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string DisplayName {
-      get { return displayName_; }
-      set {
-        displayName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "entry_progress" field.</summary>
-    public const int EntryProgressFieldNumber = 8;
-    private int entryProgress_;
-    /// <summary>
-    /// The entry progress value. (-1000 to 1000)
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int EntryProgress {
-      get { return entryProgress_; }
-      set {
-        entryProgress_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "signal" field.</summary>
-    public const int SignalFieldNumber = 9;
-    private global::QuantGate.API.Signals.Proto.Stealth.StrategySignal signal_ = 0;
-    /// <summary>
-    /// The entry signal for the strategy.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::QuantGate.API.Signals.Proto.Stealth.StrategySignal Signal {
-      get { return signal_; }
-      set {
-        signal_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "perception_signal" field.</summary>
-    public const int PerceptionSignalFieldNumber = 10;
-    private global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal perceptionSignal_ = 0;
-    /// <summary>
-    /// The signal tied to the perception level.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal PerceptionSignal {
-      get { return perceptionSignal_; }
-      set {
-        perceptionSignal_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "commitment_signal" field.</summary>
-    public const int CommitmentSignalFieldNumber = 11;
-    private global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal commitmentSignal_ = 0;
-    /// <summary>
-    /// The signal tied to the commitment level.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal CommitmentSignal {
-      get { return commitmentSignal_; }
-      set {
-        commitmentSignal_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "sentiment_signal" field.</summary>
-    public const int SentimentSignalFieldNumber = 12;
-    private global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal sentimentSignal_ = 0;
-    /// <summary>
-    /// The signal tied to the 50t sentiment indication.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal SentimentSignal {
-      get { return sentimentSignal_; }
-      set {
-        sentimentSignal_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "equilibrium_signal" field.</summary>
-    public const int EquilibriumSignalFieldNumber = 13;
-    private global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal equilibriumSignal_ = 0;
-    /// <summary>
-    /// The signal tied to the equilibrium level.    
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal EquilibriumSignal {
-      get { return equilibriumSignal_; }
-      set {
-        equilibriumSignal_ = value;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as TopSymbolItem);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(TopSymbolItem other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (Timestamp != other.Timestamp) return false;
-      if (Symbol != other.Symbol) return false;
-      if (Underlying != other.Underlying) return false;
-      if (Currency != other.Currency) return false;
-      if (InstrumentType != other.InstrumentType) return false;
-      if (Exchange != other.Exchange) return false;
-      if (DisplayName != other.DisplayName) return false;
-      if (EntryProgress != other.EntryProgress) return false;
-      if (Signal != other.Signal) return false;
-      if (PerceptionSignal != other.PerceptionSignal) return false;
-      if (CommitmentSignal != other.CommitmentSignal) return false;
-      if (SentimentSignal != other.SentimentSignal) return false;
-      if (EquilibriumSignal != other.EquilibriumSignal) return false;
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (Timestamp != 0UL) hash ^= Timestamp.GetHashCode();
-      if (Symbol.Length != 0) hash ^= Symbol.GetHashCode();
-      if (Underlying.Length != 0) hash ^= Underlying.GetHashCode();
-      if (Currency.Length != 0) hash ^= Currency.GetHashCode();
-      if (InstrumentType != 0) hash ^= InstrumentType.GetHashCode();
-      if (Exchange.Length != 0) hash ^= Exchange.GetHashCode();
-      if (DisplayName.Length != 0) hash ^= DisplayName.GetHashCode();
-      if (EntryProgress != 0) hash ^= EntryProgress.GetHashCode();
-      if (Signal != 0) hash ^= Signal.GetHashCode();
-      if (PerceptionSignal != 0) hash ^= PerceptionSignal.GetHashCode();
-      if (CommitmentSignal != 0) hash ^= CommitmentSignal.GetHashCode();
-      if (SentimentSignal != 0) hash ^= SentimentSignal.GetHashCode();
-      if (EquilibriumSignal != 0) hash ^= EquilibriumSignal.GetHashCode();
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (Timestamp != 0UL) {
-        output.WriteRawTag(8);
-        output.WriteUInt64(Timestamp);
-      }
-      if (Symbol.Length != 0) {
-        output.WriteRawTag(18);
-        output.WriteString(Symbol);
-      }
-      if (Underlying.Length != 0) {
-        output.WriteRawTag(26);
-        output.WriteString(Underlying);
-      }
-      if (Currency.Length != 0) {
-        output.WriteRawTag(34);
-        output.WriteString(Currency);
-      }
-      if (InstrumentType != 0) {
-        output.WriteRawTag(40);
-        output.WriteEnum((int) InstrumentType);
-      }
-      if (Exchange.Length != 0) {
-        output.WriteRawTag(50);
-        output.WriteString(Exchange);
-      }
-      if (DisplayName.Length != 0) {
-        output.WriteRawTag(58);
-        output.WriteString(DisplayName);
-      }
-      if (EntryProgress != 0) {
-        output.WriteRawTag(64);
-        output.WriteSInt32(EntryProgress);
-      }
-      if (Signal != 0) {
-        output.WriteRawTag(72);
-        output.WriteEnum((int) Signal);
-      }
-      if (PerceptionSignal != 0) {
-        output.WriteRawTag(80);
-        output.WriteEnum((int) PerceptionSignal);
-      }
-      if (CommitmentSignal != 0) {
-        output.WriteRawTag(88);
-        output.WriteEnum((int) CommitmentSignal);
-      }
-      if (SentimentSignal != 0) {
-        output.WriteRawTag(96);
-        output.WriteEnum((int) SentimentSignal);
-      }
-      if (EquilibriumSignal != 0) {
-        output.WriteRawTag(104);
-        output.WriteEnum((int) EquilibriumSignal);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (Timestamp != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Timestamp);
-      }
-      if (Symbol.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Symbol);
-      }
-      if (Underlying.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Underlying);
-      }
-      if (Currency.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Currency);
-      }
-      if (InstrumentType != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) InstrumentType);
-      }
-      if (Exchange.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Exchange);
-      }
-      if (DisplayName.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(DisplayName);
-      }
-      if (EntryProgress != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeSInt32Size(EntryProgress);
-      }
-      if (Signal != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Signal);
-      }
-      if (PerceptionSignal != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) PerceptionSignal);
-      }
-      if (CommitmentSignal != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) CommitmentSignal);
-      }
-      if (SentimentSignal != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) SentimentSignal);
-      }
-      if (EquilibriumSignal != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) EquilibriumSignal);
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(TopSymbolItem other) {
-      if (other == null) {
-        return;
-      }
-      if (other.Timestamp != 0UL) {
-        Timestamp = other.Timestamp;
-      }
-      if (other.Symbol.Length != 0) {
-        Symbol = other.Symbol;
-      }
-      if (other.Underlying.Length != 0) {
-        Underlying = other.Underlying;
-      }
-      if (other.Currency.Length != 0) {
-        Currency = other.Currency;
-      }
-      if (other.InstrumentType != 0) {
-        InstrumentType = other.InstrumentType;
-      }
-      if (other.Exchange.Length != 0) {
-        Exchange = other.Exchange;
-      }
-      if (other.DisplayName.Length != 0) {
-        DisplayName = other.DisplayName;
-      }
-      if (other.EntryProgress != 0) {
-        EntryProgress = other.EntryProgress;
-      }
-      if (other.Signal != 0) {
-        Signal = other.Signal;
-      }
-      if (other.PerceptionSignal != 0) {
-        PerceptionSignal = other.PerceptionSignal;
-      }
-      if (other.CommitmentSignal != 0) {
-        CommitmentSignal = other.CommitmentSignal;
-      }
-      if (other.SentimentSignal != 0) {
-        SentimentSignal = other.SentimentSignal;
-      }
-      if (other.EquilibriumSignal != 0) {
-        EquilibriumSignal = other.EquilibriumSignal;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
-          case 8: {
-            Timestamp = input.ReadUInt64();
-            break;
-          }
-          case 18: {
-            Symbol = input.ReadString();
-            break;
-          }
-          case 26: {
-            Underlying = input.ReadString();
-            break;
-          }
-          case 34: {
-            Currency = input.ReadString();
-            break;
-          }
-          case 40: {
-            instrumentType_ = (global::QuantGate.API.Signals.Proto.Stealth.InstrumentType) input.ReadEnum();
-            break;
-          }
-          case 50: {
-            Exchange = input.ReadString();
-            break;
-          }
-          case 58: {
-            DisplayName = input.ReadString();
-            break;
-          }
-          case 64: {
-            EntryProgress = input.ReadSInt32();
-            break;
-          }
-          case 72: {
-            signal_ = (global::QuantGate.API.Signals.Proto.Stealth.StrategySignal) input.ReadEnum();
-            break;
-          }
-          case 80: {
-            perceptionSignal_ = (global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal) input.ReadEnum();
-            break;
-          }
-          case 88: {
-            commitmentSignal_ = (global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal) input.ReadEnum();
-            break;
-          }
-          case 96: {
-            sentimentSignal_ = (global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal) input.ReadEnum();
-            break;
-          }
-          case 104: {
-            equilibriumSignal_ = (global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal) input.ReadEnum();
-            break;
-          }
-        }
-      }
-    }
-
-  }
-
-  /// <summary>
-  /// Holds an update of the current top items of a top symbols subscription. 
-  /// </summary>
-  internal sealed partial class TopSymbolsUpdate : pb::IMessage<TopSymbolsUpdate> {
-    private static readonly pb::MessageParser<TopSymbolsUpdate> _parser = new pb::MessageParser<TopSymbolsUpdate>(() => new TopSymbolsUpdate());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<TopSymbolsUpdate> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[20]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public TopSymbolsUpdate() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public TopSymbolsUpdate(TopSymbolsUpdate other) : this() {
-      symbols_ = other.symbols_.Clone();
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public TopSymbolsUpdate Clone() {
-      return new TopSymbolsUpdate(this);
-    }
-
-    /// <summary>Field number for the "symbols" field.</summary>
-    public const int SymbolsFieldNumber = 1;
-    private static readonly pb::FieldCodec<global::QuantGate.API.Signals.Proto.Stealth.TopSymbolItem> _repeated_symbols_codec
-        = pb::FieldCodec.ForMessage(10, global::QuantGate.API.Signals.Proto.Stealth.TopSymbolItem.Parser);
-    private readonly pbc::RepeatedField<global::QuantGate.API.Signals.Proto.Stealth.TopSymbolItem> symbols_ = new pbc::RepeatedField<global::QuantGate.API.Signals.Proto.Stealth.TopSymbolItem>();
-    /// <summary>
-    /// The top symbol results;
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::QuantGate.API.Signals.Proto.Stealth.TopSymbolItem> Symbols {
-      get { return symbols_; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as TopSymbolsUpdate);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(TopSymbolsUpdate other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if(!symbols_.Equals(other.symbols_)) return false;
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      hash ^= symbols_.GetHashCode();
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      symbols_.WriteTo(output, _repeated_symbols_codec);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      size += symbols_.CalculateSize(_repeated_symbols_codec);
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(TopSymbolsUpdate other) {
-      if (other == null) {
-        return;
-      }
-      symbols_.Add(other.symbols_);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
-          case 10: {
-            symbols_.AddEntriesFrom(input, _repeated_symbols_codec);
-            break;
-          }
-        }
-      }
-    }
-
-  }
-
-  /// <summary>
-  /// Holds a single security definition or list definition as a string. 
-  /// </summary>
-  internal sealed partial class SingleDefinitionUpdate : pb::IMessage<SingleDefinitionUpdate> {
-    private static readonly pb::MessageParser<SingleDefinitionUpdate> _parser = new pb::MessageParser<SingleDefinitionUpdate>(() => new SingleDefinitionUpdate());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<SingleDefinitionUpdate> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[21]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public SingleDefinitionUpdate() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public SingleDefinitionUpdate(SingleDefinitionUpdate other) : this() {
-      definition_ = other.definition_;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public SingleDefinitionUpdate Clone() {
-      return new SingleDefinitionUpdate(this);
-    }
-
-    /// <summary>Field number for the "definition" field.</summary>
-    public const int DefinitionFieldNumber = 1;
-    private string definition_ = "";
-    /// <summary>
-    /// The simple definition.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Definition {
-      get { return definition_; }
-      set {
-        definition_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as SingleDefinitionUpdate);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(SingleDefinitionUpdate other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (Definition != other.Definition) return false;
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (Definition.Length != 0) hash ^= Definition.GetHashCode();
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (Definition.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(Definition);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (Definition.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Definition);
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(SingleDefinitionUpdate other) {
-      if (other == null) {
-        return;
-      }
-      if (other.Definition.Length != 0) {
-        Definition = other.Definition;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
-          case 10: {
-            Definition = input.ReadString();
-            break;
-          }
-        }
-      }
-    }
-
-  }
-
-  #endregion
 
 }
 

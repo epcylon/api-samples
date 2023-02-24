@@ -7,61 +7,65 @@ using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using pbr = global::Google.Protobuf.Reflection;
 using scg = global::System.Collections.Generic;
-namespace Epcylon.Common.Net.ProtoStomp.Proto {
+namespace Epcylon.Common.Net.ProtoStomp.Proto
+{
 
-  /// <summary>Holder for reflection information generated from stomp_v0.1.proto</summary>
-  internal static partial class StompV01Reflection {
+    /// <summary>Holder for reflection information generated from stomp_v0.1.proto</summary>
+    internal static partial class StompV01Reflection
+    {
 
-    #region Descriptor
-    /// <summary>File descriptor for stomp_v0.1.proto</summary>
-    public static pbr::FileDescriptor Descriptor {
-      get { return descriptor; }
-    }
-    private static pbr::FileDescriptor descriptor;
+        #region Descriptor
+        /// <summary>File descriptor for stomp_v0.1.proto</summary>
+        public static pbr::FileDescriptor Descriptor
+        {
+            get { return descriptor; }
+        }
+        private static pbr::FileDescriptor descriptor;
 
-    static StompV01Reflection() {
-      byte[] descriptorData = global::System.Convert.FromBase64String(
-          string.Concat(
-            "ChBzdG9tcF92MC4xLnByb3RvEgVzdG9tcCILCglIZWFydGJlYXQiVwoOQ29u",
-            "bmVjdFJlcXVlc3QSFgoOYWNjZXB0X3ZlcnNpb24YASABKAkSDQoFbG9naW4Y",
-            "AiABKAkSEAoIcGFzc2NvZGUYAyABKAkSDAoEYm9keRgEIAEoDCITChFEaXNj",
-            "b25uZWN0UmVxdWVzdCJrChBTdWJzY3JpYmVSZXF1ZXN0EhMKC2Rlc3RpbmF0",
-            "aW9uGAEgASgJEhcKD3N1YnNjcmlwdGlvbl9pZBgCIAEoBBIVCg10aHJvdHRs",
-            "ZV9yYXRlGAMgASgNEhIKCnJlY2VpcHRfaWQYBCABKAQiQQoSVW5zdWJzY3Jp",
-            "YmVSZXF1ZXN0EhcKD3N1YnNjcmlwdGlvbl9pZBgBIAEoBBISCgpyZWNlaXB0",
-            "X2lkGAIgASgEIlUKD1Rocm90dGxlUmVxdWVzdBIXCg9zdWJzY3JpcHRpb25f",
-            "aWQYASABKAQSFQoNdGhyb3R0bGVfcmF0ZRgCIAEoDRISCgpyZWNlaXB0X2lk",
-            "GAMgASgEIlUKC1NlbmRSZXF1ZXN0EhMKC2Rlc3RpbmF0aW9uGAEgASgJEg8K",
-            "B3NlbmRfaWQYAiABKAQSDAoEYm9keRgDIAEoDBISCgpyZWNlaXB0X2lkGAQg",
-            "ASgEIsoCCgxSZXF1ZXN0RnJhbWUSKAoHY29ubmVjdBgBIAEoCzIVLnN0b21w",
-            "LkNvbm5lY3RSZXF1ZXN0SAASLgoKZGlzY29ubmVjdBgCIAEoCzIYLnN0b21w",
-            "LkRpc2Nvbm5lY3RSZXF1ZXN0SAASLAoJc3Vic2NyaWJlGAMgASgLMhcuc3Rv",
-            "bXAuU3Vic2NyaWJlUmVxdWVzdEgAEjAKC3Vuc3Vic2NyaWJlGAQgASgLMhku",
-            "c3RvbXAuVW5zdWJzY3JpYmVSZXF1ZXN0SAASKgoIdGhyb3R0bGUYBSABKAsy",
-            "Fi5zdG9tcC5UaHJvdHRsZVJlcXVlc3RIABIiCgRzZW5kGAYgASgLMhIuc3Rv",
-            "bXAuU2VuZFJlcXVlc3RIABIlCgloZWFydGJlYXQYByABKAsyEC5zdG9tcC5I",
-            "ZWFydGJlYXRIAEIJCgdyZXF1ZXN0IiQKEUNvbm5lY3RlZFJlc3BvbnNlEg8K",
-            "B3ZlcnNpb24YASABKAkiTAoPTWVzc2FnZVJlc3BvbnNlEhcKD3N1YnNjcmlw",
-            "dGlvbl9pZBgBIAEoBBISCgptZXNzYWdlX2lkGAIgASgEEgwKBGJvZHkYAyAB",
-            "KAwiOwoQTWVzc2FnZVJlc3BvbnNlcxInCgdtZXNzYWdlGAEgAygLMhYuc3Rv",
-            "bXAuTWVzc2FnZVJlc3BvbnNlIiUKD1JlY2VpcHRSZXNwb25zZRISCgpyZWNl",
-            "aXB0X2lkGAEgASgEIjcKE1NlcnZlckVycm9yUmVzcG9uc2USDwoHbWVzc2Fn",
-            "ZRgBIAEoCRIPCgdkZXRhaWxzGAIgASgJImoKGVN1YnNjcmlwdGlvbkVycm9y",
-            "UmVzcG9uc2USFwoPc3Vic2NyaXB0aW9uX2lkGAEgASgEEhIKCm1lc3NhZ2Vf",
-            "aWQYAiABKAQSDwoHbWVzc2FnZRgDIAEoCRIPCgdkZXRhaWxzGAQgASgJIvUC",
-            "Cg1SZXNwb25zZUZyYW1lEi0KCWNvbm5lY3RlZBgBIAEoCzIYLnN0b21wLkNv",
-            "bm5lY3RlZFJlc3BvbnNlSAASMAoOc2luZ2xlX21lc3NhZ2UYAiABKAsyFi5z",
-            "dG9tcC5NZXNzYWdlUmVzcG9uc2VIABIxCg5iYXRjaF9tZXNzYWdlcxgDIAEo",
-            "CzIXLnN0b21wLk1lc3NhZ2VSZXNwb25zZXNIABIpCgdyZWNlaXB0GAQgASgL",
-            "MhYuc3RvbXAuUmVjZWlwdFJlc3BvbnNlSAASMgoMc2VydmVyX2Vycm9yGAUg",
-            "ASgLMhouc3RvbXAuU2VydmVyRXJyb3JSZXNwb25zZUgAEj4KEnN1YnNjcmlw",
-            "dGlvbl9lcnJvchgGIAEoCzIgLnN0b21wLlN1YnNjcmlwdGlvbkVycm9yUmVz",
-            "cG9uc2VIABIlCgloZWFydGJlYXQYByABKAsyEC5zdG9tcC5IZWFydGJlYXRI",
-            "AEIKCghyZXNwb25zZUImqgIjRXBjeWxvbi5Db21tb24uTmV0LlByb3RvU3Rv",
-            "bXAuUHJvdG9iBnByb3RvMw=="));
-      descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { },
-          new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
+        static StompV01Reflection()
+        {
+            byte[] descriptorData = global::System.Convert.FromBase64String(
+                string.Concat(
+                  "ChBzdG9tcF92MC4xLnByb3RvEgVzdG9tcCILCglIZWFydGJlYXQiVwoOQ29u",
+                  "bmVjdFJlcXVlc3QSFgoOYWNjZXB0X3ZlcnNpb24YASABKAkSDQoFbG9naW4Y",
+                  "AiABKAkSEAoIcGFzc2NvZGUYAyABKAkSDAoEYm9keRgEIAEoDCITChFEaXNj",
+                  "b25uZWN0UmVxdWVzdCJrChBTdWJzY3JpYmVSZXF1ZXN0EhMKC2Rlc3RpbmF0",
+                  "aW9uGAEgASgJEhcKD3N1YnNjcmlwdGlvbl9pZBgCIAEoBBIVCg10aHJvdHRs",
+                  "ZV9yYXRlGAMgASgNEhIKCnJlY2VpcHRfaWQYBCABKAQiQQoSVW5zdWJzY3Jp",
+                  "YmVSZXF1ZXN0EhcKD3N1YnNjcmlwdGlvbl9pZBgBIAEoBBISCgpyZWNlaXB0",
+                  "X2lkGAIgASgEIlUKD1Rocm90dGxlUmVxdWVzdBIXCg9zdWJzY3JpcHRpb25f",
+                  "aWQYASABKAQSFQoNdGhyb3R0bGVfcmF0ZRgCIAEoDRISCgpyZWNlaXB0X2lk",
+                  "GAMgASgEIlUKC1NlbmRSZXF1ZXN0EhMKC2Rlc3RpbmF0aW9uGAEgASgJEg8K",
+                  "B3NlbmRfaWQYAiABKAQSDAoEYm9keRgDIAEoDBISCgpyZWNlaXB0X2lkGAQg",
+                  "ASgEIsoCCgxSZXF1ZXN0RnJhbWUSKAoHY29ubmVjdBgBIAEoCzIVLnN0b21w",
+                  "LkNvbm5lY3RSZXF1ZXN0SAASLgoKZGlzY29ubmVjdBgCIAEoCzIYLnN0b21w",
+                  "LkRpc2Nvbm5lY3RSZXF1ZXN0SAASLAoJc3Vic2NyaWJlGAMgASgLMhcuc3Rv",
+                  "bXAuU3Vic2NyaWJlUmVxdWVzdEgAEjAKC3Vuc3Vic2NyaWJlGAQgASgLMhku",
+                  "c3RvbXAuVW5zdWJzY3JpYmVSZXF1ZXN0SAASKgoIdGhyb3R0bGUYBSABKAsy",
+                  "Fi5zdG9tcC5UaHJvdHRsZVJlcXVlc3RIABIiCgRzZW5kGAYgASgLMhIuc3Rv",
+                  "bXAuU2VuZFJlcXVlc3RIABIlCgloZWFydGJlYXQYByABKAsyEC5zdG9tcC5I",
+                  "ZWFydGJlYXRIAEIJCgdyZXF1ZXN0IiQKEUNvbm5lY3RlZFJlc3BvbnNlEg8K",
+                  "B3ZlcnNpb24YASABKAkiTAoPTWVzc2FnZVJlc3BvbnNlEhcKD3N1YnNjcmlw",
+                  "dGlvbl9pZBgBIAEoBBISCgptZXNzYWdlX2lkGAIgASgEEgwKBGJvZHkYAyAB",
+                  "KAwiOwoQTWVzc2FnZVJlc3BvbnNlcxInCgdtZXNzYWdlGAEgAygLMhYuc3Rv",
+                  "bXAuTWVzc2FnZVJlc3BvbnNlIiUKD1JlY2VpcHRSZXNwb25zZRISCgpyZWNl",
+                  "aXB0X2lkGAEgASgEIjcKE1NlcnZlckVycm9yUmVzcG9uc2USDwoHbWVzc2Fn",
+                  "ZRgBIAEoCRIPCgdkZXRhaWxzGAIgASgJImoKGVN1YnNjcmlwdGlvbkVycm9y",
+                  "UmVzcG9uc2USFwoPc3Vic2NyaXB0aW9uX2lkGAEgASgEEhIKCm1lc3NhZ2Vf",
+                  "aWQYAiABKAQSDwoHbWVzc2FnZRgDIAEoCRIPCgdkZXRhaWxzGAQgASgJIvUC",
+                  "Cg1SZXNwb25zZUZyYW1lEi0KCWNvbm5lY3RlZBgBIAEoCzIYLnN0b21wLkNv",
+                  "bm5lY3RlZFJlc3BvbnNlSAASMAoOc2luZ2xlX21lc3NhZ2UYAiABKAsyFi5z",
+                  "dG9tcC5NZXNzYWdlUmVzcG9uc2VIABIxCg5iYXRjaF9tZXNzYWdlcxgDIAEo",
+                  "CzIXLnN0b21wLk1lc3NhZ2VSZXNwb25zZXNIABIpCgdyZWNlaXB0GAQgASgL",
+                  "MhYuc3RvbXAuUmVjZWlwdFJlc3BvbnNlSAASMgoMc2VydmVyX2Vycm9yGAUg",
+                  "ASgLMhouc3RvbXAuU2VydmVyRXJyb3JSZXNwb25zZUgAEj4KEnN1YnNjcmlw",
+                  "dGlvbl9lcnJvchgGIAEoCzIgLnN0b21wLlN1YnNjcmlwdGlvbkVycm9yUmVz",
+                  "cG9uc2VIABIlCgloZWFydGJlYXQYByABKAsyEC5zdG9tcC5IZWFydGJlYXRI",
+                  "AEIKCghyZXNwb25zZUImqgIjRXBjeWxvbi5Db21tb24uTmV0LlByb3RvU3Rv",
+                  "bXAuUHJvdG9iBnByb3RvMw=="));
+            descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
+                new pbr::FileDescriptor[] { },
+                new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Epcylon.Common.Net.ProtoStomp.Proto.Heartbeat), global::Epcylon.Common.Net.ProtoStomp.Proto.Heartbeat.Parser, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Epcylon.Common.Net.ProtoStomp.Proto.ConnectRequest), global::Epcylon.Common.Net.ProtoStomp.Proto.ConnectRequest.Parser, new[]{ "AcceptVersion", "Login", "Passcode", "Body" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Epcylon.Common.Net.ProtoStomp.Proto.DisconnectRequest), global::Epcylon.Common.Net.ProtoStomp.Proto.DisconnectRequest.Parser, null, null, null, null),
@@ -77,2939 +81,3455 @@ namespace Epcylon.Common.Net.ProtoStomp.Proto {
             new pbr::GeneratedClrTypeInfo(typeof(global::Epcylon.Common.Net.ProtoStomp.Proto.ServerErrorResponse), global::Epcylon.Common.Net.ProtoStomp.Proto.ServerErrorResponse.Parser, new[]{ "Message", "Details" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Epcylon.Common.Net.ProtoStomp.Proto.SubscriptionErrorResponse), global::Epcylon.Common.Net.ProtoStomp.Proto.SubscriptionErrorResponse.Parser, new[]{ "SubscriptionId", "MessageId", "Message", "Details" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Epcylon.Common.Net.ProtoStomp.Proto.ResponseFrame), global::Epcylon.Common.Net.ProtoStomp.Proto.ResponseFrame.Parser, new[]{ "Connected", "SingleMessage", "BatchMessages", "Receipt", "ServerError", "SubscriptionError", "Heartbeat" }, new[]{ "Response" }, null, null)
-          }));
-    }
-    #endregion
-
-  }
-  #region Messages
-  /// <summary>
-  /// Heartbeat message for keep-alive purposes. 
-  /// </summary>
-  internal sealed partial class Heartbeat : pb::IMessage<Heartbeat> {
-    private static readonly pb::MessageParser<Heartbeat> _parser = new pb::MessageParser<Heartbeat>(() => new Heartbeat());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<Heartbeat> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Epcylon.Common.Net.ProtoStomp.Proto.StompV01Reflection.Descriptor.MessageTypes[0]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Heartbeat() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Heartbeat(Heartbeat other) : this() {
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Heartbeat Clone() {
-      return new Heartbeat(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as Heartbeat);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(Heartbeat other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(Heartbeat other) {
-      if (other == null) {
-        return;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
+                }));
         }
-      }
+        #endregion
+
     }
-
-  }
-
-  /// <summary>
-  /// The ConnectRequest message is used to connect to the server. This is the first 
-  /// message that must be sent to the server before any other requests are made.
-  /// Use within a RequestFrame. 
-  /// </summary>
-  internal sealed partial class ConnectRequest : pb::IMessage<ConnectRequest> {
-    private static readonly pb::MessageParser<ConnectRequest> _parser = new pb::MessageParser<ConnectRequest>(() => new ConnectRequest());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<ConnectRequest> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Epcylon.Common.Net.ProtoStomp.Proto.StompV01Reflection.Descriptor.MessageTypes[1]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ConnectRequest() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ConnectRequest(ConnectRequest other) : this() {
-      acceptVersion_ = other.acceptVersion_;
-      login_ = other.login_;
-      passcode_ = other.passcode_;
-      body_ = other.body_;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ConnectRequest Clone() {
-      return new ConnectRequest(this);
-    }
-
-    /// <summary>Field number for the "accept_version" field.</summary>
-    public const int AcceptVersionFieldNumber = 1;
-    private string acceptVersion_ = "";
+    #region Messages
     /// <summary>
-    /// The proto-stomp versions the client can handle.
+    /// Heartbeat message for keep-alive purposes. 
     /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string AcceptVersion {
-      get { return acceptVersion_; }
-      set {
-        acceptVersion_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
+    internal sealed partial class Heartbeat : pb::IMessage<Heartbeat>
+    {
+        private static readonly pb::MessageParser<Heartbeat> _parser = new pb::MessageParser<Heartbeat>(() => new Heartbeat());
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pb::MessageParser<Heartbeat> Parser { get { return _parser; } }
 
-    /// <summary>Field number for the "login" field.</summary>
-    public const int LoginFieldNumber = 2;
-    private string login_ = "";
-    /// <summary>
-    /// The username to log in with.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Login {
-      get { return login_; }
-      set {
-        login_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "passcode" field.</summary>
-    public const int PasscodeFieldNumber = 3;
-    private string passcode_ = "";
-    /// <summary>
-    /// The password to log in with.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Passcode {
-      get { return passcode_; }
-      set {
-        passcode_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "body" field.</summary>
-    public const int BodyFieldNumber = 4;
-    private pb::ByteString body_ = pb::ByteString.Empty;
-    /// <summary>
-    /// Additional server-specific information to include.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pb::ByteString Body {
-      get { return body_; }
-      set {
-        body_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as ConnectRequest);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(ConnectRequest other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (AcceptVersion != other.AcceptVersion) return false;
-      if (Login != other.Login) return false;
-      if (Passcode != other.Passcode) return false;
-      if (Body != other.Body) return false;
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (AcceptVersion.Length != 0) hash ^= AcceptVersion.GetHashCode();
-      if (Login.Length != 0) hash ^= Login.GetHashCode();
-      if (Passcode.Length != 0) hash ^= Passcode.GetHashCode();
-      if (Body.Length != 0) hash ^= Body.GetHashCode();
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (AcceptVersion.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(AcceptVersion);
-      }
-      if (Login.Length != 0) {
-        output.WriteRawTag(18);
-        output.WriteString(Login);
-      }
-      if (Passcode.Length != 0) {
-        output.WriteRawTag(26);
-        output.WriteString(Passcode);
-      }
-      if (Body.Length != 0) {
-        output.WriteRawTag(34);
-        output.WriteBytes(Body);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (AcceptVersion.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(AcceptVersion);
-      }
-      if (Login.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Login);
-      }
-      if (Passcode.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Passcode);
-      }
-      if (Body.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeBytesSize(Body);
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(ConnectRequest other) {
-      if (other == null) {
-        return;
-      }
-      if (other.AcceptVersion.Length != 0) {
-        AcceptVersion = other.AcceptVersion;
-      }
-      if (other.Login.Length != 0) {
-        Login = other.Login;
-      }
-      if (other.Passcode.Length != 0) {
-        Passcode = other.Passcode;
-      }
-      if (other.Body.Length != 0) {
-        Body = other.Body;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
-          case 10: {
-            AcceptVersion = input.ReadString();
-            break;
-          }
-          case 18: {
-            Login = input.ReadString();
-            break;
-          }
-          case 26: {
-            Passcode = input.ReadString();
-            break;
-          }
-          case 34: {
-            Body = input.ReadBytes();
-            break;
-          }
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pbr::MessageDescriptor Descriptor
+        {
+            get { return global::Epcylon.Common.Net.ProtoStomp.Proto.StompV01Reflection.Descriptor.MessageTypes[0]; }
         }
-      }
-    }
 
-  }
-
-  /// <summary>
-  /// The DisconnectRequest message is used to inform the server that a disconnection
-  /// is about to be made. Server implementations must be able to handle disconnections 
-  /// with and without this request. Use within a RequestFrame. 
-  /// </summary>
-  internal sealed partial class DisconnectRequest : pb::IMessage<DisconnectRequest> {
-    private static readonly pb::MessageParser<DisconnectRequest> _parser = new pb::MessageParser<DisconnectRequest>(() => new DisconnectRequest());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<DisconnectRequest> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Epcylon.Common.Net.ProtoStomp.Proto.StompV01Reflection.Descriptor.MessageTypes[2]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public DisconnectRequest() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public DisconnectRequest(DisconnectRequest other) : this() {
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public DisconnectRequest Clone() {
-      return new DisconnectRequest(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as DisconnectRequest);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(DisconnectRequest other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(DisconnectRequest other) {
-      if (other == null) {
-        return;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        pbr::MessageDescriptor pb::IMessage.Descriptor
+        {
+            get { return Descriptor; }
         }
-      }
-    }
 
-  }
-
-  /// <summary>
-  /// The SubscribeRequest message is used to subscribe to a stream of events.
-  /// Use within a RequestFrame. 
-  /// </summary>
-  internal sealed partial class SubscribeRequest : pb::IMessage<SubscribeRequest> {
-    private static readonly pb::MessageParser<SubscribeRequest> _parser = new pb::MessageParser<SubscribeRequest>(() => new SubscribeRequest());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<SubscribeRequest> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Epcylon.Common.Net.ProtoStomp.Proto.StompV01Reflection.Descriptor.MessageTypes[3]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public SubscribeRequest() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public SubscribeRequest(SubscribeRequest other) : this() {
-      destination_ = other.destination_;
-      subscriptionId_ = other.subscriptionId_;
-      throttleRate_ = other.throttleRate_;
-      receiptId_ = other.receiptId_;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public SubscribeRequest Clone() {
-      return new SubscribeRequest(this);
-    }
-
-    /// <summary>Field number for the "destination" field.</summary>
-    public const int DestinationFieldNumber = 1;
-    private string destination_ = "";
-    /// <summary>
-    /// A string that identifies the subscription.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Destination {
-      get { return destination_; }
-      set {
-        destination_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "subscription_id" field.</summary>
-    public const int SubscriptionIdFieldNumber = 2;
-    private ulong subscriptionId_;
-    /// <summary>
-    /// A unique client identifier for the subscription.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong SubscriptionId {
-      get { return subscriptionId_; }
-      set {
-        subscriptionId_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "throttle_rate" field.</summary>
-    public const int ThrottleRateFieldNumber = 3;
-    private uint throttleRate_;
-    /// <summary>
-    /// The rate to throttle messages at (in ms, 0 for no throttling).
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint ThrottleRate {
-      get { return throttleRate_; }
-      set {
-        throttleRate_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "receipt_id" field.</summary>
-    public const int ReceiptIdFieldNumber = 4;
-    private ulong receiptId_;
-    /// <summary>
-    /// A unique (optional) receipt id to include if a receipt is desired.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong ReceiptId {
-      get { return receiptId_; }
-      set {
-        receiptId_ = value;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as SubscribeRequest);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(SubscribeRequest other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (Destination != other.Destination) return false;
-      if (SubscriptionId != other.SubscriptionId) return false;
-      if (ThrottleRate != other.ThrottleRate) return false;
-      if (ReceiptId != other.ReceiptId) return false;
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (Destination.Length != 0) hash ^= Destination.GetHashCode();
-      if (SubscriptionId != 0UL) hash ^= SubscriptionId.GetHashCode();
-      if (ThrottleRate != 0) hash ^= ThrottleRate.GetHashCode();
-      if (ReceiptId != 0UL) hash ^= ReceiptId.GetHashCode();
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (Destination.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(Destination);
-      }
-      if (SubscriptionId != 0UL) {
-        output.WriteRawTag(16);
-        output.WriteUInt64(SubscriptionId);
-      }
-      if (ThrottleRate != 0) {
-        output.WriteRawTag(24);
-        output.WriteUInt32(ThrottleRate);
-      }
-      if (ReceiptId != 0UL) {
-        output.WriteRawTag(32);
-        output.WriteUInt64(ReceiptId);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (Destination.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Destination);
-      }
-      if (SubscriptionId != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(SubscriptionId);
-      }
-      if (ThrottleRate != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(ThrottleRate);
-      }
-      if (ReceiptId != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(ReceiptId);
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(SubscribeRequest other) {
-      if (other == null) {
-        return;
-      }
-      if (other.Destination.Length != 0) {
-        Destination = other.Destination;
-      }
-      if (other.SubscriptionId != 0UL) {
-        SubscriptionId = other.SubscriptionId;
-      }
-      if (other.ThrottleRate != 0) {
-        ThrottleRate = other.ThrottleRate;
-      }
-      if (other.ReceiptId != 0UL) {
-        ReceiptId = other.ReceiptId;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
-          case 10: {
-            Destination = input.ReadString();
-            break;
-          }
-          case 16: {
-            SubscriptionId = input.ReadUInt64();
-            break;
-          }
-          case 24: {
-            ThrottleRate = input.ReadUInt32();
-            break;
-          }
-          case 32: {
-            ReceiptId = input.ReadUInt64();
-            break;
-          }
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public Heartbeat()
+        {
+            OnConstruction();
         }
-      }
-    }
 
-  }
+        partial void OnConstruction();
 
-  /// <summary>
-  /// The UnsubscribeRequest message is used to unsubscribe from a stream of events.
-  /// Use within a RequestFrame. 
-  /// </summary>
-  internal sealed partial class UnsubscribeRequest : pb::IMessage<UnsubscribeRequest> {
-    private static readonly pb::MessageParser<UnsubscribeRequest> _parser = new pb::MessageParser<UnsubscribeRequest>(() => new UnsubscribeRequest());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<UnsubscribeRequest> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Epcylon.Common.Net.ProtoStomp.Proto.StompV01Reflection.Descriptor.MessageTypes[4]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public UnsubscribeRequest() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public UnsubscribeRequest(UnsubscribeRequest other) : this() {
-      subscriptionId_ = other.subscriptionId_;
-      receiptId_ = other.receiptId_;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public UnsubscribeRequest Clone() {
-      return new UnsubscribeRequest(this);
-    }
-
-    /// <summary>Field number for the "subscription_id" field.</summary>
-    public const int SubscriptionIdFieldNumber = 1;
-    private ulong subscriptionId_;
-    /// <summary>
-    /// The client-specific subscription identifier.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong SubscriptionId {
-      get { return subscriptionId_; }
-      set {
-        subscriptionId_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "receipt_id" field.</summary>
-    public const int ReceiptIdFieldNumber = 2;
-    private ulong receiptId_;
-    /// <summary>
-    /// A unique (optional) receipt id to include if a receipt is desired.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong ReceiptId {
-      get { return receiptId_; }
-      set {
-        receiptId_ = value;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as UnsubscribeRequest);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(UnsubscribeRequest other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (SubscriptionId != other.SubscriptionId) return false;
-      if (ReceiptId != other.ReceiptId) return false;
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (SubscriptionId != 0UL) hash ^= SubscriptionId.GetHashCode();
-      if (ReceiptId != 0UL) hash ^= ReceiptId.GetHashCode();
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (SubscriptionId != 0UL) {
-        output.WriteRawTag(8);
-        output.WriteUInt64(SubscriptionId);
-      }
-      if (ReceiptId != 0UL) {
-        output.WriteRawTag(16);
-        output.WriteUInt64(ReceiptId);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (SubscriptionId != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(SubscriptionId);
-      }
-      if (ReceiptId != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(ReceiptId);
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(UnsubscribeRequest other) {
-      if (other == null) {
-        return;
-      }
-      if (other.SubscriptionId != 0UL) {
-        SubscriptionId = other.SubscriptionId;
-      }
-      if (other.ReceiptId != 0UL) {
-        ReceiptId = other.ReceiptId;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
-          case 8: {
-            SubscriptionId = input.ReadUInt64();
-            break;
-          }
-          case 16: {
-            ReceiptId = input.ReadUInt64();
-            break;
-          }
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public Heartbeat(Heartbeat other) : this()
+        {
         }
-      }
-    }
 
-  }
-
-  /// <summary>
-  /// The ThrottleRequest message is used to change the throttle rate of an existing 
-  /// subscription. Use within a RequestFrame. 
-  /// </summary>
-  internal sealed partial class ThrottleRequest : pb::IMessage<ThrottleRequest> {
-    private static readonly pb::MessageParser<ThrottleRequest> _parser = new pb::MessageParser<ThrottleRequest>(() => new ThrottleRequest());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<ThrottleRequest> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Epcylon.Common.Net.ProtoStomp.Proto.StompV01Reflection.Descriptor.MessageTypes[5]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ThrottleRequest() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ThrottleRequest(ThrottleRequest other) : this() {
-      subscriptionId_ = other.subscriptionId_;
-      throttleRate_ = other.throttleRate_;
-      receiptId_ = other.receiptId_;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ThrottleRequest Clone() {
-      return new ThrottleRequest(this);
-    }
-
-    /// <summary>Field number for the "subscription_id" field.</summary>
-    public const int SubscriptionIdFieldNumber = 1;
-    private ulong subscriptionId_;
-    /// <summary>
-    /// The client-specific subscription identifier.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong SubscriptionId {
-      get { return subscriptionId_; }
-      set {
-        subscriptionId_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "throttle_rate" field.</summary>
-    public const int ThrottleRateFieldNumber = 2;
-    private uint throttleRate_;
-    /// <summary>
-    /// The rate to throttle messages at (in ms, 0 for no throttling).
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint ThrottleRate {
-      get { return throttleRate_; }
-      set {
-        throttleRate_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "receipt_id" field.</summary>
-    public const int ReceiptIdFieldNumber = 3;
-    private ulong receiptId_;
-    /// <summary>
-    /// A unique (optional) receipt id to include if a receipt is desired.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong ReceiptId {
-      get { return receiptId_; }
-      set {
-        receiptId_ = value;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as ThrottleRequest);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(ThrottleRequest other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (SubscriptionId != other.SubscriptionId) return false;
-      if (ThrottleRate != other.ThrottleRate) return false;
-      if (ReceiptId != other.ReceiptId) return false;
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (SubscriptionId != 0UL) hash ^= SubscriptionId.GetHashCode();
-      if (ThrottleRate != 0) hash ^= ThrottleRate.GetHashCode();
-      if (ReceiptId != 0UL) hash ^= ReceiptId.GetHashCode();
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (SubscriptionId != 0UL) {
-        output.WriteRawTag(8);
-        output.WriteUInt64(SubscriptionId);
-      }
-      if (ThrottleRate != 0) {
-        output.WriteRawTag(16);
-        output.WriteUInt32(ThrottleRate);
-      }
-      if (ReceiptId != 0UL) {
-        output.WriteRawTag(24);
-        output.WriteUInt64(ReceiptId);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (SubscriptionId != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(SubscriptionId);
-      }
-      if (ThrottleRate != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(ThrottleRate);
-      }
-      if (ReceiptId != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(ReceiptId);
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(ThrottleRequest other) {
-      if (other == null) {
-        return;
-      }
-      if (other.SubscriptionId != 0UL) {
-        SubscriptionId = other.SubscriptionId;
-      }
-      if (other.ThrottleRate != 0) {
-        ThrottleRate = other.ThrottleRate;
-      }
-      if (other.ReceiptId != 0UL) {
-        ReceiptId = other.ReceiptId;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
-          case 8: {
-            SubscriptionId = input.ReadUInt64();
-            break;
-          }
-          case 16: {
-            ThrottleRate = input.ReadUInt32();
-            break;
-          }
-          case 24: {
-            ReceiptId = input.ReadUInt64();
-            break;
-          }
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public Heartbeat Clone()
+        {
+            return new Heartbeat(this);
         }
-      }
-    }
 
-  }
-
-  /// <summary>
-  /// The SendRequest message is used to send single updates or commands to the server.
-  /// Use within a RequestFrame. 
-  /// </summary>
-  internal sealed partial class SendRequest : pb::IMessage<SendRequest> {
-    private static readonly pb::MessageParser<SendRequest> _parser = new pb::MessageParser<SendRequest>(() => new SendRequest());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<SendRequest> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Epcylon.Common.Net.ProtoStomp.Proto.StompV01Reflection.Descriptor.MessageTypes[6]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public SendRequest() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public SendRequest(SendRequest other) : this() {
-      destination_ = other.destination_;
-      sendId_ = other.sendId_;
-      body_ = other.body_;
-      receiptId_ = other.receiptId_;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public SendRequest Clone() {
-      return new SendRequest(this);
-    }
-
-    /// <summary>Field number for the "destination" field.</summary>
-    public const int DestinationFieldNumber = 1;
-    private string destination_ = "";
-    /// <summary>
-    /// A string that identifies the command destination.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Destination {
-      get { return destination_; }
-      set {
-        destination_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "send_id" field.</summary>
-    public const int SendIdFieldNumber = 2;
-    private ulong sendId_;
-    /// <summary>
-    /// A unique client-specific identifier for the send. 
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong SendId {
-      get { return sendId_; }
-      set {
-        sendId_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "body" field.</summary>
-    public const int BodyFieldNumber = 3;
-    private pb::ByteString body_ = pb::ByteString.Empty;
-    /// <summary>
-    /// The body to include in the send, if required.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pb::ByteString Body {
-      get { return body_; }
-      set {
-        body_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "receipt_id" field.</summary>
-    public const int ReceiptIdFieldNumber = 4;
-    private ulong receiptId_;
-    /// <summary>
-    /// A unique (optional) receipt id to include if a receipt is desired.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong ReceiptId {
-      get { return receiptId_; }
-      set {
-        receiptId_ = value;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as SendRequest);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(SendRequest other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (Destination != other.Destination) return false;
-      if (SendId != other.SendId) return false;
-      if (Body != other.Body) return false;
-      if (ReceiptId != other.ReceiptId) return false;
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (Destination.Length != 0) hash ^= Destination.GetHashCode();
-      if (SendId != 0UL) hash ^= SendId.GetHashCode();
-      if (Body.Length != 0) hash ^= Body.GetHashCode();
-      if (ReceiptId != 0UL) hash ^= ReceiptId.GetHashCode();
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (Destination.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(Destination);
-      }
-      if (SendId != 0UL) {
-        output.WriteRawTag(16);
-        output.WriteUInt64(SendId);
-      }
-      if (Body.Length != 0) {
-        output.WriteRawTag(26);
-        output.WriteBytes(Body);
-      }
-      if (ReceiptId != 0UL) {
-        output.WriteRawTag(32);
-        output.WriteUInt64(ReceiptId);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (Destination.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Destination);
-      }
-      if (SendId != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(SendId);
-      }
-      if (Body.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeBytesSize(Body);
-      }
-      if (ReceiptId != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(ReceiptId);
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(SendRequest other) {
-      if (other == null) {
-        return;
-      }
-      if (other.Destination.Length != 0) {
-        Destination = other.Destination;
-      }
-      if (other.SendId != 0UL) {
-        SendId = other.SendId;
-      }
-      if (other.Body.Length != 0) {
-        Body = other.Body;
-      }
-      if (other.ReceiptId != 0UL) {
-        ReceiptId = other.ReceiptId;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
-          case 10: {
-            Destination = input.ReadString();
-            break;
-          }
-          case 16: {
-            SendId = input.ReadUInt64();
-            break;
-          }
-          case 26: {
-            Body = input.ReadBytes();
-            break;
-          }
-          case 32: {
-            ReceiptId = input.ReadUInt64();
-            break;
-          }
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override bool Equals(object other)
+        {
+            return Equals(other as Heartbeat);
         }
-      }
-    }
 
-  }
-
-  /// <summary>
-  /// This is the main request frame that will be received by the server. 
-  /// All requests must be made using this frame. 
-  /// </summary>
-  internal sealed partial class RequestFrame : pb::IMessage<RequestFrame> {
-    private static readonly pb::MessageParser<RequestFrame> _parser = new pb::MessageParser<RequestFrame>(() => new RequestFrame());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<RequestFrame> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Epcylon.Common.Net.ProtoStomp.Proto.StompV01Reflection.Descriptor.MessageTypes[7]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public RequestFrame() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public RequestFrame(RequestFrame other) : this() {
-      switch (other.RequestCase) {
-        case RequestOneofCase.Connect:
-          Connect = other.Connect.Clone();
-          break;
-        case RequestOneofCase.Disconnect:
-          Disconnect = other.Disconnect.Clone();
-          break;
-        case RequestOneofCase.Subscribe:
-          Subscribe = other.Subscribe.Clone();
-          break;
-        case RequestOneofCase.Unsubscribe:
-          Unsubscribe = other.Unsubscribe.Clone();
-          break;
-        case RequestOneofCase.Throttle:
-          Throttle = other.Throttle.Clone();
-          break;
-        case RequestOneofCase.Send:
-          Send = other.Send.Clone();
-          break;
-        case RequestOneofCase.Heartbeat:
-          Heartbeat = other.Heartbeat.Clone();
-          break;
-      }
-
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public RequestFrame Clone() {
-      return new RequestFrame(this);
-    }
-
-    /// <summary>Field number for the "connect" field.</summary>
-    public const int ConnectFieldNumber = 1;
-    /// <summary>
-    /// Used to connect to the server.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Epcylon.Common.Net.ProtoStomp.Proto.ConnectRequest Connect {
-      get { return requestCase_ == RequestOneofCase.Connect ? (global::Epcylon.Common.Net.ProtoStomp.Proto.ConnectRequest) request_ : null; }
-      set {
-        request_ = value;
-        requestCase_ = value == null ? RequestOneofCase.None : RequestOneofCase.Connect;
-      }
-    }
-
-    /// <summary>Field number for the "disconnect" field.</summary>
-    public const int DisconnectFieldNumber = 2;
-    /// <summary>
-    /// Sent immediately before disconnecting.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Epcylon.Common.Net.ProtoStomp.Proto.DisconnectRequest Disconnect {
-      get { return requestCase_ == RequestOneofCase.Disconnect ? (global::Epcylon.Common.Net.ProtoStomp.Proto.DisconnectRequest) request_ : null; }
-      set {
-        request_ = value;
-        requestCase_ = value == null ? RequestOneofCase.None : RequestOneofCase.Disconnect;
-      }
-    }
-
-    /// <summary>Field number for the "subscribe" field.</summary>
-    public const int SubscribeFieldNumber = 3;
-    /// <summary>
-    /// Used to subscribe to a stream of events.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Epcylon.Common.Net.ProtoStomp.Proto.SubscribeRequest Subscribe {
-      get { return requestCase_ == RequestOneofCase.Subscribe ? (global::Epcylon.Common.Net.ProtoStomp.Proto.SubscribeRequest) request_ : null; }
-      set {
-        request_ = value;
-        requestCase_ = value == null ? RequestOneofCase.None : RequestOneofCase.Subscribe;
-      }
-    }
-
-    /// <summary>Field number for the "unsubscribe" field.</summary>
-    public const int UnsubscribeFieldNumber = 4;
-    /// <summary>
-    /// Used to unsubscribe from a stream of events.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Epcylon.Common.Net.ProtoStomp.Proto.UnsubscribeRequest Unsubscribe {
-      get { return requestCase_ == RequestOneofCase.Unsubscribe ? (global::Epcylon.Common.Net.ProtoStomp.Proto.UnsubscribeRequest) request_ : null; }
-      set {
-        request_ = value;
-        requestCase_ = value == null ? RequestOneofCase.None : RequestOneofCase.Unsubscribe;
-      }
-    }
-
-    /// <summary>Field number for the "throttle" field.</summary>
-    public const int ThrottleFieldNumber = 5;
-    /// <summary>
-    /// Changes the throttle rate of an existing subscription.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Epcylon.Common.Net.ProtoStomp.Proto.ThrottleRequest Throttle {
-      get { return requestCase_ == RequestOneofCase.Throttle ? (global::Epcylon.Common.Net.ProtoStomp.Proto.ThrottleRequest) request_ : null; }
-      set {
-        request_ = value;
-        requestCase_ = value == null ? RequestOneofCase.None : RequestOneofCase.Throttle;
-      }
-    }
-
-    /// <summary>Field number for the "send" field.</summary>
-    public const int SendFieldNumber = 6;
-    /// <summary>
-    /// Used to send single updates or commands to the server.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Epcylon.Common.Net.ProtoStomp.Proto.SendRequest Send {
-      get { return requestCase_ == RequestOneofCase.Send ? (global::Epcylon.Common.Net.ProtoStomp.Proto.SendRequest) request_ : null; }
-      set {
-        request_ = value;
-        requestCase_ = value == null ? RequestOneofCase.None : RequestOneofCase.Send;
-      }
-    }
-
-    /// <summary>Field number for the "heartbeat" field.</summary>
-    public const int HeartbeatFieldNumber = 7;
-    /// <summary>
-    /// Heartbeat message for keep-alive purposes.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Epcylon.Common.Net.ProtoStomp.Proto.Heartbeat Heartbeat {
-      get { return requestCase_ == RequestOneofCase.Heartbeat ? (global::Epcylon.Common.Net.ProtoStomp.Proto.Heartbeat) request_ : null; }
-      set {
-        request_ = value;
-        requestCase_ = value == null ? RequestOneofCase.None : RequestOneofCase.Heartbeat;
-      }
-    }
-
-    private object request_;
-    /// <summary>Enum of possible cases for the "request" oneof.</summary>
-    public enum RequestOneofCase {
-      None = 0,
-      Connect = 1,
-      Disconnect = 2,
-      Subscribe = 3,
-      Unsubscribe = 4,
-      Throttle = 5,
-      Send = 6,
-      Heartbeat = 7,
-    }
-    private RequestOneofCase requestCase_ = RequestOneofCase.None;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public RequestOneofCase RequestCase {
-      get { return requestCase_; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void ClearRequest() {
-      requestCase_ = RequestOneofCase.None;
-      request_ = null;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as RequestFrame);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(RequestFrame other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (!object.Equals(Connect, other.Connect)) return false;
-      if (!object.Equals(Disconnect, other.Disconnect)) return false;
-      if (!object.Equals(Subscribe, other.Subscribe)) return false;
-      if (!object.Equals(Unsubscribe, other.Unsubscribe)) return false;
-      if (!object.Equals(Throttle, other.Throttle)) return false;
-      if (!object.Equals(Send, other.Send)) return false;
-      if (!object.Equals(Heartbeat, other.Heartbeat)) return false;
-      if (RequestCase != other.RequestCase) return false;
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (requestCase_ == RequestOneofCase.Connect) hash ^= Connect.GetHashCode();
-      if (requestCase_ == RequestOneofCase.Disconnect) hash ^= Disconnect.GetHashCode();
-      if (requestCase_ == RequestOneofCase.Subscribe) hash ^= Subscribe.GetHashCode();
-      if (requestCase_ == RequestOneofCase.Unsubscribe) hash ^= Unsubscribe.GetHashCode();
-      if (requestCase_ == RequestOneofCase.Throttle) hash ^= Throttle.GetHashCode();
-      if (requestCase_ == RequestOneofCase.Send) hash ^= Send.GetHashCode();
-      if (requestCase_ == RequestOneofCase.Heartbeat) hash ^= Heartbeat.GetHashCode();
-      hash ^= (int) requestCase_;
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (requestCase_ == RequestOneofCase.Connect) {
-        output.WriteRawTag(10);
-        output.WriteMessage(Connect);
-      }
-      if (requestCase_ == RequestOneofCase.Disconnect) {
-        output.WriteRawTag(18);
-        output.WriteMessage(Disconnect);
-      }
-      if (requestCase_ == RequestOneofCase.Subscribe) {
-        output.WriteRawTag(26);
-        output.WriteMessage(Subscribe);
-      }
-      if (requestCase_ == RequestOneofCase.Unsubscribe) {
-        output.WriteRawTag(34);
-        output.WriteMessage(Unsubscribe);
-      }
-      if (requestCase_ == RequestOneofCase.Throttle) {
-        output.WriteRawTag(42);
-        output.WriteMessage(Throttle);
-      }
-      if (requestCase_ == RequestOneofCase.Send) {
-        output.WriteRawTag(50);
-        output.WriteMessage(Send);
-      }
-      if (requestCase_ == RequestOneofCase.Heartbeat) {
-        output.WriteRawTag(58);
-        output.WriteMessage(Heartbeat);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (requestCase_ == RequestOneofCase.Connect) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Connect);
-      }
-      if (requestCase_ == RequestOneofCase.Disconnect) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Disconnect);
-      }
-      if (requestCase_ == RequestOneofCase.Subscribe) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Subscribe);
-      }
-      if (requestCase_ == RequestOneofCase.Unsubscribe) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Unsubscribe);
-      }
-      if (requestCase_ == RequestOneofCase.Throttle) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Throttle);
-      }
-      if (requestCase_ == RequestOneofCase.Send) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Send);
-      }
-      if (requestCase_ == RequestOneofCase.Heartbeat) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Heartbeat);
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(RequestFrame other) {
-      if (other == null) {
-        return;
-      }
-      switch (other.RequestCase) {
-        case RequestOneofCase.Connect:
-          if (Connect == null) {
-            Connect = new global::Epcylon.Common.Net.ProtoStomp.Proto.ConnectRequest();
-          }
-          Connect.MergeFrom(other.Connect);
-          break;
-        case RequestOneofCase.Disconnect:
-          if (Disconnect == null) {
-            Disconnect = new global::Epcylon.Common.Net.ProtoStomp.Proto.DisconnectRequest();
-          }
-          Disconnect.MergeFrom(other.Disconnect);
-          break;
-        case RequestOneofCase.Subscribe:
-          if (Subscribe == null) {
-            Subscribe = new global::Epcylon.Common.Net.ProtoStomp.Proto.SubscribeRequest();
-          }
-          Subscribe.MergeFrom(other.Subscribe);
-          break;
-        case RequestOneofCase.Unsubscribe:
-          if (Unsubscribe == null) {
-            Unsubscribe = new global::Epcylon.Common.Net.ProtoStomp.Proto.UnsubscribeRequest();
-          }
-          Unsubscribe.MergeFrom(other.Unsubscribe);
-          break;
-        case RequestOneofCase.Throttle:
-          if (Throttle == null) {
-            Throttle = new global::Epcylon.Common.Net.ProtoStomp.Proto.ThrottleRequest();
-          }
-          Throttle.MergeFrom(other.Throttle);
-          break;
-        case RequestOneofCase.Send:
-          if (Send == null) {
-            Send = new global::Epcylon.Common.Net.ProtoStomp.Proto.SendRequest();
-          }
-          Send.MergeFrom(other.Send);
-          break;
-        case RequestOneofCase.Heartbeat:
-          if (Heartbeat == null) {
-            Heartbeat = new global::Epcylon.Common.Net.ProtoStomp.Proto.Heartbeat();
-          }
-          Heartbeat.MergeFrom(other.Heartbeat);
-          break;
-      }
-
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
-          case 10: {
-            global::Epcylon.Common.Net.ProtoStomp.Proto.ConnectRequest subBuilder = new global::Epcylon.Common.Net.ProtoStomp.Proto.ConnectRequest();
-            if (requestCase_ == RequestOneofCase.Connect) {
-              subBuilder.MergeFrom(Connect);
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool Equals(Heartbeat other)
+        {
+            if (ReferenceEquals(other, null))
+            {
+                return false;
             }
-            input.ReadMessage(subBuilder);
-            Connect = subBuilder;
-            break;
-          }
-          case 18: {
-            global::Epcylon.Common.Net.ProtoStomp.Proto.DisconnectRequest subBuilder = new global::Epcylon.Common.Net.ProtoStomp.Proto.DisconnectRequest();
-            if (requestCase_ == RequestOneofCase.Disconnect) {
-              subBuilder.MergeFrom(Disconnect);
+            if (ReferenceEquals(other, this))
+            {
+                return true;
             }
-            input.ReadMessage(subBuilder);
-            Disconnect = subBuilder;
-            break;
-          }
-          case 26: {
-            global::Epcylon.Common.Net.ProtoStomp.Proto.SubscribeRequest subBuilder = new global::Epcylon.Common.Net.ProtoStomp.Proto.SubscribeRequest();
-            if (requestCase_ == RequestOneofCase.Subscribe) {
-              subBuilder.MergeFrom(Subscribe);
+            return true;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override int GetHashCode()
+        {
+            int hash = 1;
+            return hash;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override string ToString()
+        {
+            return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void WriteTo(pb::CodedOutputStream output)
+        {
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int CalculateSize()
+        {
+            int size = 0;
+            return size;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(Heartbeat other)
+        {
+            if (other == null)
+            {
+                return;
             }
-            input.ReadMessage(subBuilder);
-            Subscribe = subBuilder;
-            break;
-          }
-          case 34: {
-            global::Epcylon.Common.Net.ProtoStomp.Proto.UnsubscribeRequest subBuilder = new global::Epcylon.Common.Net.ProtoStomp.Proto.UnsubscribeRequest();
-            if (requestCase_ == RequestOneofCase.Unsubscribe) {
-              subBuilder.MergeFrom(Unsubscribe);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(pb::CodedInputStream input)
+        {
+            uint tag;
+            while ((tag = input.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    default:
+                        input.SkipLastField();
+                        break;
+                }
             }
-            input.ReadMessage(subBuilder);
-            Unsubscribe = subBuilder;
-            break;
-          }
-          case 42: {
-            global::Epcylon.Common.Net.ProtoStomp.Proto.ThrottleRequest subBuilder = new global::Epcylon.Common.Net.ProtoStomp.Proto.ThrottleRequest();
-            if (requestCase_ == RequestOneofCase.Throttle) {
-              subBuilder.MergeFrom(Throttle);
+        }
+
+    }
+
+    /// <summary>
+    /// The ConnectRequest message is used to connect to the server. This is the first 
+    /// message that must be sent to the server before any other requests are made.
+    /// Use within a RequestFrame. 
+    /// </summary>
+    internal sealed partial class ConnectRequest : pb::IMessage<ConnectRequest>
+    {
+        private static readonly pb::MessageParser<ConnectRequest> _parser = new pb::MessageParser<ConnectRequest>(() => new ConnectRequest());
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pb::MessageParser<ConnectRequest> Parser { get { return _parser; } }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pbr::MessageDescriptor Descriptor
+        {
+            get { return global::Epcylon.Common.Net.ProtoStomp.Proto.StompV01Reflection.Descriptor.MessageTypes[1]; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        pbr::MessageDescriptor pb::IMessage.Descriptor
+        {
+            get { return Descriptor; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ConnectRequest()
+        {
+            OnConstruction();
+        }
+
+        partial void OnConstruction();
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ConnectRequest(ConnectRequest other) : this()
+        {
+            acceptVersion_ = other.acceptVersion_;
+            login_ = other.login_;
+            passcode_ = other.passcode_;
+            body_ = other.body_;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ConnectRequest Clone()
+        {
+            return new ConnectRequest(this);
+        }
+
+        /// <summary>Field number for the "accept_version" field.</summary>
+        public const int AcceptVersionFieldNumber = 1;
+        private string acceptVersion_ = "";
+        /// <summary>
+        /// The proto-stomp versions the client can handle.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public string AcceptVersion
+        {
+            get { return acceptVersion_; }
+            set
+            {
+                acceptVersion_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
             }
-            input.ReadMessage(subBuilder);
-            Throttle = subBuilder;
-            break;
-          }
-          case 50: {
-            global::Epcylon.Common.Net.ProtoStomp.Proto.SendRequest subBuilder = new global::Epcylon.Common.Net.ProtoStomp.Proto.SendRequest();
-            if (requestCase_ == RequestOneofCase.Send) {
-              subBuilder.MergeFrom(Send);
+        }
+
+        /// <summary>Field number for the "login" field.</summary>
+        public const int LoginFieldNumber = 2;
+        private string login_ = "";
+        /// <summary>
+        /// The username to log in with.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public string Login
+        {
+            get { return login_; }
+            set
+            {
+                login_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
             }
-            input.ReadMessage(subBuilder);
-            Send = subBuilder;
-            break;
-          }
-          case 58: {
-            global::Epcylon.Common.Net.ProtoStomp.Proto.Heartbeat subBuilder = new global::Epcylon.Common.Net.ProtoStomp.Proto.Heartbeat();
-            if (requestCase_ == RequestOneofCase.Heartbeat) {
-              subBuilder.MergeFrom(Heartbeat);
+        }
+
+        /// <summary>Field number for the "passcode" field.</summary>
+        public const int PasscodeFieldNumber = 3;
+        private string passcode_ = "";
+        /// <summary>
+        /// The password to log in with.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public string Passcode
+        {
+            get { return passcode_; }
+            set
+            {
+                passcode_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
             }
-            input.ReadMessage(subBuilder);
-            Heartbeat = subBuilder;
-            break;
-          }
         }
-      }
-    }
 
-  }
-
-  /// <summary>
-  /// The ConnectedResponse message is sent by the server whenever a connection has been
-  /// successfully made. 
-  /// </summary>
-  internal sealed partial class ConnectedResponse : pb::IMessage<ConnectedResponse> {
-    private static readonly pb::MessageParser<ConnectedResponse> _parser = new pb::MessageParser<ConnectedResponse>(() => new ConnectedResponse());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<ConnectedResponse> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Epcylon.Common.Net.ProtoStomp.Proto.StompV01Reflection.Descriptor.MessageTypes[8]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ConnectedResponse() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ConnectedResponse(ConnectedResponse other) : this() {
-      version_ = other.version_;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ConnectedResponse Clone() {
-      return new ConnectedResponse(this);
-    }
-
-    /// <summary>Field number for the "version" field.</summary>
-    public const int VersionFieldNumber = 1;
-    private string version_ = "";
-    /// <summary>
-    /// The version of the server being used.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Version {
-      get { return version_; }
-      set {
-        version_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as ConnectedResponse);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(ConnectedResponse other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (Version != other.Version) return false;
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (Version.Length != 0) hash ^= Version.GetHashCode();
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (Version.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(Version);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (Version.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Version);
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(ConnectedResponse other) {
-      if (other == null) {
-        return;
-      }
-      if (other.Version.Length != 0) {
-        Version = other.Version;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
-          case 10: {
-            Version = input.ReadString();
-            break;
-          }
+        /// <summary>Field number for the "body" field.</summary>
+        public const int BodyFieldNumber = 4;
+        private pb::ByteString body_ = pb::ByteString.Empty;
+        /// <summary>
+        /// Additional server-specific information to include.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public pb::ByteString Body
+        {
+            get { return body_; }
+            set
+            {
+                body_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+            }
         }
-      }
-    }
 
-  }
-
-  /// <summary>
-  /// Holds an individual subscription response update. 
-  /// </summary>
-  internal sealed partial class MessageResponse : pb::IMessage<MessageResponse> {
-    private static readonly pb::MessageParser<MessageResponse> _parser = new pb::MessageParser<MessageResponse>(() => new MessageResponse());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<MessageResponse> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Epcylon.Common.Net.ProtoStomp.Proto.StompV01Reflection.Descriptor.MessageTypes[9]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public MessageResponse() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public MessageResponse(MessageResponse other) : this() {
-      subscriptionId_ = other.subscriptionId_;
-      messageId_ = other.messageId_;
-      body_ = other.body_;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public MessageResponse Clone() {
-      return new MessageResponse(this);
-    }
-
-    /// <summary>Field number for the "subscription_id" field.</summary>
-    public const int SubscriptionIdFieldNumber = 1;
-    private ulong subscriptionId_;
-    /// <summary>
-    /// The client-specific subscription identifier.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong SubscriptionId {
-      get { return subscriptionId_; }
-      set {
-        subscriptionId_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "message_id" field.</summary>
-    public const int MessageIdFieldNumber = 2;
-    private ulong messageId_;
-    /// <summary>
-    /// A unique identifier for this message.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong MessageId {
-      get { return messageId_; }
-      set {
-        messageId_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "body" field.</summary>
-    public const int BodyFieldNumber = 3;
-    private pb::ByteString body_ = pb::ByteString.Empty;
-    /// <summary>
-    /// The updated subscription information. 
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pb::ByteString Body {
-      get { return body_; }
-      set {
-        body_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as MessageResponse);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(MessageResponse other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (SubscriptionId != other.SubscriptionId) return false;
-      if (MessageId != other.MessageId) return false;
-      if (Body != other.Body) return false;
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (SubscriptionId != 0UL) hash ^= SubscriptionId.GetHashCode();
-      if (MessageId != 0UL) hash ^= MessageId.GetHashCode();
-      if (Body.Length != 0) hash ^= Body.GetHashCode();
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (SubscriptionId != 0UL) {
-        output.WriteRawTag(8);
-        output.WriteUInt64(SubscriptionId);
-      }
-      if (MessageId != 0UL) {
-        output.WriteRawTag(16);
-        output.WriteUInt64(MessageId);
-      }
-      if (Body.Length != 0) {
-        output.WriteRawTag(26);
-        output.WriteBytes(Body);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (SubscriptionId != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(SubscriptionId);
-      }
-      if (MessageId != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(MessageId);
-      }
-      if (Body.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeBytesSize(Body);
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(MessageResponse other) {
-      if (other == null) {
-        return;
-      }
-      if (other.SubscriptionId != 0UL) {
-        SubscriptionId = other.SubscriptionId;
-      }
-      if (other.MessageId != 0UL) {
-        MessageId = other.MessageId;
-      }
-      if (other.Body.Length != 0) {
-        Body = other.Body;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
-          case 8: {
-            SubscriptionId = input.ReadUInt64();
-            break;
-          }
-          case 16: {
-            MessageId = input.ReadUInt64();
-            break;
-          }
-          case 26: {
-            Body = input.ReadBytes();
-            break;
-          }
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override bool Equals(object other)
+        {
+            return Equals(other as ConnectRequest);
         }
-      }
-    }
 
-  }
-
-  /// <summary>
-  /// Holds a collection of MessageResponse elements. Used in batch messages. 
-  /// </summary>
-  internal sealed partial class MessageResponses : pb::IMessage<MessageResponses> {
-    private static readonly pb::MessageParser<MessageResponses> _parser = new pb::MessageParser<MessageResponses>(() => new MessageResponses());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<MessageResponses> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Epcylon.Common.Net.ProtoStomp.Proto.StompV01Reflection.Descriptor.MessageTypes[10]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public MessageResponses() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public MessageResponses(MessageResponses other) : this() {
-      message_ = other.message_.Clone();
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public MessageResponses Clone() {
-      return new MessageResponses(this);
-    }
-
-    /// <summary>Field number for the "message" field.</summary>
-    public const int MessageFieldNumber = 1;
-    private static readonly pb::FieldCodec<global::Epcylon.Common.Net.ProtoStomp.Proto.MessageResponse> _repeated_message_codec
-        = pb::FieldCodec.ForMessage(10, global::Epcylon.Common.Net.ProtoStomp.Proto.MessageResponse.Parser);
-    private readonly pbc::RepeatedField<global::Epcylon.Common.Net.ProtoStomp.Proto.MessageResponse> message_ = new pbc::RepeatedField<global::Epcylon.Common.Net.ProtoStomp.Proto.MessageResponse>();
-    /// <summary>
-    /// A collection of messages to handle.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::Epcylon.Common.Net.ProtoStomp.Proto.MessageResponse> Message {
-      get { return message_; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as MessageResponses);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(MessageResponses other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if(!message_.Equals(other.message_)) return false;
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      hash ^= message_.GetHashCode();
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      message_.WriteTo(output, _repeated_message_codec);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      size += message_.CalculateSize(_repeated_message_codec);
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(MessageResponses other) {
-      if (other == null) {
-        return;
-      }
-      message_.Add(other.message_);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
-          case 10: {
-            message_.AddEntriesFrom(input, _repeated_message_codec);
-            break;
-          }
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool Equals(ConnectRequest other)
+        {
+            if (ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (ReferenceEquals(other, this))
+            {
+                return true;
+            }
+            if (AcceptVersion != other.AcceptVersion) return false;
+            if (Login != other.Login) return false;
+            if (Passcode != other.Passcode) return false;
+            if (Body != other.Body) return false;
+            return true;
         }
-      }
-    }
 
-  }
-
-  /// <summary>
-  /// Notifies the client that a request has been fully processed. Sent in response to any 
-  /// message sent to the server with a receipt id included. 
-  /// </summary>
-  internal sealed partial class ReceiptResponse : pb::IMessage<ReceiptResponse> {
-    private static readonly pb::MessageParser<ReceiptResponse> _parser = new pb::MessageParser<ReceiptResponse>(() => new ReceiptResponse());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<ReceiptResponse> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Epcylon.Common.Net.ProtoStomp.Proto.StompV01Reflection.Descriptor.MessageTypes[11]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ReceiptResponse() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ReceiptResponse(ReceiptResponse other) : this() {
-      receiptId_ = other.receiptId_;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ReceiptResponse Clone() {
-      return new ReceiptResponse(this);
-    }
-
-    /// <summary>Field number for the "receipt_id" field.</summary>
-    public const int ReceiptIdFieldNumber = 1;
-    private ulong receiptId_;
-    /// <summary>
-    /// The receipt identifier included in the request.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong ReceiptId {
-      get { return receiptId_; }
-      set {
-        receiptId_ = value;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as ReceiptResponse);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(ReceiptResponse other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (ReceiptId != other.ReceiptId) return false;
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (ReceiptId != 0UL) hash ^= ReceiptId.GetHashCode();
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (ReceiptId != 0UL) {
-        output.WriteRawTag(8);
-        output.WriteUInt64(ReceiptId);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (ReceiptId != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(ReceiptId);
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(ReceiptResponse other) {
-      if (other == null) {
-        return;
-      }
-      if (other.ReceiptId != 0UL) {
-        ReceiptId = other.ReceiptId;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
-          case 8: {
-            ReceiptId = input.ReadUInt64();
-            break;
-          }
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override int GetHashCode()
+        {
+            int hash = 1;
+            if (AcceptVersion.Length != 0) hash ^= AcceptVersion.GetHashCode();
+            if (Login.Length != 0) hash ^= Login.GetHashCode();
+            if (Passcode.Length != 0) hash ^= Passcode.GetHashCode();
+            if (Body.Length != 0) hash ^= Body.GetHashCode();
+            return hash;
         }
-      }
-    }
 
-  }
-
-  /// <summary>
-  /// Notifies a client of errors that occur at the server level. 
-  /// </summary>
-  internal sealed partial class ServerErrorResponse : pb::IMessage<ServerErrorResponse> {
-    private static readonly pb::MessageParser<ServerErrorResponse> _parser = new pb::MessageParser<ServerErrorResponse>(() => new ServerErrorResponse());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<ServerErrorResponse> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Epcylon.Common.Net.ProtoStomp.Proto.StompV01Reflection.Descriptor.MessageTypes[12]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ServerErrorResponse() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ServerErrorResponse(ServerErrorResponse other) : this() {
-      message_ = other.message_;
-      details_ = other.details_;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ServerErrorResponse Clone() {
-      return new ServerErrorResponse(this);
-    }
-
-    /// <summary>Field number for the "message" field.</summary>
-    public const int MessageFieldNumber = 1;
-    private string message_ = "";
-    /// <summary>
-    /// Message that summarizes the error.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Message {
-      get { return message_; }
-      set {
-        message_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "details" field.</summary>
-    public const int DetailsFieldNumber = 2;
-    private string details_ = "";
-    /// <summary>
-    /// Detailed information about the error.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Details {
-      get { return details_; }
-      set {
-        details_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as ServerErrorResponse);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(ServerErrorResponse other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (Message != other.Message) return false;
-      if (Details != other.Details) return false;
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (Message.Length != 0) hash ^= Message.GetHashCode();
-      if (Details.Length != 0) hash ^= Details.GetHashCode();
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (Message.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(Message);
-      }
-      if (Details.Length != 0) {
-        output.WriteRawTag(18);
-        output.WriteString(Details);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (Message.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Message);
-      }
-      if (Details.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Details);
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(ServerErrorResponse other) {
-      if (other == null) {
-        return;
-      }
-      if (other.Message.Length != 0) {
-        Message = other.Message;
-      }
-      if (other.Details.Length != 0) {
-        Details = other.Details;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
-          case 10: {
-            Message = input.ReadString();
-            break;
-          }
-          case 18: {
-            Details = input.ReadString();
-            break;
-          }
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override string ToString()
+        {
+            return pb::JsonFormatter.ToDiagnosticString(this);
         }
-      }
-    }
 
-  }
-
-  /// <summary>
-  /// Notifies a client of errors that occur for a specific subscription. 
-  /// </summary>
-  internal sealed partial class SubscriptionErrorResponse : pb::IMessage<SubscriptionErrorResponse> {
-    private static readonly pb::MessageParser<SubscriptionErrorResponse> _parser = new pb::MessageParser<SubscriptionErrorResponse>(() => new SubscriptionErrorResponse());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<SubscriptionErrorResponse> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Epcylon.Common.Net.ProtoStomp.Proto.StompV01Reflection.Descriptor.MessageTypes[13]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public SubscriptionErrorResponse() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public SubscriptionErrorResponse(SubscriptionErrorResponse other) : this() {
-      subscriptionId_ = other.subscriptionId_;
-      messageId_ = other.messageId_;
-      message_ = other.message_;
-      details_ = other.details_;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public SubscriptionErrorResponse Clone() {
-      return new SubscriptionErrorResponse(this);
-    }
-
-    /// <summary>Field number for the "subscription_id" field.</summary>
-    public const int SubscriptionIdFieldNumber = 1;
-    private ulong subscriptionId_;
-    /// <summary>
-    /// The client-specific subscription identifier.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong SubscriptionId {
-      get { return subscriptionId_; }
-      set {
-        subscriptionId_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "message_id" field.</summary>
-    public const int MessageIdFieldNumber = 2;
-    private ulong messageId_;
-    /// <summary>
-    /// A unique identifier for this message.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong MessageId {
-      get { return messageId_; }
-      set {
-        messageId_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "message" field.</summary>
-    public const int MessageFieldNumber = 3;
-    private string message_ = "";
-    /// <summary>
-    /// Message that summarizes the error.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Message {
-      get { return message_; }
-      set {
-        message_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "details" field.</summary>
-    public const int DetailsFieldNumber = 4;
-    private string details_ = "";
-    /// <summary>
-    /// Detailed information about the error.
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Details {
-      get { return details_; }
-      set {
-        details_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as SubscriptionErrorResponse);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(SubscriptionErrorResponse other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (SubscriptionId != other.SubscriptionId) return false;
-      if (MessageId != other.MessageId) return false;
-      if (Message != other.Message) return false;
-      if (Details != other.Details) return false;
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (SubscriptionId != 0UL) hash ^= SubscriptionId.GetHashCode();
-      if (MessageId != 0UL) hash ^= MessageId.GetHashCode();
-      if (Message.Length != 0) hash ^= Message.GetHashCode();
-      if (Details.Length != 0) hash ^= Details.GetHashCode();
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (SubscriptionId != 0UL) {
-        output.WriteRawTag(8);
-        output.WriteUInt64(SubscriptionId);
-      }
-      if (MessageId != 0UL) {
-        output.WriteRawTag(16);
-        output.WriteUInt64(MessageId);
-      }
-      if (Message.Length != 0) {
-        output.WriteRawTag(26);
-        output.WriteString(Message);
-      }
-      if (Details.Length != 0) {
-        output.WriteRawTag(34);
-        output.WriteString(Details);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (SubscriptionId != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(SubscriptionId);
-      }
-      if (MessageId != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(MessageId);
-      }
-      if (Message.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Message);
-      }
-      if (Details.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Details);
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(SubscriptionErrorResponse other) {
-      if (other == null) {
-        return;
-      }
-      if (other.SubscriptionId != 0UL) {
-        SubscriptionId = other.SubscriptionId;
-      }
-      if (other.MessageId != 0UL) {
-        MessageId = other.MessageId;
-      }
-      if (other.Message.Length != 0) {
-        Message = other.Message;
-      }
-      if (other.Details.Length != 0) {
-        Details = other.Details;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
-          case 8: {
-            SubscriptionId = input.ReadUInt64();
-            break;
-          }
-          case 16: {
-            MessageId = input.ReadUInt64();
-            break;
-          }
-          case 26: {
-            Message = input.ReadString();
-            break;
-          }
-          case 34: {
-            Details = input.ReadString();
-            break;
-          }
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void WriteTo(pb::CodedOutputStream output)
+        {
+            if (AcceptVersion.Length != 0)
+            {
+                output.WriteRawTag(10);
+                output.WriteString(AcceptVersion);
+            }
+            if (Login.Length != 0)
+            {
+                output.WriteRawTag(18);
+                output.WriteString(Login);
+            }
+            if (Passcode.Length != 0)
+            {
+                output.WriteRawTag(26);
+                output.WriteString(Passcode);
+            }
+            if (Body.Length != 0)
+            {
+                output.WriteRawTag(34);
+                output.WriteBytes(Body);
+            }
         }
-      }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int CalculateSize()
+        {
+            int size = 0;
+            if (AcceptVersion.Length != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeStringSize(AcceptVersion);
+            }
+            if (Login.Length != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeStringSize(Login);
+            }
+            if (Passcode.Length != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeStringSize(Passcode);
+            }
+            if (Body.Length != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeBytesSize(Body);
+            }
+            return size;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(ConnectRequest other)
+        {
+            if (other == null)
+            {
+                return;
+            }
+            if (other.AcceptVersion.Length != 0)
+            {
+                AcceptVersion = other.AcceptVersion;
+            }
+            if (other.Login.Length != 0)
+            {
+                Login = other.Login;
+            }
+            if (other.Passcode.Length != 0)
+            {
+                Passcode = other.Passcode;
+            }
+            if (other.Body.Length != 0)
+            {
+                Body = other.Body;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(pb::CodedInputStream input)
+        {
+            uint tag;
+            while ((tag = input.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    default:
+                        input.SkipLastField();
+                        break;
+                    case 10:
+                        {
+                            AcceptVersion = input.ReadString();
+                            break;
+                        }
+                    case 18:
+                        {
+                            Login = input.ReadString();
+                            break;
+                        }
+                    case 26:
+                        {
+                            Passcode = input.ReadString();
+                            break;
+                        }
+                    case 34:
+                        {
+                            Body = input.ReadBytes();
+                            break;
+                        }
+                }
+            }
+        }
+
     }
 
-  }
-
-  /// <summary>
-  /// This is the main response frame that will be received by the client. 
-  /// All responses are included within this frame. 
-  /// </summary>
-  internal sealed partial class ResponseFrame : pb::IMessage<ResponseFrame> {
-    private static readonly pb::MessageParser<ResponseFrame> _parser = new pb::MessageParser<ResponseFrame>(() => new ResponseFrame());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<ResponseFrame> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Epcylon.Common.Net.ProtoStomp.Proto.StompV01Reflection.Descriptor.MessageTypes[14]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ResponseFrame() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ResponseFrame(ResponseFrame other) : this() {
-      switch (other.ResponseCase) {
-        case ResponseOneofCase.Connected:
-          Connected = other.Connected.Clone();
-          break;
-        case ResponseOneofCase.SingleMessage:
-          SingleMessage = other.SingleMessage.Clone();
-          break;
-        case ResponseOneofCase.BatchMessages:
-          BatchMessages = other.BatchMessages.Clone();
-          break;
-        case ResponseOneofCase.Receipt:
-          Receipt = other.Receipt.Clone();
-          break;
-        case ResponseOneofCase.ServerError:
-          ServerError = other.ServerError.Clone();
-          break;
-        case ResponseOneofCase.SubscriptionError:
-          SubscriptionError = other.SubscriptionError.Clone();
-          break;
-        case ResponseOneofCase.Heartbeat:
-          Heartbeat = other.Heartbeat.Clone();
-          break;
-      }
-
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ResponseFrame Clone() {
-      return new ResponseFrame(this);
-    }
-
-    /// <summary>Field number for the "connected" field.</summary>
-    public const int ConnectedFieldNumber = 1;
     /// <summary>
-    /// Response to a connection attempt. Received when properly connected. 
+    /// The DisconnectRequest message is used to inform the server that a disconnection
+    /// is about to be made. Server implementations must be able to handle disconnections 
+    /// with and without this request. Use within a RequestFrame. 
     /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Epcylon.Common.Net.ProtoStomp.Proto.ConnectedResponse Connected {
-      get { return responseCase_ == ResponseOneofCase.Connected ? (global::Epcylon.Common.Net.ProtoStomp.Proto.ConnectedResponse) response_ : null; }
-      set {
-        response_ = value;
-        responseCase_ = value == null ? ResponseOneofCase.None : ResponseOneofCase.Connected;
-      }
+    internal sealed partial class DisconnectRequest : pb::IMessage<DisconnectRequest>
+    {
+        private static readonly pb::MessageParser<DisconnectRequest> _parser = new(() => new DisconnectRequest());
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pb::MessageParser<DisconnectRequest> Parser { get { return _parser; } }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pbr::MessageDescriptor Descriptor
+        {
+            get { return global::Epcylon.Common.Net.ProtoStomp.Proto.StompV01Reflection.Descriptor.MessageTypes[2]; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        pbr::MessageDescriptor pb::IMessage.Descriptor
+        {
+            get { return Descriptor; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public DisconnectRequest()
+        {
+            OnConstruction();
+        }
+
+        partial void OnConstruction();
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public DisconnectRequest(DisconnectRequest other) : this()
+        {
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public DisconnectRequest Clone()
+        {
+            return new DisconnectRequest(this);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override bool Equals(object other)
+        {
+            return Equals(other as DisconnectRequest);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool Equals(DisconnectRequest other)
+        {
+            if (ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (ReferenceEquals(other, this))
+            {
+                return true;
+            }
+            return true;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override int GetHashCode()
+        {
+            int hash = 1;
+            return hash;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override string ToString()
+        {
+            return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void WriteTo(pb::CodedOutputStream output)
+        {
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int CalculateSize()
+        {
+            int size = 0;
+            return size;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(DisconnectRequest other)
+        {
+            if (other == null)
+            {
+                return;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(pb::CodedInputStream input)
+        {
+            uint tag;
+            while ((tag = input.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    default:
+                        input.SkipLastField();
+                        break;
+                }
+            }
+        }
+
     }
 
-    /// <summary>Field number for the "single_message" field.</summary>
-    public const int SingleMessageFieldNumber = 2;
     /// <summary>
-    /// Holds a single message for a subcription, whether throttled or not.
-    /// If a subscription is not throttled, responses will always be in this
-    /// message. If a subscription is throttled, responses may be in this message
-    /// or in the batch messages. 
+    /// The SubscribeRequest message is used to subscribe to a stream of events.
+    /// Use within a RequestFrame. 
     /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Epcylon.Common.Net.ProtoStomp.Proto.MessageResponse SingleMessage {
-      get { return responseCase_ == ResponseOneofCase.SingleMessage ? (global::Epcylon.Common.Net.ProtoStomp.Proto.MessageResponse) response_ : null; }
-      set {
-        response_ = value;
-        responseCase_ = value == null ? ResponseOneofCase.None : ResponseOneofCase.SingleMessage;
-      }
+    internal sealed partial class SubscribeRequest : pb::IMessage<SubscribeRequest>
+    {
+        private static readonly pb::MessageParser<SubscribeRequest> _parser = new pb::MessageParser<SubscribeRequest>(() => new SubscribeRequest());
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pb::MessageParser<SubscribeRequest> Parser { get { return _parser; } }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pbr::MessageDescriptor Descriptor
+        {
+            get { return global::Epcylon.Common.Net.ProtoStomp.Proto.StompV01Reflection.Descriptor.MessageTypes[3]; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        pbr::MessageDescriptor pb::IMessage.Descriptor
+        {
+            get { return Descriptor; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public SubscribeRequest()
+        {
+            OnConstruction();
+        }
+
+        partial void OnConstruction();
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public SubscribeRequest(SubscribeRequest other) : this()
+        {
+            destination_ = other.destination_;
+            subscriptionId_ = other.subscriptionId_;
+            throttleRate_ = other.throttleRate_;
+            receiptId_ = other.receiptId_;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public SubscribeRequest Clone()
+        {
+            return new SubscribeRequest(this);
+        }
+
+        /// <summary>Field number for the "destination" field.</summary>
+        public const int DestinationFieldNumber = 1;
+        private string destination_ = "";
+        /// <summary>
+        /// A string that identifies the subscription.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public string Destination
+        {
+            get { return destination_; }
+            set
+            {
+                destination_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+            }
+        }
+
+        /// <summary>Field number for the "subscription_id" field.</summary>
+        public const int SubscriptionIdFieldNumber = 2;
+        private ulong subscriptionId_;
+        /// <summary>
+        /// A unique client identifier for the subscription.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong SubscriptionId
+        {
+            get { return subscriptionId_; }
+            set
+            {
+                subscriptionId_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "throttle_rate" field.</summary>
+        public const int ThrottleRateFieldNumber = 3;
+        private uint throttleRate_;
+        /// <summary>
+        /// The rate to throttle messages at (in ms, 0 for no throttling).
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public uint ThrottleRate
+        {
+            get { return throttleRate_; }
+            set
+            {
+                throttleRate_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "receipt_id" field.</summary>
+        public const int ReceiptIdFieldNumber = 4;
+        private ulong receiptId_;
+        /// <summary>
+        /// A unique (optional) receipt id to include if a receipt is desired.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong ReceiptId
+        {
+            get { return receiptId_; }
+            set
+            {
+                receiptId_ = value;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override bool Equals(object other)
+        {
+            return Equals(other as SubscribeRequest);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool Equals(SubscribeRequest other)
+        {
+            if (ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (ReferenceEquals(other, this))
+            {
+                return true;
+            }
+            if (Destination != other.Destination) return false;
+            if (SubscriptionId != other.SubscriptionId) return false;
+            if (ThrottleRate != other.ThrottleRate) return false;
+            if (ReceiptId != other.ReceiptId) return false;
+            return true;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override int GetHashCode()
+        {
+            int hash = 1;
+            if (Destination.Length != 0) hash ^= Destination.GetHashCode();
+            if (SubscriptionId != 0UL) hash ^= SubscriptionId.GetHashCode();
+            if (ThrottleRate != 0) hash ^= ThrottleRate.GetHashCode();
+            if (ReceiptId != 0UL) hash ^= ReceiptId.GetHashCode();
+            return hash;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override string ToString()
+        {
+            return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void WriteTo(pb::CodedOutputStream output)
+        {
+            if (Destination.Length != 0)
+            {
+                output.WriteRawTag(10);
+                output.WriteString(Destination);
+            }
+            if (SubscriptionId != 0UL)
+            {
+                output.WriteRawTag(16);
+                output.WriteUInt64(SubscriptionId);
+            }
+            if (ThrottleRate != 0)
+            {
+                output.WriteRawTag(24);
+                output.WriteUInt32(ThrottleRate);
+            }
+            if (ReceiptId != 0UL)
+            {
+                output.WriteRawTag(32);
+                output.WriteUInt64(ReceiptId);
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int CalculateSize()
+        {
+            int size = 0;
+            if (Destination.Length != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeStringSize(Destination);
+            }
+            if (SubscriptionId != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(SubscriptionId);
+            }
+            if (ThrottleRate != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt32Size(ThrottleRate);
+            }
+            if (ReceiptId != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(ReceiptId);
+            }
+            return size;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(SubscribeRequest other)
+        {
+            if (other == null)
+            {
+                return;
+            }
+            if (other.Destination.Length != 0)
+            {
+                Destination = other.Destination;
+            }
+            if (other.SubscriptionId != 0UL)
+            {
+                SubscriptionId = other.SubscriptionId;
+            }
+            if (other.ThrottleRate != 0)
+            {
+                ThrottleRate = other.ThrottleRate;
+            }
+            if (other.ReceiptId != 0UL)
+            {
+                ReceiptId = other.ReceiptId;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(pb::CodedInputStream input)
+        {
+            uint tag;
+            while ((tag = input.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    default:
+                        input.SkipLastField();
+                        break;
+                    case 10:
+                        {
+                            Destination = input.ReadString();
+                            break;
+                        }
+                    case 16:
+                        {
+                            SubscriptionId = input.ReadUInt64();
+                            break;
+                        }
+                    case 24:
+                        {
+                            ThrottleRate = input.ReadUInt32();
+                            break;
+                        }
+                    case 32:
+                        {
+                            ReceiptId = input.ReadUInt64();
+                            break;
+                        }
+                }
+            }
+        }
+
     }
 
-    /// <summary>Field number for the "batch_messages" field.</summary>
-    public const int BatchMessagesFieldNumber = 3;
     /// <summary>
-    /// Holds batched throttled messages for multiple subscriptions. Only throttled
-    /// subscriptions will send messages through this, but throttled messages may
-    /// still come in through the single message. 
+    /// The UnsubscribeRequest message is used to unsubscribe from a stream of events.
+    /// Use within a RequestFrame. 
     /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Epcylon.Common.Net.ProtoStomp.Proto.MessageResponses BatchMessages {
-      get { return responseCase_ == ResponseOneofCase.BatchMessages ? (global::Epcylon.Common.Net.ProtoStomp.Proto.MessageResponses) response_ : null; }
-      set {
-        response_ = value;
-        responseCase_ = value == null ? ResponseOneofCase.None : ResponseOneofCase.BatchMessages;
-      }
+    internal sealed partial class UnsubscribeRequest : pb::IMessage<UnsubscribeRequest>
+    {
+        private static readonly pb::MessageParser<UnsubscribeRequest> _parser = new pb::MessageParser<UnsubscribeRequest>(() => new UnsubscribeRequest());
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pb::MessageParser<UnsubscribeRequest> Parser { get { return _parser; } }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pbr::MessageDescriptor Descriptor
+        {
+            get { return global::Epcylon.Common.Net.ProtoStomp.Proto.StompV01Reflection.Descriptor.MessageTypes[4]; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        pbr::MessageDescriptor pb::IMessage.Descriptor
+        {
+            get { return Descriptor; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public UnsubscribeRequest()
+        {
+            OnConstruction();
+        }
+
+        partial void OnConstruction();
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public UnsubscribeRequest(UnsubscribeRequest other) : this()
+        {
+            subscriptionId_ = other.subscriptionId_;
+            receiptId_ = other.receiptId_;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public UnsubscribeRequest Clone()
+        {
+            return new UnsubscribeRequest(this);
+        }
+
+        /// <summary>Field number for the "subscription_id" field.</summary>
+        public const int SubscriptionIdFieldNumber = 1;
+        private ulong subscriptionId_;
+        /// <summary>
+        /// The client-specific subscription identifier.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong SubscriptionId
+        {
+            get { return subscriptionId_; }
+            set
+            {
+                subscriptionId_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "receipt_id" field.</summary>
+        public const int ReceiptIdFieldNumber = 2;
+        private ulong receiptId_;
+        /// <summary>
+        /// A unique (optional) receipt id to include if a receipt is desired.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong ReceiptId
+        {
+            get { return receiptId_; }
+            set
+            {
+                receiptId_ = value;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override bool Equals(object other)
+        {
+            return Equals(other as UnsubscribeRequest);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool Equals(UnsubscribeRequest other)
+        {
+            if (ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (ReferenceEquals(other, this))
+            {
+                return true;
+            }
+            if (SubscriptionId != other.SubscriptionId) return false;
+            if (ReceiptId != other.ReceiptId) return false;
+            return true;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override int GetHashCode()
+        {
+            int hash = 1;
+            if (SubscriptionId != 0UL) hash ^= SubscriptionId.GetHashCode();
+            if (ReceiptId != 0UL) hash ^= ReceiptId.GetHashCode();
+            return hash;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override string ToString()
+        {
+            return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void WriteTo(pb::CodedOutputStream output)
+        {
+            if (SubscriptionId != 0UL)
+            {
+                output.WriteRawTag(8);
+                output.WriteUInt64(SubscriptionId);
+            }
+            if (ReceiptId != 0UL)
+            {
+                output.WriteRawTag(16);
+                output.WriteUInt64(ReceiptId);
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int CalculateSize()
+        {
+            int size = 0;
+            if (SubscriptionId != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(SubscriptionId);
+            }
+            if (ReceiptId != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(ReceiptId);
+            }
+            return size;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(UnsubscribeRequest other)
+        {
+            if (other == null)
+            {
+                return;
+            }
+            if (other.SubscriptionId != 0UL)
+            {
+                SubscriptionId = other.SubscriptionId;
+            }
+            if (other.ReceiptId != 0UL)
+            {
+                ReceiptId = other.ReceiptId;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(pb::CodedInputStream input)
+        {
+            uint tag;
+            while ((tag = input.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    default:
+                        input.SkipLastField();
+                        break;
+                    case 8:
+                        {
+                            SubscriptionId = input.ReadUInt64();
+                            break;
+                        }
+                    case 16:
+                        {
+                            ReceiptId = input.ReadUInt64();
+                            break;
+                        }
+                }
+            }
+        }
+
     }
 
-    /// <summary>Field number for the "receipt" field.</summary>
-    public const int ReceiptFieldNumber = 4;
     /// <summary>
-    /// Receipt response for receiptable requests. 
+    /// The ThrottleRequest message is used to change the throttle rate of an existing 
+    /// subscription. Use within a RequestFrame. 
     /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Epcylon.Common.Net.ProtoStomp.Proto.ReceiptResponse Receipt {
-      get { return responseCase_ == ResponseOneofCase.Receipt ? (global::Epcylon.Common.Net.ProtoStomp.Proto.ReceiptResponse) response_ : null; }
-      set {
-        response_ = value;
-        responseCase_ = value == null ? ResponseOneofCase.None : ResponseOneofCase.Receipt;
-      }
+    internal sealed partial class ThrottleRequest : pb::IMessage<ThrottleRequest>
+    {
+        private static readonly pb::MessageParser<ThrottleRequest> _parser = new pb::MessageParser<ThrottleRequest>(() => new ThrottleRequest());
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pb::MessageParser<ThrottleRequest> Parser { get { return _parser; } }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pbr::MessageDescriptor Descriptor
+        {
+            get { return global::Epcylon.Common.Net.ProtoStomp.Proto.StompV01Reflection.Descriptor.MessageTypes[5]; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        pbr::MessageDescriptor pb::IMessage.Descriptor
+        {
+            get { return Descriptor; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ThrottleRequest()
+        {
+            OnConstruction();
+        }
+
+        partial void OnConstruction();
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ThrottleRequest(ThrottleRequest other) : this()
+        {
+            subscriptionId_ = other.subscriptionId_;
+            throttleRate_ = other.throttleRate_;
+            receiptId_ = other.receiptId_;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ThrottleRequest Clone()
+        {
+            return new ThrottleRequest(this);
+        }
+
+        /// <summary>Field number for the "subscription_id" field.</summary>
+        public const int SubscriptionIdFieldNumber = 1;
+        private ulong subscriptionId_;
+        /// <summary>
+        /// The client-specific subscription identifier.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong SubscriptionId
+        {
+            get { return subscriptionId_; }
+            set
+            {
+                subscriptionId_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "throttle_rate" field.</summary>
+        public const int ThrottleRateFieldNumber = 2;
+        private uint throttleRate_;
+        /// <summary>
+        /// The rate to throttle messages at (in ms, 0 for no throttling).
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public uint ThrottleRate
+        {
+            get { return throttleRate_; }
+            set
+            {
+                throttleRate_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "receipt_id" field.</summary>
+        public const int ReceiptIdFieldNumber = 3;
+        private ulong receiptId_;
+        /// <summary>
+        /// A unique (optional) receipt id to include if a receipt is desired.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong ReceiptId
+        {
+            get { return receiptId_; }
+            set
+            {
+                receiptId_ = value;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override bool Equals(object other)
+        {
+            return Equals(other as ThrottleRequest);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool Equals(ThrottleRequest other)
+        {
+            if (ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (ReferenceEquals(other, this))
+            {
+                return true;
+            }
+            if (SubscriptionId != other.SubscriptionId) return false;
+            if (ThrottleRate != other.ThrottleRate) return false;
+            if (ReceiptId != other.ReceiptId) return false;
+            return true;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override int GetHashCode()
+        {
+            int hash = 1;
+            if (SubscriptionId != 0UL) hash ^= SubscriptionId.GetHashCode();
+            if (ThrottleRate != 0) hash ^= ThrottleRate.GetHashCode();
+            if (ReceiptId != 0UL) hash ^= ReceiptId.GetHashCode();
+            return hash;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override string ToString()
+        {
+            return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void WriteTo(pb::CodedOutputStream output)
+        {
+            if (SubscriptionId != 0UL)
+            {
+                output.WriteRawTag(8);
+                output.WriteUInt64(SubscriptionId);
+            }
+            if (ThrottleRate != 0)
+            {
+                output.WriteRawTag(16);
+                output.WriteUInt32(ThrottleRate);
+            }
+            if (ReceiptId != 0UL)
+            {
+                output.WriteRawTag(24);
+                output.WriteUInt64(ReceiptId);
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int CalculateSize()
+        {
+            int size = 0;
+            if (SubscriptionId != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(SubscriptionId);
+            }
+            if (ThrottleRate != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt32Size(ThrottleRate);
+            }
+            if (ReceiptId != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(ReceiptId);
+            }
+            return size;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(ThrottleRequest other)
+        {
+            if (other == null)
+            {
+                return;
+            }
+            if (other.SubscriptionId != 0UL)
+            {
+                SubscriptionId = other.SubscriptionId;
+            }
+            if (other.ThrottleRate != 0)
+            {
+                ThrottleRate = other.ThrottleRate;
+            }
+            if (other.ReceiptId != 0UL)
+            {
+                ReceiptId = other.ReceiptId;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(pb::CodedInputStream input)
+        {
+            uint tag;
+            while ((tag = input.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    default:
+                        input.SkipLastField();
+                        break;
+                    case 8:
+                        {
+                            SubscriptionId = input.ReadUInt64();
+                            break;
+                        }
+                    case 16:
+                        {
+                            ThrottleRate = input.ReadUInt32();
+                            break;
+                        }
+                    case 24:
+                        {
+                            ReceiptId = input.ReadUInt64();
+                            break;
+                        }
+                }
+            }
+        }
+
     }
 
-    /// <summary>Field number for the "server_error" field.</summary>
-    public const int ServerErrorFieldNumber = 5;
+    /// <summary>
+    /// The SendRequest message is used to send single updates or commands to the server.
+    /// Use within a RequestFrame. 
+    /// </summary>
+    internal sealed partial class SendRequest : pb::IMessage<SendRequest>
+    {
+        private static readonly pb::MessageParser<SendRequest> _parser = new pb::MessageParser<SendRequest>(() => new SendRequest());
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pb::MessageParser<SendRequest> Parser { get { return _parser; } }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pbr::MessageDescriptor Descriptor
+        {
+            get { return global::Epcylon.Common.Net.ProtoStomp.Proto.StompV01Reflection.Descriptor.MessageTypes[6]; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        pbr::MessageDescriptor pb::IMessage.Descriptor
+        {
+            get { return Descriptor; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public SendRequest()
+        {
+            OnConstruction();
+        }
+
+        partial void OnConstruction();
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public SendRequest(SendRequest other) : this()
+        {
+            destination_ = other.destination_;
+            sendId_ = other.sendId_;
+            body_ = other.body_;
+            receiptId_ = other.receiptId_;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public SendRequest Clone()
+        {
+            return new SendRequest(this);
+        }
+
+        /// <summary>Field number for the "destination" field.</summary>
+        public const int DestinationFieldNumber = 1;
+        private string destination_ = "";
+        /// <summary>
+        /// A string that identifies the command destination.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public string Destination
+        {
+            get { return destination_; }
+            set
+            {
+                destination_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+            }
+        }
+
+        /// <summary>Field number for the "send_id" field.</summary>
+        public const int SendIdFieldNumber = 2;
+        private ulong sendId_;
+        /// <summary>
+        /// A unique client-specific identifier for the send. 
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong SendId
+        {
+            get { return sendId_; }
+            set
+            {
+                sendId_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "body" field.</summary>
+        public const int BodyFieldNumber = 3;
+        private pb::ByteString body_ = pb::ByteString.Empty;
+        /// <summary>
+        /// The body to include in the send, if required.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public pb::ByteString Body
+        {
+            get { return body_; }
+            set
+            {
+                body_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+            }
+        }
+
+        /// <summary>Field number for the "receipt_id" field.</summary>
+        public const int ReceiptIdFieldNumber = 4;
+        private ulong receiptId_;
+        /// <summary>
+        /// A unique (optional) receipt id to include if a receipt is desired.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong ReceiptId
+        {
+            get { return receiptId_; }
+            set
+            {
+                receiptId_ = value;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override bool Equals(object other)
+        {
+            return Equals(other as SendRequest);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool Equals(SendRequest other)
+        {
+            if (ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (ReferenceEquals(other, this))
+            {
+                return true;
+            }
+            if (Destination != other.Destination) return false;
+            if (SendId != other.SendId) return false;
+            if (Body != other.Body) return false;
+            if (ReceiptId != other.ReceiptId) return false;
+            return true;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override int GetHashCode()
+        {
+            int hash = 1;
+            if (Destination.Length != 0) hash ^= Destination.GetHashCode();
+            if (SendId != 0UL) hash ^= SendId.GetHashCode();
+            if (Body.Length != 0) hash ^= Body.GetHashCode();
+            if (ReceiptId != 0UL) hash ^= ReceiptId.GetHashCode();
+            return hash;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override string ToString()
+        {
+            return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void WriteTo(pb::CodedOutputStream output)
+        {
+            if (Destination.Length != 0)
+            {
+                output.WriteRawTag(10);
+                output.WriteString(Destination);
+            }
+            if (SendId != 0UL)
+            {
+                output.WriteRawTag(16);
+                output.WriteUInt64(SendId);
+            }
+            if (Body.Length != 0)
+            {
+                output.WriteRawTag(26);
+                output.WriteBytes(Body);
+            }
+            if (ReceiptId != 0UL)
+            {
+                output.WriteRawTag(32);
+                output.WriteUInt64(ReceiptId);
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int CalculateSize()
+        {
+            int size = 0;
+            if (Destination.Length != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeStringSize(Destination);
+            }
+            if (SendId != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(SendId);
+            }
+            if (Body.Length != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeBytesSize(Body);
+            }
+            if (ReceiptId != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(ReceiptId);
+            }
+            return size;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(SendRequest other)
+        {
+            if (other == null)
+            {
+                return;
+            }
+            if (other.Destination.Length != 0)
+            {
+                Destination = other.Destination;
+            }
+            if (other.SendId != 0UL)
+            {
+                SendId = other.SendId;
+            }
+            if (other.Body.Length != 0)
+            {
+                Body = other.Body;
+            }
+            if (other.ReceiptId != 0UL)
+            {
+                ReceiptId = other.ReceiptId;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(pb::CodedInputStream input)
+        {
+            uint tag;
+            while ((tag = input.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    default:
+                        input.SkipLastField();
+                        break;
+                    case 10:
+                        {
+                            Destination = input.ReadString();
+                            break;
+                        }
+                    case 16:
+                        {
+                            SendId = input.ReadUInt64();
+                            break;
+                        }
+                    case 26:
+                        {
+                            Body = input.ReadBytes();
+                            break;
+                        }
+                    case 32:
+                        {
+                            ReceiptId = input.ReadUInt64();
+                            break;
+                        }
+                }
+            }
+        }
+
+    }
+
+    /// <summary>
+    /// This is the main request frame that will be received by the server. 
+    /// All requests must be made using this frame. 
+    /// </summary>
+    internal sealed partial class RequestFrame : pb::IMessage<RequestFrame>
+    {
+        private static readonly pb::MessageParser<RequestFrame> _parser = new pb::MessageParser<RequestFrame>(() => new RequestFrame());
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pb::MessageParser<RequestFrame> Parser { get { return _parser; } }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pbr::MessageDescriptor Descriptor
+        {
+            get { return global::Epcylon.Common.Net.ProtoStomp.Proto.StompV01Reflection.Descriptor.MessageTypes[7]; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        pbr::MessageDescriptor pb::IMessage.Descriptor
+        {
+            get { return Descriptor; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public RequestFrame()
+        {
+            OnConstruction();
+        }
+
+        partial void OnConstruction();
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public RequestFrame(RequestFrame other) : this()
+        {
+            switch (other.RequestCase)
+            {
+                case RequestOneofCase.Connect:
+                    Connect = other.Connect.Clone();
+                    break;
+                case RequestOneofCase.Disconnect:
+                    Disconnect = other.Disconnect.Clone();
+                    break;
+                case RequestOneofCase.Subscribe:
+                    Subscribe = other.Subscribe.Clone();
+                    break;
+                case RequestOneofCase.Unsubscribe:
+                    Unsubscribe = other.Unsubscribe.Clone();
+                    break;
+                case RequestOneofCase.Throttle:
+                    Throttle = other.Throttle.Clone();
+                    break;
+                case RequestOneofCase.Send:
+                    Send = other.Send.Clone();
+                    break;
+                case RequestOneofCase.Heartbeat:
+                    Heartbeat = other.Heartbeat.Clone();
+                    break;
+            }
+
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public RequestFrame Clone()
+        {
+            return new RequestFrame(this);
+        }
+
+        /// <summary>Field number for the "connect" field.</summary>
+        public const int ConnectFieldNumber = 1;
+        /// <summary>
+        /// Used to connect to the server.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public global::Epcylon.Common.Net.ProtoStomp.Proto.ConnectRequest Connect
+        {
+            get { return requestCase_ == RequestOneofCase.Connect ? (global::Epcylon.Common.Net.ProtoStomp.Proto.ConnectRequest)request_ : null; }
+            set
+            {
+                request_ = value;
+                requestCase_ = value == null ? RequestOneofCase.None : RequestOneofCase.Connect;
+            }
+        }
+
+        /// <summary>Field number for the "disconnect" field.</summary>
+        public const int DisconnectFieldNumber = 2;
+        /// <summary>
+        /// Sent immediately before disconnecting.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public global::Epcylon.Common.Net.ProtoStomp.Proto.DisconnectRequest Disconnect
+        {
+            get { return requestCase_ == RequestOneofCase.Disconnect ? (global::Epcylon.Common.Net.ProtoStomp.Proto.DisconnectRequest)request_ : null; }
+            set
+            {
+                request_ = value;
+                requestCase_ = value == null ? RequestOneofCase.None : RequestOneofCase.Disconnect;
+            }
+        }
+
+        /// <summary>Field number for the "subscribe" field.</summary>
+        public const int SubscribeFieldNumber = 3;
+        /// <summary>
+        /// Used to subscribe to a stream of events.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public global::Epcylon.Common.Net.ProtoStomp.Proto.SubscribeRequest Subscribe
+        {
+            get { return requestCase_ == RequestOneofCase.Subscribe ? (global::Epcylon.Common.Net.ProtoStomp.Proto.SubscribeRequest)request_ : null; }
+            set
+            {
+                request_ = value;
+                requestCase_ = value == null ? RequestOneofCase.None : RequestOneofCase.Subscribe;
+            }
+        }
+
+        /// <summary>Field number for the "unsubscribe" field.</summary>
+        public const int UnsubscribeFieldNumber = 4;
+        /// <summary>
+        /// Used to unsubscribe from a stream of events.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public global::Epcylon.Common.Net.ProtoStomp.Proto.UnsubscribeRequest Unsubscribe
+        {
+            get { return requestCase_ == RequestOneofCase.Unsubscribe ? (global::Epcylon.Common.Net.ProtoStomp.Proto.UnsubscribeRequest)request_ : null; }
+            set
+            {
+                request_ = value;
+                requestCase_ = value == null ? RequestOneofCase.None : RequestOneofCase.Unsubscribe;
+            }
+        }
+
+        /// <summary>Field number for the "throttle" field.</summary>
+        public const int ThrottleFieldNumber = 5;
+        /// <summary>
+        /// Changes the throttle rate of an existing subscription.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public global::Epcylon.Common.Net.ProtoStomp.Proto.ThrottleRequest Throttle
+        {
+            get { return requestCase_ == RequestOneofCase.Throttle ? (global::Epcylon.Common.Net.ProtoStomp.Proto.ThrottleRequest)request_ : null; }
+            set
+            {
+                request_ = value;
+                requestCase_ = value == null ? RequestOneofCase.None : RequestOneofCase.Throttle;
+            }
+        }
+
+        /// <summary>Field number for the "send" field.</summary>
+        public const int SendFieldNumber = 6;
+        /// <summary>
+        /// Used to send single updates or commands to the server.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public global::Epcylon.Common.Net.ProtoStomp.Proto.SendRequest Send
+        {
+            get { return requestCase_ == RequestOneofCase.Send ? (global::Epcylon.Common.Net.ProtoStomp.Proto.SendRequest)request_ : null; }
+            set
+            {
+                request_ = value;
+                requestCase_ = value == null ? RequestOneofCase.None : RequestOneofCase.Send;
+            }
+        }
+
+        /// <summary>Field number for the "heartbeat" field.</summary>
+        public const int HeartbeatFieldNumber = 7;
+        /// <summary>
+        /// Heartbeat message for keep-alive purposes.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public global::Epcylon.Common.Net.ProtoStomp.Proto.Heartbeat Heartbeat
+        {
+            get { return requestCase_ == RequestOneofCase.Heartbeat ? (global::Epcylon.Common.Net.ProtoStomp.Proto.Heartbeat)request_ : null; }
+            set
+            {
+                request_ = value;
+                requestCase_ = value == null ? RequestOneofCase.None : RequestOneofCase.Heartbeat;
+            }
+        }
+
+        private object request_;
+        /// <summary>Enum of possible cases for the "request" oneof.</summary>
+        public enum RequestOneofCase
+        {
+            None = 0,
+            Connect = 1,
+            Disconnect = 2,
+            Subscribe = 3,
+            Unsubscribe = 4,
+            Throttle = 5,
+            Send = 6,
+            Heartbeat = 7,
+        }
+        private RequestOneofCase requestCase_ = RequestOneofCase.None;
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public RequestOneofCase RequestCase
+        {
+            get { return requestCase_; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void ClearRequest()
+        {
+            requestCase_ = RequestOneofCase.None;
+            request_ = null;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override bool Equals(object other)
+        {
+            return Equals(other as RequestFrame);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool Equals(RequestFrame other)
+        {
+            if (ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (ReferenceEquals(other, this))
+            {
+                return true;
+            }
+            if (!object.Equals(Connect, other.Connect)) return false;
+            if (!object.Equals(Disconnect, other.Disconnect)) return false;
+            if (!object.Equals(Subscribe, other.Subscribe)) return false;
+            if (!object.Equals(Unsubscribe, other.Unsubscribe)) return false;
+            if (!object.Equals(Throttle, other.Throttle)) return false;
+            if (!object.Equals(Send, other.Send)) return false;
+            if (!object.Equals(Heartbeat, other.Heartbeat)) return false;
+            if (RequestCase != other.RequestCase) return false;
+            return true;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override int GetHashCode()
+        {
+            int hash = 1;
+            if (requestCase_ == RequestOneofCase.Connect) hash ^= Connect.GetHashCode();
+            if (requestCase_ == RequestOneofCase.Disconnect) hash ^= Disconnect.GetHashCode();
+            if (requestCase_ == RequestOneofCase.Subscribe) hash ^= Subscribe.GetHashCode();
+            if (requestCase_ == RequestOneofCase.Unsubscribe) hash ^= Unsubscribe.GetHashCode();
+            if (requestCase_ == RequestOneofCase.Throttle) hash ^= Throttle.GetHashCode();
+            if (requestCase_ == RequestOneofCase.Send) hash ^= Send.GetHashCode();
+            if (requestCase_ == RequestOneofCase.Heartbeat) hash ^= Heartbeat.GetHashCode();
+            hash ^= (int)requestCase_;
+            return hash;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override string ToString()
+        {
+            return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void WriteTo(pb::CodedOutputStream output)
+        {
+            if (requestCase_ == RequestOneofCase.Connect)
+            {
+                output.WriteRawTag(10);
+                output.WriteMessage(Connect);
+            }
+            if (requestCase_ == RequestOneofCase.Disconnect)
+            {
+                output.WriteRawTag(18);
+                output.WriteMessage(Disconnect);
+            }
+            if (requestCase_ == RequestOneofCase.Subscribe)
+            {
+                output.WriteRawTag(26);
+                output.WriteMessage(Subscribe);
+            }
+            if (requestCase_ == RequestOneofCase.Unsubscribe)
+            {
+                output.WriteRawTag(34);
+                output.WriteMessage(Unsubscribe);
+            }
+            if (requestCase_ == RequestOneofCase.Throttle)
+            {
+                output.WriteRawTag(42);
+                output.WriteMessage(Throttle);
+            }
+            if (requestCase_ == RequestOneofCase.Send)
+            {
+                output.WriteRawTag(50);
+                output.WriteMessage(Send);
+            }
+            if (requestCase_ == RequestOneofCase.Heartbeat)
+            {
+                output.WriteRawTag(58);
+                output.WriteMessage(Heartbeat);
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int CalculateSize()
+        {
+            int size = 0;
+            if (requestCase_ == RequestOneofCase.Connect)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeMessageSize(Connect);
+            }
+            if (requestCase_ == RequestOneofCase.Disconnect)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeMessageSize(Disconnect);
+            }
+            if (requestCase_ == RequestOneofCase.Subscribe)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeMessageSize(Subscribe);
+            }
+            if (requestCase_ == RequestOneofCase.Unsubscribe)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeMessageSize(Unsubscribe);
+            }
+            if (requestCase_ == RequestOneofCase.Throttle)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeMessageSize(Throttle);
+            }
+            if (requestCase_ == RequestOneofCase.Send)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeMessageSize(Send);
+            }
+            if (requestCase_ == RequestOneofCase.Heartbeat)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeMessageSize(Heartbeat);
+            }
+            return size;
+        }
+
+        [System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(RequestFrame other)
+        {
+            if (other == null)
+            {
+                return;
+            }
+            switch (other.RequestCase)
+            {
+                case RequestOneofCase.Connect:
+                    Connect ??= new();
+                    Connect.MergeFrom(other.Connect);
+                    break;
+                case RequestOneofCase.Disconnect:
+                    Disconnect ??= new();
+                    Disconnect.MergeFrom(other.Disconnect);
+                    break;
+                case RequestOneofCase.Subscribe:
+                    Subscribe ??= new();
+                    Subscribe.MergeFrom(other.Subscribe);
+                    break;
+                case RequestOneofCase.Unsubscribe:
+                    Unsubscribe ??= new();
+                    Unsubscribe.MergeFrom(other.Unsubscribe);
+                    break;
+                case RequestOneofCase.Throttle:
+                    Throttle ??= new();
+                    Throttle.MergeFrom(other.Throttle);
+                    break;
+                case RequestOneofCase.Send:
+                    Send ??= new();
+                    Send.MergeFrom(other.Send);
+                    break;
+                case RequestOneofCase.Heartbeat:
+                    Heartbeat ??= new();
+                    Heartbeat.MergeFrom(other.Heartbeat);
+                    break;
+            }
+        }
+
+        [System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(pb::CodedInputStream input)
+        {
+            uint tag;
+            while ((tag = input.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    default:
+                        input.SkipLastField();
+                        break;
+
+                    case 10:
+                        {
+                            ConnectRequest subBuilder = new();
+
+                            if (requestCase_ == RequestOneofCase.Connect)
+                                subBuilder.MergeFrom(Connect);
+
+                            input.ReadMessage(subBuilder);
+                            Connect = subBuilder;
+                            break;
+                        }
+                    case 18:
+                        {
+                            DisconnectRequest subBuilder = new();
+
+                            if (requestCase_ == RequestOneofCase.Disconnect)
+                                subBuilder.MergeFrom(Disconnect);
+
+                            input.ReadMessage(subBuilder);
+                            Disconnect = subBuilder;
+                            break;
+                        }
+                    case 26:
+                        {
+                            SubscribeRequest subBuilder = new();
+
+                            if (requestCase_ == RequestOneofCase.Subscribe)
+                                subBuilder.MergeFrom(Subscribe);
+
+                            input.ReadMessage(subBuilder);
+                            Subscribe = subBuilder;
+                            break;
+                        }
+                    case 34:
+                        {
+                            UnsubscribeRequest subBuilder = new();
+                            if (requestCase_ == RequestOneofCase.Unsubscribe)
+                                subBuilder.MergeFrom(Unsubscribe);
+
+                            input.ReadMessage(subBuilder);
+                            Unsubscribe = subBuilder;
+                            break;
+                        }
+                    case 42:
+                        {
+                            ThrottleRequest subBuilder = new();
+
+                            if (requestCase_ == RequestOneofCase.Throttle)
+                                subBuilder.MergeFrom(Throttle);
+
+                            input.ReadMessage(subBuilder);
+                            Throttle = subBuilder;
+                            break;
+                        }
+                    case 50:
+                        {
+                            SendRequest subBuilder = new();
+
+                            if (requestCase_ == RequestOneofCase.Send)
+                                subBuilder.MergeFrom(Send);
+
+                            input.ReadMessage(subBuilder);
+                            Send = subBuilder;
+                            break;
+                        }
+                    case 58:
+                        {
+                            if (requestCase_ == RequestOneofCase.Heartbeat)
+                                new Heartbeat().MergeFrom(Heartbeat);
+
+                            input.ReadMessage(new Heartbeat());
+                            Heartbeat = new Heartbeat();
+                            break;
+                        }
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// The ConnectedResponse message is sent by the server whenever a connection has been
+    /// successfully made. 
+    /// </summary>
+    internal sealed partial class ConnectedResponse : pb::IMessage<ConnectedResponse>
+    {
+        private static readonly pb::MessageParser<ConnectedResponse> _parser = new(() => new ConnectedResponse());
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pb::MessageParser<ConnectedResponse> Parser { get { return _parser; } }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pbr::MessageDescriptor Descriptor
+        {
+            get { return global::Epcylon.Common.Net.ProtoStomp.Proto.StompV01Reflection.Descriptor.MessageTypes[8]; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        pbr::MessageDescriptor pb::IMessage.Descriptor
+        {
+            get { return Descriptor; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ConnectedResponse()
+        {
+            OnConstruction();
+        }
+
+        partial void OnConstruction();
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ConnectedResponse(ConnectedResponse other) : this()
+        {
+            version_ = other.version_;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ConnectedResponse Clone()
+        {
+            return new ConnectedResponse(this);
+        }
+
+        /// <summary>Field number for the "version" field.</summary>
+        public const int VersionFieldNumber = 1;
+        private string version_ = "";
+        /// <summary>
+        /// The version of the server being used.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public string Version
+        {
+            get { return version_; }
+            set
+            {
+                version_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override bool Equals(object other)
+        {
+            return Equals(other as ConnectedResponse);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool Equals(ConnectedResponse other)
+        {
+            if (ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (ReferenceEquals(other, this))
+            {
+                return true;
+            }
+            if (Version != other.Version) return false;
+            return true;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override int GetHashCode()
+        {
+            int hash = 1;
+            if (Version.Length != 0) hash ^= Version.GetHashCode();
+            return hash;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override string ToString()
+        {
+            return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void WriteTo(pb::CodedOutputStream output)
+        {
+            if (Version.Length != 0)
+            {
+                output.WriteRawTag(10);
+                output.WriteString(Version);
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int CalculateSize()
+        {
+            int size = 0;
+            if (Version.Length != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeStringSize(Version);
+            }
+            return size;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(ConnectedResponse other)
+        {
+            if (other == null)
+            {
+                return;
+            }
+            if (other.Version.Length != 0)
+            {
+                Version = other.Version;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(pb::CodedInputStream input)
+        {
+            uint tag;
+            while ((tag = input.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    default:
+                        input.SkipLastField();
+                        break;
+                    case 10:
+                        {
+                            Version = input.ReadString();
+                            break;
+                        }
+                }
+            }
+        }
+
+    }
+
+    /// <summary>
+    /// Holds an individual subscription response update. 
+    /// </summary>
+    internal sealed partial class MessageResponse : pb::IMessage<MessageResponse>
+    {
+        private static readonly pb::MessageParser<MessageResponse> _parser = new pb::MessageParser<MessageResponse>(() => new MessageResponse());
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pb::MessageParser<MessageResponse> Parser { get { return _parser; } }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pbr::MessageDescriptor Descriptor
+        {
+            get { return global::Epcylon.Common.Net.ProtoStomp.Proto.StompV01Reflection.Descriptor.MessageTypes[9]; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        pbr::MessageDescriptor pb::IMessage.Descriptor
+        {
+            get { return Descriptor; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public MessageResponse()
+        {
+            OnConstruction();
+        }
+
+        partial void OnConstruction();
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public MessageResponse(MessageResponse other) : this()
+        {
+            subscriptionId_ = other.subscriptionId_;
+            messageId_ = other.messageId_;
+            body_ = other.body_;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public MessageResponse Clone()
+        {
+            return new MessageResponse(this);
+        }
+
+        /// <summary>Field number for the "subscription_id" field.</summary>
+        public const int SubscriptionIdFieldNumber = 1;
+        private ulong subscriptionId_;
+        /// <summary>
+        /// The client-specific subscription identifier.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong SubscriptionId
+        {
+            get { return subscriptionId_; }
+            set
+            {
+                subscriptionId_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "message_id" field.</summary>
+        public const int MessageIdFieldNumber = 2;
+        private ulong messageId_;
+        /// <summary>
+        /// A unique identifier for this message.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong MessageId
+        {
+            get { return messageId_; }
+            set
+            {
+                messageId_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "body" field.</summary>
+        public const int BodyFieldNumber = 3;
+        private pb::ByteString body_ = pb::ByteString.Empty;
+        /// <summary>
+        /// The updated subscription information. 
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public pb::ByteString Body
+        {
+            get { return body_; }
+            set
+            {
+                body_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override bool Equals(object other)
+        {
+            return Equals(other as MessageResponse);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool Equals(MessageResponse other)
+        {
+            if (ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (ReferenceEquals(other, this))
+            {
+                return true;
+            }
+            if (SubscriptionId != other.SubscriptionId) return false;
+            if (MessageId != other.MessageId) return false;
+            if (Body != other.Body) return false;
+            return true;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override int GetHashCode()
+        {
+            int hash = 1;
+            if (SubscriptionId != 0UL) hash ^= SubscriptionId.GetHashCode();
+            if (MessageId != 0UL) hash ^= MessageId.GetHashCode();
+            if (Body.Length != 0) hash ^= Body.GetHashCode();
+            return hash;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override string ToString()
+        {
+            return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void WriteTo(pb::CodedOutputStream output)
+        {
+            if (SubscriptionId != 0UL)
+            {
+                output.WriteRawTag(8);
+                output.WriteUInt64(SubscriptionId);
+            }
+            if (MessageId != 0UL)
+            {
+                output.WriteRawTag(16);
+                output.WriteUInt64(MessageId);
+            }
+            if (Body.Length != 0)
+            {
+                output.WriteRawTag(26);
+                output.WriteBytes(Body);
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int CalculateSize()
+        {
+            int size = 0;
+            if (SubscriptionId != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(SubscriptionId);
+            }
+            if (MessageId != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(MessageId);
+            }
+            if (Body.Length != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeBytesSize(Body);
+            }
+            return size;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(MessageResponse other)
+        {
+            if (other == null)
+            {
+                return;
+            }
+            if (other.SubscriptionId != 0UL)
+            {
+                SubscriptionId = other.SubscriptionId;
+            }
+            if (other.MessageId != 0UL)
+            {
+                MessageId = other.MessageId;
+            }
+            if (other.Body.Length != 0)
+            {
+                Body = other.Body;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(pb::CodedInputStream input)
+        {
+            uint tag;
+            while ((tag = input.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    default:
+                        input.SkipLastField();
+                        break;
+                    case 8:
+                        {
+                            SubscriptionId = input.ReadUInt64();
+                            break;
+                        }
+                    case 16:
+                        {
+                            MessageId = input.ReadUInt64();
+                            break;
+                        }
+                    case 26:
+                        {
+                            Body = input.ReadBytes();
+                            break;
+                        }
+                }
+            }
+        }
+
+    }
+
+    /// <summary>
+    /// Holds a collection of MessageResponse elements. Used in batch messages. 
+    /// </summary>
+    internal sealed partial class MessageResponses : pb::IMessage<MessageResponses>
+    {
+        private static readonly pb::MessageParser<MessageResponses> _parser = new pb::MessageParser<MessageResponses>(() => new MessageResponses());
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pb::MessageParser<MessageResponses> Parser { get { return _parser; } }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pbr::MessageDescriptor Descriptor
+        {
+            get { return global::Epcylon.Common.Net.ProtoStomp.Proto.StompV01Reflection.Descriptor.MessageTypes[10]; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        pbr::MessageDescriptor pb::IMessage.Descriptor
+        {
+            get { return Descriptor; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public MessageResponses()
+        {
+            OnConstruction();
+        }
+
+        partial void OnConstruction();
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public MessageResponses(MessageResponses other) : this()
+        {
+            message_ = other.message_.Clone();
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public MessageResponses Clone()
+        {
+            return new MessageResponses(this);
+        }
+
+        /// <summary>Field number for the "message" field.</summary>
+        public const int MessageFieldNumber = 1;
+        private static readonly pb::FieldCodec<global::Epcylon.Common.Net.ProtoStomp.Proto.MessageResponse> _repeated_message_codec
+            = pb::FieldCodec.ForMessage(10, global::Epcylon.Common.Net.ProtoStomp.Proto.MessageResponse.Parser);
+        private readonly pbc::RepeatedField<global::Epcylon.Common.Net.ProtoStomp.Proto.MessageResponse> message_ = new pbc::RepeatedField<global::Epcylon.Common.Net.ProtoStomp.Proto.MessageResponse>();
+        /// <summary>
+        /// A collection of messages to handle.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public pbc::RepeatedField<global::Epcylon.Common.Net.ProtoStomp.Proto.MessageResponse> Message
+        {
+            get { return message_; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override bool Equals(object other)
+        {
+            return Equals(other as MessageResponses);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool Equals(MessageResponses other)
+        {
+            if (ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (ReferenceEquals(other, this))
+            {
+                return true;
+            }
+            if (!message_.Equals(other.message_)) return false;
+            return true;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override int GetHashCode()
+        {
+            int hash = 1;
+            hash ^= message_.GetHashCode();
+            return hash;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override string ToString()
+        {
+            return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void WriteTo(pb::CodedOutputStream output)
+        {
+            message_.WriteTo(output, _repeated_message_codec);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int CalculateSize()
+        {
+            int size = 0;
+            size += message_.CalculateSize(_repeated_message_codec);
+            return size;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(MessageResponses other)
+        {
+            if (other == null)
+            {
+                return;
+            }
+            message_.Add(other.message_);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(pb::CodedInputStream input)
+        {
+            uint tag;
+            while ((tag = input.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    default:
+                        input.SkipLastField();
+                        break;
+                    case 10:
+                        {
+                            message_.AddEntriesFrom(input, _repeated_message_codec);
+                            break;
+                        }
+                }
+            }
+        }
+
+    }
+
+    /// <summary>
+    /// Notifies the client that a request has been fully processed. Sent in response to any 
+    /// message sent to the server with a receipt id included. 
+    /// </summary>
+    internal sealed partial class ReceiptResponse : pb::IMessage<ReceiptResponse>
+    {
+        private static readonly pb::MessageParser<ReceiptResponse> _parser = new pb::MessageParser<ReceiptResponse>(() => new ReceiptResponse());
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pb::MessageParser<ReceiptResponse> Parser { get { return _parser; } }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pbr::MessageDescriptor Descriptor
+        {
+            get { return global::Epcylon.Common.Net.ProtoStomp.Proto.StompV01Reflection.Descriptor.MessageTypes[11]; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        pbr::MessageDescriptor pb::IMessage.Descriptor
+        {
+            get { return Descriptor; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ReceiptResponse()
+        {
+            OnConstruction();
+        }
+
+        partial void OnConstruction();
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ReceiptResponse(ReceiptResponse other) : this()
+        {
+            receiptId_ = other.receiptId_;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ReceiptResponse Clone()
+        {
+            return new ReceiptResponse(this);
+        }
+
+        /// <summary>Field number for the "receipt_id" field.</summary>
+        public const int ReceiptIdFieldNumber = 1;
+        private ulong receiptId_;
+        /// <summary>
+        /// The receipt identifier included in the request.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong ReceiptId
+        {
+            get { return receiptId_; }
+            set
+            {
+                receiptId_ = value;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override bool Equals(object other)
+        {
+            return Equals(other as ReceiptResponse);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool Equals(ReceiptResponse other)
+        {
+            if (ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (ReferenceEquals(other, this))
+            {
+                return true;
+            }
+            if (ReceiptId != other.ReceiptId) return false;
+            return true;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override int GetHashCode()
+        {
+            int hash = 1;
+            if (ReceiptId != 0UL) hash ^= ReceiptId.GetHashCode();
+            return hash;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override string ToString()
+        {
+            return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void WriteTo(pb::CodedOutputStream output)
+        {
+            if (ReceiptId != 0UL)
+            {
+                output.WriteRawTag(8);
+                output.WriteUInt64(ReceiptId);
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int CalculateSize()
+        {
+            int size = 0;
+            if (ReceiptId != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(ReceiptId);
+            }
+            return size;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(ReceiptResponse other)
+        {
+            if (other == null)
+            {
+                return;
+            }
+            if (other.ReceiptId != 0UL)
+            {
+                ReceiptId = other.ReceiptId;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(pb::CodedInputStream input)
+        {
+            uint tag;
+            while ((tag = input.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    default:
+                        input.SkipLastField();
+                        break;
+                    case 8:
+                        {
+                            ReceiptId = input.ReadUInt64();
+                            break;
+                        }
+                }
+            }
+        }
+
+    }
+
     /// <summary>
     /// Notifies a client of errors that occur at the server level. 
     /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Epcylon.Common.Net.ProtoStomp.Proto.ServerErrorResponse ServerError {
-      get { return responseCase_ == ResponseOneofCase.ServerError ? (global::Epcylon.Common.Net.ProtoStomp.Proto.ServerErrorResponse) response_ : null; }
-      set {
-        response_ = value;
-        responseCase_ = value == null ? ResponseOneofCase.None : ResponseOneofCase.ServerError;
-      }
+    internal sealed partial class ServerErrorResponse : pb::IMessage<ServerErrorResponse>
+    {
+        private static readonly pb::MessageParser<ServerErrorResponse> _parser = new pb::MessageParser<ServerErrorResponse>(() => new ServerErrorResponse());
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pb::MessageParser<ServerErrorResponse> Parser { get { return _parser; } }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pbr::MessageDescriptor Descriptor
+        {
+            get { return global::Epcylon.Common.Net.ProtoStomp.Proto.StompV01Reflection.Descriptor.MessageTypes[12]; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        pbr::MessageDescriptor pb::IMessage.Descriptor
+        {
+            get { return Descriptor; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ServerErrorResponse()
+        {
+            OnConstruction();
+        }
+
+        partial void OnConstruction();
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ServerErrorResponse(ServerErrorResponse other) : this()
+        {
+            message_ = other.message_;
+            details_ = other.details_;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ServerErrorResponse Clone()
+        {
+            return new ServerErrorResponse(this);
+        }
+
+        /// <summary>Field number for the "message" field.</summary>
+        public const int MessageFieldNumber = 1;
+        private string message_ = "";
+        /// <summary>
+        /// Message that summarizes the error.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public string Message
+        {
+            get { return message_; }
+            set
+            {
+                message_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+            }
+        }
+
+        /// <summary>Field number for the "details" field.</summary>
+        public const int DetailsFieldNumber = 2;
+        private string details_ = "";
+        /// <summary>
+        /// Detailed information about the error.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public string Details
+        {
+            get { return details_; }
+            set
+            {
+                details_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override bool Equals(object other)
+        {
+            return Equals(other as ServerErrorResponse);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool Equals(ServerErrorResponse other)
+        {
+            if (ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (ReferenceEquals(other, this))
+            {
+                return true;
+            }
+            if (Message != other.Message) return false;
+            if (Details != other.Details) return false;
+            return true;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override int GetHashCode()
+        {
+            int hash = 1;
+            if (Message.Length != 0) hash ^= Message.GetHashCode();
+            if (Details.Length != 0) hash ^= Details.GetHashCode();
+            return hash;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override string ToString()
+        {
+            return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void WriteTo(pb::CodedOutputStream output)
+        {
+            if (Message.Length != 0)
+            {
+                output.WriteRawTag(10);
+                output.WriteString(Message);
+            }
+            if (Details.Length != 0)
+            {
+                output.WriteRawTag(18);
+                output.WriteString(Details);
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int CalculateSize()
+        {
+            int size = 0;
+            if (Message.Length != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeStringSize(Message);
+            }
+            if (Details.Length != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeStringSize(Details);
+            }
+            return size;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(ServerErrorResponse other)
+        {
+            if (other == null)
+            {
+                return;
+            }
+            if (other.Message.Length != 0)
+            {
+                Message = other.Message;
+            }
+            if (other.Details.Length != 0)
+            {
+                Details = other.Details;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(pb::CodedInputStream input)
+        {
+            uint tag;
+            while ((tag = input.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    default:
+                        input.SkipLastField();
+                        break;
+                    case 10:
+                        {
+                            Message = input.ReadString();
+                            break;
+                        }
+                    case 18:
+                        {
+                            Details = input.ReadString();
+                            break;
+                        }
+                }
+            }
+        }
+
     }
 
-    /// <summary>Field number for the "subscription_error" field.</summary>
-    public const int SubscriptionErrorFieldNumber = 6;
     /// <summary>
     /// Notifies a client of errors that occur for a specific subscription. 
     /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Epcylon.Common.Net.ProtoStomp.Proto.SubscriptionErrorResponse SubscriptionError {
-      get { return responseCase_ == ResponseOneofCase.SubscriptionError ? (global::Epcylon.Common.Net.ProtoStomp.Proto.SubscriptionErrorResponse) response_ : null; }
-      set {
-        response_ = value;
-        responseCase_ = value == null ? ResponseOneofCase.None : ResponseOneofCase.SubscriptionError;
-      }
-    }
+    internal sealed partial class SubscriptionErrorResponse : pb::IMessage<SubscriptionErrorResponse>
+    {
+        private static readonly pb::MessageParser<SubscriptionErrorResponse> _parser = new pb::MessageParser<SubscriptionErrorResponse>(() => new SubscriptionErrorResponse());
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pb::MessageParser<SubscriptionErrorResponse> Parser { get { return _parser; } }
 
-    /// <summary>Field number for the "heartbeat" field.</summary>
-    public const int HeartbeatFieldNumber = 7;
-    /// <summary>
-    /// Heartbeat message. 
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Epcylon.Common.Net.ProtoStomp.Proto.Heartbeat Heartbeat {
-      get { return responseCase_ == ResponseOneofCase.Heartbeat ? (global::Epcylon.Common.Net.ProtoStomp.Proto.Heartbeat) response_ : null; }
-      set {
-        response_ = value;
-        responseCase_ = value == null ? ResponseOneofCase.None : ResponseOneofCase.Heartbeat;
-      }
-    }
-
-    private object response_;
-    /// <summary>Enum of possible cases for the "response" oneof.</summary>
-    public enum ResponseOneofCase {
-      None = 0,
-      Connected = 1,
-      SingleMessage = 2,
-      BatchMessages = 3,
-      Receipt = 4,
-      ServerError = 5,
-      SubscriptionError = 6,
-      Heartbeat = 7,
-    }
-    private ResponseOneofCase responseCase_ = ResponseOneofCase.None;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ResponseOneofCase ResponseCase {
-      get { return responseCase_; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void ClearResponse() {
-      responseCase_ = ResponseOneofCase.None;
-      response_ = null;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as ResponseFrame);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(ResponseFrame other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (!object.Equals(Connected, other.Connected)) return false;
-      if (!object.Equals(SingleMessage, other.SingleMessage)) return false;
-      if (!object.Equals(BatchMessages, other.BatchMessages)) return false;
-      if (!object.Equals(Receipt, other.Receipt)) return false;
-      if (!object.Equals(ServerError, other.ServerError)) return false;
-      if (!object.Equals(SubscriptionError, other.SubscriptionError)) return false;
-      if (!object.Equals(Heartbeat, other.Heartbeat)) return false;
-      if (ResponseCase != other.ResponseCase) return false;
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (responseCase_ == ResponseOneofCase.Connected) hash ^= Connected.GetHashCode();
-      if (responseCase_ == ResponseOneofCase.SingleMessage) hash ^= SingleMessage.GetHashCode();
-      if (responseCase_ == ResponseOneofCase.BatchMessages) hash ^= BatchMessages.GetHashCode();
-      if (responseCase_ == ResponseOneofCase.Receipt) hash ^= Receipt.GetHashCode();
-      if (responseCase_ == ResponseOneofCase.ServerError) hash ^= ServerError.GetHashCode();
-      if (responseCase_ == ResponseOneofCase.SubscriptionError) hash ^= SubscriptionError.GetHashCode();
-      if (responseCase_ == ResponseOneofCase.Heartbeat) hash ^= Heartbeat.GetHashCode();
-      hash ^= (int) responseCase_;
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (responseCase_ == ResponseOneofCase.Connected) {
-        output.WriteRawTag(10);
-        output.WriteMessage(Connected);
-      }
-      if (responseCase_ == ResponseOneofCase.SingleMessage) {
-        output.WriteRawTag(18);
-        output.WriteMessage(SingleMessage);
-      }
-      if (responseCase_ == ResponseOneofCase.BatchMessages) {
-        output.WriteRawTag(26);
-        output.WriteMessage(BatchMessages);
-      }
-      if (responseCase_ == ResponseOneofCase.Receipt) {
-        output.WriteRawTag(34);
-        output.WriteMessage(Receipt);
-      }
-      if (responseCase_ == ResponseOneofCase.ServerError) {
-        output.WriteRawTag(42);
-        output.WriteMessage(ServerError);
-      }
-      if (responseCase_ == ResponseOneofCase.SubscriptionError) {
-        output.WriteRawTag(50);
-        output.WriteMessage(SubscriptionError);
-      }
-      if (responseCase_ == ResponseOneofCase.Heartbeat) {
-        output.WriteRawTag(58);
-        output.WriteMessage(Heartbeat);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (responseCase_ == ResponseOneofCase.Connected) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Connected);
-      }
-      if (responseCase_ == ResponseOneofCase.SingleMessage) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(SingleMessage);
-      }
-      if (responseCase_ == ResponseOneofCase.BatchMessages) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(BatchMessages);
-      }
-      if (responseCase_ == ResponseOneofCase.Receipt) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Receipt);
-      }
-      if (responseCase_ == ResponseOneofCase.ServerError) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(ServerError);
-      }
-      if (responseCase_ == ResponseOneofCase.SubscriptionError) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(SubscriptionError);
-      }
-      if (responseCase_ == ResponseOneofCase.Heartbeat) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Heartbeat);
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(ResponseFrame other) {
-      if (other == null) {
-        return;
-      }
-      switch (other.ResponseCase) {
-        case ResponseOneofCase.Connected:
-          if (Connected == null) {
-            Connected = new global::Epcylon.Common.Net.ProtoStomp.Proto.ConnectedResponse();
-          }
-          Connected.MergeFrom(other.Connected);
-          break;
-        case ResponseOneofCase.SingleMessage:
-          if (SingleMessage == null) {
-            SingleMessage = new global::Epcylon.Common.Net.ProtoStomp.Proto.MessageResponse();
-          }
-          SingleMessage.MergeFrom(other.SingleMessage);
-          break;
-        case ResponseOneofCase.BatchMessages:
-          if (BatchMessages == null) {
-            BatchMessages = new global::Epcylon.Common.Net.ProtoStomp.Proto.MessageResponses();
-          }
-          BatchMessages.MergeFrom(other.BatchMessages);
-          break;
-        case ResponseOneofCase.Receipt:
-          if (Receipt == null) {
-            Receipt = new global::Epcylon.Common.Net.ProtoStomp.Proto.ReceiptResponse();
-          }
-          Receipt.MergeFrom(other.Receipt);
-          break;
-        case ResponseOneofCase.ServerError:
-          if (ServerError == null) {
-            ServerError = new global::Epcylon.Common.Net.ProtoStomp.Proto.ServerErrorResponse();
-          }
-          ServerError.MergeFrom(other.ServerError);
-          break;
-        case ResponseOneofCase.SubscriptionError:
-          if (SubscriptionError == null) {
-            SubscriptionError = new global::Epcylon.Common.Net.ProtoStomp.Proto.SubscriptionErrorResponse();
-          }
-          SubscriptionError.MergeFrom(other.SubscriptionError);
-          break;
-        case ResponseOneofCase.Heartbeat:
-          if (Heartbeat == null) {
-            Heartbeat = new global::Epcylon.Common.Net.ProtoStomp.Proto.Heartbeat();
-          }
-          Heartbeat.MergeFrom(other.Heartbeat);
-          break;
-      }
-
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
-          case 10: {
-            global::Epcylon.Common.Net.ProtoStomp.Proto.ConnectedResponse subBuilder = new global::Epcylon.Common.Net.ProtoStomp.Proto.ConnectedResponse();
-            if (responseCase_ == ResponseOneofCase.Connected) {
-              subBuilder.MergeFrom(Connected);
-            }
-            input.ReadMessage(subBuilder);
-            Connected = subBuilder;
-            break;
-          }
-          case 18: {
-            global::Epcylon.Common.Net.ProtoStomp.Proto.MessageResponse subBuilder = new global::Epcylon.Common.Net.ProtoStomp.Proto.MessageResponse();
-            if (responseCase_ == ResponseOneofCase.SingleMessage) {
-              subBuilder.MergeFrom(SingleMessage);
-            }
-            input.ReadMessage(subBuilder);
-            SingleMessage = subBuilder;
-            break;
-          }
-          case 26: {
-            global::Epcylon.Common.Net.ProtoStomp.Proto.MessageResponses subBuilder = new global::Epcylon.Common.Net.ProtoStomp.Proto.MessageResponses();
-            if (responseCase_ == ResponseOneofCase.BatchMessages) {
-              subBuilder.MergeFrom(BatchMessages);
-            }
-            input.ReadMessage(subBuilder);
-            BatchMessages = subBuilder;
-            break;
-          }
-          case 34: {
-            global::Epcylon.Common.Net.ProtoStomp.Proto.ReceiptResponse subBuilder = new global::Epcylon.Common.Net.ProtoStomp.Proto.ReceiptResponse();
-            if (responseCase_ == ResponseOneofCase.Receipt) {
-              subBuilder.MergeFrom(Receipt);
-            }
-            input.ReadMessage(subBuilder);
-            Receipt = subBuilder;
-            break;
-          }
-          case 42: {
-            global::Epcylon.Common.Net.ProtoStomp.Proto.ServerErrorResponse subBuilder = new global::Epcylon.Common.Net.ProtoStomp.Proto.ServerErrorResponse();
-            if (responseCase_ == ResponseOneofCase.ServerError) {
-              subBuilder.MergeFrom(ServerError);
-            }
-            input.ReadMessage(subBuilder);
-            ServerError = subBuilder;
-            break;
-          }
-          case 50: {
-            global::Epcylon.Common.Net.ProtoStomp.Proto.SubscriptionErrorResponse subBuilder = new global::Epcylon.Common.Net.ProtoStomp.Proto.SubscriptionErrorResponse();
-            if (responseCase_ == ResponseOneofCase.SubscriptionError) {
-              subBuilder.MergeFrom(SubscriptionError);
-            }
-            input.ReadMessage(subBuilder);
-            SubscriptionError = subBuilder;
-            break;
-          }
-          case 58: {
-            global::Epcylon.Common.Net.ProtoStomp.Proto.Heartbeat subBuilder = new global::Epcylon.Common.Net.ProtoStomp.Proto.Heartbeat();
-            if (responseCase_ == ResponseOneofCase.Heartbeat) {
-              subBuilder.MergeFrom(Heartbeat);
-            }
-            input.ReadMessage(subBuilder);
-            Heartbeat = subBuilder;
-            break;
-          }
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pbr::MessageDescriptor Descriptor
+        {
+            get { return global::Epcylon.Common.Net.ProtoStomp.Proto.StompV01Reflection.Descriptor.MessageTypes[13]; }
         }
-      }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        pbr::MessageDescriptor pb::IMessage.Descriptor
+        {
+            get { return Descriptor; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public SubscriptionErrorResponse()
+        {
+            OnConstruction();
+        }
+
+        partial void OnConstruction();
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public SubscriptionErrorResponse(SubscriptionErrorResponse other) : this()
+        {
+            subscriptionId_ = other.subscriptionId_;
+            messageId_ = other.messageId_;
+            message_ = other.message_;
+            details_ = other.details_;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public SubscriptionErrorResponse Clone()
+        {
+            return new SubscriptionErrorResponse(this);
+        }
+
+        /// <summary>Field number for the "subscription_id" field.</summary>
+        public const int SubscriptionIdFieldNumber = 1;
+        private ulong subscriptionId_;
+        /// <summary>
+        /// The client-specific subscription identifier.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong SubscriptionId
+        {
+            get { return subscriptionId_; }
+            set
+            {
+                subscriptionId_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "message_id" field.</summary>
+        public const int MessageIdFieldNumber = 2;
+        private ulong messageId_;
+        /// <summary>
+        /// A unique identifier for this message.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong MessageId
+        {
+            get { return messageId_; }
+            set
+            {
+                messageId_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "message" field.</summary>
+        public const int MessageFieldNumber = 3;
+        private string message_ = "";
+        /// <summary>
+        /// Message that summarizes the error.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public string Message
+        {
+            get { return message_; }
+            set
+            {
+                message_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+            }
+        }
+
+        /// <summary>Field number for the "details" field.</summary>
+        public const int DetailsFieldNumber = 4;
+        private string details_ = "";
+        /// <summary>
+        /// Detailed information about the error.
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public string Details
+        {
+            get { return details_; }
+            set
+            {
+                details_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override bool Equals(object other)
+        {
+            return Equals(other as SubscriptionErrorResponse);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool Equals(SubscriptionErrorResponse other)
+        {
+            if (ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (ReferenceEquals(other, this))
+            {
+                return true;
+            }
+            if (SubscriptionId != other.SubscriptionId) return false;
+            if (MessageId != other.MessageId) return false;
+            if (Message != other.Message) return false;
+            if (Details != other.Details) return false;
+            return true;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override int GetHashCode()
+        {
+            int hash = 1;
+            if (SubscriptionId != 0UL) hash ^= SubscriptionId.GetHashCode();
+            if (MessageId != 0UL) hash ^= MessageId.GetHashCode();
+            if (Message.Length != 0) hash ^= Message.GetHashCode();
+            if (Details.Length != 0) hash ^= Details.GetHashCode();
+            return hash;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override string ToString()
+        {
+            return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void WriteTo(pb::CodedOutputStream output)
+        {
+            if (SubscriptionId != 0UL)
+            {
+                output.WriteRawTag(8);
+                output.WriteUInt64(SubscriptionId);
+            }
+            if (MessageId != 0UL)
+            {
+                output.WriteRawTag(16);
+                output.WriteUInt64(MessageId);
+            }
+            if (Message.Length != 0)
+            {
+                output.WriteRawTag(26);
+                output.WriteString(Message);
+            }
+            if (Details.Length != 0)
+            {
+                output.WriteRawTag(34);
+                output.WriteString(Details);
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int CalculateSize()
+        {
+            int size = 0;
+            if (SubscriptionId != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(SubscriptionId);
+            }
+            if (MessageId != 0UL)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(MessageId);
+            }
+            if (Message.Length != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeStringSize(Message);
+            }
+            if (Details.Length != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeStringSize(Details);
+            }
+            return size;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(SubscriptionErrorResponse other)
+        {
+            if (other == null)
+            {
+                return;
+            }
+            if (other.SubscriptionId != 0UL)
+            {
+                SubscriptionId = other.SubscriptionId;
+            }
+            if (other.MessageId != 0UL)
+            {
+                MessageId = other.MessageId;
+            }
+            if (other.Message.Length != 0)
+            {
+                Message = other.Message;
+            }
+            if (other.Details.Length != 0)
+            {
+                Details = other.Details;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(pb::CodedInputStream input)
+        {
+            uint tag;
+            while ((tag = input.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    default:
+                        input.SkipLastField();
+                        break;
+                    case 8:
+                        {
+                            SubscriptionId = input.ReadUInt64();
+                            break;
+                        }
+                    case 16:
+                        {
+                            MessageId = input.ReadUInt64();
+                            break;
+                        }
+                    case 26:
+                        {
+                            Message = input.ReadString();
+                            break;
+                        }
+                    case 34:
+                        {
+                            Details = input.ReadString();
+                            break;
+                        }
+                }
+            }
+        }
+
     }
 
-  }
+    /// <summary>
+    /// This is the main response frame that will be received by the client. 
+    /// All responses are included within this frame. 
+    /// </summary>
+    internal sealed partial class ResponseFrame : pb::IMessage<ResponseFrame>
+    {
+        private static readonly pb::MessageParser<ResponseFrame> _parser = new pb::MessageParser<ResponseFrame>(() => new ResponseFrame());
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pb::MessageParser<ResponseFrame> Parser { get { return _parser; } }
 
-  #endregion
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pbr::MessageDescriptor Descriptor
+        {
+            get { return global::Epcylon.Common.Net.ProtoStomp.Proto.StompV01Reflection.Descriptor.MessageTypes[14]; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        pbr::MessageDescriptor pb::IMessage.Descriptor
+        {
+            get { return Descriptor; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ResponseFrame()
+        {
+            OnConstruction();
+        }
+
+        partial void OnConstruction();
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ResponseFrame(ResponseFrame other) : this()
+        {
+            switch (other.ResponseCase)
+            {
+                case ResponseOneofCase.Connected:
+                    Connected = other.Connected.Clone();
+                    break;
+                case ResponseOneofCase.SingleMessage:
+                    SingleMessage = other.SingleMessage.Clone();
+                    break;
+                case ResponseOneofCase.BatchMessages:
+                    BatchMessages = other.BatchMessages.Clone();
+                    break;
+                case ResponseOneofCase.Receipt:
+                    Receipt = other.Receipt.Clone();
+                    break;
+                case ResponseOneofCase.ServerError:
+                    ServerError = other.ServerError.Clone();
+                    break;
+                case ResponseOneofCase.SubscriptionError:
+                    SubscriptionError = other.SubscriptionError.Clone();
+                    break;
+                case ResponseOneofCase.Heartbeat:
+                    Heartbeat = other.Heartbeat.Clone();
+                    break;
+            }
+
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ResponseFrame Clone()
+        {
+            return new ResponseFrame(this);
+        }
+
+        /// <summary>Field number for the "connected" field.</summary>
+        public const int ConnectedFieldNumber = 1;
+        /// <summary>
+        /// Response to a connection attempt. Received when properly connected. 
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public global::Epcylon.Common.Net.ProtoStomp.Proto.ConnectedResponse Connected
+        {
+            get { return responseCase_ == ResponseOneofCase.Connected ? (global::Epcylon.Common.Net.ProtoStomp.Proto.ConnectedResponse)response_ : null; }
+            set
+            {
+                response_ = value;
+                responseCase_ = value == null ? ResponseOneofCase.None : ResponseOneofCase.Connected;
+            }
+        }
+
+        /// <summary>Field number for the "single_message" field.</summary>
+        public const int SingleMessageFieldNumber = 2;
+        /// <summary>
+        /// Holds a single message for a subcription, whether throttled or not.
+        /// If a subscription is not throttled, responses will always be in this
+        /// message. If a subscription is throttled, responses may be in this message
+        /// or in the batch messages. 
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public global::Epcylon.Common.Net.ProtoStomp.Proto.MessageResponse SingleMessage
+        {
+            get { return responseCase_ == ResponseOneofCase.SingleMessage ? (global::Epcylon.Common.Net.ProtoStomp.Proto.MessageResponse)response_ : null; }
+            set
+            {
+                response_ = value;
+                responseCase_ = value == null ? ResponseOneofCase.None : ResponseOneofCase.SingleMessage;
+            }
+        }
+
+        /// <summary>Field number for the "batch_messages" field.</summary>
+        public const int BatchMessagesFieldNumber = 3;
+        /// <summary>
+        /// Holds batched throttled messages for multiple subscriptions. Only throttled
+        /// subscriptions will send messages through this, but throttled messages may
+        /// still come in through the single message. 
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public global::Epcylon.Common.Net.ProtoStomp.Proto.MessageResponses BatchMessages
+        {
+            get { return responseCase_ == ResponseOneofCase.BatchMessages ? (global::Epcylon.Common.Net.ProtoStomp.Proto.MessageResponses)response_ : null; }
+            set
+            {
+                response_ = value;
+                responseCase_ = value == null ? ResponseOneofCase.None : ResponseOneofCase.BatchMessages;
+            }
+        }
+
+        /// <summary>Field number for the "receipt" field.</summary>
+        public const int ReceiptFieldNumber = 4;
+        /// <summary>
+        /// Receipt response for receiptable requests. 
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public global::Epcylon.Common.Net.ProtoStomp.Proto.ReceiptResponse Receipt
+        {
+            get { return responseCase_ == ResponseOneofCase.Receipt ? (global::Epcylon.Common.Net.ProtoStomp.Proto.ReceiptResponse)response_ : null; }
+            set
+            {
+                response_ = value;
+                responseCase_ = value == null ? ResponseOneofCase.None : ResponseOneofCase.Receipt;
+            }
+        }
+
+        /// <summary>Field number for the "server_error" field.</summary>
+        public const int ServerErrorFieldNumber = 5;
+        /// <summary>
+        /// Notifies a client of errors that occur at the server level. 
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public global::Epcylon.Common.Net.ProtoStomp.Proto.ServerErrorResponse ServerError
+        {
+            get { return responseCase_ == ResponseOneofCase.ServerError ? (global::Epcylon.Common.Net.ProtoStomp.Proto.ServerErrorResponse)response_ : null; }
+            set
+            {
+                response_ = value;
+                responseCase_ = value == null ? ResponseOneofCase.None : ResponseOneofCase.ServerError;
+            }
+        }
+
+        /// <summary>Field number for the "subscription_error" field.</summary>
+        public const int SubscriptionErrorFieldNumber = 6;
+        /// <summary>
+        /// Notifies a client of errors that occur for a specific subscription. 
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public global::Epcylon.Common.Net.ProtoStomp.Proto.SubscriptionErrorResponse SubscriptionError
+        {
+            get { return responseCase_ == ResponseOneofCase.SubscriptionError ? (global::Epcylon.Common.Net.ProtoStomp.Proto.SubscriptionErrorResponse)response_ : null; }
+            set
+            {
+                response_ = value;
+                responseCase_ = value == null ? ResponseOneofCase.None : ResponseOneofCase.SubscriptionError;
+            }
+        }
+
+        /// <summary>Field number for the "heartbeat" field.</summary>
+        public const int HeartbeatFieldNumber = 7;
+        /// <summary>
+        /// Heartbeat message. 
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public global::Epcylon.Common.Net.ProtoStomp.Proto.Heartbeat Heartbeat
+        {
+            get { return responseCase_ == ResponseOneofCase.Heartbeat ? (global::Epcylon.Common.Net.ProtoStomp.Proto.Heartbeat)response_ : null; }
+            set
+            {
+                response_ = value;
+                responseCase_ = value == null ? ResponseOneofCase.None : ResponseOneofCase.Heartbeat;
+            }
+        }
+
+        private object response_;
+        /// <summary>Enum of possible cases for the "response" oneof.</summary>
+        public enum ResponseOneofCase
+        {
+            None = 0,
+            Connected = 1,
+            SingleMessage = 2,
+            BatchMessages = 3,
+            Receipt = 4,
+            ServerError = 5,
+            SubscriptionError = 6,
+            Heartbeat = 7,
+        }
+        private ResponseOneofCase responseCase_ = ResponseOneofCase.None;
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ResponseOneofCase ResponseCase
+        {
+            get { return responseCase_; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void ClearResponse()
+        {
+            responseCase_ = ResponseOneofCase.None;
+            response_ = null;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override bool Equals(object other)
+        {
+            return Equals(other as ResponseFrame);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool Equals(ResponseFrame other)
+        {
+            if (ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (ReferenceEquals(other, this))
+            {
+                return true;
+            }
+            if (!object.Equals(Connected, other.Connected)) return false;
+            if (!object.Equals(SingleMessage, other.SingleMessage)) return false;
+            if (!object.Equals(BatchMessages, other.BatchMessages)) return false;
+            if (!object.Equals(Receipt, other.Receipt)) return false;
+            if (!object.Equals(ServerError, other.ServerError)) return false;
+            if (!object.Equals(SubscriptionError, other.SubscriptionError)) return false;
+            if (!object.Equals(Heartbeat, other.Heartbeat)) return false;
+            if (ResponseCase != other.ResponseCase) return false;
+            return true;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override int GetHashCode()
+        {
+            int hash = 1;
+            if (responseCase_ == ResponseOneofCase.Connected) hash ^= Connected.GetHashCode();
+            if (responseCase_ == ResponseOneofCase.SingleMessage) hash ^= SingleMessage.GetHashCode();
+            if (responseCase_ == ResponseOneofCase.BatchMessages) hash ^= BatchMessages.GetHashCode();
+            if (responseCase_ == ResponseOneofCase.Receipt) hash ^= Receipt.GetHashCode();
+            if (responseCase_ == ResponseOneofCase.ServerError) hash ^= ServerError.GetHashCode();
+            if (responseCase_ == ResponseOneofCase.SubscriptionError) hash ^= SubscriptionError.GetHashCode();
+            if (responseCase_ == ResponseOneofCase.Heartbeat) hash ^= Heartbeat.GetHashCode();
+            hash ^= (int)responseCase_;
+            return hash;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override string ToString()
+        {
+            return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void WriteTo(pb::CodedOutputStream output)
+        {
+            if (responseCase_ == ResponseOneofCase.Connected)
+            {
+                output.WriteRawTag(10);
+                output.WriteMessage(Connected);
+            }
+            if (responseCase_ == ResponseOneofCase.SingleMessage)
+            {
+                output.WriteRawTag(18);
+                output.WriteMessage(SingleMessage);
+            }
+            if (responseCase_ == ResponseOneofCase.BatchMessages)
+            {
+                output.WriteRawTag(26);
+                output.WriteMessage(BatchMessages);
+            }
+            if (responseCase_ == ResponseOneofCase.Receipt)
+            {
+                output.WriteRawTag(34);
+                output.WriteMessage(Receipt);
+            }
+            if (responseCase_ == ResponseOneofCase.ServerError)
+            {
+                output.WriteRawTag(42);
+                output.WriteMessage(ServerError);
+            }
+            if (responseCase_ == ResponseOneofCase.SubscriptionError)
+            {
+                output.WriteRawTag(50);
+                output.WriteMessage(SubscriptionError);
+            }
+            if (responseCase_ == ResponseOneofCase.Heartbeat)
+            {
+                output.WriteRawTag(58);
+                output.WriteMessage(Heartbeat);
+            }
+        }
+
+        [System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int CalculateSize()
+        {
+            int size = 0;
+            if (responseCase_ == ResponseOneofCase.Connected)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeMessageSize(Connected);
+            }
+            if (responseCase_ == ResponseOneofCase.SingleMessage)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeMessageSize(SingleMessage);
+            }
+            if (responseCase_ == ResponseOneofCase.BatchMessages)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeMessageSize(BatchMessages);
+            }
+            if (responseCase_ == ResponseOneofCase.Receipt)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeMessageSize(Receipt);
+            }
+            if (responseCase_ == ResponseOneofCase.ServerError)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeMessageSize(ServerError);
+            }
+            if (responseCase_ == ResponseOneofCase.SubscriptionError)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeMessageSize(SubscriptionError);
+            }
+            if (responseCase_ == ResponseOneofCase.Heartbeat)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeMessageSize(Heartbeat);
+            }
+            return size;
+        }
+
+        [System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(ResponseFrame other)
+        {
+            if (other == null)
+            {
+                return;
+            }
+            switch (other.ResponseCase)
+            {
+                case ResponseOneofCase.Connected:
+                    Connected ??= new();
+                    Connected.MergeFrom(other.Connected);
+                    break;
+                case ResponseOneofCase.SingleMessage:
+                    SingleMessage ??= new();
+                    SingleMessage.MergeFrom(other.SingleMessage);
+                    break;
+                case ResponseOneofCase.BatchMessages:
+                    BatchMessages ??= new();
+                    BatchMessages.MergeFrom(other.BatchMessages);
+                    break;
+                case ResponseOneofCase.Receipt:
+                    Receipt ??= new();
+                    Receipt.MergeFrom(other.Receipt);
+                    break;
+                case ResponseOneofCase.ServerError:
+                    ServerError ??= new();
+                    ServerError.MergeFrom(other.ServerError);
+                    break;
+                case ResponseOneofCase.SubscriptionError:
+                    SubscriptionError ??= new();
+                    SubscriptionError.MergeFrom(other.SubscriptionError);
+                    break;
+                case ResponseOneofCase.Heartbeat:
+                    Heartbeat ??= new();
+                    Heartbeat.MergeFrom(other.Heartbeat);
+                    break;
+            }
+        }
+
+        [System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(pb::CodedInputStream input)
+        {
+            uint tag;
+            while ((tag = input.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    default:
+                        input.SkipLastField();
+                        break;
+                    case 10:
+                        {
+                            ConnectedResponse subBuilder = new();
+                            
+                            if (responseCase_ == ResponseOneofCase.Connected)
+                                subBuilder.MergeFrom(Connected);
+                            
+                            input.ReadMessage(subBuilder);
+                            Connected = subBuilder;
+                            break;
+                        }
+                    case 18:
+                        {
+                            MessageResponse subBuilder = new();
+                            
+                            if (responseCase_ == ResponseOneofCase.SingleMessage)
+                                subBuilder.MergeFrom(SingleMessage);
+                            
+                            input.ReadMessage(subBuilder);
+                            SingleMessage = subBuilder;
+                            break;
+                        }
+                    case 26:
+                        {
+                            MessageResponses subBuilder = new();
+                            
+                            if (responseCase_ == ResponseOneofCase.BatchMessages)
+                                subBuilder.MergeFrom(BatchMessages);
+                            
+                            input.ReadMessage(subBuilder);
+                            BatchMessages = subBuilder;
+                            break;
+                        }
+                    case 34:
+                        {
+                            ReceiptResponse subBuilder = new();
+                            
+                            if (responseCase_ == ResponseOneofCase.Receipt)
+                                subBuilder.MergeFrom(Receipt);
+                            
+                            input.ReadMessage(subBuilder);
+                            Receipt = subBuilder;
+                            break;
+                        }
+                    case 42:
+                        {
+                            ServerErrorResponse subBuilder = new();
+                            
+                            if (responseCase_ == ResponseOneofCase.ServerError)
+                                subBuilder.MergeFrom(ServerError);
+                            
+                            input.ReadMessage(subBuilder);
+                            ServerError = subBuilder;
+                            break;
+                        }
+                    case 50:
+                        {
+                            SubscriptionErrorResponse subBuilder = new();
+                            
+                            if (responseCase_ == ResponseOneofCase.SubscriptionError)
+                                subBuilder.MergeFrom(SubscriptionError);
+                            
+                            input.ReadMessage(subBuilder);
+                            SubscriptionError = subBuilder;
+                            break;
+                        }
+                    case 58:
+                        {
+                            Heartbeat subBuilder = new();
+                            
+                            if (responseCase_ == ResponseOneofCase.Heartbeat)
+                                subBuilder.MergeFrom(Heartbeat);
+                            
+                            input.ReadMessage(subBuilder);
+                            Heartbeat = subBuilder;
+                            break;
+                        }
+                }
+            }
+        }
+
+    }
+
+    #endregion
 
 }
 
