@@ -34,7 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\stealth-apis\AccountAPI\AccountAPI.csproj" />
+    <ProjectReference Include="..\AccountAPI\AccountAPI.csproj" />
   </ItemGroup>
 
 </Project>
