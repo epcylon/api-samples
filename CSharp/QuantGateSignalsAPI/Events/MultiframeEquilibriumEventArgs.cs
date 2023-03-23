@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace QuantGate.API.Signals.Events
+﻿namespace QuantGate.API.Signals.Events
 {
     /// <summary>
     /// Holds Multiframe Equilibrium values. Will be updated by the stream with change notifications.

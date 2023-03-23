@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace QuantGate.API.Signals.Events
+﻿namespace QuantGate.API.Signals.Events
 {
     /// <summary>
     /// Holds Futures List response details.
@@ -20,7 +17,7 @@ namespace QuantGate.API.Signals.Events
         /// <summary>
         /// The list of futures returned.
         /// </summary>
-        public IReadOnlyList<InstrumentBase> Futures { get; }        
+        public IReadOnlyList<InstrumentBase> Futures { get; }
 
         /// <summary>
         /// Creates a new FuturesListEventArgs instance.

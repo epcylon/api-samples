@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace QuantGate.API.Signals.Events
+﻿namespace QuantGate.API.Signals.Events
 {
     /// <summary>
     /// Base event args class for all subscriptions.
@@ -31,6 +29,6 @@ namespace QuantGate.API.Signals.Events
         /// Creates a copy of this object.
         /// </summary>
         /// <returns>A copy of this object.</returns>
-        protected internal virtual object Clone() => MemberwiseClone();        
+        protected internal virtual object Clone() => MemberwiseClone();
     }
 }

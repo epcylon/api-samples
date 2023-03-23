@@ -1,11 +1,8 @@
 ﻿using QuantGate.API.Signals.Events;
 using QuantGate.API.Signals.Proto.Stealth;
 using QuantGate.API.Signals.Utilities;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using System.Linq;
 
 namespace QuantGate.API.Signals.Subscriptions
 {
@@ -58,11 +55,25 @@ namespace QuantGate.API.Signals.Subscriptions
         /// </summary>
         private static readonly Dictionary<string, string> _exchangeMics = new()
         {
-            ["BMF"] = "BMVF", ["CFE"] = "XCBF", ["CFECRYPTO"] = "XCBC", ["CME"] = "XCME",
-            ["CMECRYPTO"] = "XCMC", ["EEX"] = "XEEE", ["FTA"] = "ALXA", ["ICEEU"] = "IFEU",
-            ["MONEP"] = "XPAR", ["SGX"] = "XSES", ["SMFE"] = "SMFE", ["SOFFEX"] = "XSFX",
-            ["CDE"] = "XMOD", ["DTB"] = "XEUR", ["ECBOT"] = "XCBT", ["GLOBEX"] = "GLBX",
-            ["NYBOT"] = "IFUS", ["NYMEX"] = "XNYM", ["NYSELIFFE"] = "XNLI",
+            ["BMF"] = "BMVF",
+            ["CFE"] = "XCBF",
+            ["CFECRYPTO"] = "XCBC",
+            ["CME"] = "XCME",
+            ["CMECRYPTO"] = "XCMC",
+            ["EEX"] = "XEEE",
+            ["FTA"] = "ALXA",
+            ["ICEEU"] = "IFEU",
+            ["MONEP"] = "XPAR",
+            ["SGX"] = "XSES",
+            ["SMFE"] = "SMFE",
+            ["SOFFEX"] = "XSFX",
+            ["CDE"] = "XMOD",
+            ["DTB"] = "XEUR",
+            ["ECBOT"] = "XCBT",
+            ["GLOBEX"] = "GLBX",
+            ["NYBOT"] = "IFUS",
+            ["NYMEX"] = "XNYM",
+            ["NYSELIFFE"] = "XNLI",
         };
 
         #endregion
@@ -221,7 +232,7 @@ namespace QuantGate.API.Signals.Subscriptions
                 return new InstrumentBase(symbol, baseFuture.Underlying, baseFuture.Currency,
                                           baseFuture.Exchange, baseFuture.InstrumentType,
                                           baseFuture.PutOrCall, baseFuture.Strike, fullExpiry.AddDays(0),
-                                          baseFuture.Multiplier, baseFuture.DisplayName); 
+                                          baseFuture.Multiplier, baseFuture.DisplayName);
             }
             catch (Exception ex)
             {
@@ -310,7 +321,7 @@ namespace QuantGate.API.Signals.Subscriptions
         /// </summary>
         /// <param name="exchange">The exchange to get the MIC for.</param>
         /// <returns>The MIC for the given exchange.</returns>
-        private static string GetMIC(string exchange) 
+        private static string GetMIC(string exchange)
             => _exchangeMics.TryGetValue(exchange, out string mic) ? mic : exchange;
 
         protected override FuturesListEventArgs WrapError(SubscriptionError error)

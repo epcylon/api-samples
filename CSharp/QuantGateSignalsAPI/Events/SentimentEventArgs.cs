@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace QuantGate.API.Signals.Events
+﻿namespace QuantGate.API.Signals.Events
 {
     /// <summary>
     /// Holds Sentiment values. Will be updated by the stream with change notifications.
@@ -76,7 +73,7 @@ namespace QuantGate.API.Signals.Events
         /// </param>
         /// <param name="error">Holds error information, if a subscription error occured.</param>
         internal SentimentEventArgs(string symbol, DataStream stream, DateTime timestamp, string compression,
-                                    double avgLength, int lengthI, int lengthJ, double[] lengths, double avgColor, 
+                                    double avgLength, int lengthI, int lengthJ, double[] lengths, double avgColor,
                                     int colorI, int colorJ, double[] colors, bool isDirty, SubscriptionError error = null) :
             base(symbol, stream, timestamp, isDirty, error)
         {

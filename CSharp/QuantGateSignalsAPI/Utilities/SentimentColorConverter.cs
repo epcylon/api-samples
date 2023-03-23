@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 
 namespace QuantGate.API.Signals.Utilities
 {
@@ -53,7 +52,7 @@ namespace QuantGate.API.Signals.Utilities
             if (!exact)
                 return _rgb[(int)((color + 1) * 200)];
             else
-                return "#" + RedBlueColor((color + 1) * 0.5);            
+                return "#" + RedBlueColor((color + 1) * 0.5);
         }
 
         /// <summary>
@@ -93,7 +92,7 @@ namespace QuantGate.API.Signals.Utilities
         {
             //The final color is the combination of the RGB elements.
             return CalculateRBElement(forValue, 0.7125) +
-                   CalculateRBElement(forValue, 0.5) + 
+                   CalculateRBElement(forValue, 0.5) +
                    CalculateRBElement(forValue, 0.2875);
         }
 
@@ -134,7 +133,7 @@ namespace QuantGate.API.Signals.Utilities
                     else
                         return Convert.ToString(asByte, 16);
                 }
-                    
+
             }
             catch (Exception ex)
             {

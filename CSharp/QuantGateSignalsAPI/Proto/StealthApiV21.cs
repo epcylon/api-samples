@@ -8,7 +8,6 @@
 using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using pbr = global::Google.Protobuf.Reflection;
-using scg = global::System.Collections.Generic;
 namespace QuantGate.API.Signals.Proto.Stealth
 {
 
@@ -1561,26 +1560,17 @@ namespace QuantGate.API.Signals.Proto.Stealth
             }
             if (other.realtime_ != null)
             {
-                if (realtime_ == null)
-                {
-                    realtime_ = new global::QuantGate.API.Signals.Proto.Stealth.RealtimeUpdate();
-                }
+                realtime_ ??= new global::QuantGate.API.Signals.Proto.Stealth.RealtimeUpdate();
                 Realtime.MergeFrom(other.Realtime);
             }
             if (other.snapshot_ != null)
             {
-                if (snapshot_ == null)
-                {
-                    snapshot_ = new global::QuantGate.API.Signals.Proto.Stealth.SnapshotUpdate();
-                }
+                snapshot_ ??= new global::QuantGate.API.Signals.Proto.Stealth.SnapshotUpdate();
                 Snapshot.MergeFrom(other.Snapshot);
             }
             if (other.statistics_ != null)
             {
-                if (statistics_ == null)
-                {
-                    statistics_ = new global::QuantGate.API.Signals.Proto.Stealth.StatisticsUpdate();
-                }
+                statistics_ ??= new global::QuantGate.API.Signals.Proto.Stealth.StatisticsUpdate();
                 Statistics.MergeFrom(other.Statistics);
             }
         }
@@ -1603,28 +1593,19 @@ namespace QuantGate.API.Signals.Proto.Stealth
                         }
                     case 18:
                         {
-                            if (realtime_ == null)
-                            {
-                                realtime_ = new global::QuantGate.API.Signals.Proto.Stealth.RealtimeUpdate();
-                            }
+                            realtime_ ??= new global::QuantGate.API.Signals.Proto.Stealth.RealtimeUpdate();
                             input.ReadMessage(realtime_);
                             break;
                         }
                     case 26:
                         {
-                            if (snapshot_ == null)
-                            {
-                                snapshot_ = new global::QuantGate.API.Signals.Proto.Stealth.SnapshotUpdate();
-                            }
+                            snapshot_ ??= new global::QuantGate.API.Signals.Proto.Stealth.SnapshotUpdate();
                             input.ReadMessage(snapshot_);
                             break;
                         }
                     case 34:
                         {
-                            if (statistics_ == null)
-                            {
-                                statistics_ = new global::QuantGate.API.Signals.Proto.Stealth.StatisticsUpdate();
-                            }
+                            statistics_ ??= new global::QuantGate.API.Signals.Proto.Stealth.StatisticsUpdate();
                             input.ReadMessage(statistics_);
                             break;
                         }
@@ -2178,18 +2159,12 @@ namespace QuantGate.API.Signals.Proto.Stealth
             }
             if (other.lengths_ != null)
             {
-                if (lengths_ == null)
-                {
-                    lengths_ = new global::QuantGate.API.Signals.Proto.Stealth.SentimentSpline();
-                }
+                lengths_ ??= new global::QuantGate.API.Signals.Proto.Stealth.SentimentSpline();
                 Lengths.MergeFrom(other.Lengths);
             }
             if (other.colors_ != null)
             {
-                if (colors_ == null)
-                {
-                    colors_ = new global::QuantGate.API.Signals.Proto.Stealth.SentimentSpline();
-                }
+                colors_ ??= new global::QuantGate.API.Signals.Proto.Stealth.SentimentSpline();
                 Colors.MergeFrom(other.Colors);
             }
             if (other.IsDirty != false)
@@ -2216,19 +2191,13 @@ namespace QuantGate.API.Signals.Proto.Stealth
                         }
                     case 18:
                         {
-                            if (lengths_ == null)
-                            {
-                                lengths_ = new global::QuantGate.API.Signals.Proto.Stealth.SentimentSpline();
-                            }
+                            lengths_ ??= new global::QuantGate.API.Signals.Proto.Stealth.SentimentSpline();
                             input.ReadMessage(lengths_);
                             break;
                         }
                     case 26:
                         {
-                            if (colors_ == null)
-                            {
-                                colors_ = new global::QuantGate.API.Signals.Proto.Stealth.SentimentSpline();
-                            }
+                            colors_ ??= new global::QuantGate.API.Signals.Proto.Stealth.SentimentSpline();
                             input.ReadMessage(colors_);
                             break;
                         }

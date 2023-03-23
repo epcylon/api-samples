@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace QuantGate.API.Signals.Utilities
+﻿namespace QuantGate.API.Signals.Utilities
 {
     internal static class ProtoTimeEncoder
     {
@@ -31,7 +29,7 @@ namespace QuantGate.API.Signals.Utilities
 
                 return new DateTime(_ticks1800 + (long)(timestamp * TimeSpan.TicksPerSecond), DateTimeKind.Utc);
             }
-            catch 
+            catch
             {
                 return DateTime.UtcNow;
             }

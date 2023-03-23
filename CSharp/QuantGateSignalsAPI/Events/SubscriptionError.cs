@@ -14,7 +14,7 @@
         /// Detailed description about the error (if supplied). 
         /// </summary>
         public string Details { get; }
-        
+
         /// <summary>
         /// Creates a new SubscriptionError instance.
         /// </summary>

@@ -1,9 +1,6 @@
 ﻿using Google.Protobuf;
 using QuantGate.API.Signals.Events;
 using QuantGate.API.Signals.ProtoStomp;
-using System;
-using System.Collections.Generic;
-using System.Threading;
 
 namespace QuantGate.API.Signals.Subscriptions
 {
@@ -11,7 +8,7 @@ namespace QuantGate.API.Signals.Subscriptions
     {
         public HashSet<object> References { get; }
 
-        public SubscriptionBase(APIClient client, string destination, bool receipt = false, 
+        public SubscriptionBase(APIClient client, string destination, bool receipt = false,
                                 uint throttleRate = 0, object reference = null) :
             base(client, destination, receipt, throttleRate)
         {
@@ -45,7 +42,7 @@ namespace QuantGate.API.Signals.Subscriptions
             _parser = parser;
             ParentUpdatedEvent = handler;
             OnNext += HandleOnNext;
-            OnError += HandleError;            
+            OnError += HandleError;
         }
 
         private void HandleOnNext(ProtoStompSubscription subscription, ByteString values)
@@ -75,7 +72,7 @@ namespace QuantGate.API.Signals.Subscriptions
         {
             Client.Sync.Post(new SendOrPostCallback(o =>
             {
-                SendUpdateToAll(update);                
+                SendUpdateToAll(update);
             }), null);
         }
 

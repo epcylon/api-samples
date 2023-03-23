@@ -1,17 +1,16 @@
-﻿using QuantGate.API.Signals.Proto.Stealth;
+﻿using QuantGate.API.Signals.Events;
+using QuantGate.API.Signals.Proto.Stealth;
 using QuantGate.API.Signals.Utilities;
-using QuantGate.API.Signals.Events;
-using System;
 
 namespace QuantGate.API.Signals.Subscriptions
 {
     internal class CommitmentSubscription : GaugeSubscriptionBase<SingleValueUpdate, CommitmentEventArgs>
     {
         public CommitmentSubscription(APIClient client, EventHandler<CommitmentEventArgs> handler,
-                                      string streamID, string symbol, bool receipt = false, 
+                                      string streamID, string symbol, bool receipt = false,
                                       uint throttleRate = 0, object reference = null) :
-            base(client, SingleValueUpdate.Parser, handler, SubscriptionPath.GaugeCommitment, 
-                 ParsedDestination.StreamIDForSymbol(streamID, symbol), symbol, "1m", 
+            base(client, SingleValueUpdate.Parser, handler, SubscriptionPath.GaugeCommitment,
+                 ParsedDestination.StreamIDForSymbol(streamID, symbol), symbol, "1m",
                  receipt, throttleRate, reference)
         {
         }

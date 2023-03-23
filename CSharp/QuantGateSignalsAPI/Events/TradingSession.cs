@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace QuantGate.API.Signals.Events
+﻿namespace QuantGate.API.Signals.Events
 {
     /// <summary>
     /// Trading session end times and lengths for each day Sunday-Saturday, specified in the exchange Time Zone.
@@ -49,7 +47,7 @@ namespace QuantGate.API.Signals.Events
             DayOfWeek = dayOfWeek;
             Close = TimeSpan.FromMinutes(close);
             Length = TimeSpan.FromMinutes(length);
-            Open = TimeSpan.FromMinutes((_minutesPerDay + close - length) % _minutesPerDay);            
+            Open = TimeSpan.FromMinutes((_minutesPerDay + close - length) % _minutesPerDay);
         }
     }
 }

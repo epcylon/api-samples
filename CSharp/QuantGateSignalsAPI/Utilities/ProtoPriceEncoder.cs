@@ -112,7 +112,7 @@
                 _mantissaLengths[level] = 7 * (level + 1) - scaleBits;
                 _maxMantissas[level] = value >> scaleBits;
                 _levelMask[level] = 0x7FUL << (7 * level);
-                
+
                 // Don't need more than 16.
                 if (scaleBits < 4)
                     scaleBits++;

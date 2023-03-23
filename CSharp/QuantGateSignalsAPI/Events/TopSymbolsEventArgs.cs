@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace QuantGate.API.Signals.Events
+﻿namespace QuantGate.API.Signals.Events
 {
     /// <summary>
     /// Holds Top Symbol values. Will be updated by the stream with change notifications.
@@ -20,7 +17,7 @@ namespace QuantGate.API.Signals.Events
         /// <summary>
         /// The type of instrument to include in the results.
         /// </summary>
-        public InstrumentType InstrumentType { get; }     
+        public InstrumentType InstrumentType { get; }
 
         /// <summary>
         /// Creates a new TopSymbolsEventArgs instance.
@@ -30,7 +27,7 @@ namespace QuantGate.API.Signals.Events
         /// <param name="reference">Reference object tied to the initial request.</param>
         /// <param name="symbols">Top symbol results.</param>
         /// <param name="error">Holds error information, if a subscription error occured.</param>
-        public TopSymbolsEventArgs(string broker, InstrumentType instrumentType, List<TopSymbol> symbols, 
+        public TopSymbolsEventArgs(string broker, InstrumentType instrumentType, List<TopSymbol> symbols,
                                    SubscriptionError error = null) : base(error)
         {
             Broker = broker;

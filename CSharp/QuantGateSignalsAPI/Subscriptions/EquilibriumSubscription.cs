@@ -1,14 +1,13 @@
 ﻿using QuantGate.API.Signals.Events;
 using QuantGate.API.Signals.Proto.Stealth;
 using QuantGate.API.Signals.Utilities;
-using System;
 
 namespace QuantGate.API.Signals.Subscriptions
 {
     internal class EquilibriumSubscription : GaugeSubscriptionBase<EquilibriumUpdate, EquilibriumEventArgs>
     {
-        public EquilibriumSubscription(APIClient client, EventHandler<EquilibriumEventArgs> handler, string streamID, 
-                                       string symbol, string compression, bool receipt = false, 
+        public EquilibriumSubscription(APIClient client, EventHandler<EquilibriumEventArgs> handler, string streamID,
+                                       string symbol, string compression, bool receipt = false,
                                        uint throttleRate = 0, object reference = null) :
                 base(client, EquilibriumUpdate.Parser, handler, SubscriptionPath.GaugeEquilibrium,
                      streamID, symbol, compression, receipt, throttleRate, reference)
@@ -19,7 +18,7 @@ namespace QuantGate.API.Signals.Subscriptions
         {
             return new EquilibriumEventArgs(
                 Symbol, Stream,
-                ProtoTimeEncoder.TimestampSecondsToDate(update.Timestamp), 
+                ProtoTimeEncoder.TimestampSecondsToDate(update.Timestamp),
                 Compression,
                 ProtoPriceEncoder.DecodePrice(update.EquilibriumPrice),
                 ProtoPriceEncoder.DecodePrice(update.GapSize),

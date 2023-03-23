@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace QuantGate.API.Signals.Events
+﻿namespace QuantGate.API.Signals.Events
 {
     public class PricesEventArgs : SubscriptionEventArgs
     {

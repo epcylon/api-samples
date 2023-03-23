@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace QuantGate.API.Signals.ProtoStomp
+﻿namespace QuantGate.API.Signals.ProtoStomp
 {
     internal class ProtoStompReceipt : IReceiptable
     {
@@ -14,13 +12,13 @@ namespace QuantGate.API.Signals.ProtoStomp
             ReceiptID = id;
         }
 
-        public void OnInvalidate() 
-        { 
+        public void OnInvalidate()
+        {
             Invalidated();
         }
 
-        public void OnReceipt() 
-        { 
+        public void OnReceipt()
+        {
             Receipted();
             ReceiptID = 0;
         }

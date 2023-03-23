@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Text;
 
 namespace QuantGate.API.Signals.Utilities
@@ -54,7 +51,7 @@ namespace QuantGate.API.Signals.Utilities
         /// <summary>
         /// Multi-time-frame gauge subscription.
         /// </summary>
-        GaugeMultiframeEquilibrium = 0x0000000003,        
+        GaugeMultiframeEquilibrium = 0x0000000003,
         /// <summary>
         /// Commitment gauge subscription.
         /// </summary>
@@ -75,7 +72,7 @@ namespace QuantGate.API.Signals.Utilities
         /// Perception2 gauge subscription.
         /// </summary>
         GaugePerception = 0x0000000040,
-        
+
         /// <summary>
         /// Long instrument definition subscription.
         /// </summary>
@@ -231,7 +228,7 @@ namespace QuantGate.API.Signals.Utilities
 
             if (string.IsNullOrEmpty(destination) || destination[0] != _separator)
                 destination = _separator + destination;
-            
+
             Destination = destination;
             SubscriptionType = SubscriptionType.None;
 
@@ -477,7 +474,7 @@ namespace QuantGate.API.Signals.Utilities
             return new ParsedDestination(SubscriptionType.Quote, SubscriptionPath.None, streamID, symbol);
         }
 
-        public static ParsedDestination CreateGaugeDestination(SubscriptionPath subscriptionPath, string streamID, 
+        public static ParsedDestination CreateGaugeDestination(SubscriptionPath subscriptionPath, string streamID,
                                                                string symbol, string compression = "")
         {
             return new ParsedDestination(SubscriptionType.Gauge, subscriptionPath, streamID, symbol, compression);
@@ -485,7 +482,7 @@ namespace QuantGate.API.Signals.Utilities
 
         public static ParsedDestination CreateStrategyDestination(string strategyID, string streamID, string symbol)
         {
-            return new ParsedDestination(SubscriptionType.Strategy, SubscriptionPath.None, 
+            return new ParsedDestination(SubscriptionType.Strategy, SubscriptionPath.None,
                                          streamID, symbol, strategyID: strategyID);
         }
 
@@ -497,7 +494,7 @@ namespace QuantGate.API.Signals.Utilities
 
         public static ParsedDestination CreateTopSymbolsDestination(string broker, string securityType = "")
         {
-            return new ParsedDestination(SubscriptionType.Definition, SubscriptionPath.DefnTopSymbols, 
+            return new ParsedDestination(SubscriptionType.Definition, SubscriptionPath.DefnTopSymbols,
                                          broker: broker, securityType: securityType);
         }
 

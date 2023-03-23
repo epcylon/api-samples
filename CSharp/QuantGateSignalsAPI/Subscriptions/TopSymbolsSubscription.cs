@@ -1,8 +1,6 @@
 ﻿using QuantGate.API.Signals.Events;
 using QuantGate.API.Signals.Proto.Stealth;
 using QuantGate.API.Signals.Utilities;
-using System;
-using System.Collections.Generic;
 
 namespace QuantGate.API.Signals.Subscriptions
 {
@@ -15,7 +13,7 @@ namespace QuantGate.API.Signals.Subscriptions
         /// <summary>
         /// The type of instrument to include in the results.
         /// </summary>
-        public InstrumentType InstrumentType { get; }        
+        public InstrumentType InstrumentType { get; }
 
         public TopSymbolsSubscription(APIClient client, EventHandler<TopSymbolsEventArgs> handler, string broker,
                                       InstrumentType instrumentType = InstrumentType.NoInstrument,

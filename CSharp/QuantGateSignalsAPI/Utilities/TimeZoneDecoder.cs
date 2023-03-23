@@ -153,9 +153,9 @@
 
             if (_olsonWindowsTimes.TryGetValue(olsonTimeZoneId, out var windowsTimeZoneId))
             {
-                try 
+                try
                 {
-                    windowsTimeZone = TimeZoneInfo.FindSystemTimeZoneById(windowsTimeZoneId); 
+                    windowsTimeZone = TimeZoneInfo.FindSystemTimeZoneById(windowsTimeZoneId);
                 }
                 catch (TimeZoneNotFoundException) { }
                 catch (InvalidTimeZoneException) { }

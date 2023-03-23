@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace QuantGate.API.Signals.Events
+﻿namespace QuantGate.API.Signals.Events
 {
     /// <summary>
     /// Basic details about an instrument (not including trading day information, etc.)

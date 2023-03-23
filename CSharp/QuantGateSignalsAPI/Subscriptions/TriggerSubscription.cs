@@ -1,15 +1,14 @@
-﻿using QuantGate.API.Signals.Proto.Stealth;
+﻿using QuantGate.API.Signals.Events;
+using QuantGate.API.Signals.Proto.Stealth;
 using QuantGate.API.Signals.Utilities;
-using QuantGate.API.Signals.Events;
-using System;
 
 namespace QuantGate.API.Signals.Subscriptions
 {
     internal class TriggerSubscription : GaugeSubscriptionBase<TriggerUpdate, TriggerEventArgs>
     {
-        public TriggerSubscription(APIClient client, EventHandler<TriggerEventArgs> handler, string streamID, 
+        public TriggerSubscription(APIClient client, EventHandler<TriggerEventArgs> handler, string streamID,
                                    string symbol, bool receipt = false, uint throttleRate = 0, object reference = null) :
-            base(client, TriggerUpdate.Parser, handler, SubscriptionPath.GaugeTrigger, 
+            base(client, TriggerUpdate.Parser, handler, SubscriptionPath.GaugeTrigger,
                  streamID, symbol, string.Empty, receipt, throttleRate, reference)
         {
         }

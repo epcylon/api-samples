@@ -1,8 +1,6 @@
 ﻿using QuantGate.API.Signals.Events;
 using QuantGate.API.Signals.Proto.Stealth;
 using QuantGate.API.Signals.Utilities;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace QuantGate.API.Signals.Subscriptions
@@ -18,7 +16,6 @@ namespace QuantGate.API.Signals.Subscriptions
         /// The symbol that was requested.
         /// </summary>
         private readonly string _symbol;
-        private readonly DataStream _stream;
 
         public InstrumentSubscription(APIClient client, EventHandler<InstrumentEventArgs> handler,
                                       string streamID, string symbol, bool receipt = false,
@@ -29,7 +26,6 @@ namespace QuantGate.API.Signals.Subscriptions
                  receipt, throttleRate, reference)
         {
             _symbol = symbol;
-            _stream = APIClient.ToStream(streamID);
         }
 
         protected override InstrumentEventArgs WrapError(SubscriptionError error) => new(_symbol, error);
@@ -62,9 +58,9 @@ namespace QuantGate.API.Signals.Subscriptions
                 foreach (KeyValuePair<string, string> symbolMapping in update.BrokerSymbols)
                     brokerSymbols.Add(symbolMapping.Key, symbolMapping.Value);
 
-                return new InstrumentEventArgs(_symbol, 
+                return new InstrumentEventArgs(_symbol,
                     new Instrument(update.Symbol, update.Underlying, update.Currency, update.Exchange,
-                                   (InstrumentType)update.InstrumentType, (PutOrCall)update.PutOrCall, 
+                                   (InstrumentType)update.InstrumentType, (PutOrCall)update.PutOrCall,
                                    update.Strike, new DateTime((long)update.ExpiryDate, DateTimeKind.Utc),
                                    update.Multiplier, update.DisplayName,
                                    TimeZoneDecoder.OlsonTimeZoneToTimeZoneInfo(update.TimeZone),

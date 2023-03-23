@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace QuantGate.API.Signals.Events
+﻿namespace QuantGate.API.Signals.Events
 {
     /// <summary>
     /// The details of an individual symbol in response to a top symbols request.
@@ -54,8 +52,8 @@ namespace QuantGate.API.Signals.Events
         /// <param name="signal">Entry signal for the default strategy.</param>
         internal TopSymbol(DateTime timestamp, string symbol, string underlying, string currency,
                            InstrumentType instrumentType, string exchange, string displayName,
-                           double entryProgress, GaugeSignal perceptionSignal, 
-                           GaugeSignal commitmentSignal, GaugeSignal equilibriumSignal, 
+                           double entryProgress, GaugeSignal perceptionSignal,
+                           GaugeSignal commitmentSignal, GaugeSignal equilibriumSignal,
                            GaugeSignal sentimentSignal, StrategySignal signal) :
             base(symbol, underlying, currency, instrumentType, exchange, displayName)
         {

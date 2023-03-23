@@ -1,7 +1,6 @@
-﻿using QuantGate.API.Signals.Proto.Stealth;
+﻿using QuantGate.API.Signals.Events;
+using QuantGate.API.Signals.Proto.Stealth;
 using QuantGate.API.Signals.Utilities;
-using QuantGate.API.Signals.Events;
-using System;
 
 namespace QuantGate.API.Signals.Subscriptions
 {
@@ -9,10 +8,10 @@ namespace QuantGate.API.Signals.Subscriptions
     {
         private readonly string _symbol;
         private readonly DataStream _stream;
-        private readonly string _strategyID;        
+        private readonly string _strategyID;
 
         public StrategySubscription(APIClient client, EventHandler<StrategyEventArgs> handler,
-                                    string strategyID, string streamID, string symbol, 
+                                    string strategyID, string streamID, string symbol,
                                     bool receipt = false, uint throttleRate = 0, object reference = null) :
             base(client, StrategyUpdate.Parser, handler,
                  new ParsedDestination(SubscriptionType.Strategy, SubscriptionPath.None,
@@ -48,7 +47,7 @@ namespace QuantGate.API.Signals.Subscriptions
         }
 
         protected override StrategyEventArgs WrapError(SubscriptionError error) =>
-            new (DateTime.UtcNow, _symbol, _stream, _strategyID, 0, 0, null, 
+            new(DateTime.UtcNow, _symbol, _stream, _strategyID, 0, 0, null,
                  0, null, 0, null, 0, null, 0, StrategySignal.None, error);
 
         /// <summary>

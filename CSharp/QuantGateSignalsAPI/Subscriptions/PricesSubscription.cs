@@ -1,7 +1,6 @@
 ﻿using QuantGate.API.Signals.Events;
 using QuantGate.API.Signals.Proto.Stealth;
 using QuantGate.API.Signals.Utilities;
-using System;
 
 namespace QuantGate.API.Signals.Subscriptions
 {
@@ -12,19 +11,19 @@ namespace QuantGate.API.Signals.Subscriptions
 
         public PricesSubscription(APIClient client, EventHandler<PricesEventArgs> handler, string streamID,
                                   string symbol, bool receipt = false, uint throttleRate = 0, object reference = null) :
-            base(client, QuoteUpdate.Parser, handler,               
+            base(client, QuoteUpdate.Parser, handler,
                  ParsedDestination.CreatePricesDestination(
                      ParsedDestination.StreamIDForSymbol(streamID, symbol), symbol).Destination, receipt, throttleRate, reference)
-        {            
+        {
             _current = new PricesEventArgs(symbol, APIClient.ToStream(streamID));
             _isCrypto = symbol.Contains(':');
-        }        
+        }
 
         protected override PricesEventArgs HandleUpdate(QuoteUpdate update, object processed)
         {
             _current.TimeStamp = ProtoTimeEncoder.TimestampSecondsToDate(update.Timestamp);
 
-            if (update.Realtime is object)
+            if (update.Realtime is not null)
             {
                 _current.BidPrice = ProtoPriceEncoder.DecodePrice(update.Realtime.BidPrice);
                 _current.BidSize = AdjustSize(update.Realtime.BidSize);
@@ -33,7 +32,7 @@ namespace QuantGate.API.Signals.Subscriptions
                 _current.LastPrice = ProtoPriceEncoder.DecodePrice(update.Realtime.LastPrice);
                 _current.LastSize = AdjustSize(update.Realtime.LastSize);
             }
-            if (update.Snapshot is object)
+            if (update.Snapshot is not null)
             {
                 _current.Volume = AdjustSize(update.Snapshot.Volume);
                 _current.OpenPrice = ProtoPriceEncoder.DecodePrice(update.Snapshot.OpenPrice);
@@ -44,7 +43,7 @@ namespace QuantGate.API.Signals.Subscriptions
                 _current.High52Price = ProtoPriceEncoder.DecodePrice(update.Snapshot.High52Price);
                 _current.Low52Price = ProtoPriceEncoder.DecodePrice(update.Snapshot.Low52Price);
             }
-            if (update.Statistics is object)
+            if (update.Statistics is not null)
             {
                 _current.Beta = update.Statistics.Beta;
                 _current.Eps = update.Statistics.Eps;

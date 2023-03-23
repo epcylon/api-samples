@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace QuantGate.API.Signals.Events
+﻿namespace QuantGate.API.Signals.Events
 {
     /// <summary>
     /// Holds Trigger values. Will be updated by the stream with change notifications.
@@ -60,8 +58,8 @@ namespace QuantGate.API.Signals.Events
         /// (values are missing) or stale (not the most recent data).
         /// </param>
         /// <param name="error">Holds error information, if a subscription error occured.</param>
-        internal TriggerEventArgs(string symbol, DataStream stream, DateTime timestamp, double perception, 
-                                  double commitment, double sentiment, double equilibriumPrice, double gapSize, 
+        internal TriggerEventArgs(string symbol, DataStream stream, DateTime timestamp, double perception,
+                                  double commitment, double sentiment, double equilibriumPrice, double gapSize,
                                   double lastPrice, double bias, bool isDirty, SubscriptionError error = null) :
             base(symbol, stream, timestamp, isDirty, error)
         {

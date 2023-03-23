@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace QuantGate.API.Signals.Events
+﻿namespace QuantGate.API.Signals.Events
 {
     /// <summary>
     /// Holds Strategy values. Will be updated by the stream with change notifications.
@@ -98,8 +96,8 @@ namespace QuantGate.API.Signals.Events
         /// <param name="error">Holds error information, if a subscription error occured.</param>
         internal StrategyEventArgs(DateTime timeStamp, string symbol, DataStream stream, string strategyID, double entryProgress,
                                    double exitProgress, double? perceptionLevel, GaugeSignal perceptionSignal,
-                                   double? commitmentLevel, GaugeSignal commitmentSignal, double? equilibriumLevel, 
-                                   GaugeSignal equilibriumSignal, double? sentimentLevel, GaugeSignal sentimentSignal, 
+                                   double? commitmentLevel, GaugeSignal commitmentSignal, double? equilibriumLevel,
+                                   GaugeSignal equilibriumSignal, double? sentimentLevel, GaugeSignal sentimentSignal,
                                    StrategySignal signal, SubscriptionError error = null) : base(error)
         {
             TimeStamp = timeStamp;

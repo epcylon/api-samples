@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Net.Http;
-using System.Threading;
+﻿using System.Diagnostics;
 
 namespace Epcylon.Net.APIs.Account
 {
@@ -502,7 +497,7 @@ namespace Epcylon.Net.APIs.Account
                     token = GetJSONField(jsonResponse, "jwt");
                     refreshToken = GetJSONField(jsonResponse, "jwtr");
                     tokenExpiry = GetExpiry(token);
-                    bool.TryParse(GetJSONField(jsonResponse, "trial"), out trial);
+                    _ = bool.TryParse(GetJSONField(jsonResponse, "trial"), out trial);
                     message = GetJSONField(jsonResponse, "message");
                 }
                 else if (jsonResponse.Contains("Message"))

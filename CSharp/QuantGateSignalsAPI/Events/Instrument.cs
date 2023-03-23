@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace QuantGate.API.Signals.Events
+﻿namespace QuantGate.API.Signals.Events
 {
     /// <summary>
     /// Holds the details of an instrument.
@@ -51,8 +48,8 @@ namespace QuantGate.API.Signals.Events
                             InstrumentType instrumentType, PutOrCall putOrCall, double strike,
                             DateTime expiryDate, double multiplier, string displayName,
                             TimeZoneInfo timeZone, List<TickRange> tickRanges,
-                            List<TradingSession> tradingSessions, Dictionary<string, string> brokerSymbols) : 
-            base(symbol, underlying, currency, exchange, instrumentType, 
+                            List<TradingSession> tradingSessions, Dictionary<string, string> brokerSymbols) :
+            base(symbol, underlying, currency, exchange, instrumentType,
                  putOrCall, strike, expiryDate, multiplier, displayName)
         {
             TimeZone = timeZone;

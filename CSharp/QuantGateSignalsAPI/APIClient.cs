@@ -90,7 +90,7 @@ namespace QuantGate.API.Signals
         /// The password for the current connection (JWT Token).
         /// </summary>        
         private readonly ConnectionToken _token;
-        
+
         /// <summary>
         /// Is the client disconnecting?
         /// </summary>
@@ -185,7 +185,7 @@ namespace QuantGate.API.Signals
         /// The synchronization context to return values on (default = SychronizationContext.Current).
         /// </param>
         /// <param name="connectBody">Connect body to send (internal use only).</param>
-        public APIClient(ConnectionToken token, DataStream stream = DataStream.Realtime, 
+        public APIClient(ConnectionToken token, DataStream stream = DataStream.Realtime,
                          SynchronizationContext sync = null, string connectBody = null)
         {
             // Set the connect body.
@@ -221,7 +221,7 @@ namespace QuantGate.API.Signals
             else
                 Stream = stream;
 
-            _streamID = ConvertStream(Stream);            
+            _streamID = ConvertStream(Stream);
 
             // Start the main (long running) thread queue.
             Task.Factory.StartNew(HandleActions, TaskCreationOptions.LongRunning);
@@ -262,7 +262,7 @@ namespace QuantGate.API.Signals
         /// <summary>
         /// The username (email) of the connected user.
         /// </summary>
-        public string Username { get; private set; }        
+        public string Username { get; private set; }
 
         /// <summary>
         /// Returns the type of stream that this client is connected to (realtime/delay/demo).
@@ -283,13 +283,13 @@ namespace QuantGate.API.Signals
         /// Adds a new action to the list of actions to run in the main thread.
         /// </summary>
         /// <param name="action">The action to run within the thread.</param>
-        internal void Enqueue(Action action) 
-        { 
+        internal void Enqueue(Action action)
+        {
             try
             {
                 // Try to enqueue the action.
                 if (!_actions.IsAddingCompleted)
-                    _actions.Add(action); 
+                    _actions.Add(action);
             }
             catch (Exception ex)
             {
@@ -318,10 +318,10 @@ namespace QuantGate.API.Signals
                 ConnectRequest connect;
 
                 try
-                {                    
+                {
                     connect = new ConnectRequest { AcceptVersion = "1.0" };
 
-                    if (_token is object)
+                    if (_token is not null)
                     {
                         connect.Login = _token.ClientID;
                         connect.Passcode = _token.Token;
@@ -377,7 +377,7 @@ namespace QuantGate.API.Signals
                 }
             });
         }
-         
+
         /// <summary>
         /// Dispatches the given message to a registered message consumer.
         /// </summary>
@@ -423,7 +423,7 @@ namespace QuantGate.API.Signals
                 _reconnectCount = 0;
                 _reconnectTicks = 0;
                 _killTicks = 0;
-                
+
                 IsConnected = true;
 
                 IDGenerator.Reset();
@@ -497,7 +497,7 @@ namespace QuantGate.API.Signals
                 if (_receiptReferences.TryGetValue(frame.Receipt.ReceiptId, out IReceiptable receiptable))
                     _receiptReferences.Remove(frame.Receipt.ReceiptId);
 
-                if (receiptable is object)
+                if (receiptable is not null)
                 {
                     receiptable.OnReceipt();
                 }
@@ -568,7 +568,7 @@ namespace QuantGate.API.Signals
             Enqueue(() =>
             {
                 try
-                {                    
+                {
                     // Set the username and password.
                     _isDisconnecting = false;
                     _reconnectTicks = 0;
@@ -582,7 +582,7 @@ namespace QuantGate.API.Signals
                     Trace.TraceError(_moduleID + ":Cn2 - " + ex.Message);
                 }
             });
-        }        
+        }
 
         /// <summary>
         /// Disconnects this instance.
@@ -609,7 +609,7 @@ namespace QuantGate.API.Signals
                 }
 
                 // Send disconnect frame, if the transport is alive.
-                if (_transport is object && 
+                if (_transport is not null &&
                     _transport.State == System.Net.WebSockets.WebSocketState.Open)
                     Send(new RequestFrame { Disconnect = new DisconnectRequest() });
 
@@ -629,7 +629,7 @@ namespace QuantGate.API.Signals
         {
             try
             {
-                if (_transport is object)
+                if (_transport is not null)
                 {
                     // If there is a transport, close if not closed, otherwise send event.
                     if (_transport.State != System.Net.WebSockets.WebSocketState.Closed)
@@ -674,7 +674,7 @@ namespace QuantGate.API.Signals
         {
             try
             {
-                if (subscription is object)
+                if (subscription is not null)
                 {
                     _subscriptionReferences[subscription.SubscriptionID] = subscription;
                     _subscriptionsByDestination[subscription.Destination] = subscription;
@@ -709,7 +709,7 @@ namespace QuantGate.API.Signals
 
             try
             {
-                if (subscription is object)
+                if (subscription is not null)
                 {
                     // Create the unsubscribe message.
                     throttle.SubscriptionId = subscription.SubscriptionID;
@@ -797,7 +797,7 @@ namespace QuantGate.API.Signals
         /// </summary>
         /// <param name="toSend">The Stomp frame to send.</param>
         internal void Send(ProtoStompSend toSend)
-        {            
+        {
             try
             {
                 // If there is a receipt requested, add to receipt references.
@@ -810,7 +810,7 @@ namespace QuantGate.API.Signals
             catch (Exception ex)
             {
                 Trace.TraceError(_moduleID + ":Snd - " + ex.Message);
-            }            
+            }
         }
 
         /// <summary>
@@ -898,7 +898,7 @@ namespace QuantGate.API.Signals
         /// you will receive two events on each update - one for each reference supplied.
         /// If no reference is supplied, you will receive a single update.
         /// </remarks>
-        public void SubscribePrices(string symbol, int throttleRate = 0, 
+        public void SubscribePrices(string symbol, int throttleRate = 0,
                                     object reference = null, DataStream stream = DataStream.Invalid) =>
             EnqueueAndSubscribe(new PricesSubscription(this, SendPricesUpdate, ConvertStream(stream), symbol,
                                                        false, (uint)throttleRate, reference));
@@ -915,9 +915,9 @@ namespace QuantGate.API.Signals
         /// you will receive two events on each update - one for each reference supplied.
         /// If no reference is supplied, you will receive a single update.
         /// </remarks>
-        public void SubscribePerception(string symbol, int throttleRate = 0, 
+        public void SubscribePerception(string symbol, int throttleRate = 0,
                                         object reference = null, DataStream stream = DataStream.Invalid) =>
-            EnqueueAndSubscribe(new PerceptionSubscription(this, SendPerceptionUpdate, ConvertStream(stream), symbol, 
+            EnqueueAndSubscribe(new PerceptionSubscription(this, SendPerceptionUpdate, ConvertStream(stream), symbol,
                                                            false, (uint)throttleRate, reference));
 
         /// <summary>
@@ -932,9 +932,9 @@ namespace QuantGate.API.Signals
         /// you will receive two events on each update - one for each reference supplied.
         /// If no reference is supplied, you will receive a single update.
         /// </remarks>
-        public void SubscribeCommitment(string symbol, int throttleRate = 0, 
+        public void SubscribeCommitment(string symbol, int throttleRate = 0,
                                         object reference = null, DataStream stream = DataStream.Invalid) =>
-            EnqueueAndSubscribe(new CommitmentSubscription(this, SendCommitmentUpdate, ConvertStream(stream), symbol, 
+            EnqueueAndSubscribe(new CommitmentSubscription(this, SendCommitmentUpdate, ConvertStream(stream), symbol,
                                                            false, (uint)throttleRate, reference));
 
         /// <summary>
@@ -949,9 +949,9 @@ namespace QuantGate.API.Signals
         /// you will receive two events on each update - one for each reference supplied.
         /// If no reference is supplied, you will receive a single update.
         /// </remarks>
-        public void SubscribeBookPressure(string symbol, int throttleRate = 0, 
+        public void SubscribeBookPressure(string symbol, int throttleRate = 0,
                                           object reference = null, DataStream stream = DataStream.Invalid) =>
-            EnqueueAndSubscribe(new BookPressureSubscription(this, SendBookPressureUpdate, ConvertStream(stream), 
+            EnqueueAndSubscribe(new BookPressureSubscription(this, SendBookPressureUpdate, ConvertStream(stream),
                                                              symbol, false, (uint)throttleRate, reference));
 
         /// <summary>
@@ -968,7 +968,7 @@ namespace QuantGate.API.Signals
         /// </remarks>
         public void SubscribeHeadroom(string symbol, int throttleRate = 0,
                                       object reference = null, DataStream stream = DataStream.Invalid) =>
-            EnqueueAndSubscribe(new HeadroomSubscription(this, SendHeadroomUpdate, ConvertStream(stream), symbol, 
+            EnqueueAndSubscribe(new HeadroomSubscription(this, SendHeadroomUpdate, ConvertStream(stream), symbol,
                                                          false, (uint)throttleRate, reference));
 
         /// <summary>
@@ -984,10 +984,10 @@ namespace QuantGate.API.Signals
         /// you will receive two events on each update - one for each reference supplied.
         /// If no reference is supplied, you will receive a single update.
         /// </remarks>
-        public void SubscribeSentiment(string symbol, string compression = "50t", int throttleRate = 0, 
+        public void SubscribeSentiment(string symbol, string compression = "50t", int throttleRate = 0,
                                        object reference = null, DataStream stream = DataStream.Invalid) =>
             EnqueueAndSubscribe(new SentimentSubscription(this, SendSentimentUpdate, ConvertStream(stream), symbol,
-                                                          CleanCompression(compression), false, 
+                                                          CleanCompression(compression), false,
                                                           (uint)throttleRate, reference));
 
         /// <summary>
@@ -1003,9 +1003,9 @@ namespace QuantGate.API.Signals
         /// you will receive two events on each update - one for each reference supplied.
         /// If no reference is supplied, you will receive a single update.
         /// </remarks>
-        public void SubscribeEquilibrium(string symbol, string compression = "300s", int throttleRate = 0, 
+        public void SubscribeEquilibrium(string symbol, string compression = "300s", int throttleRate = 0,
                                          object reference = null, DataStream stream = DataStream.Invalid) =>
-            EnqueueAndSubscribe(new EquilibriumSubscription(this, SendEquilibriumUpdate, ConvertStream(stream), symbol, 
+            EnqueueAndSubscribe(new EquilibriumSubscription(this, SendEquilibriumUpdate, ConvertStream(stream), symbol,
                                                             CleanCompression(compression), false,
                                                             (uint)throttleRate, reference));
 
@@ -1023,7 +1023,7 @@ namespace QuantGate.API.Signals
         /// </remarks>
         public void SubscribeMultiframeEquilibrium(string symbol, int throttleRate = 0,
                                                    object reference = null, DataStream stream = DataStream.Invalid) =>
-            EnqueueAndSubscribe(new MultiframeSubscription(this, SendMultiframeEquilibriumUpdate, ConvertStream(stream), 
+            EnqueueAndSubscribe(new MultiframeSubscription(this, SendMultiframeEquilibriumUpdate, ConvertStream(stream),
                                                            symbol, false, (uint)throttleRate, reference));
 
         /// <summary>
@@ -1038,9 +1038,9 @@ namespace QuantGate.API.Signals
         /// you will receive two events on each update - one for each reference supplied.
         /// If no reference is supplied, you will receive a single update.
         /// </remarks>
-        public void SubscribeTrigger(string symbol, int throttleRate = 0, 
+        public void SubscribeTrigger(string symbol, int throttleRate = 0,
                                      object reference = null, DataStream stream = DataStream.Invalid) =>
-            EnqueueAndSubscribe(new TriggerSubscription(this, SendTriggerUpdate, ConvertStream(stream), symbol, 
+            EnqueueAndSubscribe(new TriggerSubscription(this, SendTriggerUpdate, ConvertStream(stream), symbol,
                                                         false, (uint)throttleRate, reference));
 
         /// <summary>
@@ -1056,9 +1056,9 @@ namespace QuantGate.API.Signals
         /// you will receive two events on each update - one for each reference supplied.
         /// If no reference is supplied, you will receive a single update.
         /// </remarks>
-        public void SubscribeStrategy(string strategyID, string symbol, int throttleRate = 0, 
+        public void SubscribeStrategy(string strategyID, string symbol, int throttleRate = 0,
                                       object reference = null, DataStream stream = DataStream.Invalid) =>
-            EnqueueAndSubscribe(new StrategySubscription(this, SendStrategyUpdate, strategyID, ConvertStream(stream), 
+            EnqueueAndSubscribe(new StrategySubscription(this, SendStrategyUpdate, strategyID, ConvertStream(stream),
                                                          symbol, false, (uint)throttleRate, reference));
 
         /// <summary>
@@ -1091,7 +1091,7 @@ namespace QuantGate.API.Signals
         /// you will receive two events on each update - one for each reference supplied.
         /// If no reference is supplied, you will receive a single update.
         /// </remarks>
-        public void RequestInstrumentDetails(string symbol, object reference = null, 
+        public void RequestInstrumentDetails(string symbol, object reference = null,
                                              DataStream stream = DataStream.Invalid) =>
             EnqueueAndSubscribe(new InstrumentSubscription(this, SendInstrumentUpdate, ConvertStream(stream),
                                                            symbol, reference: reference));
@@ -1108,9 +1108,9 @@ namespace QuantGate.API.Signals
         /// you will receive two events on each update - one for each reference supplied.
         /// If no reference is supplied, you will receive a single update.
         /// </remarks>
-        public void RequestFutures(string underlying, string currency, 
+        public void RequestFutures(string underlying, string currency,
                                    object reference = null, DataStream stream = DataStream.Invalid) =>
-            EnqueueAndSubscribe(new FuturesListSubscription(this, SendFuturesListUpdate, ConvertStream(stream), 
+            EnqueueAndSubscribe(new FuturesListSubscription(this, SendFuturesListUpdate, ConvertStream(stream),
                                                             underlying, currency, reference: reference));
 
         /// <summary>
@@ -1126,14 +1126,14 @@ namespace QuantGate.API.Signals
                 if (_subscriptionsByDestination.TryGetValue(subscription.Destination, out ProtoStompSubscription existing))
                 {
                     // If already subscribed, and there are references to add, add the reference.
-                    if ((subscription.References.Count > 0) && (existing is SubscriptionBase converted))                        
+                    if ((subscription.References.Count > 0) && (existing is SubscriptionBase converted))
                         converted.References.Add(subscription.References.FirstOrDefault());
                 }
                 else
                 {
                     // If not yet subscribed, set the parent event handler and subscribe.
                     Subscribe(subscription);
-                }                
+                }
             });
         }
 
@@ -1143,14 +1143,14 @@ namespace QuantGate.API.Signals
         /// <param name="term">Term to search for.</param>
         /// <param name="broker">Broker to get the results for. If supplied, must match a valid broker type string.</param>
         /// <param name="reference">Reference to return with the event.</param>
-        public void SearchSymbols(string term, string broker, object reference = null, 
+        public void SearchSymbols(string term, string broker, object reference = null,
                                   DataStream stream = DataStream.Invalid)
         {
             Enqueue(() =>
             {
                 if (_search is null)
                 {
-                    _search = new SearchSubscription(this, SendSymbolSearchUpdate, 
+                    _search = new SearchSubscription(this, SendSymbolSearchUpdate,
                                                      ConvertStream(stream), reference: reference);
                     EnqueueAndSubscribe(_search);
                 }
@@ -1169,7 +1169,7 @@ namespace QuantGate.API.Signals
         /// <param name="symbol">The symbol to stop getting prices for.</param>
         /// <param name="reference">Reference returned with the event.</param>
         /// <param name="stream">Stream to request for (overrides stream supplied on connection, if supplied).</param>
-        public void UnsubscribePrices(string symbol, object reference = null, 
+        public void UnsubscribePrices(string symbol, object reference = null,
                                       DataStream stream = DataStream.Invalid) =>
             Unsubscribe(ParsedDestination.CreatePricesDestination(
                 ParsedDestination.StreamIDForSymbol(ConvertStream(stream), symbol), symbol).Destination, reference);
@@ -1190,7 +1190,7 @@ namespace QuantGate.API.Signals
         /// <param name="symbol">The symbol to stop getting Commitment data for.</param>
         /// <param name="reference">Reference returned with the event.</param>
         /// <param name="stream">Stream to request for (overrides stream supplied on connection, if supplied).</param>
-        public void UnsubscribeCommitment(string symbol, object reference = null, 
+        public void UnsubscribeCommitment(string symbol, object reference = null,
                                           DataStream stream = DataStream.Invalid) =>
             Unsubscribe(GetGaugeDestination(SubscriptionPath.GaugeCommitment, symbol, "1m", stream), reference);
 
@@ -1200,7 +1200,7 @@ namespace QuantGate.API.Signals
         /// <param name="symbol">The symbol to stop getting Book Pressure data for.</param>
         /// <param name="reference">Reference returned with the event.</param>
         /// <param name="stream">Stream to request for (overrides stream supplied on connection, if supplied).</param>
-        public void UnsubscribeBookPressure(string symbol, object reference = null, 
+        public void UnsubscribeBookPressure(string symbol, object reference = null,
                                             DataStream stream = DataStream.Invalid) =>
             Unsubscribe(GetGaugeDestination(SubscriptionPath.GaugeBookPressure, symbol, "0q", stream), reference);
 
@@ -1210,7 +1210,7 @@ namespace QuantGate.API.Signals
         /// <param name="symbol">The symbol to stop getting Headroom data for.</param>
         /// <param name="reference">Reference returned with the event.</param>
         /// <param name="stream">Stream to request for (overrides stream supplied on connection, if supplied).</param>
-        public void UnsubscribeHeadroom(string symbol, object reference = null, 
+        public void UnsubscribeHeadroom(string symbol, object reference = null,
                                         DataStream stream = DataStream.Invalid) =>
             Unsubscribe(GetGaugeDestination(SubscriptionPath.GaugeHeadroom, symbol, "5m", stream), reference);
 
@@ -1232,7 +1232,7 @@ namespace QuantGate.API.Signals
         /// <param name="compression">Compression timeframe being applied to the gauge. Default value is 300s.</param>
         /// <param name="reference">Reference returned with the event.</param>
         /// <param name="stream">Stream to request for (overrides stream supplied on connection, if supplied).</param>
-        public void UnsubscribeEquilibrium(string symbol, string compression = "300s", 
+        public void UnsubscribeEquilibrium(string symbol, string compression = "300s",
                                            object reference = null, DataStream stream = DataStream.Invalid) =>
             Unsubscribe(GetGaugeDestination(SubscriptionPath.GaugeEquilibrium, symbol, compression, stream), reference);
 
@@ -1242,7 +1242,7 @@ namespace QuantGate.API.Signals
         /// <param name="symbol">The symbol to stop getting Multiframe Equilibrium data for.</param>
         /// <param name="reference">Reference returned with the event.</param>
         /// <param name="stream">Stream to request for (overrides stream supplied on connection, if supplied).</param>
-        public void UnsubscribeMultiframeEquilibrium(string symbol, object reference = null, 
+        public void UnsubscribeMultiframeEquilibrium(string symbol, object reference = null,
                                                      DataStream stream = DataStream.Invalid) =>
             Unsubscribe(GetGaugeDestination(SubscriptionPath.GaugeMultiframeEquilibrium, symbol, stream: stream), reference);
 
@@ -1320,7 +1320,7 @@ namespace QuantGate.API.Signals
                     Unsubscribe(subscription);
 
                 // This includes the search.
-                _search = null;                
+                _search = null;
             });
         }
 
@@ -1334,13 +1334,13 @@ namespace QuantGate.API.Signals
             {
                 // Get a list of all of the current subscriptions.
                 List<ProtoStompSubscription> subscriptions = _subscriptionReferences.Values.ToList();
-               
+
                 // If a symbol was supplied, need to check each subscription.
-                foreach (ProtoStompSubscription subscription in subscriptions) 
+                foreach (ProtoStompSubscription subscription in subscriptions)
                 {
                     // If the subscription is tied to the symbol, unsubscribe.
-                    if ((subscription is ISymbolSubscription symbolSubscription) && 
-                        (symbolSubscription.Symbol == symbol))                        
+                    if ((subscription is ISymbolSubscription symbolSubscription) &&
+                        (symbolSubscription.Symbol == symbol))
                         Unsubscribe(subscription);
                 }
             });
@@ -1384,7 +1384,7 @@ namespace QuantGate.API.Signals
         /// <param name="symbol">The symbol to change the Book Pressure gauge throttle rate for.</param>
         /// <param name="throttleRate">The new throttle rate to set to (in ms). Enter 0 for no throttling.</param>
         /// <param name="stream">Stream to request for (overrides stream supplied on connection, if supplied).</param>
-        public void ThrottleBookPressure(string symbol, int throttleRate = 0, 
+        public void ThrottleBookPressure(string symbol, int throttleRate = 0,
                                          DataStream stream = DataStream.Invalid) =>
             Throttle(GetGaugeDestination(SubscriptionPath.GaugeBookPressure, symbol, "0q", stream), throttleRate);
 
@@ -1405,7 +1405,7 @@ namespace QuantGate.API.Signals
         /// <param name="compression">Compression timeframe being applied to the gauge. Default value is 50t.</param>
         /// <param name="throttleRate">The new throttle rate to set to (in ms). Enter 0 for no throttling.</param>
         /// <param name="stream">Stream to request for (overrides stream supplied on connection, if supplied).</param>
-        public void ThrottleSentiment(string symbol, string compression = "50t", 
+        public void ThrottleSentiment(string symbol, string compression = "50t",
                                       int throttleRate = 0, DataStream stream = DataStream.Invalid) =>
             Throttle(GetGaugeDestination(SubscriptionPath.GaugeSentiment, symbol, compression, stream), throttleRate);
 
@@ -1427,7 +1427,7 @@ namespace QuantGate.API.Signals
         /// <param name="symbol">The symbol to change the Multiframe Equilibrium gauge throttle rate for.</param>
         /// <param name="throttleRate">The new throttle rate to set to (in ms). Enter 0 for no throttling.</param>
         /// <param name="stream">Stream to request for (overrides stream supplied on connection, if supplied).</param>
-        public void ThrottleMultiframeEquilibrium(string symbol, int throttleRate = 0, 
+        public void ThrottleMultiframeEquilibrium(string symbol, int throttleRate = 0,
                                                   DataStream stream = DataStream.Invalid) =>
             Throttle(GetGaugeDestination(SubscriptionPath.GaugeMultiframeEquilibrium, symbol, stream: stream), throttleRate);
 
@@ -1448,7 +1448,7 @@ namespace QuantGate.API.Signals
         /// <param name="symbol">The symbol to change the Strategy throttle rate for.</param>
         /// <param name="throttleRate">The new throttle rate to set to (in ms). Enter 0 for no throttling.</param>
         /// <param name="stream">Stream to request for (overrides stream supplied on connection, if supplied).</param>
-        public void ThrottleStrategy(string strategyID, string symbol, 
+        public void ThrottleStrategy(string strategyID, string symbol,
                                      int throttleRate = 0, DataStream stream = DataStream.Invalid)
         {
             string destination = ParsedDestination.CreateStrategyDestination(
@@ -1636,7 +1636,7 @@ namespace QuantGate.API.Signals
         /// <param name="symbol">The symbol to get the destination path for.</param>
         /// <param name="compression">The compression to include in the destination path.</param>
         /// <returns>The standard format destination for the gauge.</returns>
-        private string GetGaugeDestination(SubscriptionPath path, string symbol, string compression = "", 
+        private string GetGaugeDestination(SubscriptionPath path, string symbol, string compression = "",
                                            DataStream stream = DataStream.Invalid)
         {
             return ParsedDestination.CreateGaugeDestination(
@@ -1692,7 +1692,7 @@ namespace QuantGate.API.Signals
                 try
                 {
                     // Get the current time.
-                    utcTicks = DateTime.UtcNow.Ticks;                                      
+                    utcTicks = DateTime.UtcNow.Ticks;
 
                     if (!IsConnected && !_isDisconnecting)
                     {
@@ -1724,7 +1724,7 @@ namespace QuantGate.API.Signals
                             // If past the last heartbeat checks, request a heartbeat.
                             Send(new RequestFrame { Heartbeat = new Heartbeat() });
                         }
-                    }                    
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -1732,7 +1732,7 @@ namespace QuantGate.API.Signals
                     OnClose(this, EventArgs.Empty);
                 }
             });
-        }        
+        }
 
         #endregion
 

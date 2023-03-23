@@ -84,8 +84,8 @@ namespace QuantGate.API.Signals.Utilities
         /// <summary>
         /// Returns the current WebSocket state.
         /// </summary>
-        public WebSocketState State 
-        { 
+        public WebSocketState State
+        {
             get
             {
                 lock (_lock)
@@ -114,11 +114,11 @@ namespace QuantGate.API.Signals.Utilities
         /// <param name="maxConcurrent">Maximum number of concurrent messages (queue should not exceed this).</param>
         public WebSocketClient(Uri uri, SynchronizationContext context = null, int maxConcurrent = 10000)
         {
-            Uri = uri;            
+            Uri = uri;
             _maxConcurrent = maxConcurrent;
             _context = context;
 
-            _messageType = WebSocketMessageType.Binary;            
+            _messageType = WebSocketMessageType.Binary;
             _invalidType = WebSocketMessageType.Text;
         }
 
@@ -402,7 +402,7 @@ namespace QuantGate.API.Signals.Utilities
             catch (OperationCanceledException)
             {
                 // Log an error message.
-                Trace.TraceError(_moduleID + ":HS-1 - Client disconnected due a timed out send operation");                
+                Trace.TraceError(_moduleID + ":HS-1 - Client disconnected due a timed out send operation");
                 // Disconnect (overloaded).
                 Close(WebSocketCloseStatus.EndpointUnavailable, "Send timeout.");
             }

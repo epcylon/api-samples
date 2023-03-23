@@ -1,6 +1,5 @@
 ﻿using Epcylon.Common.Net.ProtoStomp.Proto;
 using Google.Protobuf;
-using System;
 using System.Diagnostics;
 
 namespace QuantGate.API.Signals.ProtoStomp
@@ -96,7 +95,7 @@ namespace QuantGate.API.Signals.ProtoStomp
                     changed = _request.ThrottleRate != value;
 
                     if (changed)
-                    { 
+                    {
                         // If throttle value changed, update it and set.
                         _request.ThrottleRate = value;
                         Client?.Throttle(this, value);

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace QuantGate.API.Signals.Events
+﻿namespace QuantGate.API.Signals.Events
 {
     /// <summary>
     /// Base class for gauge values.
@@ -38,7 +36,7 @@ namespace QuantGate.API.Signals.Events
         /// (values are missing) or stale (not the most recent data).
         /// </param>
         /// <param name="error">Subscription error information, if an error occured.</param>
-        internal GaugeEventArgs(string symbol, DataStream stream, DateTime timestamp, bool isDirty, SubscriptionError error) : 
+        internal GaugeEventArgs(string symbol, DataStream stream, DateTime timestamp, bool isDirty, SubscriptionError error) :
             base(error)
         {
             Symbol = symbol;

@@ -1,15 +1,14 @@
-﻿using QuantGate.API.Signals.Proto.Stealth;
+﻿using QuantGate.API.Signals.Events;
+using QuantGate.API.Signals.Proto.Stealth;
 using QuantGate.API.Signals.Utilities;
-using QuantGate.API.Signals.Events;
-using System;
 
 namespace QuantGate.API.Signals.Subscriptions
 {
     internal class HeadroomSubscription : GaugeSubscriptionBase<SingleValueUpdate, HeadroomEventArgs>
     {
-        public HeadroomSubscription(APIClient client, EventHandler<HeadroomEventArgs> handler, string streamID, 
+        public HeadroomSubscription(APIClient client, EventHandler<HeadroomEventArgs> handler, string streamID,
                                     string symbol, bool receipt = false, uint throttleRate = 0, object reference = null) :
-            base(client, SingleValueUpdate.Parser, handler, SubscriptionPath.GaugeHeadroom, 
+            base(client, SingleValueUpdate.Parser, handler, SubscriptionPath.GaugeHeadroom,
                  ParsedDestination.StreamIDForSymbol(streamID, symbol), symbol, "5m", receipt, throttleRate, reference)
         {
         }
