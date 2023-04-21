@@ -115,7 +115,7 @@ namespace Epcylon.Common.Net.ProtoStomp.Proto
         partial void OnConstruction();
 
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public Heartbeat(Heartbeat other) : this()
+        public Heartbeat(Heartbeat _) : this()
         {
         }
 
@@ -489,7 +489,7 @@ namespace Epcylon.Common.Net.ProtoStomp.Proto
         partial void OnConstruction();
 
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public DisconnectRequest(DisconnectRequest other) : this()
+        public DisconnectRequest(DisconnectRequest _) : this()
         {
         }
 
