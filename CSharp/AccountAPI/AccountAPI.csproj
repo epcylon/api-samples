@@ -5,7 +5,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <RootNamespace>Epcylon.Net.APIs.Account</RootNamespace>
-    <Version>3.0.1</Version>
+	<Version>3.1.0.0</Version>
+	<AssemblyVersion>3.1.0.0</AssemblyVersion>
+	<Copyright>Copyright © QuantGate Systems 2023</Copyright>
+	<Company>QuantGate Systems</Company>
   </PropertyGroup>
 
   <ItemGroup>
