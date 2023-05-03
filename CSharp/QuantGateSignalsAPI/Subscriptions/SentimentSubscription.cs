@@ -1,4 +1,5 @@
-﻿using QuantGate.API.Signals.Events;
+﻿using Epcylon.Common.Logging;
+using QuantGate.API.Signals.Events;
 using QuantGate.API.Signals.Proto.Stealth;
 using QuantGate.API.Signals.Utilities;
 using System.Diagnostics;
@@ -106,7 +107,7 @@ namespace QuantGate.API.Signals.Subscriptions
             }
             catch (Exception ex)
             {
-                Trace.TraceError(_moduleID + ":IT55 - " + ex.Message);
+                SharedLogger.LogException(_moduleID + ":IT55", ex);
             }
 
             return result;

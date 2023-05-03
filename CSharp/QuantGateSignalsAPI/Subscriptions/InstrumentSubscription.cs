@@ -1,4 +1,5 @@
-﻿using QuantGate.API.Signals.Events;
+﻿using Epcylon.Common.Logging;
+using QuantGate.API.Signals.Events;
 using QuantGate.API.Signals.Proto.Stealth;
 using QuantGate.API.Signals.Utilities;
 using System.Diagnostics;
@@ -68,7 +69,7 @@ namespace QuantGate.API.Signals.Subscriptions
             }
             catch (Exception ex)
             {
-                Trace.TraceError(_moduleID + ":HUd - " + ex.Message);
+                SharedLogger.LogException(_moduleID + ":HUd", ex);
                 return new InstrumentEventArgs(_symbol, new SubscriptionError("Internal error handling update.", ex.Message));
             }
             finally

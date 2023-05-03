@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using Epcylon.Common.Logging;
+using System.Diagnostics;
 
 namespace QuantGate.API.Signals.Utilities
 {
@@ -138,7 +139,7 @@ namespace QuantGate.API.Signals.Utilities
             catch (Exception ex)
             {
                 //Use the adjusted value.
-                Trace.TraceError(_moduleID + ":CRBE - " + ex.Message);
+                SharedLogger.LogException(_moduleID + ":CRBE", ex);
                 return "00";
             }
         }

@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using Epcylon.Common.Logging;
+using System.Diagnostics;
 
 namespace Epcylon.Net.APIs.Account
 {
@@ -424,7 +425,7 @@ namespace Epcylon.Net.APIs.Account
             }
             catch (Exception ex)
             {
-                Trace.TraceError(_moduleID + ":Tmr - " + ex.Message);
+                SharedLogger.LogException(_moduleID + ":Tmr", ex);
                 lock (_lock)
                     _loginMessage = ex.Message;
             }
@@ -464,7 +465,7 @@ namespace Epcylon.Net.APIs.Account
             }
             catch (Exception ex)
             {
-                Trace.TraceError(_moduleID + ":Cn - " + ex.Message);
+                SharedLogger.LogException(_moduleID + ":Cn", ex);
             }
 
             return string.Empty;
@@ -512,7 +513,7 @@ namespace Epcylon.Net.APIs.Account
             catch (Exception ex)
             {
                 message = ex.Message;
-                Trace.TraceError(_moduleID + ":UdTkns - " + ex.Message);
+                SharedLogger.LogException(_moduleID + ":UdTkns", ex);
             }
         }
 
@@ -537,7 +538,7 @@ namespace Epcylon.Net.APIs.Account
             }
             catch (Exception ex)
             {
-                Trace.TraceError(_moduleID + ":GExp - " + ex.Message);
+                SharedLogger.LogException(_moduleID + ":GExp", ex);
                 return default;
             }
         }
@@ -588,7 +589,7 @@ namespace Epcylon.Net.APIs.Account
             }
             catch (Exception ex)
             {
-                Trace.TraceError(_moduleID + ":GJWTP - " + ex.Message);
+                SharedLogger.LogException(_moduleID + ":GJWTP", ex);
                 return string.Empty;
             }
         }

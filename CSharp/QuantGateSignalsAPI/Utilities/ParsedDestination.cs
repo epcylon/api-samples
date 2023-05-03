@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+﻿using Epcylon.Common.Logging;
 using System.Text;
 
 namespace QuantGate.API.Signals.Utilities
@@ -327,7 +327,7 @@ namespace QuantGate.API.Signals.Utilities
             }
             catch (Exception ex)
             {
-                Trace.TraceError(_moduleID + ":GSI = " + ex.Message);
+                SharedLogger.LogException(_moduleID + ":GSI", ex);
                 SubscriptionType = SubscriptionType.None;
             }
         }

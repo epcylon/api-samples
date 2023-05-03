@@ -1,4 +1,5 @@
-﻿using QuantGate.API.Signals.Events;
+﻿using Epcylon.Common.Logging;
+using QuantGate.API.Signals.Events;
 using QuantGate.API.Signals.Proto.Stealth;
 using QuantGate.API.Signals.Utilities;
 using System.Diagnostics;
@@ -142,7 +143,7 @@ namespace QuantGate.API.Signals.Subscriptions
             }
             catch (Exception ex)
             {
-                Trace.TraceError(_moduleID + ":HUd - " + ex.Message);
+                SharedLogger.LogException(_moduleID + ":HUd", ex);
                 return new FuturesListEventArgs(_underlying, _currency, _stream,
                             new SubscriptionError("Internal error handling update.", ex.Message));
             }
@@ -197,7 +198,7 @@ namespace QuantGate.API.Signals.Subscriptions
             catch (Exception ex)
             {
                 //log the exception.
-                Trace.TraceError(_moduleID + ":Dec - " + ex.Message);
+                SharedLogger.LogException(_moduleID + ":Dec", ex);
             }
 
             return toReturn;
@@ -236,7 +237,7 @@ namespace QuantGate.API.Signals.Subscriptions
             }
             catch (Exception ex)
             {
-                Trace.TraceError(_moduleID + ":DCF - " + ex.Message);
+                SharedLogger.LogException(_moduleID + ":DCF", ex);
                 return null;
             }
         }
@@ -310,7 +311,7 @@ namespace QuantGate.API.Signals.Subscriptions
             catch (Exception ex)
             {
                 //log the exception.
-                Trace.TraceError(_moduleID + ":DBF - " + ex.Message);
+                SharedLogger.LogException(_moduleID + ":DBF", ex);
                 futureMonthOffset = 0;
                 baseDefinition = null;
             }

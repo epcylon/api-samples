@@ -1,4 +1,7 @@
-﻿using Epcylon.Common.Net.ProtoStomp.Proto;
+﻿using Epcylon.Common.Logging;
+using Epcylon.Common.Net.NetCore.Client;
+using Epcylon.Common.Net.ProtoStomp.Proto;
+using Epcylon.Common.Net.Transport;
 using Epcylon.Net.APIs.Account;
 using Google.Protobuf;
 using QuantGate.API.Signals.Events;
@@ -155,7 +158,7 @@ namespace QuantGate.API.Signals
         /// <summary>
         /// Transport layer interface instance.
         /// </summary>
-        private readonly WebSocketClient _transport;
+        private readonly ITransport<byte[]> _transport;
 
         /// <summary>
         /// Used to generate ids in messages, etc.
@@ -227,7 +230,7 @@ namespace QuantGate.API.Signals
             Task.Factory.StartNew(HandleActions, TaskCreationOptions.LongRunning);
 
             // Create the new websocket.
-            _transport = new WebSocketClient(new Uri($"{_host}:{_port}/"));
+            _transport = new WebsocketBinaryTransport(new Uri($"{_host}:{_port}/"));
 
             // Set up the event handling.
             _transport.OnOpen += OnOpen;
@@ -293,7 +296,7 @@ namespace QuantGate.API.Signals
             }
             catch (Exception ex)
             {
-                Trace.TraceError(_moduleID + ":NQ - " + ex.Message);
+                SharedLogger.LogException(_moduleID + ":NQ", ex);
             }
         }
 
@@ -334,7 +337,7 @@ namespace QuantGate.API.Signals
                 }
                 catch (Exception ex)
                 {
-                    Trace.TraceError($"{_moduleID}:OO - {ex.Message}");
+                    SharedLogger.LogException($"{_moduleID}:OO", ex);
                 }
             });
         }
@@ -373,7 +376,7 @@ namespace QuantGate.API.Signals
                 }
                 catch (Exception ex)
                 {
-                    Trace.TraceError($"{_moduleID}:OCl - {ex.Message}");
+                    SharedLogger.LogException($"{_moduleID}:OCl", ex);
                 }
             });
         }
@@ -402,7 +405,7 @@ namespace QuantGate.API.Signals
                 }
                 catch (Exception ex)
                 {
-                    Trace.TraceError($"{_moduleID}:HMsg - {ex.Message}");
+                    SharedLogger.LogException($"{_moduleID}:HMsg", ex);
                 }
             });
         }
@@ -433,7 +436,7 @@ namespace QuantGate.API.Signals
             }
             catch (Exception ex)
             {
-                Trace.TraceError(_moduleID + ":OSCn - " + ex.Message);
+                SharedLogger.LogException(_moduleID + ":OSCn", ex);
             }
         }
 
@@ -446,7 +449,7 @@ namespace QuantGate.API.Signals
             }
             catch (Exception ex)
             {
-                Trace.TraceError(_moduleID + ":HMF - " + ex.Message);
+                SharedLogger.LogException(_moduleID + ":HMF", ex);
             }
         }
 
@@ -460,7 +463,7 @@ namespace QuantGate.API.Signals
             }
             catch (Exception ex)
             {
-                Trace.TraceError(_moduleID + ":HMsF - " + ex.Message);
+                SharedLogger.LogException(_moduleID + ":HMsF", ex);
             }
         }
 
@@ -479,13 +482,13 @@ namespace QuantGate.API.Signals
                 else if (!_isDisconnecting && IsConnected)
                 {
                     // If not disconnecting, log an error.
-                    Trace.TraceInformation(_moduleID + ":HM - Subscription not found for id: " +
+                    SharedLogger.LogDebug(_moduleID + ":HM", "Subscription not found", "Id={Id}",
                                            message.SubscriptionId.ToString());
                 }
             }
             catch (Exception ex)
             {
-                Trace.TraceError(_moduleID + ":HM - " + ex.Message);
+                SharedLogger.LogException(_moduleID + ":HM", ex);
             }
         }
 
@@ -503,12 +506,13 @@ namespace QuantGate.API.Signals
                 }
                 else if (!_isDisconnecting && IsConnected)
                 {
-                    Trace.TraceError(_moduleID + ":HRF - Receiptable not found for id" + frame.Receipt.ReceiptId.ToString());
+                    SharedLogger.LogError(_moduleID + ":HRF", "Receiptable not found for id", 
+                                          "Receipt={Receipt}", frame.Receipt.ReceiptId.ToString());
                 }
             }
             catch (Exception ex)
             {
-                Trace.TraceError(_moduleID + ":HRF - " + ex.Message);
+                SharedLogger.LogException(_moduleID + ":HRF", ex);
             }
         }
 
@@ -535,13 +539,13 @@ namespace QuantGate.API.Signals
                 else if (!_isDisconnecting && IsConnected)
                 {
                     // If not disconnecting, log an error.
-                    Trace.TraceInformation(_moduleID + ":HSE - Subscription not found for id: " +
-                                           frame.SubscriptionError.SubscriptionId.ToString());
+                    SharedLogger.LogDebug(_moduleID + ":HSE", "Subscription not found", "Id={Id}",
+                                          frame.SubscriptionError.SubscriptionId.ToString());
                 }
             }
             catch (Exception ex)
             {
-                Trace.TraceError(_moduleID + ":HSE - " + ex.Message);
+                SharedLogger.LogException(_moduleID + ":HSE", ex);
             }
         }
 
@@ -579,7 +583,7 @@ namespace QuantGate.API.Signals
                 }
                 catch (Exception ex)
                 {
-                    Trace.TraceError(_moduleID + ":Cn2 - " + ex.Message);
+                    SharedLogger.LogException(_moduleID + ":Cn2", ex);
                 }
             });
         }
@@ -609,8 +613,7 @@ namespace QuantGate.API.Signals
                 }
 
                 // Send disconnect frame, if the transport is alive.
-                if (_transport is not null &&
-                    _transport.State == System.Net.WebSockets.WebSocketState.Open)
+                if (_transport is not null && _transport.IsConnected)
                     Send(new RequestFrame { Disconnect = new DisconnectRequest() });
 
                 // Close the connection.
@@ -618,7 +621,7 @@ namespace QuantGate.API.Signals
             }
             catch (Exception ex)
             {
-                Trace.TraceError(_moduleID + ":DCn - " + ex.Message);
+                SharedLogger.LogException(_moduleID + ":DCn", ex);
             }
         }
 
@@ -632,7 +635,7 @@ namespace QuantGate.API.Signals
                 if (_transport is not null)
                 {
                     // If there is a transport, close if not closed, otherwise send event.
-                    if (_transport.State != System.Net.WebSockets.WebSocketState.Closed)
+                    if (_transport.IsConnected)
                         _transport.Close();
                     else
                         OnClose(this, EventArgs.Empty);
@@ -640,7 +643,7 @@ namespace QuantGate.API.Signals
             }
             catch (Exception ex)
             {
-                Trace.TraceError(_moduleID + ":Cls - " + ex.Message);
+                SharedLogger.LogException(_moduleID + ":Cls", ex);
                 OnClose(this, EventArgs.Empty);
             }
         }
@@ -657,7 +660,7 @@ namespace QuantGate.API.Signals
             }
             catch (Exception ex)
             {
-                Trace.TraceError(_moduleID + ":Snd - " + ex.Message);
+                SharedLogger.LogException(_moduleID + ":Snd", ex);
             }
         }
 
@@ -688,14 +691,15 @@ namespace QuantGate.API.Signals
                         Send(new RequestFrame { Subscribe = subscription.Request });
 
                         // Log the subscription action.
-                        Trace.TraceInformation(_moduleID + ":Sub - Subscribe: " + subscription.Destination +
-                                                " [" + subscription.SubscriptionID.ToString() + "]");
+                        SharedLogger.LogDebug(_moduleID + ":Sub", "Subscribe", 
+                                              "Destination={Destination}, SubscriptionId={SubscriptionId}",
+                                              subscription.Destination, subscription.SubscriptionID.ToString());
                     }
                 }
             }
             catch (Exception ex)
             {
-                Trace.TraceError(_moduleID + ":Sub - " + ex.Message);
+                SharedLogger.LogException(_moduleID + ":Sub", ex);
             }
         }
 
@@ -725,14 +729,15 @@ namespace QuantGate.API.Signals
                         Send(new RequestFrame { Throttle = throttle });
 
                         // Log the throttle action.
-                        Trace.TraceInformation(_moduleID + ":Thr - Throttle: " + subscription.Destination +
-                                             " [" + subscription.SubscriptionID.ToString() + "]: " + rate.ToString());
+                        SharedLogger.LogDebug(_moduleID + ":Thr", "Throttle", 
+                                              "Destination={Destination}, SubscriptionId={SubscriptionId}, Rate={Rate}", 
+                                              subscription.Destination, subscription.SubscriptionID.ToString(), rate.ToString());
                     }
                 }
             }
             catch (Exception ex)
             {
-                Trace.TraceError(_moduleID + ":Thr - " + ex.Message);
+                SharedLogger.LogException(_moduleID + ":Thr", ex);
             }
         }
 
@@ -782,13 +787,14 @@ namespace QuantGate.API.Signals
                     Send(new RequestFrame { Unsubscribe = unsubscribe });
 
                     // Log the subscription action.
-                    Trace.TraceInformation(_moduleID + ":USub - Unsubscribe: " + subscription.Destination +
-                                           " [" + subscription.SubscriptionID.ToString() + "]");
+                    SharedLogger.LogDebug(_moduleID + ":USub", "Unsubscribe",
+                                          "Destination={Destination}, SubscriptionId={SubscriptionId}", 
+                                          subscription.Destination, subscription.SubscriptionID.ToString());
                 }
             }
             catch (Exception ex)
             {
-                Trace.TraceError(_moduleID + ":USub - " + ex.Message);
+                SharedLogger.LogException(_moduleID + ":USub", ex);
             }
         }
 
@@ -809,7 +815,7 @@ namespace QuantGate.API.Signals
             }
             catch (Exception ex)
             {
-                Trace.TraceError(_moduleID + ":Snd - " + ex.Message);
+                SharedLogger.LogException(_moduleID + ":Snd", ex);
             }
         }
 
@@ -844,7 +850,7 @@ namespace QuantGate.API.Signals
             }
             catch (Exception ex)
             {
-                Trace.TraceError(_moduleID + ":ReSub - " + ex.Message);
+                SharedLogger.LogException(_moduleID + ":ReSub", ex);
             }
         }
 
@@ -878,7 +884,7 @@ namespace QuantGate.API.Signals
             }
             catch (Exception ex)
             {
-                Trace.TraceError(_moduleID + ":CSs - " + ex.Message);
+                SharedLogger.LogException(_moduleID + ":CSs", ex);
             }
         }
 
@@ -1670,7 +1676,7 @@ namespace QuantGate.API.Signals
                 }
                 catch (Exception ex)
                 {
-                    Trace.TraceError(_moduleID + ":PSt - " + ex.Message);
+                    SharedLogger.LogException(_moduleID + ":PSt", ex);
                 }
             });
         }
@@ -1728,7 +1734,7 @@ namespace QuantGate.API.Signals
                 }
                 catch (Exception ex)
                 {
-                    Trace.TraceError(_moduleID + ":Tmr - " + ex.Message);
+                    SharedLogger.LogException(_moduleID + ":Tmr", ex);
                     OnClose(this, EventArgs.Empty);
                 }
             });

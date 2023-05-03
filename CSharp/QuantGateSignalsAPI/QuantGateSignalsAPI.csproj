@@ -37,4 +37,13 @@
     <ProjectReference Include="..\AccountAPI\AccountAPI.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Common">
+      <HintPath>..\Include\Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Net.NetCore">
+      <HintPath>..\Include\Common.Net.NetCore.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
