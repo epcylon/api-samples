@@ -85,7 +85,7 @@ namespace QuantGate.API.Signals.Subscriptions
             }
             else
             {
-                foreach (var reference in References)
+                foreach (object reference in References.ToList())
                 {
                     update = (V)update.Clone();
                     update.Reference = reference;
