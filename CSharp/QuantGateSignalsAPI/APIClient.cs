@@ -756,15 +756,18 @@ namespace QuantGate.API.Signals
                 if (subscription is not SubscriptionBase converted)
                     return;
 
-                // Remove appropriate references.
-                if (reference is null)
-                    converted.References.Clear();
-                else
-                    converted.References.Remove(reference);
+                lock (converted._references)
+                {
+                    // Remove appropriate references.
+                    if (reference is null)
+                        converted._references.Clear();
+                    else
+                        converted._references.Remove(reference);
 
-                // If there are still references, don't remove until last is gone.
-                if (converted.References.Count > 0)
-                    return;
+                    // If there are still references, don't remove until last is gone.
+                    if (converted._references.Count > 0)
+                        return;
+                }
 
                 // Remove from the subscription references.                        
                 _subscriptionReferences.Remove(subscription.SubscriptionID);
@@ -1131,9 +1134,18 @@ namespace QuantGate.API.Signals
             {
                 if (_subscriptionsByDestination.TryGetValue(subscription.Destination, out ProtoStompSubscription existing))
                 {
-                    // If already subscribed, and there are references to add, add the reference.
-                    if ((subscription.References.Count > 0) && (existing is SubscriptionBase converted))
-                        converted.References.Add(subscription.References.FirstOrDefault());
+                    if (existing is SubscriptionBase converted)
+                    {
+                        // If already subscribed, check for subscription reference.
+                        IReadOnlyList<object> references = subscription.References;
+
+                        if (references.Count > 0)
+                        {
+                            // If there are references to add, add the reference.
+                            lock (converted._references)
+                                converted._references.Add(references[0]);
+                        }
+                    }
                 }
                 else
                 {

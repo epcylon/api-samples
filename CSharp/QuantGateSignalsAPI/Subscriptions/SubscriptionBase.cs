@@ -5,17 +5,26 @@ using QuantGate.API.Signals.ProtoStomp;
 namespace QuantGate.API.Signals.Subscriptions
 {
     internal abstract class SubscriptionBase : ProtoStompSubscription
-    {
-        public HashSet<object> References { get; }
+    {        
+        internal readonly HashSet<object> _references;        
 
         public SubscriptionBase(APIClient client, string destination, bool receipt = false,
                                 uint throttleRate = 0, object reference = null) :
             base(client, destination, receipt, throttleRate)
         {
             if (reference is not null)
-                References = new HashSet<object> { reference };
+                _references = new HashSet<object> { reference };
             else
-                References = new HashSet<object>();
+                _references = new HashSet<object>();
+        }
+
+        public IReadOnlyList<object> References
+        {
+            get
+            {
+                lock (_references)
+                    return _references.ToList();
+            }
         }
     }
 
@@ -78,15 +87,18 @@ namespace QuantGate.API.Signals.Subscriptions
 
         private void SendUpdateToAll(V update)
         {
-            if (References.Count == 0)
+            IReadOnlyList<object> references = References;
+
+            if (references.Count == 0)
             {
                 update.Reference = null;
                 ParentUpdatedEvent?.Invoke(Client, update);
             }
             else
             {
-                foreach (object reference in References.ToList())
+                for (int i = 0; i < references.Count; i++)
                 {
+                    object reference = references[i];
                     update = (V)update.Clone();
                     update.Reference = reference;
                     ParentUpdatedEvent?.Invoke(Client, update);
