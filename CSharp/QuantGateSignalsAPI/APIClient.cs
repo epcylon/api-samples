@@ -9,7 +9,6 @@ using QuantGate.API.Signals.ProtoStomp;
 using QuantGate.API.Signals.Subscriptions;
 using QuantGate.API.Signals.Utilities;
 using System.Collections.Concurrent;
-using System.Diagnostics;
 using events = QuantGate.API.Events;
 
 namespace QuantGate.API.Signals
