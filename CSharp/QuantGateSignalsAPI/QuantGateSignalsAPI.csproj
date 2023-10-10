@@ -32,7 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AccountAPI\AccountAPI.csproj" />
+    <ProjectReference Include="..\..\..\stealth-apis\AccountAPI\AccountAPI.csproj" />
   </ItemGroup>
 
   <ItemGroup>
