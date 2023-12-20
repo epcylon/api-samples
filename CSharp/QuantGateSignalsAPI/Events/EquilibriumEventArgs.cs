@@ -1,4 +1,6 @@
-﻿namespace QuantGate.API.Signals.Events
+﻿using System.Diagnostics;
+
+namespace QuantGate.API.Signals.Events
 {
     /// <summary>
     /// Holds Equilibrium values. Will be updated by the stream with change notifications.
@@ -27,14 +29,22 @@
         public double LastPrice { get; }
 
         /// <summary>
-        /// Position of the high value.
+        /// Returns the high price.
         /// </summary>
         public double High { get; }
-
         /// <summary>
-        /// Position of the low value.
+        /// Returns the low price.
         /// </summary>
         public double Low { get; }
+
+        /// <summary>
+        /// Position of the high price in standard deviations from the equilibrium price.
+        /// </summary>
+        public double HighSTD { get; }
+        /// <summary>
+        /// Position of the low price in standard deviations from the equilibrium price.
+        /// </summary>
+        public double LowSTD { get; }
 
         /// <summary>
         /// Bias (as determined by the slope).
@@ -78,11 +88,16 @@
             EquilibriumPrice = equilibriumPrice;
             GapSize = gapSize;
             LastPrice = lastPrice;
-            High = high;
-            Low = low;
-            ProjectedSTD = projectedPosition / 200.0;
+            ProjectedSTD = projectedPosition * 5;
             Projected = equilibriumPrice + ProjectedSTD * gapSize;
+            HighSTD = high * 5;
+            LowSTD = low * 5;
+            High = equilibriumPrice + HighSTD * gapSize;
+            Low = equilibriumPrice + LowSTD * gapSize;
             Bias = bias;
+
+            if (symbol == "NQ H4")
+                Debug.Print($"Symbol: {symbol} High: {High} Low: {Low} Projected: {Projected} / {ProjectedSTD}");
         }
 
         /// <summary>
