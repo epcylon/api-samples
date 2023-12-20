@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace QuantGate.API.Signals.Events
+﻿namespace QuantGate.API.Signals.Events
 {
     /// <summary>
     /// Holds Equilibrium values. Will be updated by the stream with change notifications.
@@ -95,9 +93,6 @@ namespace QuantGate.API.Signals.Events
             High = equilibriumPrice + HighSTD * gapSize;
             Low = equilibriumPrice + LowSTD * gapSize;
             Bias = bias;
-
-            if (symbol == "NQ H4")
-                Debug.Print($"Symbol: {symbol} High: {High} Low: {Low} Projected: {Projected} / {ProjectedSTD}");
         }
 
         /// <summary>
