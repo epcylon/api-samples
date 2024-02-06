@@ -304,9 +304,16 @@ namespace QuantGate.API.Signals
         /// </summary>
         private void HandleActions()
         {
-            // Go through each action in the blocking collection while not cancelled.
-            foreach (Action action in _actions.GetConsumingEnumerable())
-                action();
+            try
+            {
+                // Go through each action in the blocking collection while not cancelled.
+                foreach (Action action in _actions.GetConsumingEnumerable())
+                    action(); 
+            }
+            catch (Exception ex)
+            {
+                SharedLogger.LogException(_moduleID + ":HActs", ex);
+            }
         }
 
         #endregion
@@ -367,6 +374,7 @@ namespace QuantGate.API.Signals
 
                     // Set the status values.
                     IsConnected = false;
+                    SharedLogger.LogDebug($"{_moduleID}:OCl", "API Client was disconnected.");
                     Sync.Post(new SendOrPostCallback(o => { Disconnected(this, EventArgs.Empty); }), null);
 
                     // If disposed, stop the thread.
@@ -431,6 +439,7 @@ namespace QuantGate.API.Signals
                 IDGenerator.Reset();
                 ResubscribeAll();
 
+                SharedLogger.LogDebug(_moduleID + ":OSCn", "API Client was connected.");
                 Sync.Post(new SendOrPostCallback(o => { Connected(this, EventArgs.Empty); }), null);
             }
             catch (Exception ex)
@@ -577,6 +586,8 @@ namespace QuantGate.API.Signals
                     _reconnectTicks = 0;
                     _killTicks = DateTime.UtcNow.Ticks + _connectKill;
 
+                    SharedLogger.LogDebug(_moduleID + ":Cn2", "Connecting API client.");
+
                     // Connect to the websocket.
                     _transport.Connect();
                 }
@@ -603,6 +614,8 @@ namespace QuantGate.API.Signals
         {
             try
             {
+                SharedLogger.LogDebug(_moduleID + ":DCn", "Disconnecting API client.");
+
                 if (full)
                 {
                     // If doing a full disconnect, set to disconnecting.
@@ -886,7 +899,7 @@ namespace QuantGate.API.Signals
             }
             catch (Exception ex)
             {
-                SharedLogger.LogException(_moduleID + ":CSs", ex);
+                SharedLogger.LogException(_moduleID + ":ClrSs", ex);
             }
         }
 
@@ -1131,25 +1144,32 @@ namespace QuantGate.API.Signals
         {
             Enqueue(() =>
             {
-                if (_subscriptionsByDestination.TryGetValue(subscription.Destination, out ProtoStompSubscription existing))
+                try
                 {
-                    if (existing is SubscriptionBase converted)
+                    if (_subscriptionsByDestination.TryGetValue(subscription.Destination, out ProtoStompSubscription existing))
                     {
-                        // If already subscribed, check for subscription reference.
-                        IReadOnlyList<object> references = subscription.References;
-
-                        if (references.Count > 0)
+                        if (existing is SubscriptionBase converted)
                         {
-                            // If there are references to add, add the reference.
-                            lock (converted._references)
-                                converted._references.Add(references[0]);
+                            // If already subscribed, check for subscription reference.
+                            IReadOnlyList<object> references = subscription.References;
+
+                            if (references.Count > 0)
+                            {
+                                // If there are references to add, add the reference.
+                                lock (converted._references)
+                                    converted._references.Add(references[0]);
+                            }
                         }
                     }
+                    else
+                    {
+                        // If not yet subscribed, set the parent event handler and subscribe.
+                        Subscribe(subscription);
+                    } 
                 }
-                else
+                catch (Exception ex)
                 {
-                    // If not yet subscribed, set the parent event handler and subscribe.
-                    Subscribe(subscription);
+                    SharedLogger.LogException(_moduleID + ":NQnSubs", ex);
                 }
             });
         }
@@ -1165,14 +1185,21 @@ namespace QuantGate.API.Signals
         {
             Enqueue(() =>
             {
-                if (_search is null)
+                try
                 {
-                    _search = new SearchSubscription(this, SendSymbolSearchUpdate,
-                                                     ConvertStream(stream), reference: reference);
-                    EnqueueAndSubscribe(_search);
-                }
+                    if (_search is null)
+                    {
+                        _search = new SearchSubscription(this, SendSymbolSearchUpdate,
+                                                         ConvertStream(stream), reference: reference);
+                        EnqueueAndSubscribe(_search);
+                    }
 
-                _search.Search(term, broker);
+                    _search.Search(term, broker); 
+                }
+                catch (Exception ex)
+                {
+                    SharedLogger.LogException(_moduleID + ":SSyms", ex);
+                }
             });
         }
 
@@ -1312,13 +1339,20 @@ namespace QuantGate.API.Signals
         {
             Enqueue(() =>
             {
-                // Make sure there is a leading slash.
-                if (!destination.StartsWith("/"))
-                    destination = '/' + destination;
+                try
+                {
+                    // Make sure there is a leading slash.
+                    if (!destination.StartsWith("/"))
+                        destination = '/' + destination;
 
-                // If the destination exists, unsubscribe (otherwise, no need).
-                if (_subscriptionsByDestination.TryGetValue(destination, out var subscription))
-                    Unsubscribe(subscription, reference);
+                    // If the destination exists, unsubscribe (otherwise, no need).
+                    if (_subscriptionsByDestination.TryGetValue(destination, out var subscription))
+                        Unsubscribe(subscription, reference); 
+                }
+                catch (Exception ex)
+                {
+                    SharedLogger.LogException(_moduleID + ":USub", ex);
+                }
             });
         }
 
@@ -1329,15 +1363,22 @@ namespace QuantGate.API.Signals
         {
             Enqueue(() =>
             {
-                // Get a list of all of the current subscriptions.
-                List<ProtoStompSubscription> subscriptions = _subscriptionReferences.Values.ToList();
+                try
+                {
+                    // Get a list of all of the current subscriptions.
+                    List<ProtoStompSubscription> subscriptions = _subscriptionReferences.Values.ToList();
 
-                // If no symbol supplied, unsubscribe from everything.
-                foreach (ProtoStompSubscription subscription in subscriptions)
-                    Unsubscribe(subscription);
+                    // If no symbol supplied, unsubscribe from everything.
+                    foreach (ProtoStompSubscription subscription in subscriptions)
+                        Unsubscribe(subscription);
 
-                // This includes the search.
-                _search = null;
+                    // This includes the search.
+                    _search = null; 
+                }
+                catch (Exception ex)
+                {
+                    SharedLogger.LogException(_moduleID + ":USubA", ex);
+                }
             });
         }
 
@@ -1349,16 +1390,23 @@ namespace QuantGate.API.Signals
         {
             Enqueue(() =>
             {
-                // Get a list of all of the current subscriptions.
-                List<ProtoStompSubscription> subscriptions = _subscriptionReferences.Values.ToList();
-
-                // If a symbol was supplied, need to check each subscription.
-                foreach (ProtoStompSubscription subscription in subscriptions)
+                try
                 {
-                    // If the subscription is tied to the symbol, unsubscribe.
-                    if ((subscription is ISymbolSubscription symbolSubscription) &&
-                        (symbolSubscription.Symbol == symbol))
-                        Unsubscribe(subscription);
+                    // Get a list of all of the current subscriptions.
+                    List<ProtoStompSubscription> subscriptions = _subscriptionReferences.Values.ToList();
+
+                    // If a symbol was supplied, need to check each subscription.
+                    foreach (ProtoStompSubscription subscription in subscriptions)
+                    {
+                        // If the subscription is tied to the symbol, unsubscribe.
+                        if ((subscription is ISymbolSubscription symbolSubscription) &&
+                            (symbolSubscription.Symbol == symbol))
+                            Unsubscribe(subscription);
+                    } 
+                }
+                catch (Exception ex)
+                {
+                    SharedLogger.LogException(_moduleID + ":USubA-s", ex);
                 }
             });
         }
@@ -1499,13 +1547,20 @@ namespace QuantGate.API.Signals
         {
             Enqueue(() =>
             {
-                // Make sure there is a leading slash.
-                if (!destination.StartsWith("/"))
-                    destination = '/' + destination;
+                try
+                {
+                    // Make sure there is a leading slash.
+                    if (!destination.StartsWith("/"))
+                        destination = '/' + destination;
 
-                // If the destination exists, unsubscribe.
-                if (_subscriptionsByDestination.TryGetValue(destination, out var subscription))
-                    subscription.ThrottleRate = (uint)throttleRate;
+                    // If the destination exists, unsubscribe.
+                    if (_subscriptionsByDestination.TryGetValue(destination, out var subscription))
+                        subscription.ThrottleRate = (uint)throttleRate; 
+                }
+                catch (Exception ex)
+                {
+                    SharedLogger.LogException(_moduleID + ":Thr", ex);
+                }
             });
         }
 
@@ -1760,18 +1815,25 @@ namespace QuantGate.API.Signals
         /// </summary>
         protected virtual void Dispose(bool disposing)
         {
-            if (!_isDisposed)
+            try
             {
-                // Dispose of and clear the timer reference.
-                _timer.Dispose();
+                if (!_isDisposed)
+                {
+                    // Dispose of and clear the timer reference.
+                    _timer.Dispose();
 
-                // If still connected, disconnect, otherwise stop the thread.
-                if (IsConnected)
-                    Disconnect();
-                else
-                    _actions.CompleteAdding();
+                    // If still connected, disconnect, otherwise stop the thread.
+                    if (IsConnected)
+                        Disconnect();
+                    else
+                        _actions.CompleteAdding();
 
-                _isDisposed = true;
+                    _isDisposed = true;
+                } 
+            }
+            catch (Exception ex)
+            {
+                SharedLogger.LogException(_moduleID + ":Dsp", ex);
             }
         }
 
