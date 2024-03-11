@@ -98,6 +98,10 @@ namespace QuantGate.API.Signals
         /// </summary>
         private bool _isDisconnecting = false;
         /// <summary>
+        /// Is the disconnection a full disconnect?
+        /// </summary>
+        private bool _fullDisconnect = false;
+        /// <summary>
         /// Is this object disposed yet?
         /// </summary>
         private bool _isDisposed = false;
@@ -155,9 +159,9 @@ namespace QuantGate.API.Signals
         private readonly BlockingCollection<Action> _actions = new();
 
         /// <summary>
-        /// Transport layer interface instance.
+        /// Client transport layer interface instance.
         /// </summary>
-        private readonly ITransport<byte[]> _transport;
+        private ITransport<byte[]> _client;
 
         /// <summary>
         /// Used to generate ids in messages, etc.
@@ -226,15 +230,7 @@ namespace QuantGate.API.Signals
             _streamID = ConvertStream(Stream);
 
             // Start the main (long running) thread queue.
-            Task.Factory.StartNew(HandleActions, TaskCreationOptions.LongRunning);
-
-            // Create the new websocket.
-            _transport = new WebsocketBinaryTransport(new Uri($"{_host}:{_port}/"));
-
-            // Set up the event handling.
-            _transport.OnOpen += OnOpen;
-            _transport.OnClose += OnClose;
-            _transport.OnMessage += HandleMessage;
+            Task.Factory.StartNew(HandleActions, TaskCreationOptions.LongRunning);            
 
             // Set up the message consumers (dictionary of handlers for each response message type).
             _messageConsumers = new Dictionary<ResponseFrame.ResponseOneofCase, Action<ResponseFrame>>
@@ -354,7 +350,7 @@ namespace QuantGate.API.Signals
             {
                 try
                 {
-                    if (_isDisconnecting || _isDisposed)
+                    if (_fullDisconnect || _isDisposed)
                     {
                         // If not reconnecting, clear any open subscriptions.
                         ClearSubscriptions();
@@ -372,11 +368,12 @@ namespace QuantGate.API.Signals
                         _reconnectTicks = DateTime.UtcNow.Ticks + _minReconnect * _reconnectCount;
                     }
 
-                    // Set the status values.
-                    IsConnected = false;
+                    // We're disconnected, clear the client reference.
+                    ClearConnection();
+
                     SharedLogger.LogDebug($"{_moduleID}:OCl", "API Client was disconnected.");
                     Sync.Post(new SendOrPostCallback(o => { Disconnected(this, EventArgs.Empty); }), null);
-
+                    
                     // If disposed, stop the thread.
                     if (_isDisposed)
                         _actions.CompleteAdding();
@@ -384,6 +381,8 @@ namespace QuantGate.API.Signals
                 catch (Exception ex)
                 {
                     SharedLogger.LogException($"{_moduleID}:OCl", ex);
+                    // We're disconnected, clear the client reference.
+                    ClearConnection();
                 }
             });
         }
@@ -573,6 +572,41 @@ namespace QuantGate.API.Signals
         #region Connection Handling        
 
         /// <summary>
+        /// The stomp client to connect with.
+        /// </summary>
+        private ITransport<byte[]> Client
+        {
+            get { return _client; }
+            set
+            {
+                if (!ReferenceEquals(_client, value))
+                {
+                    // If the client changed, remove old event handlers.
+                    if (_client is not null)
+                    {
+                        // Remove old handlers for the connected and disconnected events.
+                        _client.OnOpen -= OnOpen;
+                        _client.OnClose -= OnClose;
+                        _client.OnMessage -= HandleMessage;
+                        // Close the client (if not already closed).
+                        _client.Close();
+                    }
+
+                    // Set the new client.
+                    _client = value;
+
+                    if (_client is not null)
+                    {
+                        // Add new handlers for the connected and disconnected events.
+                        _client.OnOpen += OnOpen;
+                        _client.OnClose += OnClose;
+                        _client.OnMessage += HandleMessage;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Connects to the server on the specified address.
         /// </summary>
         public void Connect()
@@ -583,13 +617,15 @@ namespace QuantGate.API.Signals
                 {
                     // Set the username and password.
                     _isDisconnecting = false;
+                    _fullDisconnect = false;
                     _reconnectTicks = 0;
                     _killTicks = DateTime.UtcNow.Ticks + _connectKill;
 
                     SharedLogger.LogDebug(_moduleID + ":Cn2", "Connecting API client.");
 
-                    // Connect to the websocket.
-                    _transport.Connect();
+                    // Create the new websocket and connect.
+                    Client = new WebsocketBinaryTransport(new Uri($"{_host}:{_port}/"));                    
+                    Client.Connect();
                 }
                 catch (Exception ex)
                 {
@@ -618,46 +654,55 @@ namespace QuantGate.API.Signals
 
                 if (full)
                 {
-                    // If doing a full disconnect, set to disconnecting.
-                    _isDisconnecting = true;
+                    // If doing a full disconnect, set to full disconnect.
+                    _fullDisconnect = true;
                     // Clear the subscriptions.
                     ClearSubscriptions();
                 }
 
                 // Send disconnect frame, if the transport is alive.
-                if (_transport is not null && _transport.IsConnected)
-                    Send(new RequestFrame { Disconnect = new DisconnectRequest() });
-
-                // Close the connection.
-                Close();
-            }
-            catch (Exception ex)
-            {
-                SharedLogger.LogException(_moduleID + ":DCn", ex);
-            }
-        }
-
-        /// <summary>
-        /// Used to close the APIClient connection.
-        /// </summary>
-        private void Close()
-        {
-            try
-            {
-                if (_transport is not null)
+                Send(new RequestFrame { Disconnect = new DisconnectRequest() });
+        
+                if (Client is not null)
                 {
-                    // If there is a transport, close if not closed, otherwise send event.
-                    if (_transport.IsConnected)
-                        _transport.Close();
+                    // If there is a client, 
+                    if (Client.IsConnected)
+                    {
+                        // We're disconnecting now.
+                        _isDisconnecting = true;
+                        // Close if not closed.
+                        Client.Close();
+                    }
                     else
+                    {
+                        // We're disconnected, clear the client reference.
+                        ClearConnection();
                         OnClose(this, EventArgs.Empty);
+                    }
+                }
+                else
+                {
+                    // If no client, clear the connection.
+                    ClearConnection();
                 }
             }
             catch (Exception ex)
             {
                 SharedLogger.LogException(_moduleID + ":Cls", ex);
+                // We're disconnected, clear the client reference.
+                ClearConnection();
                 OnClose(this, EventArgs.Empty);
             }
+        }
+
+        /// <summary>
+        /// Clears the connection state and sets to disconnected.
+        /// </summary>
+        private void ClearConnection()
+        {
+            IsConnected = false;
+            _isDisconnecting = false;
+            Client = null;
         }
 
         /// <summary>
@@ -668,7 +713,9 @@ namespace QuantGate.API.Signals
         {
             try
             {
-                _transport.Send(frame.ToByteArray());
+                // If we're in a state to send, send the message.
+                if (Client is not null && Client.IsConnected && !_isDisconnecting)
+                    Client.Send(frame.ToByteArray());
             }
             catch (Exception ex)
             {
@@ -696,17 +743,14 @@ namespace QuantGate.API.Signals
 
                     if (subscription.ReceiptID != 0)
                         _receiptReferences.Add(subscription.ReceiptID, subscription);
+                    
+                    // If connected, send the subscription request - otherwise, waiting for connection.
+                    Send(new RequestFrame { Subscribe = subscription.Request });
 
-                    if (IsConnected & !_isDisconnecting)
-                    {
-                        // If connected, send the subscription request - otherwise, waiting for connection.
-                        Send(new RequestFrame { Subscribe = subscription.Request });
-
-                        // Log the subscription action.
-                        SharedLogger.LogDebug(_moduleID + ":Sub", "Subscribe", 
-                                              "Destination={Destination}, SubscriptionId={SubscriptionId}",
-                                              subscription.Destination, subscription.SubscriptionID.ToString());
-                    }
+                    // Log the subscription action.
+                    SharedLogger.LogDebug(_moduleID + ":Sub", "Subscribe",
+                                            "Destination={Destination}, SubscriptionId={SubscriptionId}",
+                                            subscription.Destination, subscription.SubscriptionID.ToString());
                 }
             }
             catch (Exception ex)
@@ -734,17 +778,14 @@ namespace QuantGate.API.Signals
 
                     // Add to the receiptable requests.                        
                     _receiptReferences.Add(receipt.ReceiptID, receipt);
+                    
+                    // If connected, send the throttle request - if not sent, will be applied to the initial subscription.
+                    Send(new RequestFrame { Throttle = throttle });
 
-                    if (IsConnected & !_isDisconnecting)
-                    {
-                        // If connected, send the throttle request - if not sent, will be applied to the initial subscription.
-                        Send(new RequestFrame { Throttle = throttle });
-
-                        // Log the throttle action.
-                        SharedLogger.LogDebug(_moduleID + ":Thr", "Throttle", 
-                                              "Destination={Destination}, SubscriptionId={SubscriptionId}, Rate={Rate}", 
-                                              subscription.Destination, subscription.SubscriptionID.ToString(), rate.ToString());
-                    }
+                    // Log the throttle action.
+                    SharedLogger.LogDebug(_moduleID + ":Thr", "Throttle", 
+                                          "Destination={Destination}, SubscriptionId={SubscriptionId}, Rate={Rate}", 
+                                          subscription.Destination, subscription.SubscriptionID.ToString(), rate.ToString());                    
                 }
             }
             catch (Exception ex)
@@ -795,17 +836,14 @@ namespace QuantGate.API.Signals
 
                 // Add to the receiptable requests.                        
                 _receiptReferences.Add(receipt.ReceiptID, receipt);
+                
+                // If connected, send the message.
+                Send(new RequestFrame { Unsubscribe = unsubscribe });
 
-                if (IsConnected & !_isDisconnecting)
-                {
-                    // If connected, send the message.
-                    Send(new RequestFrame { Unsubscribe = unsubscribe });
-
-                    // Log the subscription action.
-                    SharedLogger.LogDebug(_moduleID + ":USub", "Unsubscribe",
-                                          "Destination={Destination}, SubscriptionId={SubscriptionId}", 
-                                          subscription.Destination, subscription.SubscriptionID.ToString());
-                }
+                // Log the subscription action.
+                SharedLogger.LogDebug(_moduleID + ":USub", "Unsubscribe",
+                                      "Destination={Destination}, SubscriptionId={SubscriptionId}", 
+                                      subscription.Destination, subscription.SubscriptionID.ToString());                
             }
             catch (Exception ex)
             {
@@ -1766,27 +1804,38 @@ namespace QuantGate.API.Signals
                     // Get the current time.
                     utcTicks = DateTime.UtcNow.Ticks;
 
-                    if (!IsConnected && !_isDisconnecting)
+                    if (!IsConnected)
                     {
                         // If not connected, check if we need to reconnect.
-                        if (utcTicks > _reconnectTicks && _reconnectTicks != 0)
+                        if (!_isDisconnecting)
                         {
-                            // If we need to connect, reconnect.
-                            Connect();
-                            _reconnectTicks = 0;
-                            _killTicks = utcTicks + _connectKill;
-                        }
-                        else if (utcTicks > _killTicks && _killTicks != 0)
-                        {
-                            // If we need to kill the connection, kill it.
-                            Disconnect(false);
-                            _killTicks = 0;
+                            // Don't connect or disconnect while disconnecting.
+                            if (utcTicks > _reconnectTicks && _reconnectTicks != 0)
+                            {
+                                // If we need to connect, reconnect.
+                                Connect();
+                                _reconnectTicks = 0;
+                                _killTicks = utcTicks + _connectKill;
+                            }
+                            else if (utcTicks > _killTicks && _killTicks != 0)
+                            {
+                                // If we need to kill the connection, kill it.
+                                Disconnect(false);
+                                _killTicks = 0;
+                            }
                         }
                     }
-                    else if (IsConnected && !_isDisconnecting)
+                    else if (IsConnected)
                     {
                         // If connected and not disconnecting.
-                        if (utcTicks > _lastMessageTicks + _maxHeartBeatWait)
+                        if (utcTicks > _lastMessageTicks + 2 * _maxHeartBeatWait)
+                        {
+                            // If more than two times the regular heartbeat timeout, force a full close.
+                            // At this point, it's not closing properly, so we want to initiate a new
+                            // connection without regard to how well the current instance is closing.
+                            OnClose(this, EventArgs.Empty);
+                        }
+                        else if (!_isDisconnecting && utcTicks > _lastMessageTicks + _maxHeartBeatWait)
                         {
                             // If it's been too long before receiving a message, disconnect (to reconnect).
                             Disconnect(false);
