@@ -5,8 +5,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
-	<Version>2.3.2.0</Version>
-	<AssemblyVersion>2.3.2.0</AssemblyVersion>
+	<Version>2.4.1.0</Version>
+	<AssemblyVersion>2.4.1.0</AssemblyVersion>
 	<Copyright>Copyright © QuantGate Systems 2024</Copyright>
 	<Company>QuantGate Systems</Company>
   </PropertyGroup>
