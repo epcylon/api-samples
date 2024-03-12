@@ -140,9 +140,13 @@ namespace QuantGate.API.Signals
         /// </summary>
         private const long _heartBeatCheckTicks = 10 * TimeSpan.TicksPerSecond;
         /// <summary>
+        /// The last time that a message was sent.
+        /// </summary>
+        private long _lastSentTicks = 0;
+        /// <summary>
         /// The last time that a message was received.
         /// </summary>
-        private long _lastMessageTicks = 0;
+        private long _lastReceivedTicks = 0;
 
         #endregion
 
@@ -400,7 +404,7 @@ namespace QuantGate.API.Signals
                 try
                 {
                     // Mark as the last time a message was received.
-                    _lastMessageTicks = DateTime.UtcNow.Ticks;
+                    _lastReceivedTicks = DateTime.UtcNow.Ticks;
 
                     // Parse the next message frame.
                     frame = ResponseFrame.Parser.ParseFrom(message);
@@ -564,7 +568,7 @@ namespace QuantGate.API.Signals
         private void HandleHeartbeatFrame(ResponseFrame frame)
         {
             // Mark as the last time a message was received.
-            _lastMessageTicks = DateTime.UtcNow.Ticks;
+            _lastReceivedTicks = DateTime.UtcNow.Ticks;
         }
 
         #endregion        
@@ -715,7 +719,10 @@ namespace QuantGate.API.Signals
             {
                 // If we're in a state to send, send the message.
                 if (Client is not null && Client.IsConnected && !_isDisconnecting)
+                {
                     Client.Send(frame.ToByteArray());
+                    _lastSentTicks = DateTime.UtcNow.Ticks;
+                }
             }
             catch (Exception ex)
             {
@@ -1828,19 +1835,19 @@ namespace QuantGate.API.Signals
                     else if (IsConnected)
                     {
                         // If connected and not disconnecting.
-                        if (utcTicks > _lastMessageTicks + 2 * _maxHeartBeatWait)
+                        if (utcTicks > _lastReceivedTicks + 2 * _maxHeartBeatWait)
                         {
                             // If more than two times the regular heartbeat timeout, force a full close.
                             // At this point, it's not closing properly, so we want to initiate a new
                             // connection without regard to how well the current instance is closing.
                             OnClose(this, EventArgs.Empty);
                         }
-                        else if (!_isDisconnecting && utcTicks > _lastMessageTicks + _maxHeartBeatWait)
+                        else if (!_isDisconnecting && utcTicks > _lastReceivedTicks + _maxHeartBeatWait)
                         {
                             // If it's been too long before receiving a message, disconnect (to reconnect).
                             Disconnect(false);
                         }
-                        else if (utcTicks > _lastMessageTicks + _heartBeatCheckTicks)
+                        else if (utcTicks > _lastSentTicks + _heartBeatCheckTicks)
                         {
                             // If past the last heartbeat checks, request a heartbeat.
                             Send(new RequestFrame { Heartbeat = new Heartbeat() });
