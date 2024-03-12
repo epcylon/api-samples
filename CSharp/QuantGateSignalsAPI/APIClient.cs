@@ -750,14 +750,17 @@ namespace QuantGate.API.Signals
 
                     if (subscription.ReceiptID != 0)
                         _receiptReferences.Add(subscription.ReceiptID, subscription);
-                    
-                    // If connected, send the subscription request - otherwise, waiting for connection.
-                    Send(new RequestFrame { Subscribe = subscription.Request });
 
-                    // Log the subscription action.
-                    SharedLogger.LogDebug(_moduleID + ":Sub", "Subscribe",
-                                            "Destination={Destination}, SubscriptionId={SubscriptionId}",
-                                            subscription.Destination, subscription.SubscriptionID.ToString());
+                    if (IsConnected)
+                    {
+                        // If connected, send the subscription request - otherwise, waiting for connection.
+                        Send(new RequestFrame { Subscribe = subscription.Request });
+
+                        // Log the subscription action.
+                        SharedLogger.LogDebug(_moduleID + ":Sub", "Subscribe",
+                                                "Destination={Destination}, SubscriptionId={SubscriptionId}",
+                                                subscription.Destination, subscription.SubscriptionID.ToString());
+                    }
                 }
             }
             catch (Exception ex)
@@ -785,14 +788,17 @@ namespace QuantGate.API.Signals
 
                     // Add to the receiptable requests.                        
                     _receiptReferences.Add(receipt.ReceiptID, receipt);
-                    
-                    // If connected, send the throttle request - if not sent, will be applied to the initial subscription.
-                    Send(new RequestFrame { Throttle = throttle });
 
-                    // Log the throttle action.
-                    SharedLogger.LogDebug(_moduleID + ":Thr", "Throttle", 
-                                          "Destination={Destination}, SubscriptionId={SubscriptionId}, Rate={Rate}", 
-                                          subscription.Destination, subscription.SubscriptionID.ToString(), rate.ToString());                    
+                    if (IsConnected)
+                    {
+                        // If connected, send the throttle request - if not sent, will be applied to the initial subscription.
+                        Send(new RequestFrame { Throttle = throttle });
+
+                        // Log the throttle action.
+                        SharedLogger.LogDebug(_moduleID + ":Thr", "Throttle",
+                                              "Destination={Destination}, SubscriptionId={SubscriptionId}, Rate={Rate}",
+                                              subscription.Destination, subscription.SubscriptionID.ToString(), rate.ToString());
+                    }
                 }
             }
             catch (Exception ex)
@@ -843,14 +849,17 @@ namespace QuantGate.API.Signals
 
                 // Add to the receiptable requests.                        
                 _receiptReferences.Add(receipt.ReceiptID, receipt);
-                
-                // If connected, send the message.
-                Send(new RequestFrame { Unsubscribe = unsubscribe });
 
-                // Log the subscription action.
-                SharedLogger.LogDebug(_moduleID + ":USub", "Unsubscribe",
-                                      "Destination={Destination}, SubscriptionId={SubscriptionId}", 
-                                      subscription.Destination, subscription.SubscriptionID.ToString());                
+                if (IsConnected)
+                {
+                    // If connected, send the message.
+                    Send(new RequestFrame { Unsubscribe = unsubscribe });
+
+                    // Log the subscription action.
+                    SharedLogger.LogDebug(_moduleID + ":USub", "Unsubscribe",
+                                          "Destination={Destination}, SubscriptionId={SubscriptionId}",
+                                          subscription.Destination, subscription.SubscriptionID.ToString());
+                }
             }
             catch (Exception ex)
             {
@@ -870,8 +879,11 @@ namespace QuantGate.API.Signals
                 if (toSend.ReceiptID != 0)
                     _receiptReferences.Add(toSend.ReceiptID, toSend);
 
-                // Send the Send request.
-                Send(new RequestFrame { Send = toSend.Request });
+                if (IsConnected)
+                {
+                    // Send the Send request.
+                    Send(new RequestFrame { Send = toSend.Request });
+                }
             }
             catch (Exception ex)
             {
