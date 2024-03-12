@@ -25,6 +25,8 @@ namespace QuantGate.WindowsFormsExample
                     _client.SymbolSearchUpdated -= HandleSearchUpdate;
                     _client.TopSymbolsUpdated -= HandleTopSymbolsUpdate;
                     _client.PerceptionUpdated -= HandlePerceptionUpdate;
+                    _client.Disconnect();
+                    _client.Dispose();
                 }
 
                 _client = value;
@@ -156,6 +158,7 @@ namespace QuantGate.WindowsFormsExample
         private void HandleDisconnectClicked(object client, EventArgs args)
         {
             Client?.Disconnect();
+            Client?.Dispose();
         }
     }
 }
