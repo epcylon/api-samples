@@ -234,7 +234,7 @@ namespace QuantGate.API.Signals
             _streamID = ConvertStream(Stream);
 
             // Start the main (long running) thread queue.
-            Task.Factory.StartNew(HandleActions, TaskCreationOptions.LongRunning);            
+            Task.Factory.StartNew(HandleActions, TaskCreationOptions.LongRunning);
 
             // Set up the message consumers (dictionary of handlers for each response message type).
             _messageConsumers = new Dictionary<ResponseFrame.ResponseOneofCase, Action<ResponseFrame>>
@@ -494,7 +494,7 @@ namespace QuantGate.API.Signals
                 {
                     // If not disconnecting, log an error.
                     SharedLogger.LogDebug(_moduleID + ":HM", "Subscription not found", "Id={Id}",
-                                           message.SubscriptionId.ToString());
+                                          message.SubscriptionId.ToString());
                 }
             }
             catch (Exception ex)
