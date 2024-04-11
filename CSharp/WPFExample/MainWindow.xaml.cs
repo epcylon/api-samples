@@ -3,6 +3,7 @@ using QuantGate.API.Events;
 using QuantGate.API.Signals;
 using QuantGate.API.Signals.Events;
 using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -15,7 +16,7 @@ namespace QuantGate.WPFExample
     {
         private APIClient? _client;
         private TopSymbolsEventArgs? _topSymbols;
-        private string _symbol = "NQ H3";
+        private string _symbol = "NQ M4";
         private readonly string _strategyId = "Crb9.0";
 
         #region Client Property
@@ -131,8 +132,9 @@ namespace QuantGate.WPFExample
 
         private void HandleInstrumentUpdate(object? sender, InstrumentEventArgs e)
         {
-            Console.WriteLine(e.Symbol + " " + e.Details.InstrumentType.ToString() + " " +
-                              e.Details.ExpiryDate.ToString() + " " + e.Error?.Message);
+            if (e.Details is not null)
+                Console.WriteLine(e.Symbol + " " + e.Details.InstrumentType.ToString() + " " +
+                                  e.Details.ExpiryDate.ToString() + " " + e.Error?.Message);
         }
 
         private void Subscribe(string symbol)
@@ -177,17 +179,17 @@ namespace QuantGate.WPFExample
 
         private void HandleError(object? client, ErrorEventArgs args)
         {
-            Console.WriteLine("Error! " + args.Message);
+            Debug.Print("Error! " + args.Message);
         }
 
         private void HandleDisconnected(object? client, EventArgs args)
         {
-            Console.WriteLine("Disconnected!");
+            Debug.Print("Disconnected!");
         }
 
         private void HandleConnected(object? client, EventArgs args)
         {
-            Console.WriteLine("Connected!");
+            Debug.Print("Connected!");
         }
 
         private void HandleTopSymbolsUpdate(object? sender, TopSymbolsEventArgs topSymbols)
@@ -258,8 +260,8 @@ namespace QuantGate.WPFExample
         private void HandleConnectClick(object sender, RoutedEventArgs e)
         {
             Client = new APIClient(new ConnectionToken(Environments.Development,
-                                                       txtUsername.Text, txtPassword.Text),
-                                   stream: DataStream.Realtime);
+                                                       txtUsername.Text, txtPassword.Text, Products.Stealth),
+                                   DataStream.Realtime, System.Threading.SynchronizationContext.Current);
 
             Client.Connect();
 
