@@ -1,4 +1,4 @@
-﻿namespace BridgeRock.MauiExample
+﻿namespace QuantGate.MauiExample
 {
     public class SearchRow
     {

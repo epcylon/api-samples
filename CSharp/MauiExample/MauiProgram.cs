@@ -1,7 +1,9 @@
-﻿namespace BridgeRock.MauiExample
+﻿using Microsoft.Extensions.Logging;
+
+namespace QuantGate.MauiExample
 {
     public static class MauiProgram
-	{
+    {
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
@@ -12,6 +14,10 @@
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+
+#if DEBUG
+    		builder.Logging.AddDebug();
+#endif
 
             return builder.Build();
         }

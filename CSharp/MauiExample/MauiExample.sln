@@ -1,12 +1,13 @@
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.0.31611.283
+VisualStudioVersion = 17.9.34321.82
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MauiExample", "MauiExample.csproj", "{C13F2493-1376-443D-9E41-057FE5FE50BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MauiExample", "MauiExample.csproj", "{63CA987F-27FC-4254-BAC6-A7595059F509}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccountAPI", "..\AccountAPI\AccountAPI.csproj", "{47F93D82-8993-4E1B-AE8E-9374906CBF9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuantGateSignalsAPI", "..\QuantGateSignalsAPI\QuantGateSignalsAPI.csproj", "{A846DC90-2173-48D0-A5CE-2F2E73E244C6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuantGateSignalsAPI", "..\QuantGateSignalsAPI\QuantGateSignalsAPI.csproj", "{F4EEA603-3F51-4C7B-9C5E-3C9178671992}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccountAPI", "..\AccountAPI\AccountAPI.csproj", "{1B2337EC-FFA6-4161-AE19-87A4B9C91954}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,25 +15,25 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C13F2493-1376-443D-9E41-057FE5FE50BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C13F2493-1376-443D-9E41-057FE5FE50BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C13F2493-1376-443D-9E41-057FE5FE50BA}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{C13F2493-1376-443D-9E41-057FE5FE50BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C13F2493-1376-443D-9E41-057FE5FE50BA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C13F2493-1376-443D-9E41-057FE5FE50BA}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{47F93D82-8993-4E1B-AE8E-9374906CBF9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{47F93D82-8993-4E1B-AE8E-9374906CBF9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{47F93D82-8993-4E1B-AE8E-9374906CBF9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{47F93D82-8993-4E1B-AE8E-9374906CBF9D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F4EEA603-3F51-4C7B-9C5E-3C9178671992}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F4EEA603-3F51-4C7B-9C5E-3C9178671992}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F4EEA603-3F51-4C7B-9C5E-3C9178671992}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F4EEA603-3F51-4C7B-9C5E-3C9178671992}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63CA987F-27FC-4254-BAC6-A7595059F509}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63CA987F-27FC-4254-BAC6-A7595059F509}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63CA987F-27FC-4254-BAC6-A7595059F509}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{63CA987F-27FC-4254-BAC6-A7595059F509}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63CA987F-27FC-4254-BAC6-A7595059F509}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63CA987F-27FC-4254-BAC6-A7595059F509}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{A846DC90-2173-48D0-A5CE-2F2E73E244C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A846DC90-2173-48D0-A5CE-2F2E73E244C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A846DC90-2173-48D0-A5CE-2F2E73E244C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A846DC90-2173-48D0-A5CE-2F2E73E244C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B2337EC-FFA6-4161-AE19-87A4B9C91954}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B2337EC-FFA6-4161-AE19-87A4B9C91954}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B2337EC-FFA6-4161-AE19-87A4B9C91954}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B2337EC-FFA6-4161-AE19-87A4B9C91954}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}
+		SolutionGuid = {0F4624DD-933F-4A16-92E8-BB80D199B7D8}
 	EndGlobalSection
 EndGlobal

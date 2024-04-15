@@ -1,4 +1,4 @@
-﻿namespace BridgeRock.MauiExample.Controls
+﻿namespace QuantGate.MauiExample.Controls
 {
     public partial class SimpleGauge : ContentView
     {

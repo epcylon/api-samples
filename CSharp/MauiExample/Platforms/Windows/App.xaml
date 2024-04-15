@@ -1,8 +1,8 @@
 ﻿<maui:MauiWinUIApplication
-    x:Class="BridgeRock.MauiExample.WinUI.App"
+    x:Class="QuantGate.MauiExample.WinUI.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:maui="using:Microsoft.Maui"
-    xmlns:local="using:BridgeRock.MauiExample.WinUI">
+    xmlns:local="using:QuantGate.MauiExample.WinUI">
 
 </maui:MauiWinUIApplication>

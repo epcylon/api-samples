@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
-using mg = Microsoft.Maui.Graphics;
+using MG = Microsoft.Maui.Graphics;
 
-namespace BridgeRock.MauiExample.Controls
+namespace QuantGate.MauiExample.Controls
 {
     public partial class SentimentBar : Grid
     {
@@ -30,7 +30,7 @@ namespace BridgeRock.MauiExample.Controls
         /// </summary>
         static SentimentBar()
         {
-            _inactiveColor = new SolidColorBrush(mg.Color.FromRgb(0x27, 0x27, 0x26));
+            _inactiveColor = new SolidColorBrush(MG.Color.FromRgb(0x27, 0x27, 0x26));
 
             for (int index = 0; index <= 400; index++)
                 _brushes[index] = new SolidColorBrush(RedBlueColor(index / 400.0));
@@ -44,7 +44,7 @@ namespace BridgeRock.MauiExample.Controls
         private static Color RedBlueColor(double forValue)
         {
             //The final color is the combination of the RGB elements.
-            return mg.Color.FromRgb(CalculateRBElement(forValue, 0.7125),
+            return MG.Color.FromRgb(CalculateRBElement(forValue, 0.7125),
                                     CalculateRBElement(forValue, 0.5),
                                     CalculateRBElement(forValue, 0.2875));
         }

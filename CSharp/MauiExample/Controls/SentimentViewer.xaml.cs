@@ -1,7 +1,7 @@
 using QuantGate.API.Signals.Events;
 using System.Diagnostics;
 
-namespace BridgeRock.MauiExample.Controls
+namespace QuantGate.MauiExample.Controls
 {
     public partial class SentimentViewer : Grid
     {

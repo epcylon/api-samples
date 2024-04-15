@@ -1,7 +1,7 @@
 ﻿<Grid xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:controls="clr-namespace:BridgeRock.MauiExample.Controls"
-             x:Class="BridgeRock.MauiExample.Controls.SentimentViewer" Background="#FFD0D0D0"
+             xmlns:controls="clr-namespace:QuantGate.MauiExample.Controls"
+             x:Class="QuantGate.MauiExample.Controls.SentimentViewer" Background="#FFD0D0D0"
             RowDefinitions="100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,95*,
                             20*,95*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*,10*,100*">
 
