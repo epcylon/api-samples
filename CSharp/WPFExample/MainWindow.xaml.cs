@@ -259,8 +259,7 @@ namespace QuantGate.WPFExample
 
         private void HandleConnectClick(object sender, RoutedEventArgs e)
         {
-            Client = new APIClient(new ConnectionToken(Environments.Development,
-                                                       txtUsername.Text, txtPassword.Text, Products.Stealth),
+            Client = new APIClient(new ConnectionToken(Environments.Staging, txtUsername.Text, txtPassword.Password),
                                    DataStream.Realtime, System.Threading.SynchronizationContext.Current);
 
             Client.Connect();

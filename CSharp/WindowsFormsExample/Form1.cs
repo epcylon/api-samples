@@ -47,7 +47,7 @@ namespace QuantGate.WindowsFormsExample
         {
             InitializeComponent();
 
-            txtSearch.TextChanged += HandleSearchTextUpdate;            
+            txtSearch.TextChanged += HandleSearchTextUpdate;
         }
 
         private void Subscribe(string symbol)
@@ -56,7 +56,7 @@ namespace QuantGate.WindowsFormsExample
                 return;
 
             // Unsubscribe from all subscriptions for this symbol.
-            _client.UnsubscribeAll(_symbol);            
+            _client.UnsubscribeAll(_symbol);
 
             _symbol = symbol;
 
@@ -145,7 +145,7 @@ namespace QuantGate.WindowsFormsExample
 
         private void HandleConnectClicked(object? client, EventArgs args)
         {
-            Client = new APIClient(new ConnectionToken(Environments.Development,
+            Client = new APIClient(new ConnectionToken(Environments.Staging,
                                                        txtUsername.Text, txtPassword.Text),
                                    stream: DataStream.Realtime);
 

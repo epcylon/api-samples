@@ -10,8 +10,8 @@
         <TextBox x:Name="txtUsername" Margin="110,20,0,0" Height="23" Width="180" TextWrapping="Wrap" 
                   VerticalAlignment="Top" HorizontalAlignment="Left" Text="" />
         <Label Margin="310,18,0,0" Height="30" Width="80" VerticalAlignment="Top" HorizontalAlignment="Left" Content="Password:" />
-        <TextBox x:Name="txtPassword" Margin="375,20,0,0" Height="23" Width="140" TextWrapping="Wrap" 
-                 VerticalAlignment="Top" HorizontalAlignment="Left" Text="" />
+        <PasswordBox x:Name="txtPassword" Margin="375,20,0,0" Height="23" Width="140"
+                     VerticalAlignment="Top" HorizontalAlignment="Left" Password="" />
         <Button Margin="540,21,0,0" Height="20" Width="90" VerticalAlignment="Top" HorizontalAlignment="Left" Click="HandleConnectClick">Connect</Button>
         <Button Margin="640,21,0,0" Height="20" Width="90" VerticalAlignment="Top" HorizontalAlignment="Left" Click="HandleDisconnectClick">Disconnect</Button>
         
