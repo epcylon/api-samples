@@ -36,11 +36,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Common">
-      <HintPath>..\Include\Common.dll</HintPath>
+    <Reference Include="Common.Core">
+      <HintPath>..\..\..\stealth-brokers\Compiled\Common\net6.0\Common.Core.dll</HintPath>
     </Reference>
     <Reference Include="Common.Net.NetCore">
-      <HintPath>..\Include\Common.Net.NetCore.dll</HintPath>
+      <HintPath>..\..\..\stealth-brokers\Compiled\Common\net6.0\Common.Net.NetCore.dll</HintPath>
     </Reference>
   </ItemGroup>
 
