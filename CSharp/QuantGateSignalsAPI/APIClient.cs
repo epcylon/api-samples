@@ -1,8 +1,8 @@
-﻿using Epcylon.Common.Logging;
+﻿using Epcylon.APIs.Account;
+using Epcylon.Common.Logging;
 using Epcylon.Common.Net.NetCore.Client;
 using Epcylon.Common.Net.ProtoStomp.Proto;
 using Epcylon.Common.Net.Transport;
-using Epcylon.Net.APIs.Account;
 using Google.Protobuf;
 using QuantGate.API.Signals.Events;
 using QuantGate.API.Signals.ProtoStomp;
