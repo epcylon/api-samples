@@ -1,4 +1,4 @@
-﻿using Epcylon.Net.APIs.Account;
+﻿using Epcylon.APIs.Account;
 using QuantGate.API.Events;
 using QuantGate.API.Signals;
 using QuantGate.API.Signals.Events;
