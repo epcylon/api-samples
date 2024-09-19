@@ -1,20 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <RootNamespace>Epcylon.APIs.Account</RootNamespace>
-	<Version>3.2.0.0</Version>
-	<AssemblyVersion>3.2.0.0</AssemblyVersion>
-	<Copyright>Copyright © QuantGate Systems 2024</Copyright>
-	<Company>QuantGate Systems</Company>
+    <Version>3.2.0.0</Version>
+    <AssemblyVersion>3.2.0.0</AssemblyVersion>
+    <Copyright>Copyright © QuantGate Systems 2024</Copyright>
+    <Company>QuantGate Systems</Company>
   </PropertyGroup>
-
   <ItemGroup>
     <Reference Include="Common.Core">
       <HintPath>..\Include\Common.Core.dll</HintPath>
     </Reference>
   </ItemGroup>
-
 </Project>

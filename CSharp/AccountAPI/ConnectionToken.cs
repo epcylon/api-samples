@@ -557,7 +557,7 @@ public class ConnectionToken : IDisposable
             return string.Empty;
 
         result = source[..^1].Split(new string[] { key },
-            StringSplitOptions.None)[1].Replace("\"", "").Split(new char[] { ',' })[0];
+            StringSplitOptions.None)[1].Replace("\"", "").Split([','])[0];
 
         if (result == "null")
             return string.Empty;
@@ -584,7 +584,7 @@ public class ConnectionToken : IDisposable
         try
         {
             return System.Text.Encoding.UTF8.GetString(
-                Convert.FromBase64String(PadBase64String(jwtToken.Split(new char[] { '.' })[1])));
+                Convert.FromBase64String(PadBase64String(jwtToken.Split(['.'])[1])));
         }
         catch (Exception ex)
         {

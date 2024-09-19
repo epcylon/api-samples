@@ -9,7 +9,7 @@ using QuantGate.API.Signals.ProtoStomp;
 using QuantGate.API.Signals.Subscriptions;
 using QuantGate.API.Signals.Utilities;
 using System.Collections.Concurrent;
-using events = QuantGate.API.Events;
+using EVENTS = QuantGate.API.Events;
 
 namespace QuantGate.API.Signals
 {
@@ -27,7 +27,7 @@ namespace QuantGate.API.Signals
 
         public event EventHandler Connected = delegate { };
         public event EventHandler Disconnected = delegate { };
-        public event EventHandler<events.ErrorEventArgs> Error = delegate { };
+        public event EventHandler<EVENTS.ErrorEventArgs> Error = delegate { };
 
         public event EventHandler<PricesEventArgs> PricesUpdated = delegate { };
         public event EventHandler<PerceptionEventArgs> PerceptionUpdated = delegate { };
@@ -529,7 +529,7 @@ namespace QuantGate.API.Signals
 
         private void HandleErrorFrame(ResponseFrame frame)
         {
-            Sync.Post(new SendOrPostCallback(o => { Error(this, new events.ErrorEventArgs(frame.ServerError.Message)); }), null);
+            Sync.Post(new SendOrPostCallback(o => { Error(this, new EVENTS.ErrorEventArgs(frame.ServerError.Message)); }), null);
         }
 
         private void HandleSubscriptionError(ResponseFrame frame)
@@ -627,7 +627,7 @@ namespace QuantGate.API.Signals
 
                     SharedLogger.LogDebug(_moduleID + ":Cn2", "Connecting API client.");
 
-                    // Create the new websocket and connect.
+                    // Create the new WebSocket and connect.
                     Client = new WebsocketBinaryTransport(new Uri($"{_host}:{_port}/"));                    
                     Client.Connect();
                 }
@@ -647,7 +647,7 @@ namespace QuantGate.API.Signals
         }
 
         /// <summary>
-        /// Disconnect from the websocket server.
+        /// Disconnect from the WebSocket server.
         /// </summary>
         /// <param name="full">True if this is a full disconnect.</param>
         private void Disconnect(bool full)
@@ -1357,7 +1357,7 @@ namespace QuantGate.API.Signals
             Unsubscribe(GetGaugeDestination(SubscriptionPath.GaugeTrigger, symbol, stream: stream), reference);
 
         /// <summary>
-        /// Unsubscribes from Stategy data for the given strategy and symbol.
+        /// Unsubscribes from Strategy data for the given strategy and symbol.
         /// </summary>
         /// <param name="strategyID">The identifier of the strategy to stop running.</param>
         /// <param name="symbol">The symbol to stop getting Strategy data for.</param>

@@ -1,16 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
-	<Version>2.4.2.0</Version>
-	<AssemblyVersion>2.4.2.0</AssemblyVersion>
-	<Copyright>Copyright © QuantGate Systems 2024</Copyright>
-	<Company>QuantGate Systems</Company>
+    <Version>2.4.2.0</Version>
+    <AssemblyVersion>2.4.2.0</AssemblyVersion>
+    <Copyright>Copyright © QuantGate Systems 2024</Copyright>
+    <Company>QuantGate Systems</Company>
   </PropertyGroup>
-
   <ItemGroup>
     <None Remove="Events\placeholder.txt" />
     <None Remove="ProtoStomp\placeholder.txt" />
@@ -18,7 +16,6 @@
     <None Remove="Subscriptions\placeholder.txt" />
     <None Remove="Utilities\placeholder.txt" />
   </ItemGroup>
-
   <ItemGroup>
     <Folder Include="Events\" />
     <Folder Include="Utilities\" />
@@ -26,15 +23,12 @@
     <Folder Include="Proto\" />
     <Folder Include="Subscriptions\" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Google.Protobuf" Version="3.26.1" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\AccountAPI\AccountAPI.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <Reference Include="Common.Core">
       <HintPath>..\..\..\stealth-brokers\Compiled\Common\net6.0\Common.Core.dll</HintPath>
@@ -43,5 +37,4 @@
       <HintPath>..\..\..\stealth-brokers\Compiled\Common\net6.0\Common.Net.NetCore.dll</HintPath>
     </Reference>
   </ItemGroup>
-
 </Project>
