@@ -1,12 +1,18 @@
 ﻿namespace QuantGate.API.Signals.Events
 {
-    public class PricesEventArgs : SubscriptionEventArgs
+    /// <summary>
+    /// Creates a new PricesEventArgs instance.
+    /// </summary>
+    /// <param name="symbol">The symbol we are getting prices for.</param>
+    /// <param name="error">Holds error information, if a subscription error occurred.</param>
+    public class PricesEventArgs(string symbol, DataStream stream, SubscriptionError error = null) :
+        SubscriptionEventArgs(error)
     {
         /// <summary>
         /// The symbol we are getting prices for.
         /// </summary>
-        public string Symbol { get; }
-        public DataStream Stream { get; }
+        public string Symbol { get; } = symbol;
+        public DataStream Stream { get; } = stream;
 
         /// <summary>
         /// Timestamp of the latest update.
@@ -51,17 +57,6 @@
         public long SharesOutstanding { get; protected internal set; }
         public double HistoricalVolatility { get; protected internal set; }
         public double ImpliedVolatility { get; protected internal set; }
-
-        /// <summary>
-        /// Creates a new PricesEventArgs instance.
-        /// </summary>
-        /// <param name="symbol">The symbol we are getting prices for.</param>
-        /// <param name="error">Holds error information, if a subscription error occured.</param>
-        public PricesEventArgs(string symbol, DataStream stream, SubscriptionError error = null) : base(error)
-        {
-            Symbol = symbol;
-            Stream = stream;
-        }
 
         /// <summary>
         /// Creates a cloned copy of this object.

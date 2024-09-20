@@ -4,16 +4,13 @@ using QuantGate.API.Signals.Utilities;
 
 namespace QuantGate.API.Signals.Subscriptions
 {
-    internal class MultiframeSubscription : GaugeSubscriptionBase<MultiframeUpdate, MultiframeEquilibriumEventArgs>
+    internal class MultiframeSubscription(APIClient client, EventHandler<MultiframeEquilibriumEventArgs> handler,
+                                          string streamID, string symbol, bool receipt = false,
+                                          uint throttleRate = 0, object reference = null) :
+        GaugeSubscriptionBase<MultiframeUpdate, MultiframeEquilibriumEventArgs>(
+            client, MultiframeUpdate.Parser, handler, SubscriptionPath.GaugeMultiframeEquilibrium,
+            streamID, symbol, string.Empty, receipt, throttleRate, reference)
     {
-        public MultiframeSubscription(APIClient client, EventHandler<MultiframeEquilibriumEventArgs> handler,
-                                      string streamID, string symbol, bool receipt = false,
-                                      uint throttleRate = 0, object reference = null) :
-               base(client, MultiframeUpdate.Parser, handler, SubscriptionPath.GaugeMultiframeEquilibrium,
-                    streamID, symbol, string.Empty, receipt, throttleRate, reference)
-        {
-        }
-
         protected override MultiframeEquilibriumEventArgs HandleUpdate(MultiframeUpdate update, object processed)
         {
             return new MultiframeEquilibriumEventArgs(

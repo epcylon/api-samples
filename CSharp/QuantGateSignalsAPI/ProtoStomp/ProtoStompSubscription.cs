@@ -38,7 +38,7 @@ namespace QuantGate.API.Signals.ProtoStomp
 
             _request = new SubscribeRequest();
 
-            if (!destination.StartsWith("/"))
+            if (!destination.StartsWith('/'))
                 _request.Destination = '/' + destination;
             else
                 _request.Destination = destination;

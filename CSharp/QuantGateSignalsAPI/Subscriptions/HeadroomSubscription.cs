@@ -4,15 +4,12 @@ using QuantGate.API.Signals.Utilities;
 
 namespace QuantGate.API.Signals.Subscriptions
 {
-    internal class HeadroomSubscription : GaugeSubscriptionBase<SingleValueUpdate, HeadroomEventArgs>
+    internal class HeadroomSubscription(APIClient client, EventHandler<HeadroomEventArgs> handler, string streamID,
+                                        string symbol, bool receipt = false, uint throttleRate = 0, object reference = null) : 
+        GaugeSubscriptionBase<SingleValueUpdate, HeadroomEventArgs>(
+            client, SingleValueUpdate.Parser, handler, SubscriptionPath.GaugeHeadroom,
+            ParsedDestination.StreamIDForSymbol(streamID, symbol), symbol, "5m", receipt, throttleRate, reference)
     {
-        public HeadroomSubscription(APIClient client, EventHandler<HeadroomEventArgs> handler, string streamID,
-                                    string symbol, bool receipt = false, uint throttleRate = 0, object reference = null) :
-            base(client, SingleValueUpdate.Parser, handler, SubscriptionPath.GaugeHeadroom,
-                 ParsedDestination.StreamIDForSymbol(streamID, symbol), symbol, "5m", receipt, throttleRate, reference)
-        {
-        }
-
         protected override HeadroomEventArgs HandleUpdate(SingleValueUpdate update, object processed)
         {
             return new HeadroomEventArgs(

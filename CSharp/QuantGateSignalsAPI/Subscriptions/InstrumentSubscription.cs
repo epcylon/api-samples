@@ -2,11 +2,16 @@
 using QuantGate.API.Signals.Events;
 using QuantGate.API.Signals.Proto.Stealth;
 using QuantGate.API.Signals.Utilities;
-using System.Diagnostics;
 
 namespace QuantGate.API.Signals.Subscriptions
 {
-    internal class InstrumentSubscription : SubscriptionBase<InstrumentUpdate, InstrumentEventArgs>
+    internal class InstrumentSubscription(APIClient client, EventHandler<InstrumentEventArgs> handler,
+                                          string streamID, string symbol, bool receipt = false,
+                                          uint throttleRate = 0, object reference = null) :
+        SubscriptionBase<InstrumentUpdate, InstrumentEventArgs>(client, InstrumentUpdate.Parser, handler,
+             new ParsedDestination(SubscriptionType.Definition, SubscriptionPath.DefnInstrument,
+                                   ParsedDestination.StreamIDForSymbol(streamID, symbol), symbol).Destination,
+                                   receipt, throttleRate, reference)
     {
         /// <summary>
         /// Module-level identifier.
@@ -16,18 +21,7 @@ namespace QuantGate.API.Signals.Subscriptions
         /// <summary>
         /// The symbol that was requested.
         /// </summary>
-        private readonly string _symbol;
-
-        public InstrumentSubscription(APIClient client, EventHandler<InstrumentEventArgs> handler,
-                                      string streamID, string symbol, bool receipt = false,
-                                      uint throttleRate = 0, object reference = null) :
-            base(client, InstrumentUpdate.Parser, handler,
-                 new ParsedDestination(SubscriptionType.Definition, SubscriptionPath.DefnInstrument,
-                                       ParsedDestination.StreamIDForSymbol(streamID, symbol), symbol).Destination,
-                 receipt, throttleRate, reference)
-        {
-            _symbol = symbol;
-        }
+        private readonly string _symbol = symbol;
 
         protected override InstrumentEventArgs WrapError(SubscriptionError error) => new(_symbol, error);
 

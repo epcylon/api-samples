@@ -4,25 +4,18 @@ using QuantGate.API.Signals.Utilities;
 
 namespace QuantGate.API.Signals.Subscriptions
 {
-    internal class StrategySubscription : SubscriptionBase<StrategyUpdate, StrategyEventArgs>, ISymbolSubscription
+    internal class StrategySubscription(APIClient client, EventHandler<StrategyEventArgs> handler,
+                                        string strategyID, string streamID, string symbol,
+                                        bool receipt = false, uint throttleRate = 0, object reference = null) : 
+        SubscriptionBase<StrategyUpdate, StrategyEventArgs>(client, StrategyUpdate.Parser, handler,
+             new ParsedDestination(SubscriptionType.Strategy, SubscriptionPath.None,
+                                   ParsedDestination.StreamIDForSymbol(streamID, symbol),
+                                   symbol, strategyID: strategyID).Destination, 
+                                   receipt, throttleRate, reference), ISymbolSubscription
     {
-        private readonly string _symbol;
-        private readonly DataStream _stream;
-        private readonly string _strategyID;
-
-        public StrategySubscription(APIClient client, EventHandler<StrategyEventArgs> handler,
-                                    string strategyID, string streamID, string symbol,
-                                    bool receipt = false, uint throttleRate = 0, object reference = null) :
-            base(client, StrategyUpdate.Parser, handler,
-                 new ParsedDestination(SubscriptionType.Strategy, SubscriptionPath.None,
-                                       ParsedDestination.StreamIDForSymbol(streamID, symbol),
-                                       symbol, strategyID: strategyID).Destination,
-                 receipt, throttleRate, reference)
-        {
-            _symbol = symbol;
-            _stream = APIClient.ToStream(streamID);
-            _strategyID = strategyID;
-        }
+        private readonly string _symbol = symbol;
+        private readonly DataStream _stream = APIClient.ToStream(streamID);
+        private readonly string _strategyID = strategyID;
 
         string ISymbolSubscription.Symbol => _symbol;
         DataStream ISymbolSubscription.Stream => _stream;

@@ -4,17 +4,14 @@ using QuantGate.API.Signals.Utilities;
 
 namespace QuantGate.API.Signals.Subscriptions
 {
-    internal class CommitmentSubscription : GaugeSubscriptionBase<SingleValueUpdate, CommitmentEventArgs>
+    internal class CommitmentSubscription(APIClient client, EventHandler<CommitmentEventArgs> handler,
+                                          string streamID, string symbol, bool receipt = false,
+                                          uint throttleRate = 0, object reference = null) : 
+        GaugeSubscriptionBase<SingleValueUpdate, CommitmentEventArgs>(
+            client, SingleValueUpdate.Parser, handler, SubscriptionPath.GaugeCommitment,
+             ParsedDestination.StreamIDForSymbol(streamID, symbol), 
+             symbol, "1m", receipt, throttleRate, reference)
     {
-        public CommitmentSubscription(APIClient client, EventHandler<CommitmentEventArgs> handler,
-                                      string streamID, string symbol, bool receipt = false,
-                                      uint throttleRate = 0, object reference = null) :
-            base(client, SingleValueUpdate.Parser, handler, SubscriptionPath.GaugeCommitment,
-                 ParsedDestination.StreamIDForSymbol(streamID, symbol), symbol, "1m",
-                 receipt, throttleRate, reference)
-        {
-        }
-
         protected override CommitmentEventArgs HandleUpdate(SingleValueUpdate update, object processed)
         {
             return new CommitmentEventArgs(

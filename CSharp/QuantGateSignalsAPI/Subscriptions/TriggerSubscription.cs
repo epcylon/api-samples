@@ -4,15 +4,11 @@ using QuantGate.API.Signals.Utilities;
 
 namespace QuantGate.API.Signals.Subscriptions
 {
-    internal class TriggerSubscription : GaugeSubscriptionBase<TriggerUpdate, TriggerEventArgs>
+    internal class TriggerSubscription(APIClient client, EventHandler<TriggerEventArgs> handler, string streamID,
+                                       string symbol, bool receipt = false, uint throttleRate = 0, object reference = null) : 
+        GaugeSubscriptionBase<TriggerUpdate, TriggerEventArgs>(client, TriggerUpdate.Parser, handler, SubscriptionPath.GaugeTrigger,
+                                                               streamID, symbol, string.Empty, receipt, throttleRate, reference)
     {
-        public TriggerSubscription(APIClient client, EventHandler<TriggerEventArgs> handler, string streamID,
-                                   string symbol, bool receipt = false, uint throttleRate = 0, object reference = null) :
-            base(client, TriggerUpdate.Parser, handler, SubscriptionPath.GaugeTrigger,
-                 streamID, symbol, string.Empty, receipt, throttleRate, reference)
-        {
-        }
-
         protected override TriggerEventArgs HandleUpdate(TriggerUpdate update, object processed)
         {
             return new TriggerEventArgs(

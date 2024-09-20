@@ -4,16 +4,13 @@ using QuantGate.API.Signals.Utilities;
 
 namespace QuantGate.API.Signals.Subscriptions
 {
-    internal class BookPressureSubscription : GaugeSubscriptionBase<SingleValueUpdate, BookPressureEventArgs>
+    internal class BookPressureSubscription(APIClient client, EventHandler<BookPressureEventArgs> handler,
+                                            string streamID, string symbol, bool receipt = false,
+                                            uint throttleRate = 0, object reference = null) : 
+        GaugeSubscriptionBase<SingleValueUpdate, BookPressureEventArgs>(
+            client, SingleValueUpdate.Parser, handler, SubscriptionPath.GaugeBookPressure,
+            ParsedDestination.StreamIDForSymbol(streamID, symbol), symbol, "0q", receipt, throttleRate, reference)
     {
-        public BookPressureSubscription(APIClient client, EventHandler<BookPressureEventArgs> handler,
-                                        string streamID, string symbol, bool receipt = false,
-                                        uint throttleRate = 0, object reference = null) :
-            base(client, SingleValueUpdate.Parser, handler, SubscriptionPath.GaugeBookPressure,
-                 ParsedDestination.StreamIDForSymbol(streamID, symbol), symbol, "0q",
-                 receipt, throttleRate, reference)
-        { }
-
         protected override BookPressureEventArgs HandleUpdate(SingleValueUpdate update, object processed)
         {
             return new BookPressureEventArgs(

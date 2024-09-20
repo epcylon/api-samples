@@ -8,6 +8,7 @@
     <AssemblyVersion>2.4.2.0</AssemblyVersion>
     <Copyright>Copyright © QuantGate Systems 2024</Copyright>
     <Company>QuantGate Systems</Company>
+	  <RootNamespace>QuantGate.API.Signals</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Events\placeholder.txt" />

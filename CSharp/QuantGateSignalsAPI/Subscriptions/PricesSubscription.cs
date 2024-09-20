@@ -4,20 +4,14 @@ using QuantGate.API.Signals.Utilities;
 
 namespace QuantGate.API.Signals.Subscriptions
 {
-    internal class PricesSubscription : SubscriptionBase<QuoteUpdate, PricesEventArgs>
-    {
-        private readonly PricesEventArgs _current;
-        private readonly bool _isCrypto;
-
-        public PricesSubscription(APIClient client, EventHandler<PricesEventArgs> handler, string streamID,
-                                  string symbol, bool receipt = false, uint throttleRate = 0, object reference = null) :
-            base(client, QuoteUpdate.Parser, handler,
-                 ParsedDestination.CreatePricesDestination(
+    internal class PricesSubscription(APIClient client, EventHandler<PricesEventArgs> handler, string streamID,
+                                      string symbol, bool receipt = false, uint throttleRate = 0, object reference = null) : 
+        SubscriptionBase<QuoteUpdate, PricesEventArgs>(client, QuoteUpdate.Parser, handler,
+             ParsedDestination.CreatePricesDestination(
                      ParsedDestination.StreamIDForSymbol(streamID, symbol), symbol).Destination, receipt, throttleRate, reference)
-        {
-            _current = new PricesEventArgs(symbol, APIClient.ToStream(streamID));
-            _isCrypto = symbol.Contains(':');
-        }
+    {
+        private readonly PricesEventArgs _current = new PricesEventArgs(symbol, APIClient.ToStream(streamID));
+        private readonly bool _isCrypto = symbol.Contains(':');
 
         protected override PricesEventArgs HandleUpdate(QuoteUpdate update, object processed)
         {

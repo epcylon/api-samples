@@ -4,28 +4,22 @@ using QuantGate.API.Signals.Utilities;
 
 namespace QuantGate.API.Signals.Subscriptions
 {
-    internal class TopSymbolsSubscription : SubscriptionBase<TopSymbolsUpdate, TopSymbolsEventArgs>
+    internal class TopSymbolsSubscription(APIClient client, EventHandler<TopSymbolsEventArgs> handler, string broker,
+                                          InstrumentType instrumentType = InstrumentType.NoInstrument,
+                                          bool receipt = false, uint throttleRate = 0, object reference = null) : 
+        SubscriptionBase<TopSymbolsUpdate, TopSymbolsEventArgs>(client, TopSymbolsUpdate.Parser, handler,
+             new ParsedDestination(SubscriptionType.Definition, SubscriptionPath.DefnTopSymbols, string.Empty,
+                                   broker: broker, securityType: InstrumentTypeToString(instrumentType)).Destination,
+                                   receipt, throttleRate, reference)
     {
         /// <summary>
         /// The broker to get the Top Symbols for. Must match a valid broker type string.
         /// </summary>
-        public string Broker { get; }
+        public string Broker { get; } = broker;
         /// <summary>
         /// The type of instrument to include in the results.
         /// </summary>
-        public InstrumentType InstrumentType { get; }
-
-        public TopSymbolsSubscription(APIClient client, EventHandler<TopSymbolsEventArgs> handler, string broker,
-                                      InstrumentType instrumentType = InstrumentType.NoInstrument,
-                                      bool receipt = false, uint throttleRate = 0, object reference = null) :
-            base(client, TopSymbolsUpdate.Parser, handler,
-                 new ParsedDestination(SubscriptionType.Definition, SubscriptionPath.DefnTopSymbols, string.Empty,
-                                       broker: broker, securityType: InstrumentTypeToString(instrumentType)).Destination,
-                 receipt, throttleRate, reference)
-        {
-            Broker = broker;
-            InstrumentType = instrumentType;
-        }
+        public InstrumentType InstrumentType { get; } = instrumentType;
 
         internal static string InstrumentTypeToString(InstrumentType type)
         {

@@ -2,24 +2,20 @@
 using QuantGate.API.Signals.Events;
 using QuantGate.API.Signals.Proto.Stealth;
 using QuantGate.API.Signals.Utilities;
-using System.Diagnostics;
 
 namespace QuantGate.API.Signals.Subscriptions
 {
-    internal class SentimentSubscription : GaugeSubscriptionBase<SentimentUpdate, SentimentEventArgs>
+    internal class SentimentSubscription(APIClient client, EventHandler<SentimentEventArgs> handler,
+                                         string streamID, string symbol, string compression,
+                                         bool receipt = false, uint throttleRate = 0, object reference = null) :
+        GaugeSubscriptionBase<SentimentUpdate, SentimentEventArgs>(
+            client, SentimentUpdate.Parser, handler, SubscriptionPath.GaugeSentiment,
+            streamID, symbol, compression, receipt, throttleRate, reference)
     {
         /// <summary>
         /// Module-level Identifier.
         /// </summary>
         private const string _moduleID = "SSub";
-
-        public SentimentSubscription(APIClient client, EventHandler<SentimentEventArgs> handler,
-                                     string streamID, string symbol, string compression,
-                                     bool receipt = false, uint throttleRate = 0, object reference = null) :
-               base(client, SentimentUpdate.Parser, handler, SubscriptionPath.GaugeSentiment,
-                    streamID, symbol, compression, receipt, throttleRate, reference)
-        {
-        }
 
         protected override object Preprocess(SentimentUpdate update)
         {

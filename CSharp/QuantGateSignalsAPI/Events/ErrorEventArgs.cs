@@ -1,12 +1,6 @@
-﻿namespace QuantGate.API.Events
-{
-    public class ErrorEventArgs
-    {
-        public string Message { get; }
+﻿namespace QuantGate.API.Events;
 
-        public ErrorEventArgs(string message)
-        {
-            Message = message;
-        }
-    }
+public class ErrorEventArgs(string message)
+{
+    public string Message { get; } = message;
 }

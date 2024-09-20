@@ -20,7 +20,7 @@ namespace QuantGate.API.Signals.ProtoStomp
         {
             Request = new SendRequest();
 
-            if (!destination.StartsWith("/"))
+            if (!destination.StartsWith('/'))
                 Request.Destination = '/' + destination;
             else
                 Request.Destination = destination;

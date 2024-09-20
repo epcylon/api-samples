@@ -1399,7 +1399,7 @@ namespace QuantGate.API.Signals
                 try
                 {
                     // Make sure there is a leading slash.
-                    if (!destination.StartsWith("/"))
+                    if (!destination.StartsWith('/'))
                         destination = '/' + destination;
 
                     // If the destination exists, unsubscribe (otherwise, no need).
@@ -1607,7 +1607,7 @@ namespace QuantGate.API.Signals
                 try
                 {
                     // Make sure there is a leading slash.
-                    if (!destination.StartsWith("/"))
+                    if (!destination.StartsWith('/'))
                         destination = '/' + destination;
 
                     // If the destination exists, unsubscribe.
