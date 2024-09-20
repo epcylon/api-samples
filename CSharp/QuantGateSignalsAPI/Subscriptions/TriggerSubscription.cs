@@ -5,7 +5,7 @@ using QuantGate.API.Signals.Utilities;
 namespace QuantGate.API.Signals.Subscriptions
 {
     internal class TriggerSubscription(APIClient client, EventHandler<TriggerEventArgs> handler, string streamID,
-                                       string symbol, bool receipt = false, uint throttleRate = 0, object reference = null) : 
+                                       string symbol, bool receipt = false, uint throttleRate = 0, object reference = null) :
         GaugeSubscriptionBase<TriggerUpdate, TriggerEventArgs>(client, TriggerUpdate.Parser, handler, SubscriptionPath.GaugeTrigger,
                                                                streamID, symbol, string.Empty, receipt, throttleRate, reference)
     {

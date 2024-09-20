@@ -5,7 +5,7 @@ using QuantGate.API.Signals.Utilities;
 namespace QuantGate.API.Signals.Subscriptions
 {
     internal class HeadroomSubscription(APIClient client, EventHandler<HeadroomEventArgs> handler, string streamID,
-                                        string symbol, bool receipt = false, uint throttleRate = 0, object reference = null) : 
+                                        string symbol, bool receipt = false, uint throttleRate = 0, object reference = null) :
         GaugeSubscriptionBase<SingleValueUpdate, HeadroomEventArgs>(
             client, SingleValueUpdate.Parser, handler, SubscriptionPath.GaugeHeadroom,
             ParsedDestination.StreamIDForSymbol(streamID, symbol), symbol, "5m", receipt, throttleRate, reference)

@@ -6,7 +6,7 @@ namespace QuantGate.API.Signals.Subscriptions
 {
     internal class BookPressureSubscription(APIClient client, EventHandler<BookPressureEventArgs> handler,
                                             string streamID, string symbol, bool receipt = false,
-                                            uint throttleRate = 0, object reference = null) : 
+                                            uint throttleRate = 0, object reference = null) :
         GaugeSubscriptionBase<SingleValueUpdate, BookPressureEventArgs>(
             client, SingleValueUpdate.Parser, handler, SubscriptionPath.GaugeBookPressure,
             ParsedDestination.StreamIDForSymbol(streamID, symbol), symbol, "0q", receipt, throttleRate, reference)

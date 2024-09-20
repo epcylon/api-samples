@@ -5,8 +5,8 @@ using QuantGate.API.Signals.ProtoStomp;
 namespace QuantGate.API.Signals.Subscriptions
 {
     internal abstract class SubscriptionBase : ProtoStompSubscription
-    {        
-        internal readonly HashSet<object> _references;        
+    {
+        internal readonly HashSet<object> _references;
 
         public SubscriptionBase(APIClient client, string destination, bool receipt = false,
                                 uint throttleRate = 0, object reference = null) :

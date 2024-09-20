@@ -11,8 +11,8 @@
     /// <param name="instrumentType">The type of instrument to include in the results.</param>    
     /// <param name="symbols">Top symbol results.</param>
     /// <param name="error">Holds error information, if a subscription error occurred.</param>
-    public class TopSymbolsEventArgs(string broker, InstrumentType instrumentType, 
-                                     List<TopSymbol> symbols, SubscriptionError error = null) : 
+    public class TopSymbolsEventArgs(string broker, InstrumentType instrumentType,
+                                     List<TopSymbol> symbols, SubscriptionError error = null) :
         SubscriptionEventArgs(error)
     {
         /// <summary>

@@ -308,7 +308,7 @@ namespace QuantGate.API.Signals
             {
                 // Go through each action in the blocking collection while not cancelled.
                 foreach (Action action in _actions.GetConsumingEnumerable())
-                    action(); 
+                    action();
             }
             catch (Exception ex)
             {
@@ -377,7 +377,7 @@ namespace QuantGate.API.Signals
 
                     SharedLogger.LogDebug($"{_moduleID}:OCl", "API Client was disconnected.");
                     Sync.Post(new SendOrPostCallback(o => { Disconnected(this, EventArgs.Empty); }), null);
-                    
+
                     // If disposed, stop the thread.
                     if (_isDisposed)
                         _actions.CompleteAdding();
@@ -517,7 +517,7 @@ namespace QuantGate.API.Signals
                 }
                 else if (!_isDisconnecting && IsConnected)
                 {
-                    SharedLogger.LogError(_moduleID + ":HRF", "Receiptable not found for id", 
+                    SharedLogger.LogError(_moduleID + ":HRF", "Receiptable not found for id",
                                           "Receipt={Receipt}", frame.Receipt.ReceiptId.ToString());
                 }
             }
@@ -628,7 +628,7 @@ namespace QuantGate.API.Signals
                     SharedLogger.LogDebug(_moduleID + ":Cn2", "Connecting API client.");
 
                     // Create the new WebSocket and connect.
-                    Client = new WebsocketBinaryTransport(new Uri($"{_host}:{_port}/"));                    
+                    Client = new WebsocketBinaryTransport(new Uri($"{_host}:{_port}/"));
                     Client.Connect();
                 }
                 catch (Exception ex)
@@ -666,7 +666,7 @@ namespace QuantGate.API.Signals
 
                 // Send disconnect frame, if the transport is alive.
                 Send(new RequestFrame { Disconnect = new DisconnectRequest() });
-        
+
                 if (Client is not null)
                 {
                     // If there is a client, 
@@ -1222,7 +1222,7 @@ namespace QuantGate.API.Signals
                     {
                         // If not yet subscribed, set the parent event handler and subscribe.
                         Subscribe(subscription);
-                    } 
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -1251,7 +1251,7 @@ namespace QuantGate.API.Signals
                         EnqueueAndSubscribe(_search);
                     }
 
-                    _search.Search(term, broker); 
+                    _search.Search(term, broker);
                 }
                 catch (Exception ex)
                 {
@@ -1404,7 +1404,7 @@ namespace QuantGate.API.Signals
 
                     // If the destination exists, unsubscribe (otherwise, no need).
                     if (_subscriptionsByDestination.TryGetValue(destination, out var subscription))
-                        Unsubscribe(subscription, reference); 
+                        Unsubscribe(subscription, reference);
                 }
                 catch (Exception ex)
                 {
@@ -1430,7 +1430,7 @@ namespace QuantGate.API.Signals
                         Unsubscribe(subscription);
 
                     // This includes the search.
-                    _search = null; 
+                    _search = null;
                 }
                 catch (Exception ex)
                 {
@@ -1459,7 +1459,7 @@ namespace QuantGate.API.Signals
                         if ((subscription is ISymbolSubscription symbolSubscription) &&
                             (symbolSubscription.Symbol == symbol))
                             Unsubscribe(subscription);
-                    } 
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -1612,7 +1612,7 @@ namespace QuantGate.API.Signals
 
                     // If the destination exists, unsubscribe.
                     if (_subscriptionsByDestination.TryGetValue(destination, out var subscription))
-                        subscription.ThrottleRate = (uint)throttleRate; 
+                        subscription.ThrottleRate = (uint)throttleRate;
                 }
                 catch (Exception ex)
                 {
@@ -1897,7 +1897,7 @@ namespace QuantGate.API.Signals
                         _actions.CompleteAdding();
 
                     _isDisposed = true;
-                } 
+                }
             }
             catch (Exception ex)
             {

@@ -6,11 +6,11 @@ namespace QuantGate.API.Signals.Subscriptions
 {
     internal class StrategySubscription(APIClient client, EventHandler<StrategyEventArgs> handler,
                                         string strategyID, string streamID, string symbol,
-                                        bool receipt = false, uint throttleRate = 0, object reference = null) : 
+                                        bool receipt = false, uint throttleRate = 0, object reference = null) :
         SubscriptionBase<StrategyUpdate, StrategyEventArgs>(client, StrategyUpdate.Parser, handler,
              new ParsedDestination(SubscriptionType.Strategy, SubscriptionPath.None,
                                    ParsedDestination.StreamIDForSymbol(streamID, symbol),
-                                   symbol, strategyID: strategyID).Destination, 
+                                   symbol, strategyID: strategyID).Destination,
                                    receipt, throttleRate, reference), ISymbolSubscription
     {
         private readonly string _symbol = symbol;

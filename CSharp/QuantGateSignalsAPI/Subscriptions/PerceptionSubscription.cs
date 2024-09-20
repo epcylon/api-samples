@@ -6,9 +6,9 @@ namespace QuantGate.API.Signals.Subscriptions
 {
     internal class PerceptionSubscription(APIClient client, EventHandler<PerceptionEventArgs> handler,
                                           string streamID, string symbol, bool receipt = false,
-                                          uint throttleRate = 0, object reference = null) : 
+                                          uint throttleRate = 0, object reference = null) :
         GaugeSubscriptionBase<SingleValueUpdate, PerceptionEventArgs>(
-            client, SingleValueUpdate.Parser, handler, SubscriptionPath.GaugePerception, 
+            client, SingleValueUpdate.Parser, handler, SubscriptionPath.GaugePerception,
             ParsedDestination.StreamIDForSymbol(streamID, symbol), symbol, string.Empty, receipt, throttleRate, reference)
     {
         protected override PerceptionEventArgs HandleUpdate(SingleValueUpdate update, object processed)

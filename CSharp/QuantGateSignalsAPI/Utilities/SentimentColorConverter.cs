@@ -1,5 +1,4 @@
 ﻿using Epcylon.Common.Logging;
-using System.Diagnostics;
 
 namespace QuantGate.API.Signals.Utilities
 {

@@ -6,7 +6,7 @@ namespace QuantGate.API.Signals.Subscriptions
 {
     internal class TopSymbolsSubscription(APIClient client, EventHandler<TopSymbolsEventArgs> handler, string broker,
                                           InstrumentType instrumentType = InstrumentType.NoInstrument,
-                                          bool receipt = false, uint throttleRate = 0, object reference = null) : 
+                                          bool receipt = false, uint throttleRate = 0, object reference = null) :
         SubscriptionBase<TopSymbolsUpdate, TopSymbolsEventArgs>(client, TopSymbolsUpdate.Parser, handler,
              new ParsedDestination(SubscriptionType.Definition, SubscriptionPath.DefnTopSymbols, string.Empty,
                                    broker: broker, securityType: InstrumentTypeToString(instrumentType)).Destination,
