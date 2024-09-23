@@ -11,7 +11,7 @@
         /// </summary>
         private static readonly long _ticks1800 = _date1800.Ticks;
         /// <summary>
-        /// The maximum timetamp possible.
+        /// The maximum timestamp possible.
         /// </summary>
         private static readonly ulong _maxTimestamp = (ulong)((long.MaxValue - _ticks1800) / TimeSpan.TicksPerSecond);
 

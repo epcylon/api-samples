@@ -4,8 +4,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
-    <Version>2.4.2.0</Version>
-    <AssemblyVersion>2.4.2.0</AssemblyVersion>
+    <Version>3.0.0.0</Version>
+    <AssemblyVersion>3.0.0.0</AssemblyVersion>
     <Copyright>Copyright © QuantGate Systems 2024</Copyright>
     <Company>QuantGate Systems</Company>
 	  <RootNamespace>QuantGate.API.Signals</RootNamespace>
@@ -32,10 +32,10 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Common.Core">
-      <HintPath>..\..\..\stealth-brokers\Compiled\Common\net6.0\Common.Core.dll</HintPath>
+      <HintPath>..\..\..\stealth-brokers\Compiled\Common\net8.0\Common.Core.dll</HintPath>
     </Reference>
     <Reference Include="Common.Net.NetCore">
-      <HintPath>..\..\..\stealth-brokers\Compiled\Common\net6.0\Common.Net.NetCore.dll</HintPath>
+      <HintPath>..\..\..\stealth-brokers\Compiled\Common\net8.0\Common.Net.NetCore.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>
