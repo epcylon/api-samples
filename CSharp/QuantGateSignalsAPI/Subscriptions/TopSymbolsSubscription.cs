@@ -36,7 +36,7 @@ namespace QuantGate.API.Signals.Subscriptions
 
         protected override object Preprocess(TopSymbolsUpdate update)
         {
-            List<TopSymbol> results = new();
+            List<TopSymbol> results = [];
 
             foreach (TopSymbolItem result in update.Symbols)
                 results.Add(new TopSymbol(

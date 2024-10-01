@@ -13,9 +13,9 @@ namespace QuantGate.API.Signals.Subscriptions
             base(client, destination, receipt, throttleRate)
         {
             if (reference is not null)
-                _references = new HashSet<object> { reference };
+                _references = [reference];
             else
-                _references = new HashSet<object>();
+                _references = [];
         }
 
         public IReadOnlyList<object> References
@@ -23,7 +23,7 @@ namespace QuantGate.API.Signals.Subscriptions
             get
             {
                 lock (_references)
-                    return _references.ToList();
+                    return [.. _references];
             }
         }
     }

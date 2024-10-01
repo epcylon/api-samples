@@ -189,7 +189,7 @@ namespace QuantGate.API.Signals.Utilities
                 ["strategy"] = SubscriptionType.Strategy,
             };
 
-            _subscriptionStringsByType = new Dictionary<SubscriptionType, string>();
+            _subscriptionStringsByType = [];
             foreach (KeyValuePair<string, SubscriptionType> pair in _subscriptionTypes)
                 _subscriptionStringsByType.Add(pair.Value, pair.Key);
 

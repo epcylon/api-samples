@@ -55,16 +55,16 @@ namespace QuantGate.API.Signals
         /// <summary>
         /// Holds a list of all current subscriptions.
         /// </summary>
-        private readonly Dictionary<ulong, ProtoStompSubscription> _subscriptionReferences = new();
+        private readonly Dictionary<ulong, ProtoStompSubscription> _subscriptionReferences = [];
         /// <summary>
         /// Holds a list of all current subscriptions by destination.
         /// </summary>
-        private readonly Dictionary<string, ProtoStompSubscription> _subscriptionsByDestination = new();
+        private readonly Dictionary<string, ProtoStompSubscription> _subscriptionsByDestination = [];
 
         /// <summary>
         /// Holds a list of all requests requiring a receipt.
         /// </summary>
-        private readonly Dictionary<ulong, IReceiptable> _receiptReferences = new();
+        private readonly Dictionary<ulong, IReceiptable> _receiptReferences = [];
 
         /// <summary>
         /// Search subscription.

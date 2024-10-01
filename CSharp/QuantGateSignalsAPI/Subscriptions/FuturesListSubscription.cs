@@ -105,7 +105,7 @@ internal class FuturesListSubscription(APIClient client, EventHandler<FuturesLis
     /// <summary>
     /// Array version of symbol used to split root from exchange postfix.
     /// </summary>
-    private static readonly char[] _tradingClassSplitArray = new char[] { _tradingClassSplit };
+    private static readonly char[] _tradingClassSplitArray = [_tradingClassSplit];
 
     /// <summary>
     /// Character used to indicate that the security type is a future with an offset expiry pattern.

@@ -80,7 +80,7 @@ namespace QuantGate.API.Signals.Subscriptions
                 remaining = SentimentEventArgs.TotalBars - 1 - j;
 
                 // Interpolate from 0 to i.
-                values = new double[] { 2 * x - y, x, y, LinearInterpolate(i, y, j, z) };
+                values = [2 * x - y, x, y, LinearInterpolate(i, y, j, z)];
 
                 for (double index = 0; index <= i; index++, next++)
                     result[next] = CubicInterpolate(values, index / i);
@@ -89,14 +89,14 @@ namespace QuantGate.API.Signals.Subscriptions
                 j -= i;
 
                 // Interpolate from i to j.
-                values = new double[] { LinearInterpolate(j, y, j + i, x), y, z,
-                                    LinearInterpolate(j, z, j + remaining, 0) };
+                values = [ LinearInterpolate(j, y, j + i, x), y, z,
+                           LinearInterpolate(j, z, j + remaining, 0) ];
 
                 for (double index = 1; index <= j; index++, next++)
                     result[next] = CubicInterpolate(values, index / j);
 
                 // Interpolate from j to end.
-                values = new double[] { LinearInterpolate(remaining, z, remaining + j, y), z, 0, -z };
+                values = [LinearInterpolate(remaining, z, remaining + j, y), z, 0, -z];
 
                 for (double index = 1; index <= remaining; index++, next++)
                     result[next] = CubicInterpolate(values, index / remaining);
