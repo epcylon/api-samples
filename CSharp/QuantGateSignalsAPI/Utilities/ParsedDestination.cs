@@ -213,7 +213,7 @@ namespace QuantGate.API.Signals.Utilities
                 ["top"] = SubscriptionPath.DefnTopSymbols,
             };
 
-            _subscriptionStringsByPath = new Dictionary<SubscriptionPath, string>();
+            _subscriptionStringsByPath = [];
             foreach (KeyValuePair<string, SubscriptionPath> pair in _subscriptionPaths)
                 _subscriptionStringsByPath.Add(pair.Value, pair.Key);
         }

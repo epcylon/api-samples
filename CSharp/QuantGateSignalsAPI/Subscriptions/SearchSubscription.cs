@@ -38,7 +38,7 @@ namespace QuantGate.API.Signals.Subscriptions
 
         protected override object Preprocess(SymbolSearchUpdate update)
         {
-            List<SearchResult> results = new();
+            List<SearchResult> results = [];
 
             foreach (SymbolSearchResult result in update.Results)
                 results.Add(new SearchResult(result.Symbol,
