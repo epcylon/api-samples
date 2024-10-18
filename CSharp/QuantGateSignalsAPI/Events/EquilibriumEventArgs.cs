@@ -76,7 +76,7 @@
         /// Whether the data used to generate this gauge value is potentially dirty 
         /// (values are missing) or stale (not the most recent data).
         /// </param>
-        /// <param name="error">Holds error information, if a subscription error occured.</param>
+        /// <param name="error">Holds error information, if a subscription error occurred.</param>
         internal EquilibriumEventArgs(string symbol, DataStream stream, DateTime timestamp, string compression,
                                       double equilibriumPrice, double gapSize, double lastPrice, double high, double low,
                                       double projectedPosition, double bias, bool isDirty, SubscriptionError error = null) :
