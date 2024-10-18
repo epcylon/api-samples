@@ -39,14 +39,14 @@
         /// </summary>
         /// <param name="underlying">The underlying for which futures were requested.</param>
         /// <param name="currency">The currency of the futures that were requested.</param>
-        /// <param name="error">Holds error information, if a subscription error occured.</param>
+        /// <param name="error">Holds error information, if a subscription error occurred.</param>
         internal FuturesListEventArgs(string underlying, string currency, DataStream stream,
                                       SubscriptionError error) : base(error)
         {
             Underlying = underlying;
             Currency = currency;
             Stream = stream;
-            Futures = new List<InstrumentBase>();
+            Futures = [];
         }
     }
 }

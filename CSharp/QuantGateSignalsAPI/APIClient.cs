@@ -132,7 +132,7 @@ namespace QuantGate.API.Signals
         private long _killTicks = 0;
 
         /// <summary>
-        /// The maximum time to wait before receiveing a message.
+        /// The maximum time to wait before receiving a message.
         /// </summary>
         private const long _maxHeartBeatWait = 1 * TimeSpan.TicksPerMinute;
         /// <summary>
@@ -160,7 +160,7 @@ namespace QuantGate.API.Signals
         /// <summary>
         /// Blocking message queue used in the main thread to process new actions within the thread.
         /// </summary>
-        private readonly BlockingCollection<Action> _actions = new();
+        private readonly BlockingCollection<Action> _actions = [];
 
         /// <summary>
         /// Client transport layer interface instance.
@@ -190,9 +190,9 @@ namespace QuantGate.API.Signals
         /// Initializes a new instance of the <see cref="StompClient" /> class.
         /// </summary>
         /// <param name="environment">The server environment to connect to.</param>
-        /// <param name="stream">The base datastream to connect to (default = realtime).</param>
+        /// <param name="stream">The base data stream to connect to (default = realtime).</param>
         /// <param name="sync">
-        /// The synchronization context to return values on (default = SychronizationContext.Current).
+        /// The synchronization context to return values on (default = SynchronizationContext.Current).
         /// </param>
         /// <param name="connectBody">Connect body to send (internal use only).</param>
         public APIClient(ConnectionToken token, DataStream stream = DataStream.Realtime,
@@ -902,7 +902,7 @@ namespace QuantGate.API.Signals
             try
             {
                 // Get the current subscriptions list and clear the old.
-                subscriptions = _subscriptionReferences.Values.ToList();
+                subscriptions = [.. _subscriptionReferences.Values];
                 _subscriptionReferences.Clear();
                 _subscriptionsByDestination.Clear();
                 _receiptReferences.Clear();
@@ -937,7 +937,7 @@ namespace QuantGate.API.Signals
             try
             {
                 // Clear the subscription references.
-                subscriptions = _subscriptionReferences.Values.ToList();
+                subscriptions = [.. _subscriptionReferences.Values];
                 _subscriptionReferences.Clear();
                 _subscriptionsByDestination.Clear();
                 _search = null;
@@ -947,7 +947,7 @@ namespace QuantGate.API.Signals
                     subscription.OnCompleted();
 
                 // Clear the receipt references.
-                receiptables = _receiptReferences.Values.ToList();
+                receiptables = [.. _receiptReferences.Values];
                 _receiptReferences.Clear();
 
                 // Handle the OnInvalidate events for each subscription.
@@ -1423,7 +1423,7 @@ namespace QuantGate.API.Signals
                 try
                 {
                     // Get a list of all of the current subscriptions.
-                    List<ProtoStompSubscription> subscriptions = _subscriptionReferences.Values.ToList();
+                    List<ProtoStompSubscription> subscriptions = [.. _subscriptionReferences.Values];
 
                     // If no symbol supplied, unsubscribe from everything.
                     foreach (ProtoStompSubscription subscription in subscriptions)
@@ -1450,7 +1450,7 @@ namespace QuantGate.API.Signals
                 try
                 {
                     // Get a list of all of the current subscriptions.
-                    List<ProtoStompSubscription> subscriptions = _subscriptionReferences.Values.ToList();
+                    List<ProtoStompSubscription> subscriptions = [.. _subscriptionReferences.Values];
 
                     // If a symbol was supplied, need to check each subscription.
                     foreach (ProtoStompSubscription subscription in subscriptions)
@@ -1784,12 +1784,12 @@ namespace QuantGate.API.Signals
 
                 try
                 {
-                    // Get the runers and sort.
+                    // Get the runners and sort.
                     Console.WriteLine("-----------------------------");
                     Console.WriteLine("Feed status: " + (IsConnected ? "Connected" : "Disconnected"));
                     Console.WriteLine("-----------------------------");
 
-                    subscriptions = _subscriptionsByDestination.Keys.ToList();
+                    subscriptions = [.. _subscriptionsByDestination.Keys];
                     subscriptions.Sort();
 
                     foreach (string subscription in subscriptions)
