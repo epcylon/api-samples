@@ -63,6 +63,6 @@ namespace QuantGate.API.Signals.Subscriptions
         }
 
         protected override TopSymbolsEventArgs WrapError(SubscriptionError error) =>
-            new(Broker, InstrumentType, new List<TopSymbol>(), error);
+            new(Broker, InstrumentType, [], error);
     }
 }

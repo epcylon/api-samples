@@ -27,9 +27,9 @@ namespace QuantGate.API.Signals.Subscriptions
 
         protected override InstrumentEventArgs HandleUpdate(InstrumentUpdate update, object processed)
         {
-            List<TickRange> tickRanges = new();
-            List<Events.TradingSession> tradingSessions = new();
-            Dictionary<string, string> brokerSymbols = new();
+            List<TickRange> tickRanges = [];
+            List<Events.TradingSession> tradingSessions = [];
+            Dictionary<string, string> brokerSymbols = [];
 
             try
             {

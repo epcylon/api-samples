@@ -55,6 +55,6 @@ namespace QuantGate.API.Signals.Subscriptions
             new(update.SearchTerm, (List<SearchResult>)processed);
 
         protected override SearchResultsEventArgs WrapError(SubscriptionError error) =>
-            new(string.Empty, new List<SearchResult>(), error);
+            new(string.Empty, [], error);
     }
 }

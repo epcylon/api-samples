@@ -152,7 +152,7 @@ internal class FuturesListSubscription(APIClient client, EventHandler<FuturesLis
     /// <returns>The decoded futures security details.</returns>
     public static List<InstrumentBase> Decode(string toDecode)
     {
-        List<InstrumentBase> toReturn = new();
+        List<InstrumentBase> toReturn = [];
         string[] fields;
         string baseString, detailString, codedExpiry;
         DateTime fullExpiry = _1800;
@@ -165,7 +165,7 @@ internal class FuturesListSubscription(APIClient client, EventHandler<FuturesLis
             if (string.IsNullOrEmpty(toDecode))
                 return toReturn;
 
-            fields = toDecode.Split(new char[] { _tradingClassDelimiter }, 2);
+            fields = toDecode.Split([_tradingClassDelimiter], 2);
             baseString = fields[0];
             detailString = fields[1];
 
