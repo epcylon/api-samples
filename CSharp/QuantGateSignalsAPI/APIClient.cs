@@ -1774,34 +1774,52 @@ namespace QuantGate.API.Signals
         }
 
         /// <summary>
-        /// Prints the current status.
+        /// Returns a status page in HTML for the current feed status and subscriptions.
         /// </summary>
-        public void PrintStatus()
+        /// <returns>An HTML status page.</returns>
+        public Task<string> GetStatusPageAsync()
         {
+            var tcs = new TaskCompletionSource<string>();
+
             Enqueue(() =>
             {
-                List<string> subscriptions;
-
                 try
                 {
-                    // Get the runners and sort.
-                    Console.WriteLine("-----------------------------");
-                    Console.WriteLine("Feed status: " + (IsConnected ? "Connected" : "Disconnected"));
-                    Console.WriteLine("-----------------------------");
+                    List<string> subscriptions;
+                    string html;
 
-                    subscriptions = [.. _subscriptionsByDestination.Keys];
+                    html = "<html><head><title>Feed Status</title><style>" +
+                           "body { font-family: Arial, sans-serif; } " +
+                           "table { width: 100%; border-collapse: collapse; } th, " +
+                           "td { border: 1px solid #ddd; padding: 8px; } " +
+                           "th { background-color: #f2f2f2; }" +
+                           "</style></head><body>";
+                    html += "<h1>Feed Status</h1>";
+                    html += $"<p>Feed status: {(IsConnected ? "Connected" : "Disconnected")}</p>";
+                    html += "<h2>Subscriptions</h2>";
+                    html += "<table><tr><th>Subscription</th></tr>";
+
+                    // Get the subscriptions and sort.
+                    subscriptions = _subscriptionsByDestination.Keys.ToList();
                     subscriptions.Sort();
 
+                    // Display the subscriptions list.
                     foreach (string subscription in subscriptions)
-                        Console.WriteLine(subscription);
+                    {
+                        html += $"<tr><td>{subscription}</td></tr>";
+                    }
 
-                    Console.WriteLine("-----------------------------");
+                    html += "</table></body></html>";
+                    tcs.SetResult(html);
                 }
                 catch (Exception ex)
                 {
-                    SharedLogger.LogException(_moduleID + ":PSt", ex);
+                    SharedLogger.LogException(_moduleID + ":GSPA", ex);
+                    tcs.SetResult("<html><body><h1>Error generating status</h1></body></html>");
                 }
             });
+
+            return tcs.Task;
         }
 
         #endregion
