@@ -1,4 +1,4 @@
-﻿using Epcylon.Net.APIs.Account;
+﻿using Epcylon.APIs.Account;
 using QuantGate.API.Signals;
 using QuantGate.API.Signals.Events;
 using System.Diagnostics;
@@ -91,7 +91,7 @@ namespace QuantGate.MauiExample
                                    " " + e.Error?.Message ?? string.Empty);
         }
 
-        private void HandleError(object? client, QuantGate.API.Events.ErrorEventArgs args)
+        private void HandleError(object? client, API.Signals.Events.ErrorEventArgs args)
         {
             Trace.TraceInformation("Error! " + args.Message);
         }
