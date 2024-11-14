@@ -1,17 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
-	<DefaultNamespace>QuantGate.WindowsFormsExample</DefaultNamespace>
+    <DefaultNamespace>QuantGate.WindowsFormsExample</DefaultNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\AccountAPI\AccountAPI.csproj" />
     <ProjectReference Include="..\QuantGateSignalsAPI\QuantGateSignalsAPI.csproj" />
   </ItemGroup>
-
 </Project>

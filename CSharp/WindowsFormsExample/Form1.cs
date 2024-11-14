@@ -1,4 +1,4 @@
-using Epcylon.Net.APIs.Account;
+using Epcylon.APIs.Account;
 using QuantGate.API.Signals;
 using QuantGate.API.Signals.Events;
 using System.Diagnostics;
@@ -9,8 +9,8 @@ namespace QuantGate.WindowsFormsExample
     {
         private APIClient? _client;
         private TopSymbolsEventArgs? _topSymbols;
-        private string _symbol = "NQ F3";
-        private readonly string _strategyId = "Crb7.6";
+        private string _symbol = "NQ Z4";
+        private readonly string _strategyId = "Crb10.0.0";
 
         private APIClient? Client
         {
@@ -78,7 +78,7 @@ namespace QuantGate.WindowsFormsExample
 
         private void SubscribeSearch()
         {
-            _client?.SubscribeTopSymbols("ib");
+            _client?.SubscribeTopSymbols("paper");
         }
 
         private void HandleSearchTextUpdate(object? sender, EventArgs e)
@@ -93,7 +93,7 @@ namespace QuantGate.WindowsFormsExample
             }
         }
 
-        private void HandleError(object? client, API.Events.ErrorEventArgs args)
+        private void HandleError(object? client, API.Signals.Events.ErrorEventArgs args)
         {
             Console.WriteLine("Error! " + args.Message);
         }
@@ -147,7 +147,7 @@ namespace QuantGate.WindowsFormsExample
         {
             Client = new APIClient(new ConnectionToken(Environments.Staging,
                                                        txtUsername.Text, txtPassword.Text),
-                                   stream: DataStream.Realtime);
+                                   stream: DataStream.Delayed);
 
             Client.Connect();
 
