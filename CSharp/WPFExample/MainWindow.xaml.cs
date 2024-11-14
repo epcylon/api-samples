@@ -1,5 +1,4 @@
 ﻿using Epcylon.APIs.Account;
-using QuantGate.API.Events;
 using QuantGate.API.Signals;
 using QuantGate.API.Signals.Events;
 using System;
@@ -16,8 +15,8 @@ namespace QuantGate.WPFExample
     {
         private APIClient? _client;
         private TopSymbolsEventArgs? _topSymbols;
-        private string _symbol = "NQ M4";
-        private readonly string _strategyId = "Crb9.0";
+        private string _symbol = "NQ Z4";
+        private readonly string _strategyId = "Crb10.0.0";
 
         #region Client Property
 
@@ -260,7 +259,7 @@ namespace QuantGate.WPFExample
         private void HandleConnectClick(object sender, RoutedEventArgs e)
         {
             Client = new APIClient(new ConnectionToken(Environments.Staging, txtUsername.Text, txtPassword.Password),
-                                   DataStream.Realtime, System.Threading.SynchronizationContext.Current);
+                                   DataStream.Delayed, System.Threading.SynchronizationContext.Current);
 
             Client.Connect();
 
