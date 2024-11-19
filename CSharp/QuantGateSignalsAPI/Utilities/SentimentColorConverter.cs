@@ -10,7 +10,7 @@ namespace QuantGate.API.Signals.Utilities
         /// <summary>
         /// Module-level Identifier.
         /// </summary>
-        private const string _moduleID = "SCCvtr";
+        private const string _moduleID = "SCCvr";
 
         /// <summary>
         /// Holds a list of precalculated RGB values.
@@ -26,7 +26,7 @@ namespace QuantGate.API.Signals.Utilities
         private static readonly string[] _rgba = new string[401];
 
         /// <summary>
-        /// Creates the static solors when the first item is created.
+        /// Creates the static colors when the first item is created.
         /// </summary>
         static SentimentColorConverter()
         {

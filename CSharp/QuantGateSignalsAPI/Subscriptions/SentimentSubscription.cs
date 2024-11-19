@@ -52,7 +52,7 @@ namespace QuantGate.API.Signals.Subscriptions
         protected override SentimentEventArgs WrapError(SubscriptionError error) =>
             new(Symbol, Stream, DateTime.UtcNow, Compression, 0, 0, 0, null, 0, 0, 0, null, true, error);
 
-        #region Height/Color Interpolation        
+        #region Height/Color Interpolation
 
         /// <summary>
         /// Interpolates a sentiment from it's compressed definition to 55 height or color values.

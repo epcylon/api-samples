@@ -1800,7 +1800,7 @@ namespace QuantGate.API.Signals
                     html += "<table><tr><th>Subscription</th></tr>";
 
                     // Get the subscriptions and sort.
-                    subscriptions = _subscriptionsByDestination.Keys.ToList();
+                    subscriptions = [.. _subscriptionsByDestination.Keys];
                     subscriptions.Sort();
 
                     // Display the subscriptions list.

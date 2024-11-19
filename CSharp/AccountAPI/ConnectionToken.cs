@@ -140,7 +140,7 @@ public class ConnectionToken : IDisposable
     /// </summary>
     private bool _trial = false;
     /// <summary>
-    /// Error message, if an error occured during login.
+    /// Error message, if an error occurred during login.
     /// </summary>
     private string _loginMessage = string.Empty;
 
@@ -453,7 +453,7 @@ public class ConnectionToken : IDisposable
     /// <summary>
     /// Used to retrieve a value from the REST API.
     /// </summary>
-    /// <param name="uri">The URI to get from (including paramters).</param>
+    /// <param name="uri">The URI to get from (including parameters).</param>
     /// <returns>The string retrieved from the REST endpoint.</returns>
     private string Get(string uri)
     {
@@ -512,7 +512,7 @@ public class ConnectionToken : IDisposable
         catch (Exception ex)
         {
             message = ex.Message;
-            SharedLogger.LogException(_moduleID + ":UdTkns", ex);
+            SharedLogger.LogException(_moduleID + ":UdTks", ex);
         }
     }
 
@@ -556,8 +556,7 @@ public class ConnectionToken : IDisposable
         if (!source.Contains(key))
             return string.Empty;
 
-        result = source[..^1].Split(new string[] { key },
-            StringSplitOptions.None)[1].Replace("\"", "").Split([','])[0];
+        result = source[..^1].Split([key], StringSplitOptions.None)[1].Replace("\"", "").Split([','])[0];
 
         if (result == "null")
             return string.Empty;
