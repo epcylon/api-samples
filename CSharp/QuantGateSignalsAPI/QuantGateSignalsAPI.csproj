@@ -21,7 +21,6 @@
     <Folder Include="Events\" />
     <Folder Include="Utilities\" />
     <Folder Include="ProtoStomp\" />
-    <Folder Include="Proto\" />
     <Folder Include="Subscriptions\" />
   </ItemGroup>
   <ItemGroup>

@@ -628,7 +628,7 @@ namespace QuantGate.API.Signals
                     SharedLogger.LogDebug(_moduleID + ":Cn2", "Connecting API client.");
 
                     // Create the new WebSocket and connect.
-                    Client = new WebsocketBinaryTransport(new Uri($"{_host}:{_port}/"));
+                    Client = new WebSocketBinaryTransport(new Uri($"{_host}:{_port}/"));
                     Client.Connect();
                 }
                 catch (Exception ex)
