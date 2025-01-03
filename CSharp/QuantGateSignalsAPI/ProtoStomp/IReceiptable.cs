@@ -1,11 +1,10 @@
-﻿namespace QuantGate.API.Signals.ProtoStomp
+﻿namespace QuantGate.API.Signals.ProtoStomp;
+
+internal interface IReceiptable
 {
-    internal interface IReceiptable
-    {
-        ulong ReceiptID { get; }
+    ulong ReceiptID { get; }
 
-        void OnReceipt();
+    void OnReceipt();
 
-        void OnInvalidate();
-    }
+    void OnInvalidate();
 }
