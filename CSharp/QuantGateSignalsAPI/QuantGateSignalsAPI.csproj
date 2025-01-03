@@ -1,40 +1,40 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>disable</Nullable>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
-    <Version>3.0.0.0</Version>
-    <AssemblyVersion>3.0.0.0</AssemblyVersion>
-    <Copyright>Copyright © QuantGate Systems 2024</Copyright>
-    <Company>QuantGate Systems</Company>
-	  <RootNamespace>QuantGate.API.Signals</RootNamespace>
-  </PropertyGroup>
-  <ItemGroup>
-    <None Remove="Events\placeholder.txt" />
-    <None Remove="ProtoStomp\placeholder.txt" />
-    <None Remove="Proto\placeholder.txt" />
-    <None Remove="Subscriptions\placeholder.txt" />
-    <None Remove="Utilities\placeholder.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Events\" />
-    <Folder Include="Utilities\" />
-    <Folder Include="ProtoStomp\" />
-    <Folder Include="Subscriptions\" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Google.Protobuf" Version="3.26.1" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AccountAPI\AccountAPI.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Common.Core">
-      <HintPath>..\..\..\stealth-brokers\Compiled\Common\net8.0\Common.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Common.Net.NetCore">
-      <HintPath>..\..\..\stealth-brokers\Compiled\Common\net8.0\Common.Net.NetCore.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+		<AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+		<Version>3.0.0.0</Version>
+		<AssemblyVersion>3.0.0.0</AssemblyVersion>
+		<Copyright>Copyright © QuantGate Systems 2024</Copyright>
+		<Company>QuantGate Systems</Company>
+		<RootNamespace>QuantGate.API.Signals</RootNamespace>
+	</PropertyGroup>
+	<ItemGroup>
+		<None Remove="Events\placeholder.txt" />
+		<None Remove="ProtoStomp\placeholder.txt" />
+		<None Remove="Proto\placeholder.txt" />
+		<None Remove="Subscriptions\placeholder.txt" />
+		<None Remove="Utilities\placeholder.txt" />
+	</ItemGroup>
+	<ItemGroup>
+		<Folder Include="Events\" />
+		<Folder Include="Utilities\" />
+		<Folder Include="ProtoStomp\" />
+		<Folder Include="Subscriptions\" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Google.Protobuf" Version="3.26.1" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\AccountAPI\AccountAPI.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<Reference Include="Common.Core">
+			<HintPath>..\..\..\stealth-brokers\Compiled\Common\net8.0\Common.Core.dll</HintPath>
+		</Reference>
+		<Reference Include="Common.Net.NetCore">
+			<HintPath>..\..\..\stealth-brokers\Compiled\Common\net8.0\Common.Net.NetCore.dll</HintPath>
+		</Reference>
+	</ItemGroup>
 </Project>

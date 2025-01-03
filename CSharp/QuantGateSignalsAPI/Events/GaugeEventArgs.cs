@@ -35,7 +35,7 @@
         /// Whether the data used to generate this gauge value is potentially dirty 
         /// (values are missing) or stale (not the most recent data).
         /// </param>
-        /// <param name="error">Subscription error information, if an error occured.</param>
+        /// <param name="error">Subscription error information, if an error occurred.</param>
         internal GaugeEventArgs(string symbol, DataStream stream, DateTime timestamp, bool isDirty, SubscriptionError error) :
             base(error)
         {
