@@ -18,7 +18,6 @@
 		<None Remove="Utilities\placeholder.txt" />
 	</ItemGroup>
 	<ItemGroup>
-		<Folder Include="Events\" />
 		<Folder Include="Utilities\" />
 		<Folder Include="ProtoStomp\" />
 		<Folder Include="Subscriptions\" />
