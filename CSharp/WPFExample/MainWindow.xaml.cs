@@ -15,7 +15,7 @@ public partial class MainWindow : Window
 {
     private APIClient? _client;
     private TopSymbolsEventArgs? _topSymbols;
-    private string _symbol = "NQ H5";
+    private string _symbol = "NQ U6";
     private readonly string _strategyId = "Crb10.0.0";
 
     #region Client Property
@@ -55,9 +55,10 @@ public partial class MainWindow : Window
                 _client.BookPressureUpdated += HandleBookPressureUpdate;
                 _client.HeadroomUpdated += HandleHeadroomUpdate;
                 _client.SentimentUpdated += HandleSentimentUpdate;
+                _client.TriggerUpdated += HandleTriggerUpdate;
             }
         }
-    }
+    }    
 
     #endregion
 
@@ -112,6 +113,17 @@ public partial class MainWindow : Window
     // Using a DependencyProperty as the backing store for Headroom.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty HeadroomProperty =
         DependencyProperty.Register("Headroom", typeof(double), typeof(MainWindow), new PropertyMetadata(0.0));
+
+
+    public TriggerEventArgs Trigger
+    {
+        get { return (TriggerEventArgs)GetValue(TriggerProperty); }
+        set { SetValue(TriggerProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for Trigger.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty TriggerProperty =
+        DependencyProperty.Register("Trigger", typeof(TriggerEventArgs), typeof(MainWindow), new PropertyMetadata(null));
 
     #endregion
 
@@ -234,6 +246,12 @@ public partial class MainWindow : Window
         Sentiment = e;
     }
 
+    private void HandleTriggerUpdate(object? sender, TriggerEventArgs e)
+    {
+        Debug.Print($"Confidence = {e.Confidence}");
+        Trigger = e;
+    }
+
     private void HandleSearchUpdate(object? sender, SearchResultsEventArgs e)
     {
         if (string.IsNullOrEmpty(txtSearch.Text))
@@ -258,8 +276,8 @@ public partial class MainWindow : Window
 
     private void HandleConnectClick(object sender, RoutedEventArgs e)
     {
-        Client = new APIClient(new ConnectionToken(Environments.Staging, txtUsername.Text, txtPassword.Password),
-                               DataStream.Delayed, System.Threading.SynchronizationContext.Current);
+        Client = new APIClient(new ConnectionToken(Environments.Production, txtUsername.Text, txtPassword.Password),
+                               DataStream.Realtime, System.Threading.SynchronizationContext.Current);
 
         Client.Connect();
 

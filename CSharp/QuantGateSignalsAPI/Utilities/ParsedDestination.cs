@@ -72,6 +72,10 @@ internal enum SubscriptionPath : long
     /// Perception2 gauge subscription.
     /// </summary>
     GaugePerception = 0x0000000040,
+    /// <summary>
+    /// Price conviction gauge subscription.
+    /// </summary>
+    GaugePriceConviction = 0x0000000080,
 
     /// <summary>
     /// Long instrument definition subscription.
@@ -205,6 +209,7 @@ internal class ParsedDestination
             ["head"] = SubscriptionPath.GaugeHeadroom,
             ["bp"] = SubscriptionPath.GaugeBookPressure,
             ["tr"] = SubscriptionPath.GaugeTrigger,
+            ["pcv"] = SubscriptionPath.GaugePriceConviction,
 
             ["instrument"] = SubscriptionPath.DefnInstrument,
             ["futures"] = SubscriptionPath.DefnFutures,

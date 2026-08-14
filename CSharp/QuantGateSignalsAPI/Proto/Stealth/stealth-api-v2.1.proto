@@ -159,6 +159,20 @@ message TriggerUpdate
     uint64 gap_size = 7;                         // The gap size of each equilibrium deviation.
     uint64 last_price = 8;                       // Last traded price at time of calculation.
     bool is_dirty = 9;                           // Is the data that generated this potentially dirty (or stale)?
+    float price_conviction = 10;                 // Raw, direction-agnostic price-conviction value (unbounded).
+    float confidence = 11;                       // Direction-adjusted, atan-compressed confidence score (approx -100 to 100).
+}
+
+/* PriceConvictionUpdate represents a new price-conviction subscription update -- for
+ * subscribing to the PriceConviction calculator on its own, independent of Trigger.
+ * Conviction is raw and direction-agnostic (not compressed/bounded like most gauge
+ * values in this file); Confidence is Trigger-only, since it also needs Perception/
+ * Commitment/Equilibrium/Sentiment, which this calculator doesn't have on its own. */
+message PriceConvictionUpdate
+{
+    uint64 timestamp = 1;                        // The timestamp of the latest update.
+    float conviction = 2;                        // The raw price-conviction value.
+    bool is_dirty = 3;                           // Is the data that generated this potentially dirty (or stale)?
 }
 
 /* SingleValueUpdate represents a new subscription update for a gauge that returns a single
@@ -209,6 +223,8 @@ message StrategyUpdate
     GaugeSignal equilibrium_signal = 10;         // The signal tied to the equilibrium level.
     uint32 sentiment_level = 11;                 // The normalized sentiment level ( 0=unset, else value=(x-1001)/1000 )
     uint32 equilibrium_level = 12;               // The normalized equilibrium level ( 0=unset, else value=(x-1001)/1000 )
+    
+    bool high_quality = 13;                      // Is this update for a high-quality symbol (if false, shouldn't be listed in top symbols)?
 }
 
 /* SinglePriceUpdate represents a new subscription update for a guage that returns a single 

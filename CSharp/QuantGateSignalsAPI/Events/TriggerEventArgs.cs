@@ -42,6 +42,16 @@
         public double LastPrice { get; }
 
         /// <summary>
+        /// Raw, direction-agnostic price-conviction value (unbounded).
+        /// </summary>
+        public double PriceConviction { get; }
+
+        /// <summary>
+        /// Direction-adjusted, atan-compressed confidence score (approx -100 to 100).
+        /// </summary>
+        public double Confidence { get; }
+
+        /// <summary>
         /// Creates a new TriggerEventArgs instance.
         /// </summary>
         /// <param name="symbol">The symbol being subscribed to for this gauge.</param>
@@ -53,6 +63,8 @@
         /// <param name="gapSize">Gap size of each equilibrium deviation.</param>
         /// <param name="lastPrice">Last traded price at the time of calculation.</param>
         /// <param name="bias">Bias value.</param>
+        /// <param name="priceConviction">Raw, direction-agnostic price-conviction value (unbounded).</param>
+        /// <param name="confidence">Direction-adjusted, atan-compressed confidence score (approx -100 to 100).</param>
         /// <param name="isDirty">
         /// Whether the data used to generate this gauge value is potentially dirty 
         /// (values are missing) or stale (not the most recent data).
@@ -60,7 +72,8 @@
         /// <param name="error">Holds error information, if a subscription error occured.</param>
         internal TriggerEventArgs(string symbol, DataStream stream, DateTime timestamp, double perception,
                                   double commitment, double sentiment, double equilibriumPrice, double gapSize,
-                                  double lastPrice, double bias, bool isDirty, SubscriptionError error = null) :
+                                  double lastPrice, double bias, double priceConviction, double confidence,
+                                  bool isDirty, SubscriptionError error = null) :
             base(symbol, stream, timestamp, isDirty, error)
         {
             Perception = perception;
@@ -70,6 +83,8 @@
             GapSize = gapSize;
             LastPrice = lastPrice;
             Bias = bias;
+            PriceConviction = priceConviction;
+            Confidence = confidence;
         }
 
         /// <summary>

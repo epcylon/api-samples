@@ -38,6 +38,7 @@ public class APIClient : IDisposable
     public event EventHandler<HeadroomEventArgs> HeadroomUpdated = delegate { };
     public event EventHandler<MultiframeEquilibriumEventArgs> MultiframeEquilibriumUpdated = delegate { };
     public event EventHandler<TriggerEventArgs> TriggerUpdated = delegate { };
+    public event EventHandler<PriceConvictionEventArgs> PriceConvictionUpdated = delegate { };
     public event EventHandler<SearchResultsEventArgs> SymbolSearchUpdated = delegate { };
     public event EventHandler<TopSymbolsEventArgs> TopSymbolsUpdated = delegate { };
     public event EventHandler<StrategyEventArgs> StrategyUpdated = delegate { };
@@ -1122,6 +1123,23 @@ public class APIClient : IDisposable
                                                     false, (uint)throttleRate, reference));
 
     /// <summary>
+    /// Subscribes to a PriceConviction gauge data stream for a specific symbol.
+    /// </summary>
+    /// <param name="symbol">Symbol to get the PriceConviction data for.</param>
+    /// <param name="throttleRate">Rate to throttle messages at (in ms). Enter 0 for no throttling.</param>
+    /// <param name="reference">Reference to return with the event.</param>
+    /// <param name="stream">Stream to request for (overrides stream supplied on connection, if supplied).</param>
+    /// <remarks>
+    /// Note that if two calls are made to this function with different references,
+    /// you will receive two events on each update - one for each reference supplied.
+    /// If no reference is supplied, you will receive a single update.
+    /// </remarks>
+    public void SubscribePriceConviction(string symbol, int throttleRate = 0,
+                                         object reference = null, DataStream stream = DataStream.Invalid) =>
+        EnqueueAndSubscribe(new PriceConvictionSubscription(this, SendPriceConvictionUpdate, ConvertStream(stream),
+                                                            symbol, false, (uint)throttleRate, reference));
+
+    /// <summary>
     /// Subscribes to a Strategy update data stream for a specific strategy and symbol.
     /// </summary>
     /// <param name="strategyID">Strategy to subscribe to. Example enum values: PPr4.0, BTr4.0, Crb.8.4.</param>
@@ -1670,6 +1688,11 @@ public class APIClient : IDisposable
     /// </summary>
     /// <remarks>Cannot send the event handler reference as this will change when handlers get added.</remarks>
     private void SendTriggerUpdate(object sender, TriggerEventArgs e) => TriggerUpdated(sender, e);
+    /// <summary>
+    /// Sends a price-conviction update to the event handlers.
+    /// </summary>
+    /// <remarks>Cannot send the event handler reference as this will change when handlers get added.</remarks>
+    private void SendPriceConvictionUpdate(object sender, PriceConvictionEventArgs e) => PriceConvictionUpdated(sender, e);
     /// <summary>
     /// Sends a symbol search update to the event handlers.
     /// </summary>

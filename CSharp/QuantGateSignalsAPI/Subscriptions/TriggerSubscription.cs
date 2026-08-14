@@ -21,9 +21,11 @@ internal class TriggerSubscription(APIClient client, EventHandler<TriggerEventAr
             ProtoPriceEncoder.DecodePrice(update.GapSize),
             ProtoPriceEncoder.DecodePrice(update.LastPrice),
             update.Bias / 1000.0,
+            (double)update.PriceConviction,
+            (double)update.Confidence,
             update.IsDirty);
     }
 
     protected override TriggerEventArgs WrapError(SubscriptionError error) =>
-        new(Symbol, Stream, DateTime.UtcNow, 0, 0, 0, 0, 0, 0, 0, true, error);
+        new(Symbol, Stream, DateTime.UtcNow, 0, 0, 0, 0, 0, 0, 0, 0, 0, true, error);
 }
