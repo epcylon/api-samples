@@ -33,7 +33,7 @@ public class ConnectionToken : IDisposable
         [Products.Stealth] = "stealth",
         [Products.StealthPro] = "stealthpro",
         [Products.Hydra] = "hydra",
-        [Products.InvestGuide] = "investguide",
+        [Products.InvestGuide] = "chart",
     };
 
     /// <summary>
@@ -170,14 +170,16 @@ public class ConnectionToken : IDisposable
     /// <param name="username">The username to connect with.</param>
     /// <param name="password">The password to connect with.</param>
     /// <param name="product">The type of product we are connecting to.</param>
-    public ConnectionToken(Environments environment, string username,
-                           string password, Products product = Products.Pilot)
+    /// <param name="version">The version of the product we are connecting to.</param>
+    public ConnectionToken(Environments environment, string username, string password,
+                           Products product = Products.Pilot, Version? version = null)
     {
-        string uri, productId;
+        string uri, jsonResponse, productId;
 
         // Set the environment and REST host address.
         Environment = environment;
         Product = product;
+        Version = version ?? new Version(1, 0, 0, 0);
         RestHost = GetRestHost(environment);
 
         // Set the username.
@@ -188,12 +190,25 @@ public class ConnectionToken : IDisposable
 
         // Form the URI to retrieve the token for.
         if ((product & Products.Stealth) == Products.Stealth)
-            uri = $"{RestHost}stealth/auth/login?email={username}&password={password}&product={productId}&format=json";
+        {
+            uri = $"{RestHost}stealth/login?email={username}&password={password}" +
+                  $"&product={productId}&version={Version}&format=json";
+            jsonResponse = Get(uri);
+        }
+        else if ((product & Products.Pilot) == Products.Pilot)
+        {
+            uri = $"{RestHost}auth/login?UserName={username}&Password={password}" +
+                  $"&Product={productId}&format=json";
+            jsonResponse = Post(uri);
+        }
         else
+        {
             uri = $"{RestHost}auth/credentials?UserName={username}&Password={password}&format=json";
+            jsonResponse = Get(uri);
+        }
 
         // Get the tokens for the user.
-        GetTokens(Get(uri), out string token, out string refreshToken,
+        GetTokens(jsonResponse, out string token, out string refreshToken,
                   out DateTime tokenExpiry, out bool trial, out string message);
 
         _token = token;
@@ -230,12 +245,15 @@ public class ConnectionToken : IDisposable
     /// <param name="token">The token to connect with.</param>
     /// <param name="refreshToken">The token used to refresh the connection.</param>
     /// <param name="product">The type of product we are connecting to.</param>
+    /// <param name="version">The version of the product we are connecting to.</param>
     public ConnectionToken(Environments environment, string username, string token,
-                           string refreshToken, Products product = Products.Pilot)
+                           string refreshToken, Products product = Products.Pilot,
+                           Version? version = null)
     {
         // Set the environment and REST host address.
         Environment = environment;
         Product = product;
+        Version = version ?? new Version(1, 0, 0, 0);
         RestHost = GetRestHost(environment);
 
         // Set the username.
@@ -298,6 +316,11 @@ public class ConnectionToken : IDisposable
     /// The product that the token is for.
     /// </summary>
     public Products Product { get; }
+
+    /// <summary>
+    /// The version of the product that the token is for.
+    /// </summary>
+    public Version Version { get; }
 
     /// <summary>
     /// The host address of the REST API to request from.
@@ -385,6 +408,7 @@ public class ConnectionToken : IDisposable
     private void HandleTimer(object? state)
     {
         long utcTicks;
+        string productId;
 
         try
         {
@@ -400,11 +424,18 @@ public class ConnectionToken : IDisposable
                 // If within one hour of the expiry of the token, refresh the token.
                 string uri;
 
+                // Get the product ID for the product - default is pilot.
+                productId = ProductIDByProduct(Product);
+
                 lock (_lock)
                 {
-                    // Form the URI to retrieve the token for.
-                    uri = RestHost + "auth/refresh?UserName=" + Username +
-                                     "&RefreshToken=" + _refreshToken + "&format=json";
+                    if ((Product & Products.Stealth) == Products.Stealth)
+                        // Form the URI to retrieve the token for.
+                        uri = $"{RestHost}stealth/refresh?Email={Username}&" +
+                              $"RefreshToken={_refreshToken}&Product={productId}&format=json";
+                    else
+                        uri = $"{RestHost}auth/tokenrefresh?UserName={Username}" +
+                              $"&RefreshToken={_refreshToken}&Product={productId}&format=json";
                 }
 
                 // Refresh the tokens (retrieve and handle tokens).
@@ -471,6 +502,26 @@ public class ConnectionToken : IDisposable
     }
 
     /// <summary>
+    /// Used to post to a value from the REST API.
+    /// </summary>
+    /// <param name="uri">The URI to post to (including parameters).</param>
+    /// <returns>The string retrieved from the REST endpoint.</returns>
+    private string Post(string uri)
+    {
+        try
+        {
+            HttpResponseMessage response = _httpClient.PostAsync(uri, null).Result;
+            return response.Content.ReadAsStringAsync().Result;
+        }
+        catch (Exception ex)
+        {
+            SharedLogger.LogException(_moduleID + ":Cn", ex);
+        }
+
+        return string.Empty;
+    }
+
+    /// <summary>
     /// Gets the JWT bearer and refresh tokens from the JSON response message supplied.
     /// </summary>
     /// <param name="jsonResponse">The message to retrieve the tokens from.</param>
@@ -499,6 +550,13 @@ public class ConnectionToken : IDisposable
                 tokenExpiry = GetExpiry(token);
                 _ = bool.TryParse(GetJSONField(jsonResponse, "trial"), out trial);
                 message = GetJSONField(jsonResponse, "message");
+            }
+            else if (jsonResponse.Contains("Token"))
+            {
+                token = GetJSONField(jsonResponse, "Token");
+                refreshToken = GetJSONField(jsonResponse, "Refresh");
+                message = GetJSONField(jsonResponse, "Message");
+                tokenExpiry = GetExpiry(token);
             }
             else if (jsonResponse.Contains("Message"))
             {
