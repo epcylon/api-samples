@@ -9,7 +9,7 @@ namespace QuantGate.WindowsFormsExample
     {
         private APIClient? _client;
         private TopSymbolsEventArgs? _topSymbols;
-        private string _symbol = "NQ Z4";
+        private string _symbol = "NQ U6";
         private readonly string _strategyId = "Crb10.0.0";
 
         private APIClient? Client
@@ -145,9 +145,9 @@ namespace QuantGate.WindowsFormsExample
 
         private void HandleConnectClicked(object? client, EventArgs args)
         {
-            Client = new APIClient(new ConnectionToken(Environments.Staging,
+            Client = new APIClient(new ConnectionToken(Environments.Production,
                                                        txtUsername.Text, txtPassword.Text),
-                                   stream: DataStream.Delayed);
+                                   stream: DataStream.Realtime);
 
             Client.Connect();
 

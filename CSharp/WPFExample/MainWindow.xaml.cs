@@ -276,7 +276,7 @@ public partial class MainWindow : Window
 
     private void HandleConnectClick(object sender, RoutedEventArgs e)
     {
-        Client = new APIClient(new ConnectionToken(Environments.Production, txtUsername.Text, txtPassword.Password),
+        Client = new APIClient(new ConnectionToken(Environments.Production, txtUsername.Text, txtPassword.Password, Products.Stealth),
                                DataStream.Realtime, System.Threading.SynchronizationContext.Current);
 
         Client.Connect();
