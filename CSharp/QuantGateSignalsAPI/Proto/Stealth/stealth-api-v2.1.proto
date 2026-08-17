@@ -2,6 +2,12 @@ syntax = "proto3";
 package stealth;
 option csharp_namespace = "QuantGate.API.Signals.Proto.Stealth";
 
+/* Settings to send when connecting */
+message ConnectSettings
+{
+    string product_type = 1;                     // The type of product connecting.
+}
+
 /* The type of instrument being traded. */
 enum InstrumentType
 {

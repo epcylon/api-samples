@@ -24,109 +24,111 @@ namespace QuantGate.API.Signals.Proto.Stealth {
     static StealthApiV21Reflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChZzdGVhbHRoLWFwaS12Mi4xLnByb3RvEgdzdGVhbHRoIoEBCg5SZWFsdGlt",
-            "ZVVwZGF0ZRIRCglhc2tfcHJpY2UYASABKAQSEAoIYXNrX3NpemUYAiABKAQS",
-            "EQoJYmlkX3ByaWNlGAMgASgEEhAKCGJpZF9zaXplGAQgASgEEhIKCmxhc3Rf",
-            "cHJpY2UYBSABKAQSEQoJbGFzdF9zaXplGAYgASgEIrMBCg5TbmFwc2hvdFVw",
-            "ZGF0ZRISCgpvcGVuX3ByaWNlGAEgASgEEhIKCmhpZ2hfcHJpY2UYAiABKAQS",
-            "EQoJbG93X3ByaWNlGAMgASgEEhMKC2Nsb3NlX3ByaWNlGAQgASgEEhYKDnBy",
-            "ZXZpb3VzX2Nsb3NlGAUgASgEEg4KBnZvbHVtZRgGIAEoBBIUCgxoaWdoNTJf",
-            "cHJpY2UYByABKAQSEwoLbG93NTJfcHJpY2UYCCABKAQilgEKEFN0YXRpc3Rp",
-            "Y3NVcGRhdGUSDAoEYmV0YRgBIAEoAhILCgNlcHMYAiABKAISEAoIcGVfcmF0",
-            "aW8YAyABKAISGgoSc2hhcmVzX291dHN0YW5kaW5nGAQgASgEEh0KFWhpc3Rv",
-            "cmljYWxfdm9sYXRpbGl0eRgFIAEoAhIaChJpbXBsaWVkX3ZvbGF0aWxpdHkY",
-            "BiABKAIipQEKC1F1b3RlVXBkYXRlEhEKCXRpbWVzdGFtcBgBIAEoBBIpCghy",
-            "ZWFsdGltZRgCIAEoCzIXLnN0ZWFsdGguUmVhbHRpbWVVcGRhdGUSKQoIc25h",
-            "cHNob3QYAyABKAsyFy5zdGVhbHRoLlNuYXBzaG90VXBkYXRlEi0KCnN0YXRp",
-            "c3RpY3MYBCABKAsyGS5zdGVhbHRoLlN0YXRpc3RpY3NVcGRhdGUiWQoPU2Vu",
-            "dGltZW50U3BsaW5lEg8KB2F2ZXJhZ2UYASABKBESCQoBaRgCIAEoDRIJCgFq",
-            "GAMgASgNEgkKAXgYBCABKBESCQoBeRgFIAEoERIJCgF6GAYgASgRIosBCg9T",
-            "ZW50aW1lbnRVcGRhdGUSEQoJdGltZXN0YW1wGAEgASgEEikKB2xlbmd0aHMY",
-            "AiABKAsyGC5zdGVhbHRoLlNlbnRpbWVudFNwbGluZRIoCgZjb2xvcnMYAyAB",
-            "KAsyGC5zdGVhbHRoLlNlbnRpbWVudFNwbGluZRIQCghpc19kaXJ0eRgEIAEo",
-            "CCK1AQoRRXF1aWxpYnJpdW1VcGRhdGUSEQoJdGltZXN0YW1wGAEgASgEEhkK",
-            "EWVxdWlsaWJyaXVtX3ByaWNlGAIgASgEEhAKCGdhcF9zaXplGAMgASgEEgwK",
-            "BGhpZ2gYBCABKBESCwoDbG93GAUgASgREhEKCXByb2plY3RlZBgGIAEoERIM",
-            "CgRiaWFzGAcgASgREhIKCmxhc3RfcHJpY2UYCCABKAQSEAoIaXNfZGlydHkY",
-            "CSABKAgi2AEKEE11bHRpZnJhbWVVcGRhdGUSEQoJdGltZXN0YW1wGAEgASgE",
-            "Eg0KBW1pbl81GAIgASgREg4KBm1pbl8xMBgDIAEoERIOCgZtaW5fMTUYBCAB",
-            "KBESDgoGbWluXzMwGAUgASgREg4KBm1pbl80NRgGIAEoERIOCgZtaW5fNjAY",
-            "ByABKBESDwoHbWluXzEyMBgIIAEoERIPCgdtaW5fMTgwGAkgASgREg8KB21p",
-            "bl8yNDAYCiABKBESDQoFZGF5XzEYCyABKBESEAoIaXNfZGlydHkYDCABKAgi",
-            "7AEKDVRyaWdnZXJVcGRhdGUSEQoJdGltZXN0YW1wGAEgASgEEgwKBGJpYXMY",
-            "AiABKBESEgoKcGVyY2VwdGlvbhgDIAEoERIRCglzZW50aW1lbnQYBCABKBES",
-            "EgoKY29tbWl0bWVudBgFIAEoERIZChFlcXVpbGlicml1bV9wcmljZRgGIAEo",
-            "BBIQCghnYXBfc2l6ZRgHIAEoBBISCgpsYXN0X3ByaWNlGAggASgEEhAKCGlz",
-            "X2RpcnR5GAkgASgIEhgKEHByaWNlX2NvbnZpY3Rpb24YCiABKAISEgoKY29u",
-            "ZmlkZW5jZRgLIAEoAiJQChVQcmljZUNvbnZpY3Rpb25VcGRhdGUSEQoJdGlt",
-            "ZXN0YW1wGAEgASgEEhIKCmNvbnZpY3Rpb24YAiABKAISEAoIaXNfZGlydHkY",
-            "AyABKAgiRwoRU2luZ2xlVmFsdWVVcGRhdGUSEQoJdGltZXN0YW1wGAEgASgE",
-            "Eg0KBXZhbHVlGAIgASgREhAKCGlzX2RpcnR5GAMgASgIImIKCk1BQ0RVcGRh",
-            "dGUSEQoJdGltZXN0YW1wGAEgASgEEgwKBG1hY2QYAiABKAISDgoGc2lnbmFs",
-            "GAMgASgCEhEKCWhpc3RvZ3JhbRgEIAEoAhIQCghpc19kaXJ0eRgFIAEoCCJ4",
-            "ChRCb2xsaW5nZXJCYW5kc1VwZGF0ZRIRCgl0aW1lc3RhbXAYASABKAQSEgoK",
-            "dXBwZXJfYmFuZBgCIAEoBBITCgttaWRkbGVfYmFuZBgDIAEoBBISCgpsb3dl",
-            "cl9iYW5kGAQgASgEEhAKCGlzX2RpcnR5GAUgASgIIr0DCg5TdHJhdGVneVVw",
-            "ZGF0ZRIRCgl0aW1lc3RhbXAYASABKAQSFgoOZW50cnlfcHJvZ3Jlc3MYAiAB",
-            "KBESFQoNZXhpdF9wcm9ncmVzcxgDIAEoERInCgZzaWduYWwYBCABKA4yFy5z",
-            "dGVhbHRoLlN0cmF0ZWd5U2lnbmFsEhgKEHBlcmNlcHRpb25fbGV2ZWwYBSAB",
-            "KA0SLwoRcGVyY2VwdGlvbl9zaWduYWwYBiABKA4yFC5zdGVhbHRoLkdhdWdl",
-            "U2lnbmFsEhgKEGNvbW1pdG1lbnRfbGV2ZWwYByABKA0SLwoRY29tbWl0bWVu",
-            "dF9zaWduYWwYCCABKA4yFC5zdGVhbHRoLkdhdWdlU2lnbmFsEi4KEHNlbnRp",
-            "bWVudF9zaWduYWwYCSABKA4yFC5zdGVhbHRoLkdhdWdlU2lnbmFsEjAKEmVx",
-            "dWlsaWJyaXVtX3NpZ25hbBgKIAEoDjIULnN0ZWFsdGguR2F1Z2VTaWduYWwS",
-            "FwoPc2VudGltZW50X2xldmVsGAsgASgNEhkKEWVxdWlsaWJyaXVtX2xldmVs",
-            "GAwgASgNEhQKDGhpZ2hfcXVhbGl0eRgNIAEoCCJHChFTaW5nbGVQcmljZVVw",
-            "ZGF0ZRIRCgl0aW1lc3RhbXAYASABKAQSDQoFdmFsdWUYAiABKAQSEAoIaXNf",
-            "ZGlydHkYAyABKAgiRwoQUHJpY2VBcnJheVVwZGF0ZRIRCgl0aW1lc3RhbXAY",
-            "ASABKAQSDgoGdmFsdWVzGAIgAygEEhAKCGlzX2RpcnR5GAMgASgIIrEBCglU",
-            "aWNrVmFsdWUSDQoFc3RhcnQYASABKAESDAoEdGljaxgCIAEoARITCgtkZW5v",
-            "bWluYXRvchgDIAEoDRIQCghkZWNpbWFscxgEIAEoERItCgZmb3JtYXQYBSAB",
-            "KA4yHS5zdGVhbHRoLlRpY2tWYWx1ZS5UaWNrRm9ybWF0IjEKClRpY2tGb3Jt",
-            "YXQSCwoHRGVjaW1hbBAAEgwKCEZyYWN0aW9uEAESCAoEVGljaxACIi8KDlRy",
-            "YWRpbmdTZXNzaW9uEg0KBWNsb3NlGAEgASgREg4KBmxlbmd0aBgCIAEoESLv",
-            "AwoQSW5zdHJ1bWVudFVwZGF0ZRIOCgZzeW1ib2wYASABKAkSEgoKdW5kZXJs",
-            "eWluZxgCIAEoCRIQCghjdXJyZW5jeRgDIAEoCRIQCghleGNoYW5nZRgEIAEo",
-            "CRIwCg9pbnN0cnVtZW50X3R5cGUYBSABKA4yFy5zdGVhbHRoLkluc3RydW1l",
-            "bnRUeXBlEicKC3B1dF9vcl9jYWxsGAYgASgOMhIuc3RlYWx0aC5QdXRPckNh",
-            "bGwSDgoGc3RyaWtlGAcgASgBEhMKC2V4cGlyeV9kYXRlGAggASgEEhIKCm11",
-            "bHRpcGxpZXIYCSABKAESFAoMZGlzcGxheV9uYW1lGAogASgJEhEKCXRpbWVf",
-            "em9uZRgLIAEoCRInCgt0aWNrX3ZhbHVlcxgMIAMoCzISLnN0ZWFsdGguVGlj",
-            "a1ZhbHVlEjEKEHRyYWRpbmdfc2Vzc2lvbnMYDSADKAsyFy5zdGVhbHRoLlRy",
-            "YWRpbmdTZXNzaW9uEkQKDmJyb2tlcl9zeW1ib2xzGA4gAygLMiwuc3RlYWx0",
-            "aC5JbnN0cnVtZW50VXBkYXRlLkJyb2tlclN5bWJvbHNFbnRyeRo0ChJCcm9r",
-            "ZXJTeW1ib2xzRW50cnkSCwoDa2V5GAEgASgJEg0KBXZhbHVlGAIgASgJOgI4",
-            "ASKkAQoSU3ltYm9sU2VhcmNoUmVzdWx0Eg4KBnN5bWJvbBgBIAEoCRISCgp1",
-            "bmRlcmx5aW5nGAIgASgJEhAKCGN1cnJlbmN5GAMgASgJEjAKD2luc3RydW1l",
-            "bnRfdHlwZRgEIAEoDjIXLnN0ZWFsdGguSW5zdHJ1bWVudFR5cGUSEAoIZXhj",
-            "aGFuZ2UYBSABKAkSFAoMZGlzcGxheV9uYW1lGAYgASgJIlcKElN5bWJvbFNl",
-            "YXJjaFVwZGF0ZRITCgtzZWFyY2hfdGVybRgBIAEoCRIsCgdyZXN1bHRzGAIg",
-            "AygLMhsuc3RlYWx0aC5TeW1ib2xTZWFyY2hSZXN1bHQitwMKDVRvcFN5bWJv",
-            "bEl0ZW0SEQoJdGltZXN0YW1wGAEgASgEEg4KBnN5bWJvbBgCIAEoCRISCgp1",
-            "bmRlcmx5aW5nGAMgASgJEhAKCGN1cnJlbmN5GAQgASgJEjAKD2luc3RydW1l",
-            "bnRfdHlwZRgFIAEoDjIXLnN0ZWFsdGguSW5zdHJ1bWVudFR5cGUSEAoIZXhj",
-            "aGFuZ2UYBiABKAkSFAoMZGlzcGxheV9uYW1lGAcgASgJEhYKDmVudHJ5X3By",
-            "b2dyZXNzGAggASgREicKBnNpZ25hbBgJIAEoDjIXLnN0ZWFsdGguU3RyYXRl",
-            "Z3lTaWduYWwSLwoRcGVyY2VwdGlvbl9zaWduYWwYCiABKA4yFC5zdGVhbHRo",
-            "LkdhdWdlU2lnbmFsEi8KEWNvbW1pdG1lbnRfc2lnbmFsGAsgASgOMhQuc3Rl",
-            "YWx0aC5HYXVnZVNpZ25hbBIuChBzZW50aW1lbnRfc2lnbmFsGAwgASgOMhQu",
-            "c3RlYWx0aC5HYXVnZVNpZ25hbBIwChJlcXVpbGlicml1bV9zaWduYWwYDSAB",
-            "KA4yFC5zdGVhbHRoLkdhdWdlU2lnbmFsIjsKEFRvcFN5bWJvbHNVcGRhdGUS",
-            "JwoHc3ltYm9scxgBIAMoCzIWLnN0ZWFsdGguVG9wU3ltYm9sSXRlbSIsChZT",
-            "aW5nbGVEZWZpbml0aW9uVXBkYXRlEhIKCmRlZmluaXRpb24YASABKAkq3wEK",
-            "Dkluc3RydW1lbnRUeXBlEhAKDE5vSW5zdHJ1bWVudBAAEg8KC0NvbW1vblN0",
-            "b2NrEAESDwoLU3RvY2tPcHRpb24QAhIKCgZGdXR1cmUQAxIJCgVJbmRleBAE",
-            "EhEKDUZvcmV4Q29udHJhY3QQBRIQCgxGdXR1cmVPcHRpb24QBhIUChBGdXR1",
-            "cmVJbnN0cnVtZW50EAcSCQoFQ29tYm8QCBITCg9Db21ib0luc3RydW1lbnQQ",
-            "CRISCg5DcnlwdG9DdXJyZW5jeRAKEhMKD1BlcnBldHVhbENyeXB0bxALKi0K",
-            "CVB1dE9yQ2FsbBINCglOb1B1dENhbGwQABIHCgNQdXQQARIICgRDYWxsEAIq",
-            "OwoOU3RyYXRlZ3lTaWduYWwSCAoETm9uZRAAEg4KCkxvbmdTaWduYWwQARIP",
-            "CgtTaG9ydFNpZ25hbBACKkMKC0dhdWdlU2lnbmFsEgsKB1Vua25vd24QABIJ",
-            "CgVTaG9ydBABEggKBEZsYXQQAhIICgRMb25nEAMSCAoERHVhbBAEQiaqAiNR",
-            "dWFudEdhdGUuQVBJLlNpZ25hbHMuUHJvdG8uU3RlYWx0aGIGcHJvdG8z"));
+            "ChZzdGVhbHRoLWFwaS12Mi4xLnByb3RvEgdzdGVhbHRoIicKD0Nvbm5lY3RT",
+            "ZXR0aW5ncxIUCgxwcm9kdWN0X3R5cGUYASABKAkigQEKDlJlYWx0aW1lVXBk",
+            "YXRlEhEKCWFza19wcmljZRgBIAEoBBIQCghhc2tfc2l6ZRgCIAEoBBIRCgli",
+            "aWRfcHJpY2UYAyABKAQSEAoIYmlkX3NpemUYBCABKAQSEgoKbGFzdF9wcmlj",
+            "ZRgFIAEoBBIRCglsYXN0X3NpemUYBiABKAQiswEKDlNuYXBzaG90VXBkYXRl",
+            "EhIKCm9wZW5fcHJpY2UYASABKAQSEgoKaGlnaF9wcmljZRgCIAEoBBIRCgls",
+            "b3dfcHJpY2UYAyABKAQSEwoLY2xvc2VfcHJpY2UYBCABKAQSFgoOcHJldmlv",
+            "dXNfY2xvc2UYBSABKAQSDgoGdm9sdW1lGAYgASgEEhQKDGhpZ2g1Ml9wcmlj",
+            "ZRgHIAEoBBITCgtsb3c1Ml9wcmljZRgIIAEoBCKWAQoQU3RhdGlzdGljc1Vw",
+            "ZGF0ZRIMCgRiZXRhGAEgASgCEgsKA2VwcxgCIAEoAhIQCghwZV9yYXRpbxgD",
+            "IAEoAhIaChJzaGFyZXNfb3V0c3RhbmRpbmcYBCABKAQSHQoVaGlzdG9yaWNh",
+            "bF92b2xhdGlsaXR5GAUgASgCEhoKEmltcGxpZWRfdm9sYXRpbGl0eRgGIAEo",
+            "AiKlAQoLUXVvdGVVcGRhdGUSEQoJdGltZXN0YW1wGAEgASgEEikKCHJlYWx0",
+            "aW1lGAIgASgLMhcuc3RlYWx0aC5SZWFsdGltZVVwZGF0ZRIpCghzbmFwc2hv",
+            "dBgDIAEoCzIXLnN0ZWFsdGguU25hcHNob3RVcGRhdGUSLQoKc3RhdGlzdGlj",
+            "cxgEIAEoCzIZLnN0ZWFsdGguU3RhdGlzdGljc1VwZGF0ZSJZCg9TZW50aW1l",
+            "bnRTcGxpbmUSDwoHYXZlcmFnZRgBIAEoERIJCgFpGAIgASgNEgkKAWoYAyAB",
+            "KA0SCQoBeBgEIAEoERIJCgF5GAUgASgREgkKAXoYBiABKBEiiwEKD1NlbnRp",
+            "bWVudFVwZGF0ZRIRCgl0aW1lc3RhbXAYASABKAQSKQoHbGVuZ3RocxgCIAEo",
+            "CzIYLnN0ZWFsdGguU2VudGltZW50U3BsaW5lEigKBmNvbG9ycxgDIAEoCzIY",
+            "LnN0ZWFsdGguU2VudGltZW50U3BsaW5lEhAKCGlzX2RpcnR5GAQgASgIIrUB",
+            "ChFFcXVpbGlicml1bVVwZGF0ZRIRCgl0aW1lc3RhbXAYASABKAQSGQoRZXF1",
+            "aWxpYnJpdW1fcHJpY2UYAiABKAQSEAoIZ2FwX3NpemUYAyABKAQSDAoEaGln",
+            "aBgEIAEoERILCgNsb3cYBSABKBESEQoJcHJvamVjdGVkGAYgASgREgwKBGJp",
+            "YXMYByABKBESEgoKbGFzdF9wcmljZRgIIAEoBBIQCghpc19kaXJ0eRgJIAEo",
+            "CCLYAQoQTXVsdGlmcmFtZVVwZGF0ZRIRCgl0aW1lc3RhbXAYASABKAQSDQoF",
+            "bWluXzUYAiABKBESDgoGbWluXzEwGAMgASgREg4KBm1pbl8xNRgEIAEoERIO",
+            "CgZtaW5fMzAYBSABKBESDgoGbWluXzQ1GAYgASgREg4KBm1pbl82MBgHIAEo",
+            "ERIPCgdtaW5fMTIwGAggASgREg8KB21pbl8xODAYCSABKBESDwoHbWluXzI0",
+            "MBgKIAEoERINCgVkYXlfMRgLIAEoERIQCghpc19kaXJ0eRgMIAEoCCLsAQoN",
+            "VHJpZ2dlclVwZGF0ZRIRCgl0aW1lc3RhbXAYASABKAQSDAoEYmlhcxgCIAEo",
+            "ERISCgpwZXJjZXB0aW9uGAMgASgREhEKCXNlbnRpbWVudBgEIAEoERISCgpj",
+            "b21taXRtZW50GAUgASgREhkKEWVxdWlsaWJyaXVtX3ByaWNlGAYgASgEEhAK",
+            "CGdhcF9zaXplGAcgASgEEhIKCmxhc3RfcHJpY2UYCCABKAQSEAoIaXNfZGly",
+            "dHkYCSABKAgSGAoQcHJpY2VfY29udmljdGlvbhgKIAEoAhISCgpjb25maWRl",
+            "bmNlGAsgASgCIlAKFVByaWNlQ29udmljdGlvblVwZGF0ZRIRCgl0aW1lc3Rh",
+            "bXAYASABKAQSEgoKY29udmljdGlvbhgCIAEoAhIQCghpc19kaXJ0eRgDIAEo",
+            "CCJHChFTaW5nbGVWYWx1ZVVwZGF0ZRIRCgl0aW1lc3RhbXAYASABKAQSDQoF",
+            "dmFsdWUYAiABKBESEAoIaXNfZGlydHkYAyABKAgiYgoKTUFDRFVwZGF0ZRIR",
+            "Cgl0aW1lc3RhbXAYASABKAQSDAoEbWFjZBgCIAEoAhIOCgZzaWduYWwYAyAB",
+            "KAISEQoJaGlzdG9ncmFtGAQgASgCEhAKCGlzX2RpcnR5GAUgASgIIngKFEJv",
+            "bGxpbmdlckJhbmRzVXBkYXRlEhEKCXRpbWVzdGFtcBgBIAEoBBISCgp1cHBl",
+            "cl9iYW5kGAIgASgEEhMKC21pZGRsZV9iYW5kGAMgASgEEhIKCmxvd2VyX2Jh",
+            "bmQYBCABKAQSEAoIaXNfZGlydHkYBSABKAgivQMKDlN0cmF0ZWd5VXBkYXRl",
+            "EhEKCXRpbWVzdGFtcBgBIAEoBBIWCg5lbnRyeV9wcm9ncmVzcxgCIAEoERIV",
+            "Cg1leGl0X3Byb2dyZXNzGAMgASgREicKBnNpZ25hbBgEIAEoDjIXLnN0ZWFs",
+            "dGguU3RyYXRlZ3lTaWduYWwSGAoQcGVyY2VwdGlvbl9sZXZlbBgFIAEoDRIv",
+            "ChFwZXJjZXB0aW9uX3NpZ25hbBgGIAEoDjIULnN0ZWFsdGguR2F1Z2VTaWdu",
+            "YWwSGAoQY29tbWl0bWVudF9sZXZlbBgHIAEoDRIvChFjb21taXRtZW50X3Np",
+            "Z25hbBgIIAEoDjIULnN0ZWFsdGguR2F1Z2VTaWduYWwSLgoQc2VudGltZW50",
+            "X3NpZ25hbBgJIAEoDjIULnN0ZWFsdGguR2F1Z2VTaWduYWwSMAoSZXF1aWxp",
+            "YnJpdW1fc2lnbmFsGAogASgOMhQuc3RlYWx0aC5HYXVnZVNpZ25hbBIXCg9z",
+            "ZW50aW1lbnRfbGV2ZWwYCyABKA0SGQoRZXF1aWxpYnJpdW1fbGV2ZWwYDCAB",
+            "KA0SFAoMaGlnaF9xdWFsaXR5GA0gASgIIkcKEVNpbmdsZVByaWNlVXBkYXRl",
+            "EhEKCXRpbWVzdGFtcBgBIAEoBBINCgV2YWx1ZRgCIAEoBBIQCghpc19kaXJ0",
+            "eRgDIAEoCCJHChBQcmljZUFycmF5VXBkYXRlEhEKCXRpbWVzdGFtcBgBIAEo",
+            "BBIOCgZ2YWx1ZXMYAiADKAQSEAoIaXNfZGlydHkYAyABKAgisQEKCVRpY2tW",
+            "YWx1ZRINCgVzdGFydBgBIAEoARIMCgR0aWNrGAIgASgBEhMKC2Rlbm9taW5h",
+            "dG9yGAMgASgNEhAKCGRlY2ltYWxzGAQgASgREi0KBmZvcm1hdBgFIAEoDjId",
+            "LnN0ZWFsdGguVGlja1ZhbHVlLlRpY2tGb3JtYXQiMQoKVGlja0Zvcm1hdBIL",
+            "CgdEZWNpbWFsEAASDAoIRnJhY3Rpb24QARIICgRUaWNrEAIiLwoOVHJhZGlu",
+            "Z1Nlc3Npb24SDQoFY2xvc2UYASABKBESDgoGbGVuZ3RoGAIgASgRIu8DChBJ",
+            "bnN0cnVtZW50VXBkYXRlEg4KBnN5bWJvbBgBIAEoCRISCgp1bmRlcmx5aW5n",
+            "GAIgASgJEhAKCGN1cnJlbmN5GAMgASgJEhAKCGV4Y2hhbmdlGAQgASgJEjAK",
+            "D2luc3RydW1lbnRfdHlwZRgFIAEoDjIXLnN0ZWFsdGguSW5zdHJ1bWVudFR5",
+            "cGUSJwoLcHV0X29yX2NhbGwYBiABKA4yEi5zdGVhbHRoLlB1dE9yQ2FsbBIO",
+            "CgZzdHJpa2UYByABKAESEwoLZXhwaXJ5X2RhdGUYCCABKAQSEgoKbXVsdGlw",
+            "bGllchgJIAEoARIUCgxkaXNwbGF5X25hbWUYCiABKAkSEQoJdGltZV96b25l",
+            "GAsgASgJEicKC3RpY2tfdmFsdWVzGAwgAygLMhIuc3RlYWx0aC5UaWNrVmFs",
+            "dWUSMQoQdHJhZGluZ19zZXNzaW9ucxgNIAMoCzIXLnN0ZWFsdGguVHJhZGlu",
+            "Z1Nlc3Npb24SRAoOYnJva2VyX3N5bWJvbHMYDiADKAsyLC5zdGVhbHRoLklu",
+            "c3RydW1lbnRVcGRhdGUuQnJva2VyU3ltYm9sc0VudHJ5GjQKEkJyb2tlclN5",
+            "bWJvbHNFbnRyeRILCgNrZXkYASABKAkSDQoFdmFsdWUYAiABKAk6AjgBIqQB",
+            "ChJTeW1ib2xTZWFyY2hSZXN1bHQSDgoGc3ltYm9sGAEgASgJEhIKCnVuZGVy",
+            "bHlpbmcYAiABKAkSEAoIY3VycmVuY3kYAyABKAkSMAoPaW5zdHJ1bWVudF90",
+            "eXBlGAQgASgOMhcuc3RlYWx0aC5JbnN0cnVtZW50VHlwZRIQCghleGNoYW5n",
+            "ZRgFIAEoCRIUCgxkaXNwbGF5X25hbWUYBiABKAkiVwoSU3ltYm9sU2VhcmNo",
+            "VXBkYXRlEhMKC3NlYXJjaF90ZXJtGAEgASgJEiwKB3Jlc3VsdHMYAiADKAsy",
+            "Gy5zdGVhbHRoLlN5bWJvbFNlYXJjaFJlc3VsdCK3AwoNVG9wU3ltYm9sSXRl",
+            "bRIRCgl0aW1lc3RhbXAYASABKAQSDgoGc3ltYm9sGAIgASgJEhIKCnVuZGVy",
+            "bHlpbmcYAyABKAkSEAoIY3VycmVuY3kYBCABKAkSMAoPaW5zdHJ1bWVudF90",
+            "eXBlGAUgASgOMhcuc3RlYWx0aC5JbnN0cnVtZW50VHlwZRIQCghleGNoYW5n",
+            "ZRgGIAEoCRIUCgxkaXNwbGF5X25hbWUYByABKAkSFgoOZW50cnlfcHJvZ3Jl",
+            "c3MYCCABKBESJwoGc2lnbmFsGAkgASgOMhcuc3RlYWx0aC5TdHJhdGVneVNp",
+            "Z25hbBIvChFwZXJjZXB0aW9uX3NpZ25hbBgKIAEoDjIULnN0ZWFsdGguR2F1",
+            "Z2VTaWduYWwSLwoRY29tbWl0bWVudF9zaWduYWwYCyABKA4yFC5zdGVhbHRo",
+            "LkdhdWdlU2lnbmFsEi4KEHNlbnRpbWVudF9zaWduYWwYDCABKA4yFC5zdGVh",
+            "bHRoLkdhdWdlU2lnbmFsEjAKEmVxdWlsaWJyaXVtX3NpZ25hbBgNIAEoDjIU",
+            "LnN0ZWFsdGguR2F1Z2VTaWduYWwiOwoQVG9wU3ltYm9sc1VwZGF0ZRInCgdz",
+            "eW1ib2xzGAEgAygLMhYuc3RlYWx0aC5Ub3BTeW1ib2xJdGVtIiwKFlNpbmds",
+            "ZURlZmluaXRpb25VcGRhdGUSEgoKZGVmaW5pdGlvbhgBIAEoCSrfAQoOSW5z",
+            "dHJ1bWVudFR5cGUSEAoMTm9JbnN0cnVtZW50EAASDwoLQ29tbW9uU3RvY2sQ",
+            "ARIPCgtTdG9ja09wdGlvbhACEgoKBkZ1dHVyZRADEgkKBUluZGV4EAQSEQoN",
+            "Rm9yZXhDb250cmFjdBAFEhAKDEZ1dHVyZU9wdGlvbhAGEhQKEEZ1dHVyZUlu",
+            "c3RydW1lbnQQBxIJCgVDb21ibxAIEhMKD0NvbWJvSW5zdHJ1bWVudBAJEhIK",
+            "DkNyeXB0b0N1cnJlbmN5EAoSEwoPUGVycGV0dWFsQ3J5cHRvEAsqLQoJUHV0",
+            "T3JDYWxsEg0KCU5vUHV0Q2FsbBAAEgcKA1B1dBABEggKBENhbGwQAio7Cg5T",
+            "dHJhdGVneVNpZ25hbBIICgROb25lEAASDgoKTG9uZ1NpZ25hbBABEg8KC1No",
+            "b3J0U2lnbmFsEAIqQwoLR2F1Z2VTaWduYWwSCwoHVW5rbm93bhAAEgkKBVNo",
+            "b3J0EAESCAoERmxhdBACEggKBExvbmcQAxIICgREdWFsEARCJqoCI1F1YW50",
+            "R2F0ZS5BUEkuU2lnbmFscy5Qcm90by5TdGVhbHRoYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::QuantGate.API.Signals.Proto.Stealth.InstrumentType), typeof(global::QuantGate.API.Signals.Proto.Stealth.PutOrCall), typeof(global::QuantGate.API.Signals.Proto.Stealth.StrategySignal), typeof(global::QuantGate.API.Signals.Proto.Stealth.GaugeSignal), }, new pbr::GeneratedClrTypeInfo[] {
+            new pbr::GeneratedClrTypeInfo(typeof(global::QuantGate.API.Signals.Proto.Stealth.ConnectSettings), global::QuantGate.API.Signals.Proto.Stealth.ConnectSettings.Parser, new[]{ "ProductType" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::QuantGate.API.Signals.Proto.Stealth.RealtimeUpdate), global::QuantGate.API.Signals.Proto.Stealth.RealtimeUpdate.Parser, new[]{ "AskPrice", "AskSize", "BidPrice", "BidSize", "LastPrice", "LastSize" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::QuantGate.API.Signals.Proto.Stealth.SnapshotUpdate), global::QuantGate.API.Signals.Proto.Stealth.SnapshotUpdate.Parser, new[]{ "OpenPrice", "HighPrice", "LowPrice", "ClosePrice", "PreviousClose", "Volume", "High52Price", "Low52Price" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::QuantGate.API.Signals.Proto.Stealth.StatisticsUpdate), global::QuantGate.API.Signals.Proto.Stealth.StatisticsUpdate.Parser, new[]{ "Beta", "Eps", "PeRatio", "SharesOutstanding", "HistoricalVolatility", "ImpliedVolatility" }, null, null, null),
@@ -277,6 +279,129 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
   #region Messages
   /// <summary>
+  /// Settings to send when connecting 
+  /// </summary>
+  internal sealed partial class ConnectSettings : pb::IMessage<ConnectSettings> {
+    private static readonly pb::MessageParser<ConnectSettings> _parser = new pb::MessageParser<ConnectSettings>(() => new ConnectSettings());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<ConnectSettings> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[0]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ConnectSettings() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ConnectSettings(ConnectSettings other) : this() {
+      productType_ = other.productType_;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ConnectSettings Clone() {
+      return new ConnectSettings(this);
+    }
+
+    /// <summary>Field number for the "product_type" field.</summary>
+    public const int ProductTypeFieldNumber = 1;
+    private string productType_ = "";
+    /// <summary>
+    /// The type of product connecting.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string ProductType {
+      get { return productType_; }
+      set {
+        productType_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as ConnectSettings);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(ConnectSettings other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (ProductType != other.ProductType) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (ProductType.Length != 0) hash ^= ProductType.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (ProductType.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(ProductType);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (ProductType.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(ProductType);
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(ConnectSettings other) {
+      if (other == null) {
+        return;
+      }
+      if (other.ProductType.Length != 0) {
+        ProductType = other.ProductType;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10: {
+            ProductType = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  /// <summary>
   /// RealtimeUpdate represents an update of real-time quote updates (bid/ask/last). 
   /// </summary>
   internal sealed partial class RealtimeUpdate : pb::IMessage<RealtimeUpdate> {
@@ -286,7 +411,7 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[0]; }
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[1]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -564,7 +689,7 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[1]; }
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[2]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -904,7 +1029,7 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[2]; }
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[3]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1183,7 +1308,7 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[3]; }
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[4]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1418,7 +1543,7 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[4]; }
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[5]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1696,7 +1821,7 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[5]; }
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[6]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1926,7 +2051,7 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[6]; }
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[7]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2298,7 +2423,7 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[7]; }
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[8]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2764,7 +2889,7 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[8]; }
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[9]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3201,7 +3326,7 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[9]; }
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[10]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3388,7 +3513,7 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[10]; }
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[11]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3573,7 +3698,7 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[11]; }
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[12]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3822,7 +3947,7 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[12]; }
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[13]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4069,7 +4194,7 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[13]; }
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[14]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4566,7 +4691,7 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[14]; }
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[15]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4754,7 +4879,7 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[15]; }
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[16]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4932,7 +5057,7 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[16]; }
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[17]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5210,7 +5335,7 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[17]; }
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[18]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5364,7 +5489,7 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[18]; }
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[19]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5866,7 +5991,7 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[19]; }
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[20]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6146,7 +6271,7 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[20]; }
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[21]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6292,7 +6417,7 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[21]; }
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[22]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6787,7 +6912,7 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[22]; }
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[23]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6902,7 +7027,7 @@ namespace QuantGate.API.Signals.Proto.Stealth {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[23]; }
+      get { return global::QuantGate.API.Signals.Proto.Stealth.StealthApiV21Reflection.Descriptor.MessageTypes[24]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

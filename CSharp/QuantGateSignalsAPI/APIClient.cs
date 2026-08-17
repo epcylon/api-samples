@@ -5,6 +5,7 @@ using Epcylon.Common.Net.ProtoStomp.Proto;
 using Epcylon.Common.Net.Transport;
 using Google.Protobuf;
 using QuantGate.API.Signals.Events;
+using QuantGate.API.Signals.Proto.Stealth;
 using QuantGate.API.Signals.ProtoStomp;
 using QuantGate.API.Signals.Subscriptions;
 using QuantGate.API.Signals.Utilities;
@@ -87,7 +88,7 @@ public class APIClient : IDisposable
     /// <summary>
     /// Connection body to use (internal).
     /// </summary>
-    private readonly string _connectBody;
+    private readonly ByteString _connectBody;
 
     /// <summary>
     /// The password for the current connection (JWT Token).
@@ -195,12 +196,11 @@ public class APIClient : IDisposable
     /// <param name="sync">
     /// The synchronization context to return values on (default = SynchronizationContext.Current).
     /// </param>
-    /// <param name="connectBody">Connect body to send (internal use only).</param>
     public APIClient(ConnectionToken token, DataStream stream = DataStream.Realtime,
-                     SynchronizationContext sync = null, string connectBody = null)
+                     SynchronizationContext sync = null)
     {
         // Set the connect body.
-        _connectBody = connectBody;
+        _connectBody = new ConnectSettings() { ProductType = ProductTypeChar(token.Product).ToString() }.ToByteString();
         // Get a reference to the dispatcher to use.
         Sync = (sync ?? SynchronizationContext.Current) ?? new SynchronizationContext();
 
@@ -252,6 +252,20 @@ public class APIClient : IDisposable
         // Create a new timer to handle disconnections/reconnections, etc.
         _timer = new Timer(HandleTimer, new object(), 5000, 5000);
     }
+
+    /// <summary>
+    /// Maps a <see cref="Products"/> value to the product-type character the server expects in
+    /// the connect body (see <c>DataClient.MaxSymbols</c> server-side) -- unrelated to the
+    /// <see cref="Products"/> enum's own bit-flag values, which the server has no knowledge of.
+    /// </summary>
+    /// <param name="product">The product to get the character for.</param>
+    /// <returns>The product-type character to send in the connect body.</returns>
+    private static char ProductTypeChar(Products product) => product switch
+    {
+        Products.Hydra => 'H',
+        Products.Stealth or Products.StealthPro or Products.Pilot or Products.CoPilot => 'P',
+        _ => 'U',
+    };
 
     #endregion
 
@@ -336,8 +350,8 @@ public class APIClient : IDisposable
                     connect.Login = _token.ClientID;
                     connect.Passcode = _token.Token;
 
-                    if (!string.IsNullOrEmpty(_connectBody))
-                        connect.Body = ByteString.FromBase64(_connectBody);
+                    if (_connectBody is not null && !_connectBody.IsEmpty)
+                        connect.Body = _connectBody;
                 }
 
                 Send(new RequestFrame { Connect = connect });
